@@ -5,7 +5,15 @@
 \alias{stdmod}
 \title{stdmod: Helper functions for standardized moderation effects}
 \usage{
-stdmod(lm_out, x = NULL, w = NULL, y = NULL)
+stdmod(
+  lm_out,
+  x = NULL,
+  w = NULL,
+  y = NULL,
+  x_rescale = TRUE,
+  w_rescale = TRUE,
+  y_rescale = TRUE
+)
 }
 \arguments{
 \item{lm_out}{The output from \code{lm}.}
@@ -19,6 +27,12 @@ for rescaling. Default is NULL.}
 
 \item{y}{The dependent (outcome) variable. If supplied, it's standard
 deviation will be used for rescaling. Default is NULL.}
+
+\item{x_rescale}{If TRUE, will rescale x by its SD. Default is TRUE.}
+
+\item{w_rescale}{If TRUE, will rescale w by its SD. Default is TRUE.}
+
+\item{y_rescale}{If TRUE, will rescale y by its SD. Default is TRUE.}
 }
 \value{
 The standardized moderation effect.
