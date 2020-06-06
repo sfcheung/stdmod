@@ -16,5 +16,5 @@ y <- 10 + 3*x + 5*w + 4*x*w + vs %*% matrix(c(1, 1), 2, 1) + rnorm(n, 0, 700)
 dat <- data.frame(dv = y, iv = x, mod = w, vs)
 out <- lm(dv ~ iv*mod + v1 + v2, dat)
 summary(lm.beta::lm.beta(out))
-test_x_1_w_1_v_2_n_100 <- dat
-usethis::use_data(test_x_1_w_1_v_2_n_100, overwrite = TRUE)
+test_x_1_w_1_v_2_n_500 <- dat
+usethis::use_data(test_x_1_w_1_v_2_n_500, overwrite = TRUE)
