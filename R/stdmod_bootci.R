@@ -38,7 +38,7 @@ create_boot <- function(lm_out, ...) {
 #        print(head(ind))
 #        print(head(d[ind, ]))
 #        print(colMeans(d[ind, ]))
-        stdmod(update(lm_out, data = d[ind, ]), ...)
+        stdmod(stats::update(lm_out, data = d[ind, ]), ...)
       }
   }
   

@@ -34,17 +34,17 @@ stdmod <- function(lm_out, x = NULL, w = NULL, y = NULL,
     x_name <- deparse(substitute(x))
     w_name <- deparse(substitute(w))
     y_name <- deparse(substitute(y))
-    b_names <- names(coef(lm_out))
+    b_names <- names(stats::coef(lm_out))
     mod_name1 <- paste0(x_name, ":", w_name)
     mod_name2 <- paste0(w_name, ":", x_name)
     mod_pos <- grepl(mod_name1, b_names) | grepl(mod_name2, b_names)
     if (!any(mod_pos)) {stop("The product term not found in the lm output.")}
-    b_xw <- coef(lm_out)[mod_pos]
+    b_xw <- stats::coef(lm_out)[mod_pos]
     model_names <- colnames(lm_out$model)
     if (x_rescale) {
         if (!(x_name %in% model_names)) {stop("x not in the data frame")}
         x_dat <- eval(substitute(x),lm_out$model, parent.frame())
-        x_sd  <- sd(x_dat)
+        x_sd  <- stats::sd(x_dat)
       } else {
         x_dat <- NULL
         x_sd  <- 1
@@ -52,7 +52,7 @@ stdmod <- function(lm_out, x = NULL, w = NULL, y = NULL,
      if (w_rescale) {
         if (!(w_name %in% model_names)) {stop("w not in the data frame")}
         w_dat <- eval(substitute(w),lm_out$model, parent.frame())
-        w_sd  <- sd(w_dat)
+        w_sd  <- stats::sd(w_dat)
       } else {
         w_dat <- NULL
         w_sd  <- 1
@@ -60,7 +60,7 @@ stdmod <- function(lm_out, x = NULL, w = NULL, y = NULL,
     if (y_rescale) {
         if (!(y_name %in% model_names)) {stop("y not in the data frame")}
         y_dat <- eval(substitute(y),lm_out$model, parent.frame())
-        y_sd  <- sd(y_dat)
+        y_sd  <- stats::sd(y_dat)
       } else {
         y_dat <- NULL
         y_sd  <- 1
