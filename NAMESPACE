@@ -2,3 +2,4 @@
 
 export(stdmod)
 export(stdmod_bootci)
+export(stdmod_selected)
