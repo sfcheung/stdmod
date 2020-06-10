@@ -1,22 +1,21 @@
 library(testthat)
 library(stdmod)
-library(dplyr)
 
 context("Check standardized moderation effect")
 
 dat <- test_x_1_w_1_v_2_n_500
 
 lm_raw <- lm(dv ~ iv*mod + v1 + v2, dat)
-lm_zx  <- lm(dv ~ iv*mod + v1 + v2, mutate(dat, iv = scale(iv)[, 1]))
-lm_zw  <- lm(dv ~ iv*mod + v1 + v2, mutate(dat, mod = scale(mod)[, 1]))
-lm_zy  <- lm(dv ~ iv*mod + v1 + v2, mutate(dat, dv = scale(dv)[, 1]))
-lm_zxzw  <- lm(dv ~ iv*mod + v1 + v2, mutate(dat, iv = scale(iv)[, 1],
+lm_zx  <- lm(dv ~ iv*mod + v1 + v2, dplyr::mutate(dat, iv = scale(iv)[, 1]))
+lm_zw  <- lm(dv ~ iv*mod + v1 + v2, dplyr::mutate(dat, mod = scale(mod)[, 1]))
+lm_zy  <- lm(dv ~ iv*mod + v1 + v2, dplyr::mutate(dat, dv = scale(dv)[, 1]))
+lm_zxzw  <- lm(dv ~ iv*mod + v1 + v2, dplyr::mutate(dat, iv = scale(iv)[, 1],
                                                   mod = scale(mod)[, 1]))
-lm_zxzy  <- lm(dv ~ iv*mod + v1 + v2, mutate(dat, iv = scale(iv)[, 1],
+lm_zxzy  <- lm(dv ~ iv*mod + v1 + v2, dplyr::mutate(dat, iv = scale(iv)[, 1],
                                                   dv = scale(dv)[, 1]))
-lm_zyzw  <- lm(dv ~ iv*mod + v1 + v2, mutate(dat, dv = scale(dv)[, 1],
+lm_zyzw  <- lm(dv ~ iv*mod + v1 + v2, dplyr::mutate(dat, dv = scale(dv)[, 1],
                                                   mod = scale(mod)[, 1]))
-lm_zall  <- lm(dv ~ iv*mod + v1 + v2, mutate(dat, iv = scale(iv)[, 1],
+lm_zall  <- lm(dv ~ iv*mod + v1 + v2, dplyr::mutate(dat, iv = scale(iv)[, 1],
                                                   mod = scale(mod)[, 1],
                                                   dv = scale(dv)[, 1]))
 
