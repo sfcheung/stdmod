@@ -34,7 +34,7 @@
 #' # "To be prepared"
 #' @export
 
-stdmod_selected <- function(lm_out,
+std_selected <- function(lm_out,
                             to_scale = NULL,
                             to_center = NULL) {
     if (missing(lm_out)) {
