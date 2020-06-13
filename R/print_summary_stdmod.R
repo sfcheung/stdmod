@@ -31,5 +31,5 @@ print.summary.stdmod <- function(x, ...) {
   cat("\n")
   xlm <- x
   class(xlm) <- "summary.lm"
-  print(xlm)
+  print(xlm, ...)
   }
