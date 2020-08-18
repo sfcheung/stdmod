@@ -40,3 +40,7 @@ summary(lm.beta::lm.beta(out))
 test_x_1_w_1_v_1_cat1_n_500 <- dat
 usethis::use_data(test_x_1_w_1_v_1_cat1_n_500, overwrite = TRUE)
 
+#' A real dataset extracted from a study on self-reported mask stock
+
+maskstock <- readRDS("./data-raw/maskstock_sci_dass.RDS")
+usethis::use_data(maskstock, overwrite = TRUE)

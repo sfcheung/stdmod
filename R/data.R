@@ -7,3 +7,14 @@
 #' One IV, one moderation, two covariates, v1 is contrinuous and cat2 is categorical. n 500
 #' 
 "test_x_1_w_1_v_1_cat1_n_500"
+
+#' A real dataset of 216 working Hong Kong adults with the following variables
+#' case_id
+#' Age
+#' Gender
+#' SCI (Sleep Condition Indicator)
+#' MaskStock
+#' Depression (from DASS)
+#' Anxiety (from DASS)
+#' Stress (from Stress)
+"maskstock"
