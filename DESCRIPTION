@@ -15,8 +15,11 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Suggests: 
     testthat,
-    dplyr
+    dplyr,
+    knitr,
+    rmarkdown
 Depends: 
     R (>= 3.6.0)
 Imports: 
     boot
+VignetteBuilder: knitr
