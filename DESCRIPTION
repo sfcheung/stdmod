@@ -1,6 +1,6 @@
 Package: stdmod
 Title: Functions related to standardized moderation effect
-Version: 0.0.3
+Version: 0.0.3.1
 Authors@R: 
     person(given = "Shu Fai",
            family = "Cheung",
@@ -12,7 +12,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Suggests: 
     testthat,
     dplyr,
