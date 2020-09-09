@@ -1,0 +1,109 @@
+---
+title: "Numerical Example 01"
+author: "Shu Fai Cheung"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Numerical Example 01}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Setup the Environment
+
+```{r setup}
+library(stdmod)
+library(visreg) # For visualizing the moderation effect
+library(lm.beta) # For generating the typical standardized solution
+```
+
+# Load the Dataset
+
+```{r load_dataset}
+data(sleep_emo_con)
+head(sleep_emo_con)
+```
+
+# Moderation Regression
+
+- Test the moderation effect of `conscientiousness` in the relation between 
+  `emotionality` and `sleep_duration`, controlled for `age` and `gender`.
+
+```{r mod_reg}
+lm_raw <- lm(sleep_duration ~ age + gender + emotionality*conscientiousness, sleep_emo_con)
+summary(lm_raw)
+visreg(lm_raw, "emotionality", "conscientiousness",
+            breaks = 2, overlay = TRUE)
+```
+
+# Mean center conscientiousness
+
+```{r}
+lm_w_centered <- std_selected(lm_raw, to_center = ~ conscientiousness)
+summary(lm_w_centered)
+visreg(lm_w_centered, "emotionality", "conscientiousness",
+            breaks = 2, overlay = TRUE)
+```
+
+# Mean center conscientiousness and emotionality
+
+```{r}
+lm_xw_centered <- std_selected(lm_raw, to_center = ~ emotionality + conscientiousness)
+summary(lm_xw_centered)
+visreg(lm_xw_centered, "emotionality", "conscientiousness",
+            breaks = 2, overlay = TRUE)
+```
+
+# Standardize both conscientiousness and emotionality
+
+```{r}
+lm_xw_std <- std_selected(lm_raw, to_center = ~ emotionality + conscientiousness,
+                                  to_scale  = ~ emotionality + conscientiousness)
+summary(lm_xw_std)
+visreg(lm_xw_std, "emotionality", "conscientiousness",
+            breaks = 2, overlay = TRUE)
+```
+
+# Standardize both conscientiousness and emotionality
+
+```{r}
+lm_xw_std <- std_selected(lm_raw, to_center = ~ emotionality + conscientiousness,
+                                  to_scale  = ~ emotionality + conscientiousness)
+summary(lm_xw_std)
+visreg(lm_xw_std, "emotionality", "conscientiousness",
+            breaks = 2, overlay = TRUE)
+```
+
+# Standardize conscientiousness, emotionality, and sleep_duration
+
+```{r}
+lm_xwy_std <- std_selected(lm_raw, to_center = ~ emotionality + conscientiousness + sleep_duration,
+                                  to_scale  = ~ emotionality + conscientiousness + sleep_duration)
+summary(lm_xwy_std)
+visreg(lm_xwy_std, "emotionality", "conscientiousness",
+            breaks = 2, overlay = TRUE)
+```
+
+# Standardize all variables
+
+```{r}
+lm_all_std <- std_selected(lm_raw, to_center = ~ .,
+                                   to_scale  = ~ .)
+summary(lm_all_std)
+visreg(lm_all_std, "emotionality", "conscientiousness",
+            breaks = 2, overlay = TRUE)
+```
+
+# The Usual Standardized Solution
+
+```{r}
+lm_usual_std <- lm.beta(lm_raw)
+summary(lm_usual_std)
+```
