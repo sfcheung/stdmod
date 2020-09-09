@@ -21,13 +21,13 @@
 #'@param to_scale  Specify the terms to be rescaled by standard deviation, 
 #'       using a formula as in \code{lm}. For example, if the terms to be scale
 #'       is x1 and x3, use \code{~ x1 + x3}. No need to specify the interaction term.
-#'       Specify only the original variables. If NULL, then all terms
+#'       Specify only the original variables. If NULL, then no terms
 #'       will be rescaled by standard deviation. Variables that are not numeric will
 #'       will be ignored. Default is NULL.
 #'@param to_center Specify the terms to be mean-centered, using a formula 
 #'        as in \code{lm}. For example, if the terms to be scale
 #'        is x1 and x3, use \code{~ x1 + x3}. No need to specify the interaction term.
-#'        Specify only the original variables. If NULL, then all terms 
+#'        Specify only the original variables. If NULL, then no terms 
 #'        will be centered. Default is NULL.
 #'
 #'@examples
@@ -47,27 +47,29 @@ std_selected <- function(lm_out,
     # Update the results.
     # Return the results.
 
-    # Collect the terms
-    
-    if (is.null(to_scale)) {
-        scale_terms <- colnames(lm_out$model)
-      } else {
-        scale_f <- stats::as.formula(to_scale)
-        scale_terms  <- attr(stats::terms(scale_f),  "term.labels")
-      }
-    
-    if (is.null(to_center)) {
-        center_terms <- colnames(lm_out$model)
-      } else {
-        center_f <- stats::as.formula(to_center)
-        center_terms <- attr(stats::terms(center_f), "term.labels")
-      }
-    
     # Get the data frame
 
     dat <- lm_out$model
     k <- ncol(dat)
 
+    # Collect the terms
+    
+    if (is.null(to_scale)) {
+#        scale_terms <- colnames(lm_out$model)
+        scale_terms <- NULL
+      } else {
+        scale_f <- stats::as.formula(to_scale)
+        scale_terms  <- attr(stats::terms(scale_f, data = dat),  "term.labels")
+      }
+    
+    if (is.null(to_center)) {
+#        center_terms <- colnames(lm_out$model)
+        center_terms <- NULL
+      } else {
+        center_f <- stats::as.formula(to_center)
+        center_terms <- attr(stats::terms(center_f, data = dat), "term.labels")
+      }
+    
     # Check if the terms are valid
     
     varnames <- colnames(dat)
@@ -114,10 +116,10 @@ std_selected <- function(lm_out,
     
     class(lm_out_mod) <- c("stdmod", class(lm_out))
     
-    lm_out_mod$scaled   <- scale_terms
-    lm_out_mod$centered <- center_terms
+    lm_out_mod$scaled_terms   <- scale_terms
+    lm_out_mod$centered_terms <- center_terms
     lm_out_mod$scaled_by   <- var_b
-    lm_out_mod$centered_by <- var_a    
+    lm_out_mod$centered_by <- var_a
     
     lm_out_mod
     

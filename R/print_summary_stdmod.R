@@ -16,8 +16,8 @@
 
 print.summary.stdmod <- function(x, ...) {
   cat("\nSelected variable(s) are centered and/or scaled")
-  cat("\nVariable(s) centered:", x$centered)
-  cat("\nVariable(s) scaled:", x$scaled)
+  cat("\nVariable(s) centered:", x$centered_terms)
+  cat("\nVariable(s) scaled:", x$scaled_terms)
   cat("\n")
   dat_sc <- data.frame(centered_by = x$centered_by,
                        scaled_by   = x$scaled_by)

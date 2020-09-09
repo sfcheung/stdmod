@@ -17,8 +17,8 @@
 
 summary.stdmod <- function(object, ...) {
   out <- stats::summary.lm(object, ...)
-  out$scaled <- object$scaled
-  out$centered <- object$centered
+  out$scaled_terms <- object$scaled_terms
+  out$centered_terms <- object$centered_terms
   out$scaled_by <- object$scaled_by
   out$centered_by <- object$centered_by
   out$nboot <- object$nboot

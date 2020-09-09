@@ -12,14 +12,14 @@ std_selected(lm_out, to_scale = NULL, to_center = NULL)
 \item{to_scale}{Specify the terms to be rescaled by standard deviation,
 using a formula as in \code{lm}. For example, if the terms to be scale
 is x1 and x3, use \code{~ x1 + x3}. No need to specify the interaction term.
-Specify only the original variables. If NULL, then all terms
+Specify only the original variables. If NULL, then no terms
 will be rescaled by standard deviation. Variables that are not numeric will
 will be ignored. Default is NULL.}
 
 \item{to_center}{Specify the terms to be mean-centered, using a formula
 as in \code{lm}. For example, if the terms to be scale
 is x1 and x3, use \code{~ x1 + x3}. No need to specify the interaction term.
-Specify only the original variables. If NULL, then all terms
+Specify only the original variables. If NULL, then no terms
 will be centered. Default is NULL.}
 }
 \value{
