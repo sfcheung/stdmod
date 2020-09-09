@@ -40,7 +40,13 @@ summary(lm.beta::lm.beta(out))
 test_x_1_w_1_v_1_cat1_n_500 <- dat
 usethis::use_data(test_x_1_w_1_v_1_cat1_n_500, overwrite = TRUE)
 
-#' A real dataset extracted from a study on self-reported mask stock
+#' A real dataset extracted from a study on personality traits and sleep duration
 
-maskstock <- readRDS("./data-raw/maskstock_sci_dass.RDS")
-usethis::use_data(maskstock, overwrite = TRUE)
+library(dplyr)
+sleep_emo_con <- readRDS("./data-raw/sleep_duration_emotionality_conscientiousness.RDS")
+sleep_emo_con <- sleep_emo_con %>%
+      mutate(gender = recode(gender, `0` = "male", `1` = "female"),
+             case_id = seq_len(nrow(sleep_emo_con))) %>%
+      select(case_id, everything())
+head(sleep_emo_con)
+usethis::use_data(sleep_emo_con, overwrite = TRUE)

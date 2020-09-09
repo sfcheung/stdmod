@@ -10,11 +10,7 @@
 
 #' A real dataset of 216 working Hong Kong adults with the following variables
 #' case_id
-#' Age
-#' Gender
-#' SCI (Sleep Condition Indicator)
-#' MaskStock
-#' Depression (from DASS)
-#' Anxiety (from DASS)
-#' Stress (from Stress)
-"maskstock"
+#' sleep_duration (in hours)
+#' conscientiousness
+#' emotionality
+"sleep_emo_con"
