@@ -45,7 +45,12 @@ visreg(lm_raw, "emotionality", "conscientiousness",
             breaks = 2, overlay = TRUE)
 ```
 
+The results show that conscientiousness significantly moderates the effect of emotionality on sleep duration.
+
 # Mean center conscientiousness
+
+To know the effect of emotionality when conscientiouaness is equal to its mean, we can center conscientiousness by its mean in the data and redo the moderated regression. Instead of creating the new variable and rerun the regression, we can pass the previous output to `std_selected` and specify the variables to be mean centered.
+
 
 ```{r}
 lm_w_centered <- std_selected(lm_raw, to_center = ~ conscientiousness)
@@ -53,6 +58,9 @@ summary(lm_w_centered)
 visreg(lm_w_centered, "emotionality", "conscientiousness",
             breaks = 2, overlay = TRUE)
 ```
+
+The argument for meaning centering is `to_center`. The variable is specified in the formula form.
+
 
 # Mean center conscientiousness and emotionality
 
