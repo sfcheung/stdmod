@@ -64,6 +64,8 @@ The argument for meaning centering is `to_center`. The variable is specified in 
 
 # Mean center conscientiousness and emotionality
 
+This example demonstrates centering more than one variable. In the following model, both emotionality and conscientiousness are centered. They are placed after `~` and joined by `+`.
+
 ```{r}
 lm_xw_centered <- std_selected(lm_raw, to_center = ~ emotionality + conscientiousness)
 summary(lm_xw_centered)
@@ -73,15 +75,8 @@ visreg(lm_xw_centered, "emotionality", "conscientiousness",
 
 # Standardize both conscientiousness and emotionality
 
-```{r}
-lm_xw_std <- std_selected(lm_raw, to_center = ~ emotionality + conscientiousness,
-                                  to_scale  = ~ emotionality + conscientiousness)
-summary(lm_xw_std)
-visreg(lm_xw_std, "emotionality", "conscientiousness",
-            breaks = 2, overlay = TRUE)
-```
+To standardize a variablex we first mean center it and then scale it by its standard deviation. Scaling is done by listing the variable on `to_scale`. The input format is identical to that of `to_center`.
 
-# Standardize both conscientiousness and emotionality
 
 ```{r}
 lm_xw_std <- std_selected(lm_raw, to_center = ~ emotionality + conscientiousness,
@@ -93,6 +88,8 @@ visreg(lm_xw_std, "emotionality", "conscientiousness",
 
 # Standardize conscientiousness, emotionality, and sleep_duration
 
+Note that we can also mean center or standardize the dependent variable. We just add the variable to the right hand side of `~` in `to_center` and `to_scale` as appropriate.
+
 ```{r}
 lm_xwy_std <- std_selected(lm_raw, to_center = ~ emotionality + conscientiousness + sleep_duration,
                                   to_scale  = ~ emotionality + conscientiousness + sleep_duration)
@@ -103,6 +100,8 @@ visreg(lm_xwy_std, "emotionality", "conscientiousness",
 
 # Standardize all variables
 
+If we want to standardize all variables, we can use `~ .` as a shortcut. Note that `std_selected` will skip categorical variables (i.e., factors or string variables in the regression model of `lm`).
+
 ```{r}
 lm_all_std <- std_selected(lm_raw, to_center = ~ .,
                                    to_scale  = ~ .)
@@ -112,6 +111,8 @@ visreg(lm_all_std, "emotionality", "conscientiousness",
 ```
 
 # The Usual Standardized Solution
+
+For comparison, this is the results of standardizing all variables, including the product term and the categorical variable.
 
 ```{r}
 lm_usual_std <- lm.beta(lm_raw)
