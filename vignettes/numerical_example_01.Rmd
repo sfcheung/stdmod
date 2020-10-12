@@ -125,7 +125,7 @@ It has been shown (e.g., Yuan & Chan, 2011) that the standard errors of standard
 
 We use the same example above that standardizes emotionality, conscientiousness, and sleep duration, to illustrate this function. The argument `boot` specifies the number of nonparametric bootstrap samples. Currently, only the 95% confidence intervals will be reported.
 
-```{r`}
+```{r}
 lm_xwy_std_ci <- std_selected_boot(lm_raw, to_center = ~ emotionality + conscientiousness + sleep_duration,
                                            to_scale  = ~ emotionality + conscientiousness + sleep_duration,
                                            nboot = 2000)
