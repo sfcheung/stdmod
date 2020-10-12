@@ -1,6 +1,6 @@
 Package: stdmod
 Title: Functions related to standardized moderation effect
-Version: 0.0.3.1
+Version: 0.1.0
 Authors@R: 
     person(given = "Shu Fai",
            family = "Cheung",
