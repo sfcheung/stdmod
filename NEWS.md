@@ -1,4 +1,4 @@
-# stdmod 0.0.1
+# stdmod 0.1.0
 
-- The beginning ... 
+- The first version for internal testing.
 
