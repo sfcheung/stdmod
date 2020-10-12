@@ -118,3 +118,20 @@ For comparison, this is the results of standardizing all variables, including th
 lm_usual_std <- lm.beta(lm_raw)
 summary(lm_usual_std)
 ```
+
+# Standardize conscientiousness, emotionality, and sleep_duration: With Nonparametric Bootstrapping Confidence Interval
+
+It has been shown (e.g., Yuan & Chan, 2011) that the standard errors of standardized regression coefficients computed just by rescaling the variables are biased, and consequently the confidence intervals are also invalid. The function `std_selected_boot` is a version of `std_selected` that also report the confidence interval of the regression coefficients when rescaling is conducted.
+
+We use the same example above that standardizes emotionality, conscientiousness, and sleep duration, to illustrate this function. The argument `boot` specifies the number of nonparametric bootstrap samples. Currently, only the 95% confidence intervals will be reported.
+
+```{r`}
+lm_xwy_std_ci <- std_selected_boot(lm_raw, to_center = ~ emotionality + conscientiousness + sleep_duration,
+                                           to_scale  = ~ emotionality + conscientiousness + sleep_duration,
+                                           nboot = 2000)
+summary(lm_xwy_std_ci)
+```
+
+The standardized moderation effect is -.108, and the 95% nonparametric bootstrapping confidence interval is -.207 to 0.013.
+
+Note: As a side product, the nonparametric Bootstrapping confidence of the other coefficients are also reported. They can be used for other variables that are standardized in the same model, whether they are involved in the moderation or not.
