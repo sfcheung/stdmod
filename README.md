@@ -1,6 +1,6 @@
 # stdmod
 
-Helper functions for standardized moderation effect.
+Helper functions for computing standardized moderation effect.
 
 # Installation
 
