@@ -1,10 +1,10 @@
 ---
-title: "Numerical Example 01"
+title: "Numerical Example - stdmod_selected"
 author: "Shu Fai Cheung"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Numerical Example 01}
+  %\VignetteIndexEntry{Numerical Example - stdmod_selected}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,8 +12,11 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width  = 6, 
+  fig.height = 6
 )
+options(width = 132)
 ```
 
 # Setup the Environment
