@@ -1,6 +1,8 @@
-pandoc: 2.1.1
-pkgdown: 1.5.1
+pandoc: '2.10'
+pkgdown: 1.6.1
 pkgdown_sha: ~
-articles: []
-last_built: 2020-05-11T10:23Z
+articles:
+  numerical_example_01: numerical_example_01.html
+  quick_start: quick_start.html
+last_built: 2020-10-12T02:17Z
 
