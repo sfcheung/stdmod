@@ -1,0 +1,98 @@
+#'@title Compute the standardized moderation effect and betas for other predictors given the \code{lm} output, with bootstrapping CIs
+#'
+#'@description Compute the standardized moderation effect and betas for other predictors given the \code{lm} output, with bootstrapping CIs
+#'
+#'@details Compute the standardized moderation effect and betas for other predictors given the \code{lm} output, with bootstrapping CIs
+#'
+#'@return
+#' The updated \code{lm} output, with the class \code{stdmod} added. It will be 
+#' treated as a usual \code{lm} object by most functions. It has these additional elements:
+#'
+#'  - \code{scaled}: The terms scaled.
+#'
+#'  - \code{centered}: The terms centered.
+#'
+#'  - \code{scaled_by}: The scaling factors. The value is 1 for terms not scaled.
+#'
+#'  - \code{centered}: The values used for centering. The value is 0 for terms not centered.
+#'
+#' 
+#'@param lm_out The output from \code{lm}.
+#'@param ...  Arguments to be passed to \code{std_selected}.
+#'@param nboot The number of bootstrap samples. Default is 100.
+#'@param boot_args A named list of arguments to be passed to \code{boot}. Default
+#'                 is NULL.
+#'@param full_output Whether the full output from \code{boot} is return. Default is 
+#'                   FALSE.
+#'
+#'@examples
+#' # "To be prepared"
+#' @export
+
+std_selected_boot <- function(lm_out,
+                            ...,
+                            nboot = 100,
+                            boot_args = NULL,
+                            full_output = FALSE) {
+    if (missing(lm_out)) {
+        stop("The arguments lm_out cannot be empty.")
+      }
+
+    # Get the data frame.
+    # Form the bootstrapping function.
+    # Do the bootstrapping.
+    # Collect the results.
+    # Return the results.
+
+
+    # Get the data frame
+
+    dat <- lm_out$model
+    k <- ncol(dat)
+    n <- nrow(dat)
+
+    # Create the boot function
+    
+    bootfct <- create_boot_selected(lm_out, ...)
+
+    # Do bootstrapping
+    
+    boot_out <- do.call(boot::boot, 
+                  c(list(data = dat, statistic = bootfct, R = nboot), 
+                  boot_args)) 
+    
+    # Collect output
+    
+    p <- length(boot_out$t0)
+    
+    cis <- t(sapply(seq_len(p), function(x) {
+                boot::boot.ci(boot_out, type = "perc", index = x)$percent[4:5]
+              }))
+    rownames(cis) <- names(boot_out$t0)
+    colnames(cis) <- c("CI Lower", "CI Upper")
+    
+    # Do std_selected
+    
+    std_selected_out <- std_selected(lm_out, ...)
+    
+    # Append bootstrapping output
+    
+    std_selected_out$boot_ci <- cis
+    std_selected_out$nboot <- nboot
+    if (full_output) {
+        std_selected_out$boot_out <- boot_out
+      }
+     
+    std_selected_out
+  }
+  
+create_boot_selected <- function(lm_out, ...) {
+  function(d, ind) {
+        force(lm_out)
+        lm_out_i <- lm_out
+        lm_out_i$model <- d[ind, ]
+        out <- std_selected(lm_out_i, ...)
+        stats::coef(out)
+      }
+  }
+  

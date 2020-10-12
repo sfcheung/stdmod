@@ -1,0 +1,140 @@
+---
+title: "Numerical Example - stdmod_selected"
+author: "Shu Fai Cheung"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Numerical Example - stdmod_selected}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width  = 6, 
+  fig.height = 6
+)
+options(width = 132)
+```
+
+# Setup the Environment
+
+```{r setup}
+library(stdmod)
+library(visreg) # For visualizing the moderation effect
+library(lm.beta) # For generating the typical standardized solution
+```
+
+# Load the Dataset
+
+```{r load_dataset}
+data(sleep_emo_con)
+head(sleep_emo_con)
+```
+
+This data set has 500 cases of data. The variables are sleep duration, age, gender,  and the scores from two personality scales, emotionality and conscientioisnes of the IPIP Big Five markers. Please refer to xxx for the detail of the data set.
+
+
+# Moderated Regression
+
+Suppose we are interested in predicting sleep duration by emotionality, after controlling for gender and age. However, we suspect that the effect of emotionality, if any, may be moderated by conscientiousness. Therefore, we conduct a moderared regression as follow:
+
+```{r mod_reg}
+lm_raw <- lm(sleep_duration ~ age + gender + emotionality*conscientiousness, sleep_emo_con)
+summary(lm_raw)
+visreg(lm_raw, "emotionality", "conscientiousness",
+            breaks = 2, overlay = TRUE)
+```
+
+The results show that conscientiousness significantly moderates the effect of emotionality on sleep duration.
+
+# Mean center conscientiousness
+
+To know the effect of emotionality when conscientiouaness is equal to its mean, we can center conscientiousness by its mean in the data and redo the moderated regression. Instead of creating the new variable and rerun the regression, we can pass the previous output to `std_selected` and specify the variables to be mean centered.
+
+
+```{r}
+lm_w_centered <- std_selected(lm_raw, to_center = ~ conscientiousness)
+summary(lm_w_centered)
+visreg(lm_w_centered, "emotionality", "conscientiousness",
+            breaks = 2, overlay = TRUE)
+```
+
+The argument for meaning centering is `to_center`. The variable is specified in the formula form.
+
+
+# Mean center conscientiousness and emotionality
+
+This example demonstrates centering more than one variable. In the following model, both emotionality and conscientiousness are centered. They are placed after `~` and joined by `+`.
+
+```{r}
+lm_xw_centered <- std_selected(lm_raw, to_center = ~ emotionality + conscientiousness)
+summary(lm_xw_centered)
+visreg(lm_xw_centered, "emotionality", "conscientiousness",
+            breaks = 2, overlay = TRUE)
+```
+
+# Standardize both conscientiousness and emotionality
+
+To standardize a variablex we first mean center it and then scale it by its standard deviation. Scaling is done by listing the variable on `to_scale`. The input format is identical to that of `to_center`.
+
+
+```{r}
+lm_xw_std <- std_selected(lm_raw, to_center = ~ emotionality + conscientiousness,
+                                  to_scale  = ~ emotionality + conscientiousness)
+summary(lm_xw_std)
+visreg(lm_xw_std, "emotionality", "conscientiousness",
+            breaks = 2, overlay = TRUE)
+```
+
+# Standardize conscientiousness, emotionality, and sleep_duration
+
+Note that we can also mean center or standardize the dependent variable. We just add the variable to the right hand side of `~` in `to_center` and `to_scale` as appropriate.
+
+```{r}
+lm_xwy_std <- std_selected(lm_raw, to_center = ~ emotionality + conscientiousness + sleep_duration,
+                                  to_scale  = ~ emotionality + conscientiousness + sleep_duration)
+summary(lm_xwy_std)
+visreg(lm_xwy_std, "emotionality", "conscientiousness",
+            breaks = 2, overlay = TRUE)
+```
+
+# Standardize all variables
+
+If we want to standardize all variables, we can use `~ .` as a shortcut. Note that `std_selected` will skip categorical variables (i.e., factors or string variables in the regression model of `lm`).
+
+```{r}
+lm_all_std <- std_selected(lm_raw, to_center = ~ .,
+                                   to_scale  = ~ .)
+summary(lm_all_std)
+visreg(lm_all_std, "emotionality", "conscientiousness",
+            breaks = 2, overlay = TRUE)
+```
+
+# The Usual Standardized Solution
+
+For comparison, this is the results of standardizing all variables, including the product term and the categorical variable.
+
+```{r}
+lm_usual_std <- lm.beta(lm_raw)
+summary(lm_usual_std)
+```
+
+# Standardize conscientiousness, emotionality, and sleep_duration: With Nonparametric Bootstrapping Confidence Interval
+
+It has been shown (e.g., Yuan & Chan, 2011) that the standard errors of standardized regression coefficients computed just by rescaling the variables are biased, and consequently the confidence intervals are also invalid. The function `std_selected_boot` is a version of `std_selected` that also report the confidence interval of the regression coefficients when rescaling is conducted.
+
+We use the same example above that standardizes emotionality, conscientiousness, and sleep duration, to illustrate this function. The argument `boot` specifies the number of nonparametric bootstrap samples. Currently, only the 95% confidence intervals will be reported.
+
+```{r}
+lm_xwy_std_ci <- std_selected_boot(lm_raw, to_center = ~ emotionality + conscientiousness + sleep_duration,
+                                           to_scale  = ~ emotionality + conscientiousness + sleep_duration,
+                                           nboot = 2000)
+summary(lm_xwy_std_ci)
+```
+
+The standardized moderation effect is -.108, and the 95% nonparametric bootstrapping confidence interval is -.207 to 0.013.
+
+Note: As a side product, the nonparametric Bootstrapping confidence of the other coefficients are also reported. They can be used for other variables that are standardized in the same model, whether they are involved in the moderation or not.
