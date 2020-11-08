@@ -12,5 +12,5 @@
 #' case_id
 #' sleep_duration (in hours)
 #' conscientiousness
-#' emotionality
+#' emotional_stability
 "sleep_emo_con"
