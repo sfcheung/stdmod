@@ -1,23 +1,30 @@
-#'@title Compute the bootstrapping CI of the standardized moderation effect given the \code{lm} output
+# Compute the bootstrapping CI of the standardized moderation effect given the \code{lm} output
 #'
-#'@description Compute the bootstrapping CI of the standardized moderation effect given the \code{lm} output
+# Compute the bootstrapping CI of the standardized moderation effect given the \code{lm} output
 #'
-#'@details Compute the bootstrapping CI of the standardized moderation effect given the \code{lm} output
-#'
-#'@return
-#' The standardized moderation effect.
+#' @details
 #' 
-#'@param lm_out The output from \code{lm}.
-#'@param ...    Parameters to be passed to stdmod
-#'@param nboot  The number of bootstrapping samples. Default is 100
-#'@param boot_args A named list of arguments to be passed to \code{boot}. Default
+#' [stdmod_bootci()] is a wrapper of [stdmod()]. It computes the bootstrapping
+#'  confidence interval of the standardized moderation effect given 
+#'  the \code{lm} output.
+#'
+# The standardized moderation effect.
+#'
+#' @param lm_out The output from \code{lm}.
+#' @param ...    Parameters to be passed to stdmod
+#' @param nboot  The number of bootstrapping samples. Default is 100
+#' @param boot_args A named list of arguments to be passed to \code{boot}. Default
 #'                 is NULL.
-#'@param full_output Whether the full output from \code{boot} is return. Default is 
+#' @param full_output Whether the full output from \code{boot} is return. Default is 
 #'                   FALSE.
 #'
-#'@examples
+#' @examples
 #' # "To be prepared"
 #' @export
+#' @describeIn stdmod A wrapper of [std_mod()] that compute the nonparametric
+#'                     bootstrapping confidence interval of the standardized
+#'                     moderation effect
+#' @order 2
 
 stdmod_bootci <- function(lm_out, ...,
                           nboot = 100, boot_args = NULL, full_output = FALSE) {

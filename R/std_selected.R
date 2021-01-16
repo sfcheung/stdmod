@@ -1,10 +1,12 @@
-#'@title Compute the standardized moderation effect and betas for other predictors given the \code{lm} output
+#' @title Compute the standardized moderation effect and betas for other predictors given the \code{lm} output
 #'
-#'@description Compute the standardized moderation effect and betas for other predictors given the \code{lm} output
+#' @description Compute the standardized moderation effect and betas for other predictors given the \code{lm} output
 #'
-#'@details Compute the standardized moderation effect and betas for other predictors given the \code{lm} output
+#' @details
+#' [std_selected()] compute the standardized moderation effect and betas for other predictors given 
+#' the \code{lm} output
 #'
-#'@return
+#' @return
 #' The updated \code{lm} output, with the class \code{stdmod} added. It will be 
 #' treated as a usual \code{lm} object by most functions. It has these additional elements:
 #'
@@ -16,27 +18,29 @@
 #'
 #'  - \code{centered}: The values used for centering. The value is 0 for terms not centered.
 #'
-#' 
-#'@param lm_out The output from \code{lm}.
-#'@param to_scale  Specify the terms to be rescaled by standard deviation, 
+#'
+#' @param lm_out The output from \code{lm}.
+#' @param to_scale  Specify the terms to be rescaled by standard deviation, 
 #'       using a formula as in \code{lm}. For example, if the terms to be scale
 #'       is x1 and x3, use \code{~ x1 + x3}. No need to specify the interaction term.
 #'       Specify only the original variables. If NULL, then no terms
 #'       will be rescaled by standard deviation. Variables that are not numeric will
 #'       will be ignored. Default is NULL.
-#'@param to_center Specify the terms to be mean-centered, using a formula 
+#' @param to_center Specify the terms to be mean-centered, using a formula 
 #'        as in \code{lm}. For example, if the terms to be scale
 #'        is x1 and x3, use \code{~ x1 + x3}. No need to specify the interaction term.
 #'        Specify only the original variables. If NULL, then no terms 
 #'        will be centered. Default is NULL.
 #'
-#'@examples
+#' @examples
 #' # "To be prepared"
 #' @export
+#' @describeIn std_selected The base function to center or scale selected variables
+#' @order 1
 
 std_selected <- function(lm_out,
-                            to_scale = NULL,
-                            to_center = NULL) {
+                         to_scale = NULL,
+                         to_center = NULL) {
     if (missing(lm_out)) {
         stop("The arguments lm_out cannot be empty.")
       }

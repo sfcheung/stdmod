@@ -1,27 +1,29 @@
-#'@title Compute the standardized moderation effect given the \code{lm} output
+#' @title Compute the standardized moderation effect given the \code{lm} output
 #'
-#'@description Compute the standardized moderation effect given the \code{lm} output.
+#' @description Compute the standardized moderation effect given the \code{lm} output.
 #'
-#'@details Compute the standardized moderation effect given the \code{lm} output.
+#' @details Compute the standardized moderation effect given the \code{lm} output.
 #'
-#'@return
+#' @return
 #' The standardized moderation effect.
-#' 
-#'@param lm_out The output from \code{lm}.
-#'@param x      The independent variable, that is, the variable with its effect
+#'
+#' @param lm_out The output from \code{lm}.
+#' @param x      The independent variable, that is, the variable with its effect
 #'              being moderated. If supplied, it's standard deviation will be used 
 #'              for rescaling. Default is NULL.
-#'@param w      The moderator. If supplied, it's standard deviation will be used
+#' @param w      The moderator. If supplied, it's standard deviation will be used
 #'              for rescaling. Default is NULL.
-#'@param y      The dependent (outcome) variable. If supplied, it's standard 
+#' @param y      The dependent (outcome) variable. If supplied, it's standard 
 #'              deviation will be used for rescaling. Default is NULL.
-#'@param x_rescale  If TRUE, will rescale x by its SD. Default is TRUE.
-#'@param w_rescale  If TRUE, will rescale w by its SD. Default is TRUE.
-#'@param y_rescale  If TRUE, will rescale y by its SD. Default is TRUE.
+#' @param x_rescale  If TRUE, will rescale x by its SD. Default is TRUE.
+#' @param w_rescale  If TRUE, will rescale w by its SD. Default is TRUE.
+#' @param y_rescale  If TRUE, will rescale y by its SD. Default is TRUE.
 #'
-#'@examples
+#' @examples
 #' # "To be prepared"
 #' @export
+#' @describeIn stdmod The base function compute standardized moderation effect
+#' @order 1
 
 stdmod <- function(lm_out, x = NULL, w = NULL, y = NULL,
                            x_rescale = TRUE,

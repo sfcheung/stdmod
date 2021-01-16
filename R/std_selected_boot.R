@@ -1,33 +1,43 @@
-#'@title Compute the standardized moderation effect and betas for other predictors given the \code{lm} output, with bootstrapping CIs
+# Compute the standardized moderation effect and betas for other predictors given the \code{lm} output, with bootstrapping CIs
 #'
-#'@description Compute the standardized moderation effect and betas for other predictors given the \code{lm} output, with bootstrapping CIs
+# Compute the standardized moderation effect and betas for other predictors given the \code{lm} output, with bootstrapping CIs
 #'
-#'@details Compute the standardized moderation effect and betas for other predictors given the \code{lm} output, with bootstrapping CIs
 #'
-#'@return
-#' The updated \code{lm} output, with the class \code{stdmod} added. It will be 
-#' treated as a usual \code{lm} object by most functions. It has these additional elements:
+#' @details
+#' [std_selected_boot()] is a wrapper of [std_selected()]. It calls [std_selected()] once 
+#' for each bootstrap sample, and then compute the nonparametric bootstrapping
+#' confidence intervals.
 #'
-#'  - \code{scaled}: The terms scaled.
+#' [std_selected_boot()] intentionally does not have an argument for setting the seed for
+#' random number. Users are recommended to set the seed, e.g., using [set.seed()]
+#' before calling [std_seleced_boot()], to ensure reproducibility.
 #'
-#'  - \code{centered}: The terms centered.
+#  The updated \code{lm} output, with the class \code{stdmod} added. It will be
+#  treated as a usual \code{lm} object by most functions. It has these additional elements:
+#
+#  - \code{scaled}: The terms scaled.
+#
+#  - \code{centered}: The terms centered.
+#
+#  - \code{scaled_by}: The scaling factors. The value is 1 for terms not scaled.
+#
+#  - \code{centered}: The values used for centering. The value is 0 for terms not centered.
 #'
-#'  - \code{scaled_by}: The scaling factors. The value is 1 for terms not scaled.
 #'
-#'  - \code{centered}: The values used for centering. The value is 0 for terms not centered.
+#' @param lm_out The output from \code{lm}.
+#' @param ...  Arguments to be passed to \code{std_selected}.
+#' @param nboot The number of bootstrap samples. Default is 100.
+#' @param boot_args A named list of arguments to be passed to [boot::boot()]. Default
+#'                 is `NULL`.
+#' @param full_output Whether the full output from [boot::boot()] is return. Default is 
+#'                   `FALSE`.
 #'
-#' 
-#'@param lm_out The output from \code{lm}.
-#'@param ...  Arguments to be passed to \code{std_selected}.
-#'@param nboot The number of bootstrap samples. Default is 100.
-#'@param boot_args A named list of arguments to be passed to \code{boot}. Default
-#'                 is NULL.
-#'@param full_output Whether the full output from \code{boot} is return. Default is 
-#'                   FALSE.
-#'
-#'@examples
+#' @examples
 #' # "To be prepared"
 #' @export
+#' @describeIn std_selected A wrapper of [std_selected()] that forms
+#'                           nonparametrc bootstrapping intervals.
+#' @order 2
 
 std_selected_boot <- function(lm_out,
                             ...,
