@@ -44,6 +44,7 @@ usethis::use_data(test_x_1_w_1_v_1_cat1_n_500, overwrite = TRUE)
 
 library(dplyr)
 sleep_emo_con <- readRDS("./data-raw/sleep_duration_emotional_stability_conscientiousness.RDS")
+sleep_emo_con <- sleep_emo_con %>% rename(emotional_stability = emotionality_stability)
 sleep_emo_con <- sleep_emo_con %>%
       mutate(gender = recode(gender, `0` = "male", `1` = "female"),
              case_id = seq_len(nrow(sleep_emo_con))) %>%
