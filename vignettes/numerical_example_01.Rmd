@@ -42,9 +42,9 @@ This data set has 500 cases of data. The variables are sleep duration, age, gend
 Suppose we are interested in predicting sleep duration by emotional stability, after controlling for gender and age. However, we suspect that the effect of emotional stability, if any, may be moderated by conscientiousness. Therefore, we conduct a moderared regression as follow:
 
 ```{r mod_reg}
-lm_raw <- lm(sleep_duration ~ age + gender + emotionality_stability*conscientiousness, sleep_emo_con)
+lm_raw <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
 summary(lm_raw)
-visreg(lm_raw, "emotionality_stability", "conscientiousness",
+visreg(lm_raw, "emotional_stability", "conscientiousness",
             breaks = 2, overlay = TRUE)
 ```
 
@@ -58,7 +58,7 @@ To know the effect of emotional stability when conscientiouaness is equal to its
 ```{r}
 lm_w_centered <- std_selected(lm_raw, to_center = ~ conscientiousness)
 summary(lm_w_centered)
-visreg(lm_w_centered, "emotionality_stability", "conscientiousness",
+visreg(lm_w_centered, "emotional_stability", "conscientiousness",
             breaks = 2, overlay = TRUE)
 ```
 
@@ -70,9 +70,9 @@ The argument for meaning centering is `to_center`. The variable is specified in 
 This example demonstrates centering more than one variable. In the following model, both emotional stability and conscientiousness are centered. They are placed after `~` and joined by `+`.
 
 ```{r}
-lm_xw_centered <- std_selected(lm_raw, to_center = ~ emotionality_stability + conscientiousness)
+lm_xw_centered <- std_selected(lm_raw, to_center = ~ emotional_stability + conscientiousness)
 summary(lm_xw_centered)
-visreg(lm_xw_centered, "emotionality_stability", "conscientiousness",
+visreg(lm_xw_centered, "emotional_stability", "conscientiousness",
             breaks = 2, overlay = TRUE)
 ```
 
@@ -82,10 +82,10 @@ To standardize a variablex we first mean center it and then scale it by its stan
 
 
 ```{r}
-lm_xw_std <- std_selected(lm_raw, to_center = ~ emotionality_stability + conscientiousness,
-                                  to_scale  = ~ emotionality_stability + conscientiousness)
+lm_xw_std <- std_selected(lm_raw, to_center = ~ emotional_stability + conscientiousness,
+                                  to_scale  = ~ emotional_stability + conscientiousness)
 summary(lm_xw_std)
-visreg(lm_xw_std, "emotionality_stability", "conscientiousness",
+visreg(lm_xw_std, "emotional_stability", "conscientiousness",
             breaks = 2, overlay = TRUE)
 ```
 
@@ -94,10 +94,10 @@ visreg(lm_xw_std, "emotionality_stability", "conscientiousness",
 Note that we can also mean center or standardize the dependent variable. We just add the variable to the right hand side of `~` in `to_center` and `to_scale` as appropriate.
 
 ```{r}
-lm_xwy_std <- std_selected(lm_raw, to_center = ~ emotionality_stability + conscientiousness + sleep_duration,
-                                  to_scale  = ~ emotionality_stability + conscientiousness + sleep_duration)
+lm_xwy_std <- std_selected(lm_raw, to_center = ~ emotional_stability + conscientiousness + sleep_duration,
+                                  to_scale  = ~ emotional_stability + conscientiousness + sleep_duration)
 summary(lm_xwy_std)
-visreg(lm_xwy_std, "emotionality_stability", "conscientiousness",
+visreg(lm_xwy_std, "emotional_stability", "conscientiousness",
             breaks = 2, overlay = TRUE)
 ```
 
@@ -109,7 +109,7 @@ If we want to standardize all variables, we can use `~ .` as a shortcut. Note th
 lm_all_std <- std_selected(lm_raw, to_center = ~ .,
                                    to_scale  = ~ .)
 summary(lm_all_std)
-visreg(lm_all_std, "emotionality_stability", "conscientiousness",
+visreg(lm_all_std, "emotional_stability", "conscientiousness",
             breaks = 2, overlay = TRUE)
 ```
 
@@ -129,8 +129,8 @@ It has been shown (e.g., Yuan & Chan, 2011) that the standard errors of standard
 We use the same example above that standardizes emotional stability, conscientiousness, and sleep duration, to illustrate this function. The argument `boot` specifies the number of nonparametric bootstrap samples. Currently, only the 95% confidence intervals will be reported.
 
 ```{r}
-lm_xwy_std_ci <- std_selected_boot(lm_raw, to_center = ~ emotionality_stability + conscientiousness + sleep_duration,
-                                           to_scale  = ~ emotionality_stability + conscientiousness + sleep_duration,
+lm_xwy_std_ci <- std_selected_boot(lm_raw, to_center = ~ emotional_stability + conscientiousness + sleep_duration,
+                                           to_scale  = ~ emotional_stability + conscientiousness + sleep_duration,
                                            nboot = 2000)
 summary(lm_xwy_std_ci)
 ```
