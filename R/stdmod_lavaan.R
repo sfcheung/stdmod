@@ -86,12 +86,11 @@ boot_i_gen <- function(fit, x, y, w, x_w) {
       if (!inherits(fit_i, "lavaan")) {
           return(NA)
         } else {
-          stats::coef(fit_i)
           fit_cov_implied <- lavaan::lavInspect(fit_i, "implied")
           x_sd <- sqrt(diag(fit_cov_implied$cov)[x])
           w_sd <- sqrt(diag(fit_cov_implied$cov)[w])
           y_sd <- sqrt(diag(fit_cov_implied$cov)[y])
-          x_w_i <- stats::coef(fit_i)[paste0(y, "~", x_w)]
+          x_w_i <- lavaan::coef(fit_i)[paste0(y, "~", x_w)]
           x_w_std_i <- x_w_i * x_sd * w_sd / y_sd
           return(x_w_std_i)
         }
