@@ -50,14 +50,6 @@ test_that("stdmod_lavaan", {
                                   x_w = "iv_mod")
   out_noboot
 
-  expect_equal(
-      stdmod_xyw, iv_mod_std,
-      check.attributes = FALSE
-    )
-  expect_equal(
-      stdmod_xyw, out_boot$stdmod,
-      check.attributes = FALSE
-    )
 
   set.seed(6589107)
   stdmod_xyw_boot <- stdmod_bootci(lm_raw, x = iv, y = dv, w = mod, 
@@ -75,6 +67,14 @@ test_that("stdmod_lavaan", {
   round(out_boot$ci, 5)
   expect_equal(
       stdmod_xyw_boot$ci, out_boot$ci,
+      check.attributes = FALSE
+    )
+  expect_equal(
+      stdmod_xyw, iv_mod_std,
+      check.attributes = FALSE
+    )
+  expect_equal(
+      stdmod_xyw, out_boot$stdmod,
       check.attributes = FALSE
     )
   })
