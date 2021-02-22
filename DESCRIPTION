@@ -17,7 +17,8 @@ Suggests:
     testthat,
     dplyr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    lavaan
 Depends: 
     R (>= 3.6.0)
 Imports: 
