@@ -70,6 +70,55 @@ moderation effect
 }}
 
 \examples{
-# "To be prepared"
-# "To be prepared"
+
+# Load a test data of 500 cases
+# It has one predictor (iv), one moderator (mod), two covariates (v1 and v2),
+# and one dv (dv). All variables continuous.
+dat <- test_x_1_w_1_v_2_n_500
+
+# Do regression as usual:
+lm_raw <- lm(dv ~ iv*mod + v1 + v2, dat)
+summary(lm_raw)
+
+# The standard deivations of iv, dv, and mod:
+sds <- apply(dat, 2, sd)
+sds
+
+# Compute the standardized moderation effect:
+stdmod_xyw <- stdmod(lm_raw, x = iv, y = dv, w = mod)
+stdmod_xyw
+# By default, all three variables will be standardized.
+
+# Check against self-computed standardized moderation effect:
+coef(lm_raw)["iv:mod"] * sds["iv"] * sds["mod"] / sds["dv"]
+
+# Standardize only the iv, i.e., do not standardized dv and the moderator:
+stdmod_x <- stdmod(lm_raw, x = iv, y = dv, w = mod, 
+                   x_rescale = TRUE,  y_rescale = FALSE, w_rescale = FALSE)
+stdmod_x
+# Check against self-computed moderation effect with only iv standardized:
+coef(lm_raw)["iv:mod"] * sds["iv"]
+
+
+\donttest{
+
+dat <- test_x_1_w_1_v_2_n_500
+# Do regression as usual:
+lm_raw <- lm(dv ~ iv*mod + v1 + v2, dat)
+# Compute the standardized moderation effect, generates its confidence interval 
+# by nonparametric bootstrappinng.
+set.seed(85740917)
+stdmod_xyw_boot <- stdmod_bootci(lm_raw, x = iv, w = mod, y = dv, nboot = 500)
+# Print the ci
+stdmod_xyw_boot$ci
+# Repeat the analysis but keep the results from boot:
+set.seed(85740917)
+stdmod_xyw_boot <- stdmod_bootci(lm_raw, x = iv, w = mod, y = dv, 
+                                 nboot = 500, full_output = TRUE)
+# Print the 95\% percential confidence interval
+stdmod_xyw_boot$ci
+# Print the boot output, default is the point estimate:
+stdmod_xyw_boot$boot_out
+}Â 
+
 }

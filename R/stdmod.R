@@ -20,7 +20,35 @@
 #' @param y_rescale  If TRUE, will rescale y by its SD. Default is TRUE.
 #'
 #' @examples
-#' # "To be prepared"
+#'
+#' # Load a test data of 500 cases
+#' # It has one predictor (iv), one moderator (mod), two covariates (v1 and v2),
+#' # and one dv (dv). All variables continuous.
+#' dat <- test_x_1_w_1_v_2_n_500
+#'
+#' # Do regression as usual:
+#' lm_raw <- lm(dv ~ iv*mod + v1 + v2, dat)
+#' summary(lm_raw)
+#'
+#' # The standard deivations of iv, dv, and mod:
+#' sds <- apply(dat, 2, sd)
+#' sds
+#'
+#' # Compute the standardized moderation effect:
+#' stdmod_xyw <- stdmod(lm_raw, x = iv, y = dv, w = mod)
+#' stdmod_xyw
+#' # By default, all three variables will be standardized.
+#'
+#' # Check against self-computed standardized moderation effect:
+#' coef(lm_raw)["iv:mod"] * sds["iv"] * sds["mod"] / sds["dv"]
+#'
+#' # Standardize only the iv, i.e., do not standardized dv and the moderator:
+#' stdmod_x <- stdmod(lm_raw, x = iv, y = dv, w = mod, 
+#'                    x_rescale = TRUE,  y_rescale = FALSE, w_rescale = FALSE)
+#' stdmod_x
+#' # Check against self-computed moderation effect with only iv standardized:
+#' coef(lm_raw)["iv:mod"] * sds["iv"]
+#'
 #' @export
 #' @describeIn stdmod The base function compute standardized moderation effect
 #' @order 1

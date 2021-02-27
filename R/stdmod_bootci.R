@@ -19,7 +19,33 @@
 #'                   FALSE.
 #'
 #' @examples
-#' # "To be prepared"
+#'
+#' \donttest{
+#'
+#' dat <- test_x_1_w_1_v_2_n_500
+#' # Do regression as usual:
+#' lm_raw <- lm(dv ~ iv*mod + v1 + v2, dat)
+#' 
+#' # Compute the standardized moderation effect, generates its confidence interval 
+#' # by nonparametric bootstrappinng.
+#' set.seed(85740917)
+#' stdmod_xyw_boot <- stdmod_bootci(lm_raw, x = iv, w = mod, y = dv, nboot = 500)
+#' 
+#' # Print the ci
+#' stdmod_xyw_boot$ci
+#' 
+#' # Repeat the analysis but keep the results from boot:
+#' set.seed(85740917)
+#' stdmod_xyw_boot <- stdmod_bootci(lm_raw, x = iv, w = mod, y = dv, 
+#'                                  nboot = 500, full_output = TRUE)
+#' 
+#' # Print the 95% percential confidence interval
+#' stdmod_xyw_boot$ci
+#' 
+#' # Print the boot output, default is the point estimate:
+#' stdmod_xyw_boot$boot_out
+#' } 
+#'
 #' @export
 #' @describeIn stdmod A wrapper of [std_mod()] that compute the nonparametric
 #'                     bootstrapping confidence interval of the standardized
