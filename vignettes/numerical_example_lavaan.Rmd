@@ -39,7 +39,7 @@ This data set has 500 cases of data. The variables are sleep duration, age, gend
 # Compute the product term
 
 Since the product term cannot be automatically generate through the function in 
-SEM (The way of simply using variable A*variable to specify the product term will 
+SEM (The way of simply using variable A*variable B to specify the product term will 
 not work in SEM), we need to compute the product term manually.
 
 ```{r pro_term}
@@ -47,9 +47,10 @@ sleep_emo_con$emo_con <-
   sleep_emo_con$emotional_stability * sleep_emo_con$conscientiousness
 ```
 
-# Specify the model in SEM
+# Specify the model in SEM and 
 
-
+After computing the product of the model in SEM, the remaining process is just following the normal procedures of constructing SEM in R. 
+We specify the model itself by using age, gender, emotional stability, conscientiousness and the product term of emotional stability and conscientiousness to predict the sleep duration. Therefore, we conduct the a SEM with a moderator as follow: 
 
 ```{r mod_sem}
 mod <- 
@@ -63,6 +64,8 @@ fit <- sem(mod, sleep_emo_con, likelihood = "wishart")
 
 summary(fit)
 ```
+
+* The argument "Likelihood = wishart" is provided because it ensure the results of the SEM to be consistent on each trial, users are not required to type in this argument when they are conducting normal OLS regression.
 
 # Standardize and mean-center all variables
 
