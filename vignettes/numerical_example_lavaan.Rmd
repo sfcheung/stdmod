@@ -38,7 +38,7 @@ This data set has 500 cases of data. The variables are sleep duration, age, gend
 
 # Compute the product term
 
-Since the product term cannot be automatically generate through the function in 
+Since the product term cannot be automatically generated through the function in 
 SEM (The way of simply using variable A*variable B to specify the product term will 
 not work in SEM), we need to compute the product term manually.
 
@@ -47,64 +47,73 @@ sleep_emo_con$emo_con <-
   sleep_emo_con$emotional_stability * sleep_emo_con$conscientiousness
 ```
 
-# Specify the model in SEM and 
+# Specify the model in SEM and fit the data
 
 After computing the product of the model in SEM, the remaining process is just following the normal procedures of constructing SEM in R. 
 We specify the model itself by using age, gender, emotional stability, conscientiousness and the product term of emotional stability and conscientiousness to predict the sleep duration. Therefore, we conduct the a SEM with a moderator as follow: 
 
 ```{r mod_sem}
 mod <- 
-"
-sleep_duration ~ age + gender + emotional_stability + conscientiousness + emo_con
-"
+  '
+  sleep_duration ~ age + gender + emotional_stability + conscientiousness + emo_con
+  '
 
 fit <- sem(mod, sleep_emo_con, likelihood = "wishart")
-# likelihood = "wishart" is used to reproduce results 
-# in OLS regression. Users do not have to use this option.
 
 summary(fit)
 ```
+The results show that conscientiousness significantly moderates the effect of emotional stability on sleep duration.
 
-* The argument "Likelihood = wishart" is provided because it ensure the results of the SEM to be consistent on each trial, users are not required to type in this argument when they are conducting normal OLS regression.
+*The argument "Likelihood = wishart" is provided as it ensure the results of the SEM to be consistent on each trial, users are not required to type in this argument when they are conducting normal OLS regression.
 
-# Standardize and mean-center all variables
+# Compute the standardized moderation effect
 
-The argument to_center tells std_selected which variables need to be mean centered. 
+After constructing the SEM model, we can further use the function "stdmod_lavaan" to compute the standardized moderation effect. Noted that the function can be slow if "boot_ci" or nonparametric bootstrapping is requested, as a result, we highly suggest that using parallel processing if possible.
 
-The argument to_scale tells std_selected which variables need to be rescaled by their standard deviation after centering.
-
-If we want to standardize or mean-center all variables, we can use `~ .` as a shortcut. Note that `std_selected` will skip categorical variables (i.e., factors or string variables in the regression model of `lm`).
+*Arguments of parallel, ncpus and seed are the arguments of boot::boot(). ncpus should be the core that users wish to use for parallel processing.
 
 ```{r}
-lm_stdall <- std_selected(lm_out, to_center = ~ .,
-                                   to_scale  = ~ .)
-summary(lm_stdall)
-visreg(lm_stdall, "emotional_stability", "conscientiousness", 
-            breaks = 2, overlay = TRUE)
+set.seed(515464) # Set the random seed
+out_boot <- stdmod_lavaan(fit = fit, x = "emotional_stability",
+                          y = "sleep_duration",
+                          w = "conscientiousness",
+                          x_w = "emo_con",
+                          boot_ci = TRUE, R = 2000,
+                          parallel = "snow", ncpus = 6)
+
+out_boot$stdmod
 ```
 
-# The Usual Standardized Solution
+# Identical to the result from moderated regression.
 
-For comparison, this is the results of standardizing all variables, including the product term and the categorical variable.
-
-```{r}
-lm_beta <- lm.beta(lm_out)
-summary(lm_beta)
-```
-
-# Standardize conscientiousness, emotional stability, and sleep_duration: With Nonparametric Bootstrapping Confidence Interval
-
-It has been shown (e.g., Yuan & Chan, 2011) that the standard errors of standardized regression coefficients computed just by rescaling the variables are biased, and consequently the confidence intervals are also invalid. The function `std_selected_boot` is a version of `std_selected` that also report the confidence interval of the regression coefficients when rescaling is conducted.
-
-We use the same example above that standardizes emotional stability, conscientiousness, and sleep duration, to illustrate this function. The argument `boot` specifies the number of nonparametric bootstrap samples. Currently, only the 95% confidence intervals will be reported.
+For comparison, this is the results of moderated regression using the normal function lm()
 
 ```{r}
+lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
+set.seed(514589)
 lm_xwy_std_ci <- std_selected_boot(lm_out, to_center = ~ emotional_stability + conscientiousness + sleep_duration,
                                            to_scale  = ~ emotional_stability + conscientiousness + sleep_duration,
                                            nboot = 2000)
-summary(lm_xwy_std_ci)
+coef(lm_xwy_std_ci)["emotional_stability:conscientiousness"]
 ```
 
-The standardized moderation effect is -.108, and the 95% nonparametric bootstrapping confidence interval is -.207 to 0.013.
+We can see that the standardized moderation effect is -0.1082917, in which the results from stdmod_lavaan is the same with the reuslts from moderated regression. 
 
-Note: As a side product, the nonparametric Bootstrapping confidence of the other coefficients are also reported. They can be used for other variables that are standardized in the same model, whether they are involved in the moderation or not.
+# The nonparametric bootstrapping confidence interval by stdmod_lavaan
+
+The function stdmod_lavaan can also compute the nonparametric bootstrapping confidence interval, using the same example from above to illustrate this result.
+
+```{r}
+out_boot$ci
+```
+# Close to the nonparametric bootstrapping CI by OLS
+
+For comparison, this is the results of nonparametric bootstrapping Confidence interval by OLS
+
+```{r}
+lm_xwy_std_ci$boot_ci["emotional_stability:conscientiousness", ]
+```
+
+We can see that even though the reuslts from stdmod_lavaan is not identical with the results from using OLS, but they are close enough for users to interpret. 
+
+Note: The function can be used for a more complicated path model, using a simple model here is only for the convenience to demonstrate. The computation of the standardized moderation effect only depends on the three variables involved (x, w, y), no other variables is required.
