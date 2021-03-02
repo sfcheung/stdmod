@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute the standardized moderation effect and betas for other predictors given the lm output — std_selected • stdmod</title>
+<title>Standardized moderation effect given an lm output — std_selected • stdmod</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Compute the standardized moderation effect and betas for other predictors given the lm output — std_selected" />
-<meta property="og:description" content="Compute the standardized moderation effect and betas for other predictors given the lm output" />
+<meta property="og:title" content="Standardized moderation effect given an lm output — std_selected" />
+<meta property="og:description" content="Compute the standardized moderation effect as well as the standardized coefficients for other predictors given an lm output" />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -97,6 +97,12 @@
     <li>
       <a href="../articles/numerical_example_01.html">Numerical Example - stdmod_selected</a>
     </li>
+    <li>
+      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by stdmod_selected</a>
+    </li>
+    <li>
+      <a href="../articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -118,16 +124,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute the standardized moderation effect and betas for other predictors given the <code>lm</code> output</h1>
+    <h1>Standardized moderation effect given an <code>lm</code> output</h1>
     
     <div class="hidden name"><code>std_selected.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute the standardized moderation effect and betas for other predictors given the <code>lm</code> output</p>
+    <p>Compute the standardized moderation effect as well as the standardized coefficients for other predictors given an <code>lm</code> output</p>
     </div>
 
-    <pre class="usage"><span class='fu'>std_selected</span><span class='op'>(</span><span class='va'>lm_out</span>, to_scale <span class='op'>=</span> <span class='cn'>NULL</span>, to_center <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>std_selected</span><span class='op'>(</span><span class='va'>lm_out</span>, to_scale <span class='op'>=</span> <span class='cn'>NULL</span>, to_center <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+
+<span class='fu'>std_selected_boot</span><span class='op'>(</span>
+  <span class='va'>lm_out</span>,
+  <span class='va'>...</span>,
+  conf <span class='op'>=</span> <span class='fl'>0.95</span>,
+  nboot <span class='op'>=</span> <span class='fl'>100</span>,
+  boot_args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  full_output <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,11 +168,33 @@ is x1 and x3, use <code>~ x1 + x3</code>. No need to specify the interaction ter
 Specify only the original variables. If NULL, then no terms
 will be centered. Default is NULL.</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments to be passed to <code>std_selected</code>.</p></td>
+    </tr>
+    <tr>
+      <th>conf</th>
+      <td><p>The level of confidence for the confidence interval. Default is .95.</p></td>
+    </tr>
+    <tr>
+      <th>nboot</th>
+      <td><p>The number of bootstrap samples. Default is 100.</p></td>
+    </tr>
+    <tr>
+      <th>boot_args</th>
+      <td><p>A named list of arguments to be passed to <code><a href='https://rdrr.io/pkg/boot/man/boot.html'>boot::boot()</a></code>. Default
+is <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>full_output</th>
+      <td><p>Whether the full output from <code><a href='https://rdrr.io/pkg/boot/man/boot.html'>boot::boot()</a></code> is return. Default is
+<code>FALSE</code>.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The updated <code>lm</code> output, with the class <code>stdmod</code> added. It will be
+    <p>The updated <code>lm</code> output, with the class <code>std_selected</code> added. It will be
 treated as a usual <code>lm</code> object by most functions. It has these additional elements:</p><ul>
 <li><p><code>scaled</code>: The terms scaled.</p></li>
 <li><p><code>centered</code>: The terms centered.</p></li>
@@ -167,10 +204,246 @@ treated as a usual <code>lm</code> object by most functions. It has these additi
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Compute the standardized moderation effect and betas for other predictors given the <code>lm</code> output</p>
+    <p><code>std_selected()</code> was originally developed to compute the standardized moderation effect and the standardized coefficietns for other predictors given an <code>lm</code> output. It has been revised such that users can be specify which variables in a regression model is mean-centered and rescaled by their
+standard deviations. If the model has interaction terms, they will be formed after the transformation, yielding the correct standardized solution for a moderated regression model. Moreover, categorical predictors will be automatically skipped in mean-centering and rescaling.</p>
+<p>Standardization is conducted when a variable is mean-centered and then rescaled by its standard deviation. Therefore, if the goal is to get the standardized solution of a moderated regression, users
+just instruct the function to standardize all non-categorical variables in the regression model.</p>
+<p>This function is a wrapper of <code>std_selected()</code>. It calls <code>std_selected()</code> once
+for each bootstrap sample, and then compute the nonparametric bootstrapping
+percentile confidence intervals.</p>
+<p>This function intentionally does not have an argument for setting the seed for
+random number. Users are recommended to set the seed, e.g., using <code><a href='https://rdrr.io/r/base/Random.html'>set.seed()</a></code>
+before calling it, to ensure reproducibility.</p>
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+
+    
+<ul>
+<li><p><code>std_selected</code>: The base function to center or scale selected variables</p></li>
+<li><p><code>std_selected_boot</code>: A wrapper of <code>std_selected()</code> that forms
+nonparametrc bootstrapping confidence intervals.</p></li>
+</ul>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># "To be prepared"</span>
+    <pre class="examples"><div class='input'>
+<span class='co'># Load a sample data set</span>
+<span class='co'># It has one predictor (iv), one moderator (mod), on covariate (v1),</span>
+<span class='co'># one categorial covariate (cat1) with three groups, and one dv (dv).</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>test_x_1_w_1_v_1_cat1_n_500</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;         dv       iv       mod        v1 cat1
+#&gt; 1 4946.751 12.76737  96.85621 11.756899  gp1
+#&gt; 2 6635.081 14.89097 106.25696 11.371237  gp2
+#&gt; 3 6060.708 15.24101  97.85852  9.377471  gp2
+#&gt; 4 7240.781 16.65782 104.80266 10.508913  gp1
+#&gt; 5 5775.759 11.84448  95.85912 15.093480  gp3
+#&gt; 6 7725.783 16.31270 100.20561  3.442902  gp2</div><div class='input'>
+<span class='co'># Do a moderated regression by lm</span>
+<span class='va'>lm_raw</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>dv</span> <span class='op'>~</span> <span class='va'>iv</span><span class='op'>*</span><span class='va'>mod</span> <span class='op'>+</span> <span class='va'>v1</span> <span class='op'>+</span> <span class='va'>cat1</span>, <span class='va'>dat</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_raw</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = dv ~ iv * mod + v1 + cat1, data = dat)
+#&gt; 
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -2146.0  -431.9   -25.0   411.2  2309.3 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)  
+#&gt; (Intercept)  308.767   4075.066   0.076   0.9396  
+#&gt; iv            52.760    271.242   0.195   0.8459  
+#&gt; mod            5.127     40.772   0.126   0.9000  
+#&gt; v1           -12.760     10.174  -1.254   0.2104  
+#&gt; cat1gp2     -158.673     71.834  -2.209   0.0276 *
+#&gt; cat1gp3      -43.166     75.283  -0.573   0.5666  
+#&gt; iv:mod         3.416      2.709   1.261   0.2080  
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 665 on 493 degrees of freedom
+#&gt; Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 
+#&gt; F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16
+#&gt; </div><div class='input'>
+<span class='co'># Mean center mod only</span>
+<span class='va'>lm_cw</span> <span class='op'>&lt;-</span> <span class='fu'>std_selected</span><span class='op'>(</span><span class='va'>lm_raw</span>, to_center <span class='op'>=</span> <span class='op'>~</span> <span class='va'>mod</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_cw</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)
+#&gt; 
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -2146.0  -431.9   -25.0   411.2  2309.3 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)  823.445    249.736   3.297  0.00105 ** 
+#&gt; iv           395.693     14.684  26.948  &lt; 2e-16 ***
+#&gt; mod            5.127     40.772   0.126  0.89999    
+#&gt; v1           -12.760     10.174  -1.254  0.21037    
+#&gt; cat1gp2     -158.673     71.834  -2.209  0.02764 *  
+#&gt; cat1gp3      -43.166     75.283  -0.573  0.56664    
+#&gt; iv:mod         3.416      2.709   1.261  0.20799    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 665 on 493 degrees of freedom
+#&gt; Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 
+#&gt; F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16
+#&gt; </div><div class='input'>
+<span class='co'># Mean center mod and iv</span>
+<span class='va'>lm_cwx</span> <span class='op'>&lt;-</span> <span class='fu'>std_selected</span><span class='op'>(</span><span class='va'>lm_raw</span>, to_center <span class='op'>=</span> <span class='op'>~</span> <span class='va'>mod</span> <span class='op'>+</span> <span class='va'>iv</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_cwx</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)
+#&gt; 
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -2146.0  -431.9   -25.0   411.2  2309.3 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept) 6765.069    115.857  58.392   &lt;2e-16 ***
+#&gt; iv           395.693     14.684  26.948   &lt;2e-16 ***
+#&gt; mod           56.418      5.941   9.496   &lt;2e-16 ***
+#&gt; v1           -12.760     10.174  -1.254   0.2104    
+#&gt; cat1gp2     -158.673     71.834  -2.209   0.0276 *  
+#&gt; cat1gp3      -43.166     75.283  -0.573   0.5666    
+#&gt; iv:mod         3.416      2.709   1.261   0.2080    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 665 on 493 degrees of freedom
+#&gt; Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 
+#&gt; F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16
+#&gt; </div><div class='input'>
+<span class='co'># Standardize both mod and iv</span>
+<span class='va'>lm_stdwx</span> <span class='op'>&lt;-</span> <span class='fu'>std_selected</span><span class='op'>(</span><span class='va'>lm_raw</span>, to_scale <span class='op'>=</span> <span class='op'>~</span> <span class='va'>mod</span> <span class='op'>+</span> <span class='va'>iv</span>,
+                               to_center <span class='op'>=</span> <span class='op'>~</span> <span class='va'>mod</span> <span class='op'>+</span> <span class='va'>iv</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_stdwx</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)
+#&gt; 
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -2146.0  -431.9   -25.0   411.2  2309.3 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)  6765.07     115.86  58.392   &lt;2e-16 ***
+#&gt; iv            806.88      29.94  26.948   &lt;2e-16 ***
+#&gt; mod           284.39      29.95   9.496   &lt;2e-16 ***
+#&gt; v1            -12.76      10.17  -1.254   0.2104    
+#&gt; cat1gp2      -158.67      71.83  -2.209   0.0276 *  
+#&gt; cat1gp3       -43.17      75.28  -0.573   0.5666    
+#&gt; iv:mod         35.11      27.85   1.261   0.2080    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 665 on 493 degrees of freedom
+#&gt; Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 
+#&gt; F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16
+#&gt; </div><div class='input'>
+<span class='co'># Standardize all variables except for categorical variables.</span>
+<span class='co'># Interaction terms are formed after standardization.</span>
+<span class='va'>lm_std</span> <span class='op'>&lt;-</span> <span class='fu'>std_selected</span><span class='op'>(</span><span class='va'>lm_raw</span>, to_scale <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span>,
+                               to_center <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_std</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)
+#&gt; 
+#&gt; Residuals:
+#&gt;      Min       1Q   Median       3Q      Max 
+#&gt; -1.96117 -0.39474 -0.02285  0.37579  2.11040 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)  0.06458    0.04825   1.338   0.1814    
+#&gt; iv           0.73738    0.02736  26.948   &lt;2e-16 ***
+#&gt; mod          0.25990    0.02737   9.496   &lt;2e-16 ***
+#&gt; v1          -0.03427    0.02733  -1.254   0.2104    
+#&gt; cat1gp2     -0.14501    0.06565  -2.209   0.0276 *  
+#&gt; cat1gp3     -0.03945    0.06880  -0.573   0.5666    
+#&gt; iv:mod       0.03209    0.02545   1.261   0.2080    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 0.6077 on 493 degrees of freedom
+#&gt; Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 
+#&gt; F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16
+#&gt; </div><div class='input'>
+<span class='co'># \donttest{</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>test_x_1_w_1_v_1_cat1_n_500</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;         dv       iv       mod        v1 cat1
+#&gt; 1 4946.751 12.76737  96.85621 11.756899  gp1
+#&gt; 2 6635.081 14.89097 106.25696 11.371237  gp2
+#&gt; 3 6060.708 15.24101  97.85852  9.377471  gp2
+#&gt; 4 7240.781 16.65782 104.80266 10.508913  gp1
+#&gt; 5 5775.759 11.84448  95.85912 15.093480  gp3
+#&gt; 6 7725.783 16.31270 100.20561  3.442902  gp2</div><div class='input'>
+<span class='co'># Do a moderated regression by lm</span>
+<span class='va'>lm_raw</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>dv</span> <span class='op'>~</span> <span class='va'>iv</span><span class='op'>*</span><span class='va'>mod</span> <span class='op'>+</span> <span class='va'>v1</span> <span class='op'>+</span> <span class='va'>cat1</span>, <span class='va'>dat</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_raw</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = dv ~ iv * mod + v1 + cat1, data = dat)
+#&gt; 
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -2146.0  -431.9   -25.0   411.2  2309.3 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)  
+#&gt; (Intercept)  308.767   4075.066   0.076   0.9396  
+#&gt; iv            52.760    271.242   0.195   0.8459  
+#&gt; mod            5.127     40.772   0.126   0.9000  
+#&gt; v1           -12.760     10.174  -1.254   0.2104  
+#&gt; cat1gp2     -158.673     71.834  -2.209   0.0276 *
+#&gt; cat1gp3      -43.166     75.283  -0.573   0.5666  
+#&gt; iv:mod         3.416      2.709   1.261   0.2080  
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 665 on 493 degrees of freedom
+#&gt; Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 
+#&gt; F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16
+#&gt; </div><div class='input'><span class='co'># Standardize all variables as in std_selected above, and compute the</span>
+<span class='co'># nonparametric boostrapping percentile confidence intervals.</span>
+<span class='va'>lm_std_boot</span> <span class='op'>&lt;-</span> <span class='fu'>std_selected_boot</span><span class='op'>(</span><span class='va'>lm_raw</span>, 
+                                    to_scale <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span>,
+                                    to_center <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span>,
+                                    conf <span class='op'>=</span> <span class='fl'>.95</span>,
+                                    nboot <span class='op'>=</span> <span class='fl'>500</span><span class='op'>)</span>
+<span class='co'># In read analysis, nboot should be at least 2000.</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_std_boot</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)
+#&gt; 
+#&gt; Residuals:
+#&gt;      Min       1Q   Median       3Q      Max 
+#&gt; -1.96117 -0.39474 -0.02285  0.37579  2.11040 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)  0.06458    0.04825   1.338   0.1814    
+#&gt; iv           0.73738    0.02736  26.948   &lt;2e-16 ***
+#&gt; mod          0.25990    0.02737   9.496   &lt;2e-16 ***
+#&gt; v1          -0.03427    0.02733  -1.254   0.2104    
+#&gt; cat1gp2     -0.14501    0.06565  -2.209   0.0276 *  
+#&gt; cat1gp3     -0.03945    0.06880  -0.573   0.5666    
+#&gt; iv:mod       0.03209    0.02545   1.261   0.2080    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 0.6077 on 493 degrees of freedom
+#&gt; Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 
+#&gt; F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16
+#&gt; </div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

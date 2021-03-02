@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>stdmod: Helper functions for standardized moderation effects — stdmod • stdmod</title>
+<title>Standardized moderation effect given an lm output — stdmod • stdmod</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="stdmod: Helper functions for standardized moderation effects — stdmod" />
-<meta property="og:description" content="Compute the standardized moderation effect given the lm output." />
+<meta property="og:title" content="Standardized moderation effect given an lm output — stdmod" />
+<meta property="og:description" content="Compute the standardized moderation effect given an lm output." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -97,6 +97,12 @@
     <li>
       <a href="../articles/numerical_example_01.html">Numerical Example - stdmod_selected</a>
     </li>
+    <li>
+      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by stdmod_selected</a>
+    </li>
+    <li>
+      <a href="../articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -118,13 +124,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>stdmod: Helper functions for standardized moderation effects</h1>
+    <h1>Standardized moderation effect given an <code>lm</code> output</h1>
     
     <div class="hidden name"><code>stdmod.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute the standardized moderation effect given the <code>lm</code> output.</p>
+    <p>Compute the standardized moderation effect given an <code>lm</code> output.</p>
     </div>
 
     <pre class="usage"><span class='fu'>stdmod</span><span class='op'>(</span>
@@ -135,6 +141,15 @@
   x_rescale <span class='op'>=</span> <span class='cn'>TRUE</span>,
   w_rescale <span class='op'>=</span> <span class='cn'>TRUE</span>,
   y_rescale <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+
+<span class='fu'>stdmod_boot</span><span class='op'>(</span>
+  <span class='va'>lm_out</span>,
+  <span class='va'>...</span>,
+  nboot <span class='op'>=</span> <span class='fl'>100</span>,
+  conf <span class='op'>=</span> <span class='fl'>0.95</span>,
+  boot_args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  full_output <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -172,6 +187,28 @@ deviation will be used for rescaling. Default is NULL.</p></td>
       <th>y_rescale</th>
       <td><p>If TRUE, will rescale y by its SD. Default is TRUE.</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Parameters to be passed to stdmod</p></td>
+    </tr>
+    <tr>
+      <th>nboot</th>
+      <td><p>The number of bootstrapping samples. Default is 100</p></td>
+    </tr>
+    <tr>
+      <th>conf</th>
+      <td><p>The level of confidence for the confidence interval. Default is .95.</p></td>
+    </tr>
+    <tr>
+      <th>boot_args</th>
+      <td><p>A named list of arguments to be passed to <code>boot</code>. Default
+is NULL.</p></td>
+    </tr>
+    <tr>
+      <th>full_output</th>
+      <td><p>Whether the full output from <code>boot</code> is return. Default is
+FALSE.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -179,10 +216,120 @@ deviation will be used for rescaling. Default is NULL.</p></td>
     <p>The standardized moderation effect.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Compute the standardized moderation effect given the <code>lm</code> output.</p>
+    <p>Compute the standardized moderation effect given an <code>lm</code> output. Users specify
+the moderator, the predictor, the outcome variable, and the corresponding standardized moderation
+effect. Users can also select which variable(s) will be standardized.</p>
+<p><code>stdmod_boot()</code> is a wrapper of <code>stdmod()</code>. It computes the nonparametric bootstrapping
+confidence interval of the standardized moderation effect given
+the <code>lm</code> output.</p>
+<p>Percentile interval from <code><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot::boot.ci()</a></code> is returned by this function. If other types of
+confidence intervals are desired, set <code>full_output = TRUE</code> and use <code><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot::boot.ci()</a></code> on the
+element <code>boot_out</code> in the output of this function.</p>
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+
+    
+<ul>
+<li><p><code>stdmod</code>: The base function compute standardized moderation effect</p></li>
+<li><p><code>stdmod_boot</code>: A wrapper of <code>stdmod()</code> that computes the nonparametric
+bootstrapping confidence interval of the standardized
+moderation effect</p></li>
+</ul>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># "To be prepared"</span>
+    <pre class="examples"><div class='input'>
+<span class='co'># Load a test data of 500 cases</span>
+<span class='co'># It has one predictor (iv), one moderator (mod), two covariates (v1 and v2),</span>
+<span class='co'># and one dv (dv). All variables continuous.</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>test_x_1_w_1_v_2_n_500</span>
+
+<span class='co'># Do regression as usual:</span>
+<span class='va'>lm_raw</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>dv</span> <span class='op'>~</span> <span class='va'>iv</span><span class='op'>*</span><span class='va'>mod</span> <span class='op'>+</span> <span class='va'>v1</span> <span class='op'>+</span> <span class='va'>v2</span>, <span class='va'>dat</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_raw</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = dv ~ iv * mod + v1 + v2, data = dat)
+#&gt; 
+#&gt; Residuals:
+#&gt;      Min       1Q   Median       3Q      Max 
+#&gt; -1650.87  -513.21     6.61   460.18  2189.74 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)  
+#&gt; (Intercept) 2814.565   4684.595   0.601   0.5482  
+#&gt; iv          -164.942    304.407  -0.542   0.5882  
+#&gt; mod          -17.223     46.420  -0.371   0.7108  
+#&gt; v1           -12.157     10.684  -1.138   0.2557  
+#&gt; v2            -4.284      6.290  -0.681   0.4962  
+#&gt; iv:mod         5.515      3.038   1.815   0.0701 .
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 708.1 on 494 degrees of freedom
+#&gt; Multiple R-squared:  0.5862,	Adjusted R-squared:  0.582 
+#&gt; F-statistic:   140 on 5 and 494 DF,  p-value: &lt; 2.2e-16
+#&gt; </div><div class='input'>
+<span class='co'># The standard deivations of iv, dv, and mod:</span>
+<span class='va'>sds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='fl'>2</span>, <span class='va'>sd</span><span class='op'>)</span>
+<span class='va'>sds</span>
+</div><div class='output co'>#&gt;          dv          iv         mod          v1          v2 
+#&gt; 1095.222413    1.991458    5.004342    2.970378    5.064710 </div><div class='input'>
+<span class='co'># Compute the standardized moderation effect:</span>
+<span class='va'>stdmod_xyw</span> <span class='op'>&lt;-</span> <span class='fu'>stdmod</span><span class='op'>(</span><span class='va'>lm_raw</span>, x <span class='op'>=</span> <span class='va'>iv</span>, y <span class='op'>=</span> <span class='va'>dv</span>, w <span class='op'>=</span> <span class='va'>mod</span><span class='op'>)</span>
+<span class='va'>stdmod_xyw</span>
+</div><div class='output co'>#&gt;     iv:mod 
+#&gt; 0.05018003 </div><div class='input'><span class='co'># By default, all three variables will be standardized.</span>
+
+<span class='co'># Check against self-computed standardized moderation effect:</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>lm_raw</span><span class='op'>)</span><span class='op'>[</span><span class='st'>"iv:mod"</span><span class='op'>]</span> <span class='op'>*</span> <span class='va'>sds</span><span class='op'>[</span><span class='st'>"iv"</span><span class='op'>]</span> <span class='op'>*</span> <span class='va'>sds</span><span class='op'>[</span><span class='st'>"mod"</span><span class='op'>]</span> <span class='op'>/</span> <span class='va'>sds</span><span class='op'>[</span><span class='st'>"dv"</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;     iv:mod 
+#&gt; 0.05018003 </div><div class='input'>
+<span class='co'># Standardize only the iv, i.e., do not standardized dv and the moderator:</span>
+<span class='va'>stdmod_x</span> <span class='op'>&lt;-</span> <span class='fu'>stdmod</span><span class='op'>(</span><span class='va'>lm_raw</span>, x <span class='op'>=</span> <span class='va'>iv</span>, y <span class='op'>=</span> <span class='va'>dv</span>, w <span class='op'>=</span> <span class='va'>mod</span>, 
+                   x_rescale <span class='op'>=</span> <span class='cn'>TRUE</span>,  y_rescale <span class='op'>=</span> <span class='cn'>FALSE</span>, w_rescale <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>stdmod_x</span>
+</div><div class='output co'>#&gt;   iv:mod 
+#&gt; 10.98212 </div><div class='input'><span class='co'># Check against self-computed moderation effect with only iv standardized:</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>lm_raw</span><span class='op'>)</span><span class='op'>[</span><span class='st'>"iv:mod"</span><span class='op'>]</span> <span class='op'>*</span> <span class='va'>sds</span><span class='op'>[</span><span class='st'>"iv"</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;   iv:mod 
+#&gt; 10.98212 </div><div class='input'>
+
+<span class='co'># \donttest{</span>
+
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>test_x_1_w_1_v_2_n_500</span>
+<span class='co'># Do regression as usual:</span>
+<span class='va'>lm_raw</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>dv</span> <span class='op'>~</span> <span class='va'>iv</span><span class='op'>*</span><span class='va'>mod</span> <span class='op'>+</span> <span class='va'>v1</span> <span class='op'>+</span> <span class='va'>v2</span>, <span class='va'>dat</span><span class='op'>)</span>
+
+<span class='co'># Compute the standardized moderation effect, generates its confidence interval </span>
+<span class='co'># by nonparametric bootstrappinng.</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>85740917</span><span class='op'>)</span>
+<span class='va'>stdmod_xyw_boot</span> <span class='op'>&lt;-</span> <span class='fu'>stdmod_boot</span><span class='op'>(</span><span class='va'>lm_raw</span>, x <span class='op'>=</span> <span class='va'>iv</span>, w <span class='op'>=</span> <span class='va'>mod</span>, y <span class='op'>=</span> <span class='va'>dv</span>, nboot <span class='op'>=</span> <span class='fl'>500</span><span class='op'>)</span>
+
+<span class='co'># Print the ci</span>
+<span class='va'>stdmod_xyw_boot</span><span class='op'>$</span><span class='va'>ci</span>
+</div><div class='output co'>#&gt; [1] -0.002731078  0.107099811</div><div class='input'>
+<span class='co'># Repeat the analysis but keep the results from boot:</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>85740917</span><span class='op'>)</span>
+<span class='va'>stdmod_xyw_boot</span> <span class='op'>&lt;-</span> <span class='fu'>stdmod_boot</span><span class='op'>(</span><span class='va'>lm_raw</span>, x <span class='op'>=</span> <span class='va'>iv</span>, w <span class='op'>=</span> <span class='va'>mod</span>, y <span class='op'>=</span> <span class='va'>dv</span>, 
+                                 nboot <span class='op'>=</span> <span class='fl'>500</span>, full_output <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='co'># Print the 95% percential confidence interval</span>
+<span class='va'>stdmod_xyw_boot</span><span class='op'>$</span><span class='va'>ci</span>
+</div><div class='output co'>#&gt; [1] -0.002731078  0.107099811</div><div class='input'>
+<span class='co'># Compute the confidence interval with other settings using boot.ci.</span>
+<span class='co'># For example, request the 90% BCa confidence interval:</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>boot</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>stdmod_xyw_boot</span><span class='op'>$</span><span class='va'>boot_out</span>, conf <span class='op'>=</span> <span class='fl'>.90</span>, type <span class='op'>=</span> <span class='st'>"bca"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+#&gt; Based on 500 bootstrap replicates
+#&gt; 
+#&gt; CALL : 
+#&gt; boot.ci(boot.out = stdmod_xyw_boot$boot_out, conf = 0.9, type = "bca")
+#&gt; 
+#&gt; Intervals : 
+#&gt; Level       BCa          
+#&gt; 90%   ( 0.0056,  0.0999 )  
+#&gt; Calculations and Intervals on Original Scale</div><div class='input'><span class='co'># }Â </span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
