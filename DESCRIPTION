@@ -25,7 +25,7 @@ Suggests:
     rmarkdown,
     lavaan
 Depends: 
-    R (>= 3.6.0)
+    R (>= 4.0.0)
 Imports: 
     boot
 VignetteBuilder: knitr
