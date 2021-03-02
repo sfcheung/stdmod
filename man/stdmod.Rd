@@ -16,7 +16,14 @@ stdmod(
   y_rescale = TRUE
 )
 
-stdmod_bootci(lm_out, ..., nboot = 100, boot_args = NULL, full_output = FALSE)
+stdmod_bootci(
+  lm_out,
+  ...,
+  nboot = 100,
+  conf = 0.95,
+  boot_args = NULL,
+  full_output = FALSE
+)
 }
 \arguments{
 \item{lm_out}{The output from \code{lm}.}
@@ -41,6 +48,8 @@ deviation will be used for rescaling. Default is NULL.}
 
 \item{nboot}{The number of bootstrapping samples. Default is 100}
 
+\item{conf}{The level of confidence for the confidence interval. Default is .95.}
+
 \item{boot_args}{A named list of arguments to be passed to \code{boot}. Default
 is NULL.}
 
@@ -56,9 +65,13 @@ Compute the standardized moderation effect given the \code{lm} output.
 \details{
 Compute the standardized moderation effect given the \code{lm} output.
 
-\code{\link[=stdmod_bootci]{stdmod_bootci()}} is a wrapper of \code{\link[=stdmod]{stdmod()}}. It computes the bootstrapping
+\code{\link[=stdmod_bootci]{stdmod_bootci()}} is a wrapper of \code{\link[=stdmod]{stdmod()}}. It computes the nonparametric bootstrapping
 confidence interval of the standardized moderation effect given
 the \code{lm} output.
+
+Percentile interval from \code{\link[boot:boot.ci]{boot::boot.ci()}} is returned by this function. If other types of
+confidence intervals are desired, set \code{full_output = TRUE} and use \code{\link[boot:boot.ci]{boot::boot.ci()}} on the
+element \code{boot_out} in the output of this function.
 }
 \section{Functions}{
 \itemize{
@@ -105,20 +118,26 @@ coef(lm_raw)["iv:mod"] * sds["iv"]
 dat <- test_x_1_w_1_v_2_n_500
 # Do regression as usual:
 lm_raw <- lm(dv ~ iv*mod + v1 + v2, dat)
+
 # Compute the standardized moderation effect, generates its confidence interval 
 # by nonparametric bootstrappinng.
 set.seed(85740917)
 stdmod_xyw_boot <- stdmod_bootci(lm_raw, x = iv, w = mod, y = dv, nboot = 500)
+
 # Print the ci
 stdmod_xyw_boot$ci
+
 # Repeat the analysis but keep the results from boot:
 set.seed(85740917)
 stdmod_xyw_boot <- stdmod_bootci(lm_raw, x = iv, w = mod, y = dv, 
                                  nboot = 500, full_output = TRUE)
+
 # Print the 95\% percential confidence interval
 stdmod_xyw_boot$ci
-# Print the boot output, default is the point estimate:
-stdmod_xyw_boot$boot_out
+
+# Compute the confidence interval with other settings using boot.ci.
+# For example, request the 90\% BCa confidence interval:
+boot.ci(stdmod_xyw_boot$boot_out, conf = .90, type = "bca")
 }Â 
 
 }
