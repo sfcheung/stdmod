@@ -4,13 +4,13 @@
 #'
 #'
 #' @details
-#' [std_selected_boot()] is a wrapper of [std_selected()]. It calls [std_selected()] once 
+#' This function is a wrapper of [std_selected()]. It calls [std_selected()] once 
 #' for each bootstrap sample, and then compute the nonparametric bootstrapping
 #' confidence intervals.
 #'
-#' [std_selected_boot()] intentionally does not have an argument for setting the seed for
+#' This function intentionally does not have an argument for setting the seed for
 #' random number. Users are recommended to set the seed, e.g., using [set.seed()]
-#' before calling [std_seleced_boot()], to ensure reproducibility.
+#' before calling it, to ensure reproducibility.
 #'
 #  The updated \code{lm} output, with the class \code{stdmod} added. It will be
 #  treated as a usual \code{lm} object by most functions. It has these additional elements:

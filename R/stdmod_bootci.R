@@ -47,11 +47,12 @@
 #' 
 #' # Compute the confidence interval with other settings using boot.ci.
 #' # For example, request the 90% BCa confidence interval:
+#' library(boot)
 #' boot.ci(stdmod_xyw_boot$boot_out, conf = .90, type = "bca")
 #' } 
 #'
 #' @export
-#' @describeIn stdmod A wrapper of [std_mod()] that compute the nonparametric
+#' @describeIn stdmod A wrapper of [stdmod()] that compute the nonparametric
 #'                     bootstrapping confidence interval of the standardized
 #'                     moderation effect
 #' @order 2
