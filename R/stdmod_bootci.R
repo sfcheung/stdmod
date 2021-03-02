@@ -4,7 +4,7 @@
 #'
 #' @details
 #' 
-#' [stdmod_bootci()] is a wrapper of [stdmod()]. It computes the nonparametric bootstrapping
+#' [stdmod_boot()] is a wrapper of [stdmod()]. It computes the nonparametric bootstrapping
 #'  confidence interval of the standardized moderation effect given
 #'  the \code{lm} output.
 #' 
@@ -32,14 +32,14 @@
 #' # Compute the standardized moderation effect, generates its confidence interval 
 #' # by nonparametric bootstrappinng.
 #' set.seed(85740917)
-#' stdmod_xyw_boot <- stdmod_bootci(lm_raw, x = iv, w = mod, y = dv, nboot = 500)
+#' stdmod_xyw_boot <- stdmod_boot(lm_raw, x = iv, w = mod, y = dv, nboot = 500)
 #' 
 #' # Print the ci
 #' stdmod_xyw_boot$ci
 #' 
 #' # Repeat the analysis but keep the results from boot:
 #' set.seed(85740917)
-#' stdmod_xyw_boot <- stdmod_bootci(lm_raw, x = iv, w = mod, y = dv, 
+#' stdmod_xyw_boot <- stdmod_boot(lm_raw, x = iv, w = mod, y = dv, 
 #'                                  nboot = 500, full_output = TRUE)
 #' 
 #' # Print the 95% percential confidence interval
@@ -56,7 +56,7 @@
 #'                     moderation effect
 #' @order 2
 
-stdmod_bootci <- function(lm_out, ...,
+stdmod_boot <- function(lm_out, ...,
                           nboot = 100, conf = .95,
                           boot_args = NULL, full_output = FALSE) {
     dat <- lm_out$model

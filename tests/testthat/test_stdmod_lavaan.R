@@ -52,7 +52,7 @@ test_that("stdmod_lavaan", {
 
 
   set.seed(6589107)
-  stdmod_xyw_boot <- stdmod_bootci(lm_raw, x = iv, y = dv, w = mod, 
+  stdmod_xyw_boot <- stdmod_boot(lm_raw, x = iv, y = dv, w = mod, 
                                     x_rescale = TRUE, y_rescale = TRUE, w_rescale = TRUE,
                                     nboot = 2000)
   stdmod_xyw_boot$ci

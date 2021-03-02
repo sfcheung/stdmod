@@ -3,7 +3,7 @@
 \docType{package}
 \name{stdmod}
 \alias{stdmod}
-\alias{stdmod_bootci}
+\alias{stdmod_boot}
 \title{Compute the standardized moderation effect given the \code{lm} output}
 \usage{
 stdmod(
@@ -16,7 +16,7 @@ stdmod(
   y_rescale = TRUE
 )
 
-stdmod_bootci(
+stdmod_boot(
   lm_out,
   ...,
   nboot = 100,
@@ -65,7 +65,7 @@ Compute the standardized moderation effect given the \code{lm} output.
 \details{
 Compute the standardized moderation effect given the \code{lm} output.
 
-\code{\link[=stdmod_bootci]{stdmod_bootci()}} is a wrapper of \code{\link[=stdmod]{stdmod()}}. It computes the nonparametric bootstrapping
+\code{\link[=stdmod_boot]{stdmod_boot()}} is a wrapper of \code{\link[=stdmod]{stdmod()}}. It computes the nonparametric bootstrapping
 confidence interval of the standardized moderation effect given
 the \code{lm} output.
 
@@ -77,7 +77,7 @@ element \code{boot_out} in the output of this function.
 \itemize{
 \item \code{stdmod}: The base function compute standardized moderation effect
 
-\item \code{stdmod_bootci}: A wrapper of \code{\link[=std_mod]{std_mod()}} that compute the nonparametric
+\item \code{stdmod_boot}: A wrapper of \code{\link[=std_mod]{std_mod()}} that compute the nonparametric
 bootstrapping confidence interval of the standardized
 moderation effect
 }}
@@ -122,14 +122,14 @@ lm_raw <- lm(dv ~ iv*mod + v1 + v2, dat)
 # Compute the standardized moderation effect, generates its confidence interval 
 # by nonparametric bootstrappinng.
 set.seed(85740917)
-stdmod_xyw_boot <- stdmod_bootci(lm_raw, x = iv, w = mod, y = dv, nboot = 500)
+stdmod_xyw_boot <- stdmod_boot(lm_raw, x = iv, w = mod, y = dv, nboot = 500)
 
 # Print the ci
 stdmod_xyw_boot$ci
 
 # Repeat the analysis but keep the results from boot:
 set.seed(85740917)
-stdmod_xyw_boot <- stdmod_bootci(lm_raw, x = iv, w = mod, y = dv, 
+stdmod_xyw_boot <- stdmod_boot(lm_raw, x = iv, w = mod, y = dv, 
                                  nboot = 500, full_output = TRUE)
 
 # Print the 95\% percential confidence interval
