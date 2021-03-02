@@ -1,0 +1,119 @@
+---
+title: "Numerical Example - stdmod_lavaan"
+author: "Shu Fai Cheung"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Numerical Example - stdmod_lavaan}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width  = 6, 
+  fig.height = 6
+)
+options(width = 132)
+```
+
+# Setup the Environment
+
+```{r setup}
+library(stdmod) # For computing Standardized Moderation Effect Conveniently
+library(lavaan) # For doing path analysis in lavaan.
+```
+
+# Load the Dataset
+
+```{r load_dataset}
+data(sleep_emo_con)
+head(sleep_emo_con)
+```
+
+This data set has 500 cases of data. The variables are sleep duration, age, gender,  and the scores from two personality scales, emotional stability and conscientiousness of the IPIP Big Five markers. Please refer to xxx for the detail of the data set.
+
+
+# Compute the product term
+
+Since the product term cannot be automatically generated through the function in 
+SEM (The way of simply using variable A*variable B to specify the product term will 
+not work in SEM), we need to compute the product term manually.
+
+```{r pro_term}
+sleep_emo_con$emo_con <- 
+  sleep_emo_con$emotional_stability * sleep_emo_con$conscientiousness
+```
+
+# Specify the model in SEM and fit the data
+
+After computing the product of the model in SEM, the remaining process is just following the normal procedures of constructing SEM in R. 
+We specify the model itself by using age, gender, emotional stability, conscientiousness and the product term of emotional stability and conscientiousness to predict the sleep duration. Therefore, we conduct the a SEM with a moderator as follow: 
+
+```{r mod_sem}
+mod <- 
+  '
+  sleep_duration ~ age + gender + emotional_stability + conscientiousness + emo_con
+  '
+
+fit <- sem(mod, sleep_emo_con, likelihood = "wishart")
+
+summary(fit)
+```
+The results show that conscientiousness significantly moderates the effect of emotional stability on sleep duration.
+
+*The argument "Likelihood = wishart" is provided as it ensure the results of the SEM to be consistent on each trial, users are not required to type in this argument when they are conducting normal OLS regression.
+
+# Compute the standardized moderation effect
+
+After constructing the SEM model, we can further use the function "stdmod_lavaan" to compute the standardized moderation effect. Noted that the function can be slow if "boot_ci" or nonparametric bootstrapping is requested, as a result, we highly suggest that using parallel processing if possible.
+
+*Arguments of parallel, ncpus and seed are the arguments of boot::boot(). ncpus should be the core that users wish to use for parallel processing.
+
+```{r}
+set.seed(515464) # Set the random seed
+out_boot <- stdmod_lavaan(fit = fit, x = "emotional_stability",
+                          y = "sleep_duration",
+                          w = "conscientiousness",
+                          x_w = "emo_con",
+                          boot_ci = TRUE, R = 2000,
+                          parallel = "snow", ncpus = 6)
+
+out_boot$stdmod
+```
+
+# Identical to the result from moderated regression.
+
+For comparison, this is the results of moderated regression using the normal function lm()
+
+```{r}
+lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
+set.seed(514589)
+lm_xwy_std_ci <- std_selected_boot(lm_out, to_center = ~ emotional_stability + conscientiousness + sleep_duration,
+                                           to_scale  = ~ emotional_stability + conscientiousness + sleep_duration,
+                                           nboot = 2000)
+coef(lm_xwy_std_ci)["emotional_stability:conscientiousness"]
+```
+
+We can see that the standardized moderation effect is -0.1082917, in which the results from stdmod_lavaan is the same with the reuslts from moderated regression. 
+
+# The nonparametric bootstrapping confidence interval by stdmod_lavaan
+
+The function stdmod_lavaan can also compute the nonparametric bootstrapping confidence interval, using the same example from above to illustrate this result.
+
+```{r}
+out_boot$ci
+```
+# Close to the nonparametric bootstrapping CI by OLS
+
+For comparison, this is the results of nonparametric bootstrapping Confidence interval by OLS
+
+```{r}
+lm_xwy_std_ci$boot_ci["emotional_stability:conscientiousness", ]
+```
+
+We can see that even though the reuslts from stdmod_lavaan is not identical with the results from using OLS, but they are close enough for users to interpret. 
+
+Note: The function can be used for a more complicated path model, using a simple model here is only for the convenience to demonstrate. The computation of the standardized moderation effect only depends on the three variables involved (x, w, y), no other variables is required.
