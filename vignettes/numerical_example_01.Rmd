@@ -1,6 +1,6 @@
 ---
-title: "Numerical Example - stdmod_selected (variable name changed only)"
-author: "Shu Fai Cheung"
+title: "Numerical Example - stdmod_selected"
+author: "Shu Fai Cheung and David Weng Ngai Vong"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -19,6 +19,10 @@ knitr::opts_chunk$set(
 options(width = 132)
 ```
 
+# Purpose
+
+This document demonstrates how to use `std_selected` to compute the correct standardized solution of moderated regression.
+
 # Setup the Environment
 
 ```{r setup}
@@ -34,7 +38,7 @@ data(sleep_emo_con)
 head(sleep_emo_con)
 ```
 
-This data set has 500 cases of data. The variables are sleep duration, age, gender,  and the scores from two personality scales, emotional stability and conscientioisnes of the IPIP Big Five markers. Please refer to xxx for the detail of the data set.
+This data set has 500 cases of data. The variables are sleep duration, age, gender,  and the scores from two personality scales, emotional stability and conscientioisnes of the IPIP Big Five markers. Please refer to (citation to be included) for the detail of the data set.
 
 
 # Moderated Regression
@@ -138,3 +142,7 @@ summary(lm_xwy_std_ci)
 The standardized moderation effect is -.108, and the 95% nonparametric bootstrapping confidence interval is -.207 to 0.013.
 
 Note: As a side product, the nonparametric Bootstrapping confidence of the other coefficients are also reported. They can be used for other variables that are standardized in the same model, whether they are involved in the moderation or not.
+
+# Reference
+
+Yuan, K.-H., & Chan, W. (2011). Biases and standard errors of standardized regression coefficients. #Psychometrika, 76#(4), 670–690. https://doi.org/10.1007/s11336-011-9224-6
