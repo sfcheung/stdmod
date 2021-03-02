@@ -6,7 +6,7 @@
 #' @details
 #' This function is a wrapper of [std_selected()]. It calls [std_selected()] once 
 #' for each bootstrap sample, and then compute the nonparametric bootstrapping
-#' confidence intervals.
+#' percentile confidence intervals.
 #'
 #' This function intentionally does not have an argument for setting the seed for
 #' random number. Users are recommended to set the seed, e.g., using [set.seed()]
@@ -26,6 +26,7 @@
 #'
 #' @param lm_out The output from \code{lm}.
 #' @param ...  Arguments to be passed to \code{std_selected}.
+#' @param conf The level of confidence for the confidence interval. Default is .95.
 #' @param nboot The number of bootstrap samples. Default is 100.
 #' @param boot_args A named list of arguments to be passed to [boot::boot()]. Default
 #'                 is `NULL`.
@@ -33,7 +34,23 @@
 #'                   `FALSE`.
 #'
 #' @examples
-#' # "To be prepared"
+#' \donttest{
+#' dat <- test_x_1_w_1_v_1_cat1_n_500
+#' head(dat)
+#'
+#' # Do a moderated regression by lm
+#' lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+#' summary(lm_raw)
+#' # Standardize all variables as in std_selected above, and compute the
+#' # nonparametric boostrapping percentile confidence intervals.
+#' lm_std_boot <- std_selected_boot(lm_raw, 
+#'                                     to_scale = ~ .,
+#'                                     to_center = ~ .,
+#'                                     conf = .95,
+#'                                     nboot = 500)
+#' # In read analysis, nboot should be at least 2000.
+#' summary(lm_std_boot)
+#' }
 #' @export
 #' @describeIn std_selected A wrapper of [std_selected()] that forms
 #'                           nonparametrc bootstrapping intervals.
@@ -41,6 +58,7 @@
 
 std_selected_boot <- function(lm_out,
                             ...,
+                            conf = .95,
                             nboot = 100,
                             boot_args = NULL,
                             full_output = FALSE) {
@@ -76,7 +94,8 @@ std_selected_boot <- function(lm_out,
     p <- length(boot_out$t0)
     
     cis <- t(sapply(seq_len(p), function(x) {
-                boot::boot.ci(boot_out, type = "perc", index = x)$percent[4:5]
+                boot::boot.ci(boot_out, conf = conf,
+                              type = "perc", index = x)$percent[4:5]
               }))
     rownames(cis) <- names(boot_out$t0)
     colnames(cis) <- c("CI Lower", "CI Upper")

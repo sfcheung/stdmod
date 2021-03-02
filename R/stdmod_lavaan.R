@@ -43,7 +43,49 @@
 #' @param ... Optional arguments to be passed to [boot::boot()].
 #'
 #' @examples
-#' # "To be prepared"
+#'
+#' # Load a test data of 500 cases
+#' # It has one predictor (iv), one moderator (mod), two covariates (v1 and v2),
+#' # and one dv (dv). All variables continuous.
+#' dat <- test_x_1_w_1_v_2_n_500
+#' library(lavaan)
+#' # Scale down some variables to facilitate optimization in lavaan.
+#' dat$dv <- (dat$dv - 6500)/1100
+#' dat$mod <- (dat$mod - 95)/5
+#' dat$iv <- (dat$iv - 10)
+#' # Form the product term for the moderation
+#' dat$iv_mod <- dat$iv * dat$mod
+#'
+#' mod <- 
+#' "
+#' dv ~ iv + mod + mod + v1 + v2 + iv_mod
+#' "
+#' fit <- sem(mod, dat)
+#' coef(fit)
+#'
+#' # Compute the standardized moderation effect
+#' out_noboot <- stdmod_lavaan(fit = fit, x = "iv",
+#'                                 y = "dv",
+#'                                 w = "mod",
+#'                                 x_w = "iv_mod")
+#' out_noboot$stdmod
+#'
+#' \donttest{
+#' # Compute the standardized moderation effect and 
+#' # its confidence interval based on nonparametric bootstrapping
+#' set.seed(8479075)
+#' system.time(out_boot <- stdmod_lavaan(fit = fit, x = "iv",
+#'                                 y = "dv",
+#'                                 w = "mod",
+#'                                 x_w = "iv_mod",
+#'                           boot_ci = TRUE, R = 200))
+#' # In real analysis, R should be at least 2000.
+#' out_boot$ci
+#'
+#' # Use boot.ci to compute the confidence interval using other settings
+#' library(boot)
+#' boot.ci(out_boot$boot_out, conf = .90, type = "perc")
+#'}
 #' @export
 
 stdmod_lavaan <- function(fit, x, y, w, x_w, boot_ci = FALSE, R = 100, conf = 0.95, ...) {

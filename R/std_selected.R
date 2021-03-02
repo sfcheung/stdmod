@@ -7,7 +7,7 @@
 #' the \code{lm} output
 #'
 #' @return
-#' The updated \code{lm} output, with the class \code{stdmod} added. It will be 
+#' The updated \code{lm} output, with the class \code{std_selected} added. It will be 
 #' treated as a usual \code{lm} object by most functions. It has these additional elements:
 #'
 #'  - \code{scaled}: The terms scaled.
@@ -33,7 +33,36 @@
 #'        will be centered. Default is NULL.
 #'
 #' @examples
-#' # "To be prepared"
+#'
+#' # Load a sample data set
+#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
+#' # one categorial covariate (cat1) with three groups, and one dv (dv).
+#' dat <- test_x_1_w_1_v_1_cat1_n_500
+#' head(dat)
+#'
+#' # Do a moderated regression by lm
+#' lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+#' summary(lm_raw)
+#'
+#' # Mean center mod only
+#' lm_cw <- std_selected(lm_raw, to_center = ~ mod)
+#' summary(lm_cw)
+#'
+#' # Mean center mod and iv
+#' lm_cwx <- std_selected(lm_raw, to_center = ~ mod + iv)
+#' summary(lm_cwx)
+#'
+#' # Standardize both mod and iv
+#' lm_stdwx <- std_selected(lm_raw, to_scale = ~ mod + iv,
+#'                                to_center = ~ mod + iv)
+#' summary(lm_stdwx)
+#'
+#' # Standardize all variables except for categorical variables.
+#' # Interaction terms are formed after standardization.
+#' lm_std <- std_selected(lm_raw, to_scale = ~ .,
+#'                                to_center = ~ .)
+#' summary(lm_std)
+#'
 #' @export
 #' @describeIn std_selected The base function to center or scale selected variables
 #' @order 1
@@ -118,7 +147,7 @@ std_selected <- function(lm_out,
         
     lm_out_mod <- stats::update(lm_out, data = dat_mod)
     
-    class(lm_out_mod) <- c("stdmod", class(lm_out))
+    class(lm_out_mod) <- c("std_selected", class(lm_out))
     
     lm_out_mod$scaled_terms   <- scale_terms
     lm_out_mod$centered_terms <- center_terms

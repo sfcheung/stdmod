@@ -10,6 +10,7 @@ std_selected(lm_out, to_scale = NULL, to_center = NULL)
 std_selected_boot(
   lm_out,
   ...,
+  conf = 0.95,
   nboot = 100,
   boot_args = NULL,
   full_output = FALSE
@@ -32,6 +33,8 @@ Specify only the original variables. If NULL, then no terms
 will be centered. Default is NULL.}
 
 \item{...}{Arguments to be passed to \code{std_selected}.}
+
+\item{conf}{The level of confidence for the confidence interval. Default is .95.}
 
 \item{nboot}{The number of bootstrap samples. Default is 100.}
 
@@ -60,7 +63,7 @@ the \code{lm} output
 
 This function is a wrapper of \code{\link[=std_selected]{std_selected()}}. It calls \code{\link[=std_selected]{std_selected()}} once
 for each bootstrap sample, and then compute the nonparametric bootstrapping
-confidence intervals.
+percentile confidence intervals.
 
 This function intentionally does not have an argument for setting the seed for
 random number. Users are recommended to set the seed, e.g., using \code{\link[=set.seed]{set.seed()}}
@@ -75,6 +78,51 @@ nonparametrc bootstrapping intervals.
 }}
 
 \examples{
-# "To be prepared"
-# "To be prepared"
+
+# Load a sample data set
+# It has one predictor (iv), one moderator (mod), on covariate (v1),
+# one categorial covariate (cat1) with three groups, and one dv (dv).
+dat <- test_x_1_w_1_v_1_cat1_n_500
+head(dat)
+
+# Do a moderated regression by lm
+lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+summary(lm_raw)
+
+# Mean center mod only
+lm_cw <- std_selected(lm_raw, to_center = ~ mod)
+summary(lm_cw)
+
+# Mean center mod and iv
+lm_cwx <- std_selected(lm_raw, to_center = ~ mod + iv)
+summary(lm_cwx)
+
+# Standardize both mod and iv
+lm_stdwx <- std_selected(lm_raw, to_scale = ~ mod + iv,
+                               to_center = ~ mod + iv)
+summary(lm_stdwx)
+
+# Standardize all variables except for categorical variables.
+# Interaction terms are formed after standardization.
+lm_std <- std_selected(lm_raw, to_scale = ~ .,
+                               to_center = ~ .)
+summary(lm_std)
+
+\donttest{
+dat <- test_x_1_w_1_v_1_cat1_n_500
+head(dat)
+
+# Do a moderated regression by lm
+lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+summary(lm_raw)
+# Standardize all variables as in std_selected above, and compute the
+# nonparametric boostrapping percentile confidence intervals.
+lm_std_boot <- std_selected_boot(lm_raw, 
+                                    to_scale = ~ .,
+                                    to_center = ~ .,
+                                    conf = .95,
+                                    nboot = 500)
+# In read analysis, nboot should be at least 2000.
+summary(lm_std_boot)
+}
 }
