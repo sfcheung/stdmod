@@ -58,13 +58,13 @@ Compute the standardized moderation effect and betas for other predictors given 
 \code{\link[=std_selected]{std_selected()}} compute the standardized moderation effect and betas for other predictors given
 the \code{lm} output
 
-\code{\link[=std_selected_boot]{std_selected_boot()}} is a wrapper of \code{\link[=std_selected]{std_selected()}}. It calls \code{\link[=std_selected]{std_selected()}} once
+This function is a wrapper of \code{\link[=std_selected]{std_selected()}}. It calls \code{\link[=std_selected]{std_selected()}} once
 for each bootstrap sample, and then compute the nonparametric bootstrapping
 confidence intervals.
 
-\code{\link[=std_selected_boot]{std_selected_boot()}} intentionally does not have an argument for setting the seed for
+This function intentionally does not have an argument for setting the seed for
 random number. Users are recommended to set the seed, e.g., using \code{\link[=set.seed]{set.seed()}}
-before calling \code{\link[=std_seleced_boot]{std_seleced_boot()}}, to ensure reproducibility.
+before calling it, to ensure reproducibility.
 }
 \section{Functions}{
 \itemize{

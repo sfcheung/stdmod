@@ -77,7 +77,7 @@ element \code{boot_out} in the output of this function.
 \itemize{
 \item \code{stdmod}: The base function compute standardized moderation effect
 
-\item \code{stdmod_boot}: A wrapper of \code{\link[=std_mod]{std_mod()}} that compute the nonparametric
+\item \code{stdmod_boot}: A wrapper of \code{\link[=stdmod]{stdmod()}} that compute the nonparametric
 bootstrapping confidence interval of the standardized
 moderation effect
 }}
@@ -137,6 +137,7 @@ stdmod_xyw_boot$ci
 
 # Compute the confidence interval with other settings using boot.ci.
 # For example, request the 90\% BCa confidence interval:
+library(boot)
 boot.ci(stdmod_xyw_boot$boot_out, conf = .90, type = "bca")
 }Â 
 
