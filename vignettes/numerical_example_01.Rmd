@@ -21,7 +21,7 @@ options(width = 132)
 
 # Purpose
 
-This document demonstrates how to use `std_selected` to compute the correct standardized solution of moderated regression.
+This document demonstrates how to use `std_selected` to do mean centering and rescaling for selected variables in a regression model. A moderated regression model is used as an example.
 
 # Setup the Environment
 
