@@ -268,6 +268,18 @@ nonparametrc bootstrapping confidence intervals.</p></li>
 <span class='va'>lm_cw</span> <span class='op'>&lt;-</span> <span class='fu'>std_selected</span><span class='op'>(</span><span class='va'>lm_raw</span>, to_center <span class='op'>=</span> <span class='op'>~</span> <span class='va'>mod</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_cw</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
+#&gt; Selected variable(s) are centered and/or scaled
+#&gt; Variable(s) centered: mod
+#&gt; Variable(s) scaled:
+#&gt;      centered_by scaled_by
+#&gt; dv         0.000         1
+#&gt; iv         0.000         1
+#&gt; mod      100.395         1
+#&gt; v1         0.000         1
+#&gt; cat1       0.000         1
+#&gt; Note:
+#&gt; Centered by 0 = No centering; Scaled by 1: No scaling.
+#&gt; 
 #&gt; Call:
 #&gt; lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)
 #&gt; 
@@ -295,6 +307,18 @@ nonparametrc bootstrapping confidence intervals.</p></li>
 <span class='va'>lm_cwx</span> <span class='op'>&lt;-</span> <span class='fu'>std_selected</span><span class='op'>(</span><span class='va'>lm_raw</span>, to_center <span class='op'>=</span> <span class='op'>~</span> <span class='va'>mod</span> <span class='op'>+</span> <span class='va'>iv</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_cwx</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
+#&gt; Selected variable(s) are centered and/or scaled
+#&gt; Variable(s) centered: mod iv
+#&gt; Variable(s) scaled:
+#&gt;      centered_by scaled_by
+#&gt; dv       0.00000         1
+#&gt; iv      15.01576         1
+#&gt; mod    100.39502         1
+#&gt; v1       0.00000         1
+#&gt; cat1     0.00000         1
+#&gt; Note:
+#&gt; Centered by 0 = No centering; Scaled by 1: No scaling.
+#&gt; 
 #&gt; Call:
 #&gt; lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)
 #&gt; 
@@ -323,6 +347,18 @@ nonparametrc bootstrapping confidence intervals.</p></li>
                                to_center <span class='op'>=</span> <span class='op'>~</span> <span class='va'>mod</span> <span class='op'>+</span> <span class='va'>iv</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_stdwx</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
+#&gt; Selected variable(s) are centered and/or scaled
+#&gt; Variable(s) centered: mod iv
+#&gt; Variable(s) scaled: mod iv
+#&gt;      centered_by scaled_by
+#&gt; dv       0.00000  1.000000
+#&gt; iv      15.01576  2.039154
+#&gt; mod    100.39502  5.040823
+#&gt; v1       0.00000  1.000000
+#&gt; cat1     0.00000  1.000000
+#&gt; Note:
+#&gt; Centered by 0 = No centering; Scaled by 1: No scaling.
+#&gt; 
 #&gt; Call:
 #&gt; lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)
 #&gt; 
@@ -352,6 +388,18 @@ nonparametrc bootstrapping confidence intervals.</p></li>
                                to_center <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_std</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
+#&gt; Selected variable(s) are centered and/or scaled
+#&gt; Variable(s) centered: dv iv mod v1 cat1
+#&gt; Variable(s) scaled: dv iv mod v1 cat1
+#&gt;      centered_by   scaled_by
+#&gt; dv    6565.02965 1094.244465
+#&gt; iv      15.01576    2.039154
+#&gt; mod    100.39502    5.040823
+#&gt; v1      10.13884    2.938932
+#&gt; cat1          NA          NA
+#&gt; Note:
+#&gt; Centered by 0 = No centering; Scaled by 1: No scaling.
+#&gt; 
 #&gt; Call:
 #&gt; lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)
 #&gt; 
@@ -418,32 +466,9 @@ nonparametrc bootstrapping confidence intervals.</p></li>
                                     to_center <span class='op'>=</span> <span class='op'>~</span> <span class='va'>.</span>,
                                     conf <span class='op'>=</span> <span class='fl'>.95</span>,
                                     nboot <span class='op'>=</span> <span class='fl'>500</span><span class='op'>)</span>
-<span class='co'># In read analysis, nboot should be at least 2000.</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in std_selected(lm_out_i, ...): unused argument (conf = 0.95)</span></div><div class='input'><span class='co'># In read analysis, nboot should be at least 2000.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>lm_std_boot</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; Call:
-#&gt; lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)
-#&gt; 
-#&gt; Residuals:
-#&gt;      Min       1Q   Median       3Q      Max 
-#&gt; -1.96117 -0.39474 -0.02285  0.37579  2.11040 
-#&gt; 
-#&gt; Coefficients:
-#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)  0.06458    0.04825   1.338   0.1814    
-#&gt; iv           0.73738    0.02736  26.948   &lt;2e-16 ***
-#&gt; mod          0.25990    0.02737   9.496   &lt;2e-16 ***
-#&gt; v1          -0.03427    0.02733  -1.254   0.2104    
-#&gt; cat1gp2     -0.14501    0.06565  -2.209   0.0276 *  
-#&gt; cat1gp3     -0.03945    0.06880  -0.573   0.5666    
-#&gt; iv:mod       0.03209    0.02545   1.261   0.2080    
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#&gt; 
-#&gt; Residual standard error: 0.6077 on 493 degrees of freedom
-#&gt; Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 
-#&gt; F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16
-#&gt; </div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in h(simpleError(msg, call)): error in evaluating the argument 'object' in selecting a method for function 'summary': object 'lm_std_boot' not found</span></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -456,7 +481,7 @@ nonparametrc bootstrapping confidence intervals.</p></li>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Shu Fai Cheung.</p>
+  <p>Developed by Shu Fai Cheung, David Weng Ngai Vong.</p>
 </div>
 
 <div class="pkgdown">

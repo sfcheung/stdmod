@@ -303,32 +303,23 @@ moderation effect</p></li>
 <span class='co'># by nonparametric bootstrappinng.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>85740917</span><span class='op'>)</span>
 <span class='va'>stdmod_xyw_boot</span> <span class='op'>&lt;-</span> <span class='fu'>stdmod_boot</span><span class='op'>(</span><span class='va'>lm_raw</span>, x <span class='op'>=</span> <span class='va'>iv</span>, w <span class='op'>=</span> <span class='va'>mod</span>, y <span class='op'>=</span> <span class='va'>dv</span>, nboot <span class='op'>=</span> <span class='fl'>500</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='error'>Error in stdmod_boot(lm_raw, x = iv, w = mod, y = dv, nboot = 500): could not find function "stdmod_boot"</span></div><div class='input'>
 <span class='co'># Print the ci</span>
 <span class='va'>stdmod_xyw_boot</span><span class='op'>$</span><span class='va'>ci</span>
-</div><div class='output co'>#&gt; [1] -0.002731078  0.107099811</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'stdmod_xyw_boot' not found</span></div><div class='input'>
 <span class='co'># Repeat the analysis but keep the results from boot:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>85740917</span><span class='op'>)</span>
 <span class='va'>stdmod_xyw_boot</span> <span class='op'>&lt;-</span> <span class='fu'>stdmod_boot</span><span class='op'>(</span><span class='va'>lm_raw</span>, x <span class='op'>=</span> <span class='va'>iv</span>, w <span class='op'>=</span> <span class='va'>mod</span>, y <span class='op'>=</span> <span class='va'>dv</span>, 
                                  nboot <span class='op'>=</span> <span class='fl'>500</span>, full_output <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='error'>Error in stdmod_boot(lm_raw, x = iv, w = mod, y = dv, nboot = 500, full_output = TRUE): could not find function "stdmod_boot"</span></div><div class='input'>
 <span class='co'># Print the 95% percential confidence interval</span>
 <span class='va'>stdmod_xyw_boot</span><span class='op'>$</span><span class='va'>ci</span>
-</div><div class='output co'>#&gt; [1] -0.002731078  0.107099811</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'stdmod_xyw_boot' not found</span></div><div class='input'>
 <span class='co'># Compute the confidence interval with other settings using boot.ci.</span>
 <span class='co'># For example, request the 90% BCa confidence interval:</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>boot</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/pkg/boot/man/boot.ci.html'>boot.ci</a></span><span class='op'>(</span><span class='va'>stdmod_xyw_boot</span><span class='op'>$</span><span class='va'>boot_out</span>, conf <span class='op'>=</span> <span class='fl'>.90</span>, type <span class='op'>=</span> <span class='st'>"bca"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-#&gt; Based on 500 bootstrap replicates
-#&gt; 
-#&gt; CALL : 
-#&gt; boot.ci(boot.out = stdmod_xyw_boot$boot_out, conf = 0.9, type = "bca")
-#&gt; 
-#&gt; Intervals : 
-#&gt; Level       BCa          
-#&gt; 90%   ( 0.0056,  0.0999 )  
-#&gt; Calculations and Intervals on Original Scale</div><div class='input'><span class='co'># }Â </span>
+</div><div class='output co'>#&gt; <span class='error'>Error in boot.ci(stdmod_xyw_boot$boot_out, conf = 0.9, type = "bca"): object 'stdmod_xyw_boot' not found</span></div><div class='input'><span class='co'># }Â </span>
 
 </div></pre>
   </div>
@@ -342,7 +333,7 @@ moderation effect</p></li>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Shu Fai Cheung.</p>
+  <p>Developed by Shu Fai Cheung, David Weng Ngai Vong.</p>
 </div>
 
 <div class="pkgdown">

@@ -171,6 +171,18 @@
                                    to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm_stdall</span><span class="op">)</span>
 <span class="co">#&gt; </span>
+<span class="co">#&gt; Selected variable(s) are centered and/or scaled</span>
+<span class="co">#&gt; Variable(s) centered: sleep_duration age gender emotional_stability conscientiousness</span>
+<span class="co">#&gt; Variable(s) scaled: sleep_duration age gender emotional_stability conscientiousness</span>
+<span class="co">#&gt;                     centered_by scaled_by</span>
+<span class="co">#&gt; sleep_duration         6.776333 1.4168291</span>
+<span class="co">#&gt; age                   22.274000 2.9407857</span>
+<span class="co">#&gt; gender                       NA        NA</span>
+<span class="co">#&gt; emotional_stability    2.713200 0.7629613</span>
+<span class="co">#&gt; conscientiousness      3.343200 0.6068198</span>
+<span class="co">#&gt; Note:</span>
+<span class="co">#&gt; Centered by 0 = No centering; Scaled by 1: No scaling.</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
 <span class="co">#&gt;     conscientiousness, data = dat_mod)</span>
@@ -244,6 +256,20 @@
                                            nboot <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lm_xwy_std_ci</span><span class="op">)</span>
 <span class="co">#&gt; </span>
+<span class="co">#&gt; Selected variable(s) are centered and/or scaled</span>
+<span class="co">#&gt; Variable(s) centered: sleep_duration age gender emotional_stability conscientiousness</span>
+<span class="co">#&gt; Variable(s) scaled: sleep_duration age gender emotional_stability conscientiousness</span>
+<span class="co">#&gt;                     centered_by scaled_by</span>
+<span class="co">#&gt; sleep_duration         6.776333 1.4168291</span>
+<span class="co">#&gt; age                   22.274000 2.9407857</span>
+<span class="co">#&gt; gender                       NA        NA</span>
+<span class="co">#&gt; emotional_stability    2.713200 0.7629613</span>
+<span class="co">#&gt; conscientiousness      3.343200 0.6068198</span>
+<span class="co">#&gt; Note:</span>
+<span class="co">#&gt; Centered by 0 = No centering; Scaled by 1: No scaling.</span>
+<span class="co">#&gt; Nonparametric bootstrapping 95% confidence intervals computed.</span>
+<span class="co">#&gt; Number of bootstrap samples is 2000</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
 <span class="co">#&gt;     conscientiousness, data = dat_mod)</span>
@@ -253,15 +279,13 @@
 <span class="co">#&gt; -4.2941 -0.5563  0.0063  0.6663  4.3187 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;                                       Estimate Std. Error t value Pr(&gt;|t|)   </span>
-<span class="co">#&gt; (Intercept)                            0.05492    0.04883   1.125  0.26124   </span>
-<span class="co">#&gt; age                                    0.03712    0.04428   0.838  0.40221   </span>
-<span class="co">#&gt; gendermale                            -0.18440    0.11702  -1.576  0.11570   </span>
-<span class="co">#&gt; emotional_stability                    0.11501    0.04493   2.560  0.01076 * </span>
-<span class="co">#&gt; conscientiousness                      0.13050    0.04517   2.889  0.00403 **</span>
-<span class="co">#&gt; emotional_stability:conscientiousness -0.10829    0.04337  -2.497  0.01286 * </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
+<span class="co">#&gt;                                        Estimate Std. Error   t value  Pr(&gt;|t|)  CI Lower CI Upper</span>
+<span class="co">#&gt; (Intercept)                            0.054919   0.048827  1.124753  0.261240  0.002968    0.104</span>
+<span class="co">#&gt; age                                    0.037125   0.044280  0.838408  0.402207 -0.036253    0.104</span>
+<span class="co">#&gt; gendermale                            -0.184402   0.117016 -1.575867  0.115697 -0.438855    0.088</span>
+<span class="co">#&gt; emotional_stability                    0.115014   0.044927  2.560030  0.010763  0.023642    0.202</span>
+<span class="co">#&gt; conscientiousness                      0.130502   0.045167  2.889343  0.004030  0.032359    0.224</span>
+<span class="co">#&gt; emotional_stability:conscientiousness -0.108292   0.043374 -2.496703  0.012860 -0.203990   -0.010</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residual standard error: 0.9771 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
@@ -287,7 +311,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Shu Fai Cheung.</p>
+  <p>Developed by Shu Fai Cheung, David Weng Ngai Vong.</p>
 </div>
 
 <div class="pkgdown">
