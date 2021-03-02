@@ -4,7 +4,7 @@
 \name{stdmod}
 \alias{stdmod}
 \alias{stdmod_boot}
-\title{Compute the standardized moderation effect given the \code{lm} output}
+\title{Standardized moderation effect given an \code{lm} output}
 \usage{
 stdmod(
   lm_out,
@@ -60,10 +60,12 @@ FALSE.}
 The standardized moderation effect.
 }
 \description{
-Compute the standardized moderation effect given the \code{lm} output.
+Compute the standardized moderation effect given an \code{lm} output.
 }
 \details{
-Compute the standardized moderation effect given the \code{lm} output.
+Compute the standardized moderation effect given an \code{lm} output. Users specify
+the moderator, the predictor, the outcome variable, and the corresponding standardized moderation
+effect. Users can also select which variable(s) will be standardized.
 
 \code{\link[=stdmod_boot]{stdmod_boot()}} is a wrapper of \code{\link[=stdmod]{stdmod()}}. It computes the nonparametric bootstrapping
 confidence interval of the standardized moderation effect given
@@ -77,7 +79,7 @@ element \code{boot_out} in the output of this function.
 \itemize{
 \item \code{stdmod}: The base function compute standardized moderation effect
 
-\item \code{stdmod_boot}: A wrapper of \code{\link[=stdmod]{stdmod()}} that compute the nonparametric
+\item \code{stdmod_boot}: A wrapper of \code{\link[=stdmod]{stdmod()}} that computes the nonparametric
 bootstrapping confidence interval of the standardized
 moderation effect
 }}

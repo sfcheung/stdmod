@@ -1,8 +1,10 @@
-#' @title Compute the standardized moderation effect given the \code{lm} output
+#' @title Standardized moderation effect given an \code{lm} output
 #'
-#' @description Compute the standardized moderation effect given the \code{lm} output.
+#' @description Compute the standardized moderation effect given an \code{lm} output.
 #'
-#' @details Compute the standardized moderation effect given the \code{lm} output.
+#' @details Compute the standardized moderation effect given an \code{lm} output. Users specify 
+#' the moderator, the predictor, the outcome variable, and the corresponding standardized moderation
+#' effect. Users can also select which variable(s) will be standardized.
 #'
 #' @return
 #' The standardized moderation effect.

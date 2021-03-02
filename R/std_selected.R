@@ -1,10 +1,13 @@
-#' @title Compute the standardized moderation effect and betas for other predictors given the \code{lm} output
+#' @title Standardized moderation effect given an \code{lm} output
 #'
-#' @description Compute the standardized moderation effect and betas for other predictors given the \code{lm} output
+#' @description Compute the standardized moderation effect as well as the standardized coefficients for other predictors given an \code{lm} output
 #'
 #' @details
-#' [std_selected()] compute the standardized moderation effect and betas for other predictors given 
-#' the \code{lm} output
+#' [std_selected()] was originally developed to compute the standardized moderation effect and the standardized coefficietns for other predictors given an \code{lm} output. It has been revised such that users can be specify which variables in a regression model is mean-centered and rescaled by their
+#' standard deviations. If the model has interaction terms, they will be formed after the transformation, yielding the correct standardized solution for a moderated regression model. Moreover, categorical predictors will be automatically skipped in mean-centering and rescaling.
+#' 
+#' Standardization is conducted when a variable is mean-centered and then rescaled by its standard deviation. Therefore, if the goal is to get the standardized solution of a moderated regression, users
+#' just instruct the function to standardize all non-categorical variables in the regression model.
 #'
 #' @return
 #' The updated \code{lm} output, with the class \code{std_selected} added. It will be 

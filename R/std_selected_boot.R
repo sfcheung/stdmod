@@ -53,7 +53,7 @@
 #' }
 #' @export
 #' @describeIn std_selected A wrapper of [std_selected()] that forms
-#'                           nonparametrc bootstrapping intervals.
+#'                           nonparametrc bootstrapping confidence intervals.
 #' @order 2
 
 std_selected_boot <- function(lm_out,

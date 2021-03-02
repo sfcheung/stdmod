@@ -3,7 +3,7 @@
 \name{std_selected}
 \alias{std_selected}
 \alias{std_selected_boot}
-\title{Compute the standardized moderation effect and betas for other predictors given the \code{lm} output}
+\title{Standardized moderation effect given an \code{lm} output}
 \usage{
 std_selected(lm_out, to_scale = NULL, to_center = NULL)
 
@@ -45,7 +45,7 @@ is \code{NULL}.}
 \code{FALSE}.}
 }
 \value{
-The updated \code{lm} output, with the class \code{stdmod} added. It will be
+The updated \code{lm} output, with the class \code{std_selected} added. It will be
 treated as a usual \code{lm} object by most functions. It has these additional elements:
 \itemize{
 \item \code{scaled}: The terms scaled.
@@ -55,11 +55,14 @@ treated as a usual \code{lm} object by most functions. It has these additional e
 }
 }
 \description{
-Compute the standardized moderation effect and betas for other predictors given the \code{lm} output
+Compute the standardized moderation effect as well as the standardized coefficients for other predictors given an \code{lm} output
 }
 \details{
-\code{\link[=std_selected]{std_selected()}} compute the standardized moderation effect and betas for other predictors given
-the \code{lm} output
+\code{\link[=std_selected]{std_selected()}} was originally developed to compute the standardized moderation effect and the standardized coefficietns for other predictors given an \code{lm} output. It has been revised such that users can be specify which variables in a regression model is mean-centered and rescaled by their
+standard deviations. If the model has interaction terms, they will be formed after the transformation, yielding the correct standardized solution for a moderated regression model. Moreover, categorical predictors will be automatically skipped in mean-centering and rescaling.
+
+Standardization is conducted when a variable is mean-centered and then rescaled by its standard deviation. Therefore, if the goal is to get the standardized solution of a moderated regression, users
+just instruct the function to standardize all non-categorical variables in the regression model.
 
 This function is a wrapper of \code{\link[=std_selected]{std_selected()}}. It calls \code{\link[=std_selected]{std_selected()}} once
 for each bootstrap sample, and then compute the nonparametric bootstrapping
@@ -74,7 +77,7 @@ before calling it, to ensure reproducibility.
 \item \code{std_selected}: The base function to center or scale selected variables
 
 \item \code{std_selected_boot}: A wrapper of \code{\link[=std_selected]{std_selected()}} that forms
-nonparametrc bootstrapping intervals.
+nonparametrc bootstrapping confidence intervals.
 }}
 
 \examples{

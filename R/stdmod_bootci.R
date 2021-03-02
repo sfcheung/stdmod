@@ -52,7 +52,7 @@
 #' } 
 #'
 #' @export
-#' @describeIn stdmod A wrapper of [stdmod()] that compute the nonparametric
+#' @describeIn stdmod A wrapper of [stdmod()] that computes the nonparametric
 #'                     bootstrapping confidence interval of the standardized
 #'                     moderation effect
 #' @order 2
