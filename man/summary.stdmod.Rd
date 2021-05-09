@@ -22,5 +22,5 @@ Summary method for \code{stdmod} class output
 Summary method for \code{stdmod} class output
 }
 \examples{
-# "To be prepared"
+# See examples for std_selected.
 }

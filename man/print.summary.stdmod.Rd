@@ -21,5 +21,5 @@ Print method for \code{summary.stdmod} class output
 Print method for \code{summary.stdmod} class output
 }
 \examples{
-# "To be prepared"
+# See examples for std_selected.
 }

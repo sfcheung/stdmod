@@ -12,7 +12,7 @@
 #'@param ...  Arguments to be passed to \code{summary.lm}.
 #'
 #'@examples
-#' # "To be prepared"
+#' # See examples for std_selected.
 #' @export
 
 summary.stdmod <- function(object, ...) {

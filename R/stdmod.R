@@ -1,27 +1,59 @@
-#'@title Compute the standardized moderation effect given the \code{lm} output
+#' @title Standardized moderation effect given an \code{lm} output
 #'
-#'@description Compute the standardized moderation effect given the \code{lm} output.
+#' @description Compute the standardized moderation effect given an \code{lm} output.
 #'
-#'@details Compute the standardized moderation effect given the \code{lm} output.
+#' @details Compute the standardized moderation effect given an \code{lm} output. Users specify 
+#' the moderator, the predictor, the outcome variable, and the corresponding standardized moderation
+#' effect. Users can also select which variable(s) will be standardized.
 #'
-#'@return
+#' @return
 #' The standardized moderation effect.
-#' 
-#'@param lm_out The output from \code{lm}.
-#'@param x      The independent variable, that is, the variable with its effect
+#'
+#' @param lm_out The output from \code{lm}.
+#' @param x      The independent variable, that is, the variable with its effect
 #'              being moderated. If supplied, it's standard deviation will be used 
 #'              for rescaling. Default is NULL.
-#'@param w      The moderator. If supplied, it's standard deviation will be used
+#' @param w      The moderator. If supplied, it's standard deviation will be used
 #'              for rescaling. Default is NULL.
-#'@param y      The dependent (outcome) variable. If supplied, it's standard 
+#' @param y      The dependent (outcome) variable. If supplied, it's standard 
 #'              deviation will be used for rescaling. Default is NULL.
-#'@param x_rescale  If TRUE, will rescale x by its SD. Default is TRUE.
-#'@param w_rescale  If TRUE, will rescale w by its SD. Default is TRUE.
-#'@param y_rescale  If TRUE, will rescale y by its SD. Default is TRUE.
+#' @param x_rescale  If TRUE, will rescale x by its SD. Default is TRUE.
+#' @param w_rescale  If TRUE, will rescale w by its SD. Default is TRUE.
+#' @param y_rescale  If TRUE, will rescale y by its SD. Default is TRUE.
 #'
-#'@examples
-#' # "To be prepared"
+#' @examples
+#'
+#' # Load a test data of 500 cases
+#' # It has one predictor (iv), one moderator (mod), two covariates (v1 and v2),
+#' # and one dv (dv). All variables continuous.
+#' dat <- test_x_1_w_1_v_2_n_500
+#'
+#' # Do regression as usual:
+#' lm_raw <- lm(dv ~ iv*mod + v1 + v2, dat)
+#' summary(lm_raw)
+#'
+#' # The standard deivations of iv, dv, and mod:
+#' sds <- apply(dat, 2, sd)
+#' sds
+#'
+#' # Compute the standardized moderation effect:
+#' stdmod_xyw <- stdmod(lm_raw, x = iv, y = dv, w = mod)
+#' stdmod_xyw
+#' # By default, all three variables will be standardized.
+#'
+#' # Check against self-computed standardized moderation effect:
+#' coef(lm_raw)["iv:mod"] * sds["iv"] * sds["mod"] / sds["dv"]
+#'
+#' # Standardize only the iv, i.e., do not standardized dv and the moderator:
+#' stdmod_x <- stdmod(lm_raw, x = iv, y = dv, w = mod, 
+#'                    x_rescale = TRUE,  y_rescale = FALSE, w_rescale = FALSE)
+#' stdmod_x
+#' # Check against self-computed moderation effect with only iv standardized:
+#' coef(lm_raw)["iv:mod"] * sds["iv"]
+#'
 #' @export
+#' @describeIn stdmod The base function compute standardized moderation effect
+#' @order 1
 
 stdmod <- function(lm_out, x = NULL, w = NULL, y = NULL,
                            x_rescale = TRUE,

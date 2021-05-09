@@ -3,5 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   numerical_example_01: numerical_example_01.html
-last_built: 2020-10-12T02:51Z
+  numerical_example_02: numerical_example_02.html
+  numerical_example_lavaan: numerical_example_lavaan.html
+last_built: 2021-03-02T08:33Z
 

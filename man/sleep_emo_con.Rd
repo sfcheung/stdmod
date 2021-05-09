@@ -7,9 +7,9 @@
 case_id
 sleep_duration (in hours)
 conscientiousness
-emotionality}
+emotional_stability}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 500 rows and 5 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 500 rows and 6 columns.
 }
 \usage{
 sleep_emo_con
@@ -19,6 +19,6 @@ A real dataset of 216 working Hong Kong adults with the following variables
 case_id
 sleep_duration (in hours)
 conscientiousness
-emotionality
+emotional_stability
 }
 \keyword{datasets}

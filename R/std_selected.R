@@ -1,11 +1,16 @@
-#'@title Compute the standardized moderation effect and betas for other predictors given the \code{lm} output
+#' @title Standardized moderation effect given an \code{lm} output
 #'
-#'@description Compute the standardized moderation effect and betas for other predictors given the \code{lm} output
+#' @description Compute the standardized moderation effect as well as the standardized coefficients for other predictors given an \code{lm} output
 #'
-#'@details Compute the standardized moderation effect and betas for other predictors given the \code{lm} output
+#' @details
+#' [std_selected()] was originally developed to compute the standardized moderation effect and the standardized coefficietns for other predictors given an \code{lm} output. It has been revised such that users can be specify which variables in a regression model is mean-centered and rescaled by their
+#' standard deviations. If the model has interaction terms, they will be formed after the transformation, yielding the correct standardized solution for a moderated regression model. Moreover, categorical predictors will be automatically skipped in mean-centering and rescaling.
+#' 
+#' Standardization is conducted when a variable is mean-centered and then rescaled by its standard deviation. Therefore, if the goal is to get the standardized solution of a moderated regression, users
+#' just instruct the function to standardize all non-categorical variables in the regression model.
 #'
-#'@return
-#' The updated \code{lm} output, with the class \code{stdmod} added. It will be 
+#' @return
+#' The updated \code{lm} output, with the class \code{std_selected} added. It will be 
 #' treated as a usual \code{lm} object by most functions. It has these additional elements:
 #'
 #'  - \code{scaled}: The terms scaled.
@@ -16,27 +21,58 @@
 #'
 #'  - \code{centered}: The values used for centering. The value is 0 for terms not centered.
 #'
-#' 
-#'@param lm_out The output from \code{lm}.
-#'@param to_scale  Specify the terms to be rescaled by standard deviation, 
+#'
+#' @param lm_out The output from \code{lm}.
+#' @param to_scale  Specify the terms to be rescaled by standard deviation, 
 #'       using a formula as in \code{lm}. For example, if the terms to be scale
 #'       is x1 and x3, use \code{~ x1 + x3}. No need to specify the interaction term.
 #'       Specify only the original variables. If NULL, then no terms
 #'       will be rescaled by standard deviation. Variables that are not numeric will
 #'       will be ignored. Default is NULL.
-#'@param to_center Specify the terms to be mean-centered, using a formula 
+#' @param to_center Specify the terms to be mean-centered, using a formula 
 #'        as in \code{lm}. For example, if the terms to be scale
 #'        is x1 and x3, use \code{~ x1 + x3}. No need to specify the interaction term.
 #'        Specify only the original variables. If NULL, then no terms 
 #'        will be centered. Default is NULL.
 #'
-#'@examples
-#' # "To be prepared"
+#' @examples
+#'
+#' # Load a sample data set
+#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
+#' # one categorial covariate (cat1) with three groups, and one dv (dv).
+#' dat <- test_x_1_w_1_v_1_cat1_n_500
+#' head(dat)
+#'
+#' # Do a moderated regression by lm
+#' lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+#' summary(lm_raw)
+#'
+#' # Mean center mod only
+#' lm_cw <- std_selected(lm_raw, to_center = ~ mod)
+#' summary(lm_cw)
+#'
+#' # Mean center mod and iv
+#' lm_cwx <- std_selected(lm_raw, to_center = ~ mod + iv)
+#' summary(lm_cwx)
+#'
+#' # Standardize both mod and iv
+#' lm_stdwx <- std_selected(lm_raw, to_scale = ~ mod + iv,
+#'                                to_center = ~ mod + iv)
+#' summary(lm_stdwx)
+#'
+#' # Standardize all variables except for categorical variables.
+#' # Interaction terms are formed after standardization.
+#' lm_std <- std_selected(lm_raw, to_scale = ~ .,
+#'                                to_center = ~ .)
+#' summary(lm_std)
+#'
 #' @export
+#' @describeIn std_selected The base function to center or scale selected variables
+#' @order 1
 
 std_selected <- function(lm_out,
-                            to_scale = NULL,
-                            to_center = NULL) {
+                         to_scale = NULL,
+                         to_center = NULL) {
     if (missing(lm_out)) {
         stop("The arguments lm_out cannot be empty.")
       }
@@ -114,7 +150,7 @@ std_selected <- function(lm_out,
         
     lm_out_mod <- stats::update(lm_out, data = dat_mod)
     
-    class(lm_out_mod) <- c("stdmod", class(lm_out))
+    class(lm_out_mod) <- c("std_selected", class(lm_out))
     
     lm_out_mod$scaled_terms   <- scale_terms
     lm_out_mod$centered_terms <- center_terms

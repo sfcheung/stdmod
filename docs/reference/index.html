@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -95,6 +95,12 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/numerical_example_01.html">Numerical Example - stdmod_selected</a>
+    </li>
+    <li>
+      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by stdmod_selected</a>
+    </li>
+    <li>
+      <a href="../articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan</a>
     </li>
   </ul>
 </li>
@@ -155,31 +161,25 @@
 case_id
 sleep_duration (in hours)
 conscientiousness
-emotionality</p></td>
+emotional_stability</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="stdmod.html">stdmod()</a></code> </p>
+          <p><code><a href="stdmod.html">stdmod()</a></code> <code><a href="stdmod.html">stdmod_boot()</a></code> </p>
         </td>
-        <td><p>stdmod: Helper functions for standardized moderation effects</p></td>
+        <td><p>Standardized moderation effect given an <code>lm</code> output</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="stdmod_bootci.html">stdmod_bootci()</a></code> </p>
+          <p><code><a href="stdmod_lavaan.html">stdmod_lavaan()</a></code> </p>
         </td>
-        <td><p>Compute the bootstrapping CI of the standardized moderation effect given the <code>lm</code> output</p></td>
+        <td><p>Standardized moderation effect and bootstrapping CI in lavaan</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="std_selected.html">std_selected()</a></code> </p>
+          <p><code><a href="std_selected.html">std_selected()</a></code> <code><a href="std_selected.html">std_selected_boot()</a></code> </p>
         </td>
-        <td><p>Compute the standardized moderation effect and betas for other predictors given the <code>lm</code> output</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="std_selected_boot.html">std_selected_boot()</a></code> </p>
-        </td>
-        <td><p>Compute the standardized moderation effect and betas for other predictors given the <code>lm</code> output, with bootstrapping CIs</p></td>
+        <td><p>Standardized moderation effect given an <code>lm</code> output</p></td>
       </tr><tr>
         
         <td>
@@ -213,7 +213,7 @@ emotionality</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Shu Fai Cheung.</p>
+  <p>Developed by Shu Fai Cheung, David Weng Ngai Vong.</p>
 </div>
 
 <div class="pkgdown">

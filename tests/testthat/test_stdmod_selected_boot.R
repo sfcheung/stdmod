@@ -28,9 +28,9 @@ lm_cxsw  <- lm(dv ~ iv*mod + v1 + cat1, dplyr::mutate(dat, iv = scale(iv, scale 
 stdmod_wy <- std_selected_boot(lm_raw, to_scale = ~ mod + dv, to_center = ~ mod + dv, nboot = 2000)
 stdmod_xwy <- std_selected_boot(lm_raw, to_scale = ~ mod + iv + dv, to_center = ~ iv + mod + dv, nboot = 2000)
 
-stdmod2_wy <- stdmod_bootci(lm_raw, x = iv, y = dv, w =mod,
+stdmod2_wy <- stdmod_boot(lm_raw, x = iv, y = dv, w =mod,
                            x_rescale = FALSE, y_rescale = TRUE, w_rescale = TRUE, nboot = 2000)
-stdmod2_xwy <- stdmod_bootci(lm_raw, x = iv, y = dv, w =mod,
+stdmod2_xwy <- stdmod_boot(lm_raw, x = iv, y = dv, w =mod,
                            x_rescale = TRUE, y_rescale = TRUE, w_rescale = TRUE, nboot = 2000)
 
 stdmod3_wy <- std_selected(lm_raw, to_scale = ~ mod + dv, to_center = ~ dv + mod)

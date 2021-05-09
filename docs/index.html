@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -56,6 +56,12 @@
 <li>
       <a href="articles/numerical_example_01.html">Numerical Example - stdmod_selected</a>
     </li>
+    <li>
+      <a href="articles/numerical_example_02.html">Compute the Standardized Moderation Effect by stdmod_selected</a>
+    </li>
+    <li>
+      <a href="articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -78,7 +84,8 @@
 <div id="stdmod" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#stdmod" class="anchor"></a>stdmod</h1></div>
-<p>Helper functions for computing standardized moderation effect.</p>
+<p>Helper functions for computing standardized moderation effect and forming its confidence interval by nonparametric bootstrapping.</p>
+<p>Also include functions for users to center, rescale, or standardize selected variables. If interaction terms are presented in a model, the terms will be formed <em>after</em> the transformation.</p>
 </div>
 <div id="installation" class="section level1">
 <h1 class="hasAnchor">
@@ -99,7 +106,8 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Shu Fai Cheung <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-9871-9448" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Shu Fai Cheung <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-9871-9448" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>David Weng Ngai Vong <br><small class="roles"> Maintainer </small>  </li>
 </ul>
 </div>
 
@@ -108,7 +116,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Shu Fai Cheung.</p>
+  <p>Developed by Shu Fai Cheung, David Weng Ngai Vong.</p>
 </div>
 
 <div class="pkgdown">
