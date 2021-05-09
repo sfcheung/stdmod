@@ -4,12 +4,12 @@ Version: 0.1.1
 Authors@R: 
     c(person(given = "Shu Fai",
            family = "Cheung",
-           role = c("aut"),
+           role = c("aut", "cre"),
            email = "shufai.cheung@gmail.com",
            comment = c(ORCID = "0000-0002-9871-9448")),
       person(given = "David Weng Ngai",
            family = "Vong",
-           role = c("cre"),
+           role = c("ctb"),
            email = "ckwvong@gmail.com")
            )
 Description: Helper functions for computing standardized moderation effect.
