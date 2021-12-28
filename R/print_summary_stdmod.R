@@ -1,20 +1,20 @@
-#'@title Print method for \code{summary.stdmod} class output
+#'@title Print method for \code{summary.std_selected} class output
 #'
-#'@description Print method for \code{summary.stdmod} class output
+#'@description Print method for \code{summary.std_selected} class output
 #'
-#'@details Print method for \code{summary.stdmod} class output
+#'@details Print method for \code{summary.std_selected} class output
 #'
 #'@return
 #'  Nothing
 #'
-#'@param x The output of the class \code{summary.stdmod}.
+#'@param x The output of the class \code{summary.std_selected}.
 #'@param ...  Arguments to be passed to \code{summary.lm}.
 #'
 #'@examples
 #' # See examples for std_selected.
 #' @export
 
-print.summary.stdmod <- function(x, ...) {
+print.summary.std_selected <- function(x, ...) {
   cat("\nSelected variable(s) are centered and/or scaled")
   cat("\nVariable(s) centered:", x$centered_terms)
   cat("\nVariable(s) scaled:", x$scaled_terms)
