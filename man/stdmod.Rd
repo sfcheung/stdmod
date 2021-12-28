@@ -141,6 +141,6 @@ stdmod_xyw_boot$ci
 # For example, request the 90\% BCa confidence interval:
 library(boot)
 boot.ci(stdmod_xyw_boot$boot_out, conf = .90, type = "bca")
-}Â 
+} 
 
 }
