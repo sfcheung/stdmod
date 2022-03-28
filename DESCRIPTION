@@ -24,7 +24,8 @@ Suggests:
     knitr,
     rmarkdown,
     lavaan,
-    visreg
+    visreg,
+    lm.beta
 Depends: 
     R (>= 4.0.0)
 Imports: 
