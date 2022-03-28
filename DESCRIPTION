@@ -23,7 +23,8 @@ Suggests:
     dplyr,
     knitr,
     rmarkdown,
-    lavaan
+    lavaan,
+    visreg
 Depends: 
     R (>= 4.0.0)
 Imports: 
