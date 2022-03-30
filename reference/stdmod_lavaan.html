@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3</span>
       </span>
     </div>
 
@@ -44,7 +44,13 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-      </ul><ul class="nav navbar-nav navbar-right"></ul></div><!--/.nav-collapse -->
+      </ul><ul class="nav navbar-nav navbar-right"><li>
+  <a href="https://github.com/sfcheung/stdmod/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
@@ -54,7 +60,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Standardized moderation effect and bootstrapping CI in lavaan</h1>
-    
+    <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/R/stdmod_lavaan.R" class="external-link"><code>R/stdmod_lavaan.R</code></a></small>
     <div class="hidden name"><code>stdmod_lavaan.Rd</code></div>
     </div>
 
@@ -158,7 +164,7 @@ also computed from the bootstrapping samples.</p>
 <span class="r-in">                                x_w <span class="op">=</span> <span class="st">"iv_mod"</span>,</span>
 <span class="r-in">                          boot_ci <span class="op">=</span> <span class="cn">TRUE</span>, R <span class="op">=</span> <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    user  system elapsed </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   8.449   0.080   8.531 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   7.540   0.072   7.613 </span>
 <span class="r-in"><span class="co"># In real analysis, R should be at least 2000.</span></span>
 <span class="r-in"><span class="va">out_boot</span><span class="op">$</span><span class="va">ci</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  lower_bound  upper_bound </span>
