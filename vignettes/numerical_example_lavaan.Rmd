@@ -85,7 +85,7 @@ out_boot <- stdmod_lavaan(fit = fit, x = "emotional_stability",
                           w = "conscientiousness",
                           x_w = "emo_con",
                           boot_ci = TRUE, R = 2000,
-                          parallel = "snow", ncpus = 6)
+                          parallel = "snow", ncpus = 2)
 
 out_boot$stdmod
 ```
