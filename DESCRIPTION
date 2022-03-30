@@ -1,6 +1,6 @@
 Package: stdmod
 Title: Functions related to standardized moderation effect
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: 
     c(person(given = "Shu Fai",
            family = "Cheung",
