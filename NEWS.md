@@ -1,4 +1,10 @@
-# stdmod 0.1.2 to 0.1.3
+# stdmod 0.1.2 to 0.1.4
+
+- 0.1.4 (WIP)
+
+    - Change the column order of the coefficient table
+      in `std_selected_boot` output. Bootstrapping confidence
+      intervals are placed next to parameter estimates.
 
 - 0.1.3
 
