@@ -1,16 +1,17 @@
 ---
-title: "A Quick Start Guide on Using stdmod_selected"
+title: "A Quick Start Guide on Using std_selected"
 author: "Shu Fai Cheung"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{A Quick Start Guide on Using stdmod_selected}
+  %\VignetteIndexEntry{A Quick Start Guide on Using std_selected}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
   %\VignetteDepends{magrittr}
 ---
 
 ```{r, include = FALSE}
+options(width = 142)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -20,10 +21,71 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup, echo = FALSE}
+# Purpose
+
+This Quick Start demonstrates how to use `std_selected()`, the main function
+of `stdmod`.
+
+# Sample Dataset
+
+```{r}
 library(stdmod)
+dat <- sleep_emo_con
+head(dat)
 ```
 
-# Introduction
+This dataset has 500 cases, with sleep duration (`sleep_duration`)
+measured in average hours,
+conscientiousness (`conscientiousness`) and emotional stability
+(`eomtional_stability`), age (`age`), and gender (`gender`, a
+string variable with two values: `"female"` and `"male"`).
 
-(To-Do)
+# Model
+
+Suppose this is the moderated regression model:
+
+    - Dependent variable: `sleep_duration`.
+    - Independent variable: `emotional_stability`
+    - Moderator: `conscientiousness`
+    - Control variable: `age` and `gender`.
+
+`stats::lm()` can be used to fit this model:
+
+```{r}
+lm_out <- lm(sleep_duration ~ age + gender +
+                              emotional_stability*conscientiousness,
+             dat = dat)
+summary(lm_out)
+```
+
+# Standardize Independent Variable and Moderator
+
+## Refit the Model
+
+Suppose we want to standardize only the two continuous psychological
+variables, `emotional_stability` and `conscientiousness`. Standardization
+is equivalent to centering by mean and then scale by (divide by) standard
+deviation. We can pass the `stats::lm()` output to `std_selected()`
+and instruct the function to scale and center these two variables and
+refit the moderated regression model:
+
+```{r}
+lm_std1 <- std_selected(lm_out,
+                        to_scale = . ~ emotional_stability + conscientiousness,
+                        to_center = . ~ emotional_stability + conscientiousness)
+summary(lm_std1)
+```
+
+## Correct Nonparametric Bootstrapping Confidence Intervals
+
+To request the correct nonparametric bootstrapping confidence intervals that
+do standardization in each bootstrap sample, we can use `std_selected_boot()`:
+
+```{r}
+set.seed(870432)
+lm_std1_boot <- std_selected_boot(lm_out,
+                        to_scale = . ~ emotional_stability + conscientiousness,
+                        to_center = . ~ emotional_stability + conscientiousness,
+                        nboot = 100)
+summary(lm_std1_boot)
+```
