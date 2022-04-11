@@ -11,7 +11,7 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-options(width = 142)
+options(width = 132)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -23,37 +23,48 @@ knitr::opts_chunk$set(
 
 # Purpose
 
-This Quick Start demonstrates how to use `std_selected()`, the main function
-of `stdmod`.
+This guide demonstrates how to use `std_selected()` to:
+
+- get the correct standardized regression coefficients of a moderated
+regression model, and
+
+- form the confidence intervals of the standardized regression coefficients
+using nonparametric bootstrapping, that take into account the sampling variation
+in standardization.
 
 # Sample Dataset
 
 ```{r}
 library(stdmod)
 dat <- sleep_emo_con
-head(dat)
+head(dat, 3)
 ```
 
 This dataset has 500 cases, with sleep duration (`sleep_duration`)
 measured in average hours,
-conscientiousness (`conscientiousness`) and emotional stability
-(`eomtional_stability`), age (`age`), and gender (`gender`, a
+conscientiousness, emotional stability, age, and gender (a
 string variable with two values: `"female"` and `"male"`).
+
+For this illustration, we shorten the names of some variables for readability:
+
+```{r}
+colnames(dat)[2:4] <- c("sleep", "cons", "emot")
+head(dat, 3)
+```
 
 # Model
 
 Suppose this is the moderated regression model:
 
-    - Dependent variable: `sleep_duration`.
-    - Independent variable: `emotional_stability`
-    - Moderator: `conscientiousness`
+    - Dependent variable: sleep duration (`sleep`)
+    - Independent variable: emotional stability (`emot`)
+    - Moderator: conscientiousness (`cons`)
     - Control variable: `age` and `gender`.
 
 `stats::lm()` can be used to fit this model:
 
 ```{r}
-lm_out <- lm(sleep_duration ~ age + gender +
-                              emotional_stability*conscientiousness,
+lm_out <- lm(sleep ~ age + gender + emot*cons,
              dat = dat)
 summary(lm_out)
 ```
@@ -63,7 +74,7 @@ summary(lm_out)
 ## Refit the Model
 
 Suppose we want to standardize only the two continuous psychological
-variables, `emotional_stability` and `conscientiousness`. Standardization
+variables, emotional stability and conscientiousness. Standardization
 is equivalent to centering by mean and then scale by (divide by) standard
 deviation. We can pass the `stats::lm()` output to `std_selected()`
 and instruct the function to scale and center these two variables and
@@ -71,8 +82,8 @@ refit the moderated regression model:
 
 ```{r}
 lm_std1 <- std_selected(lm_out,
-                        to_scale = . ~ emotional_stability + conscientiousness,
-                        to_center = . ~ emotional_stability + conscientiousness)
+                        to_scale = . ~ emot + cons,
+                        to_center = . ~ emot + cons)
 summary(lm_std1)
 ```
 
@@ -84,8 +95,8 @@ do standardization in each bootstrap sample, we can use `std_selected_boot()`:
 ```{r}
 set.seed(870432)
 lm_std1_boot <- std_selected_boot(lm_out,
-                        to_scale = . ~ emotional_stability + conscientiousness,
-                        to_center = . ~ emotional_stability + conscientiousness,
+                        to_scale = . ~ emot + cons,
+                        to_center = . ~ emot + cons,
                         nboot = 100)
 summary(lm_std1_boot)
 ```
