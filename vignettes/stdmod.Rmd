@@ -1,0 +1,29 @@
+---
+title: "A Quick Start Guide on Using stdmod_selected"
+author: "Shu Fai Cheung"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{A Quick Start Guide on Using stdmod_selected}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{magrittr}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width  =  6,
+  fig.height =  6,
+  fig.align = "center"
+)
+```
+
+```{r setup, echo = FALSE}
+library(stdmod)
+```
+
+# Introduction
+
+(To-Do)
