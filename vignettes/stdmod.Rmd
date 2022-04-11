@@ -100,3 +100,17 @@ lm_std1_boot <- std_selected_boot(lm_out,
                         nboot = 100)
 summary(lm_std1_boot)
 ```
+
+# Standardize All Variables That Are Not Strings or Factors 
+
+To standardize all variables that are not strings or factors, use `. ~ .`
+for `to_scale` and `to_center`:
+
+```{r}
+set.seed(870432)
+lm_std2_boot <- std_selected_boot(lm_out,
+                        to_scale = . ~ .,
+                        to_center = . ~ .,
+                        nboot = 100)
+summary(lm_std2_boot)
+```
