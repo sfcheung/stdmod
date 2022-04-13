@@ -23,7 +23,9 @@ summary.std_selected <- function(object, ...) {
   out$centered_by <- object$centered_by
   out$nboot <- object$nboot
   if (!is.null(object$boot_ci)) {
-    out$coefficients <- cbind(out$coefficients, object$boot_ci)
+    out$coefficients <- cbind(out$coefficients[, 1, drop = FALSE],
+                              object$boot_ci,
+                              out$coefficients[, -1])
     }
   class(out) <- c("summary.std_selected", class(out))
   out
