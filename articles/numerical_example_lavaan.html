@@ -33,12 +33,15 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li>
+  <a href="../articles/stdmod.html">Get started</a>
+</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -87,7 +90,7 @@
       <h1 data-toc-skip>Compute Standardized Moderation Effect in SEM using stdmod_lavaan</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung and David Weng Ngai Vong</h4>
             
-            <h4 data-toc-skip class="date">2022-03-30</h4>
+            <h4 data-toc-skip class="date">2022-04-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/numerical_example_lavaan.Rmd" class="external-link"><code>vignettes/numerical_example_lavaan.Rmd</code></a></small>
       <div class="hidden name"><code>numerical_example_lavaan.Rmd</code></div>
@@ -99,7 +102,7 @@
 <div class="section level2">
 <h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>
 </h2>
-<p>This document demonstrates how to use <code>stdmod_lavaan</code> to compute the standarized moderation effect in a path analytic model fitted by <code>lavaan</code>.</p>
+<p>This document demonstrates how to use <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> to compute the standardized moderation effect in a path analytic model fitted by <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan::lavaan()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="setup-the-environment">Setup the Environment<a class="anchor" aria-label="anchor" href="#setup-the-environment"></a>
@@ -107,7 +110,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/" class="external-link">stdmod</a></span><span class="op">)</span> <span class="co"># For computing the standardized moderation effect conveniently</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span> <span class="co"># For doing path analysis in lavaan.</span>
-<span class="co">#&gt; This is lavaan 0.6-10</span>
+<span class="co">#&gt; This is lavaan 0.6-11</span>
 <span class="co">#&gt; lavaan is FREE software! Please report any bugs.</span></code></pre></div>
 </div>
 <div class="section level2">
@@ -126,17 +129,18 @@
 <p>This data set has 500 cases of data. The variables are sleep duration, age, gender, and the scores from two personality scales, emotional stability and conscientiousness of the IPIP Big Five markers. Please refer to (citation to be added) for the detail of the data set.</p>
 </div>
 <div class="section level2">
-<h2 id="compute-the-product-term-in-the-path-analytic-model">Compute the product term in the path analytic model<a class="anchor" aria-label="anchor" href="#compute-the-product-term-in-the-path-analytic-model"></a>
+<h2 id="compute-the-product-term-in-the-path-analytic-model">Compute the Product Term in the Path Analytic Model<a class="anchor" aria-label="anchor" href="#compute-the-product-term-in-the-path-analytic-model"></a>
 </h2>
-<p>Since the product term cannot be automatically generated through the function in SEM (the way of simply using variable A*variable B to specify the product term will not work in <code>lavaan</code>), we need to compute the product term manually.</p>
+<p>Although <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan()</a></code> supports the colon operator, <code>:</code>, in this example, we manually compute the product term.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sleep_emo_con</span><span class="op">$</span><span class="va">emo_con</span> <span class="op">&lt;-</span> 
   <span class="va">sleep_emo_con</span><span class="op">$</span><span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">sleep_emo_con</span><span class="op">$</span><span class="va">conscientiousness</span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="specify-the-model-in-sem-and-fit-the-model-by-lavaan">Specify the model in SEM and fit the model by <code>lavaan</code><a class="anchor" aria-label="anchor" href="#specify-the-model-in-sem-and-fit-the-model-by-lavaan"></a>
+<h2 id="specify-the-model-in-sem-and-fit-the-model-by-lavaanlavaan">Specify the Model in SEM and Fit the Model by <code>lavaan::lavaan()</code><a class="anchor" aria-label="anchor" href="#specify-the-model-in-sem-and-fit-the-model-by-lavaanlavaan"></a>
 </h2>
-<p>After computing the product term of the model, the remaining process is just following the normal procedures of constructing SEM in R using <code>lavaan</code>. We specify the model by using age, gender, emotional stability, conscientiousness and the product term of emotional stability and conscientiousness to predict the sleep duration. Therefore, we conduct the a SEM with a moderator as follow:</p>
+<p>After computing the product term of the model, the remaining process is just following the normal procedures of constructing SEM in R using <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan::lavaan()</a></code> (or related functions such as <code><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">lavaan::sem()</a></code>).</p>
+<p>We specify the model by using age, gender, emotional stability, conscientiousness, and the product term of emotional stability and conscientiousness to predict the sleep duration. Therefore, we fit the model a moderator as follow:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod</span> <span class="op">&lt;-</span> 
   <span class="st">'
@@ -146,7 +150,7 @@
 <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">sem</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">sleep_emo_con</span>, likelihood <span class="op">=</span> <span class="st">"wishart"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>
-<span class="co">#&gt; lavaan 0.6-10 ended normally after 1 iterations</span>
+<span class="co">#&gt; lavaan 0.6-11 ended normally after 1 iterations</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;   Estimator                                         ML</span>
 <span class="co">#&gt;   Optimization method                           NLMINB</span>
@@ -181,10 +185,10 @@
 <p><em>Note</em>: The argument <code>Likelihood = wishart</code> is provided as it ensures that the SEM results are identical to the linear regression results estimated by OLS, for illustration only. Users are not required to use this argument when they are conducting fitting their models in their studies.</p>
 </div>
 <div class="section level2">
-<h2 id="compute-the-standardized-moderation-effect">Compute the standardized moderation effect<a class="anchor" aria-label="anchor" href="#compute-the-standardized-moderation-effect"></a>
+<h2 id="compute-the-standardized-moderation-effect">Compute the Standardized Moderation Effect<a class="anchor" aria-label="anchor" href="#compute-the-standardized-moderation-effect"></a>
 </h2>
-<p>After fitting the SEM model by <code>lavaan</code>, we can use the function <code>stdmod_lavaan</code> to compute the standardized moderation effect. Noted that the function can be slow if nonparametric bootstrapping confidence interval is requested by setting <code>boot_ci</code> to <code>TRUE</code>. Therefore, we highly suggest using parallel processing if possible when nonparametric bootstrapping confidence interval is to be computed.</p>
-<p>If nonparametric bootstrapping confidence interval is requested, <code>stdmod_lavaan</code> accepts arguments to be passed to <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot</a></code>. In the following example, the argumetns <code>parallel</code>, <code>ncpus</code>, and <code>seed</code> are arguments for <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot</a></code>. For example, <code>ncpus</code> specifies the number of CPU cores that users wish to use for parallel processing.</p>
+<p>After fitting the SEM model by <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan::lavaan()</a></code>, we can use the function <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> to compute the standardized moderation effect. Noted that the function can be slow if nonparametric bootstrapping confidence interval is requested by setting <code>boot_ci</code> to <code>TRUE</code>. Therefore, we highly suggest using parallel processing if possible when nonparametric bootstrapping confidence interval is to be computed.</p>
+<p>If nonparametric bootstrapping confidence interval is requested, <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> accepts arguments to be passed to <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code>. In the following example, the arguments <code>parallel</code>, <code>ncpus</code>, and <code>seed</code> are arguments for <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code>. For example, <code>ncpus</code> specifies the number of CPU cores that users wish to use for parallel processing.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">515464</span><span class="op">)</span> <span class="co"># Set the random seed</span>
 <span class="va">out_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stdmod_lavaan.html">stdmod_lavaan</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">fit</span>, x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
@@ -192,20 +196,20 @@
                           w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
                           x_w <span class="op">=</span> <span class="st">"emo_con"</span>,
                           boot_ci <span class="op">=</span> <span class="cn">TRUE</span>, R <span class="op">=</span> <span class="fl">2000</span>,
-                          parallel <span class="op">=</span> <span class="st">"snow"</span>, ncpus <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-
-<span class="va">out_boot</span><span class="op">$</span><span class="va">stdmod</span>
+                          parallel <span class="op">=</span> <span class="st">"snow"</span>, ncpus <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">out_boot</span><span class="op">$</span><span class="va">stdmod</span>
 <span class="co">#&gt; sleep_duration~emo_con </span>
 <span class="co">#&gt;             -0.1082917</span></code></pre></div>
-<p>The standardized moderation effect is in the element <code>stdmod</code>. In this example, the standardized moderation effect is -0.1082917.</p>
+<p>The standardized moderation effect is in the element <code><a href="../reference/stdmod.html">stdmod()</a></code>. In this example, the standardized moderation effect is -0.1083.</p>
 <p>Nonparametric bootstrapping confidence interval is in the element <code>ci</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out_boot</span><span class="op">$</span><span class="va">ci</span>
 <span class="co">#&gt; lower_bound upper_bound </span>
 <span class="co">#&gt; -0.20506282 -0.01082015</span></code></pre></div>
-<p>The 95% confidence interval of the standardized moderation effect is -0.2050628 to -0.0108202.</p>
-<p>By default, the original output from <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot</a></code> is stored in the element <code>boot_out</code>. Users can use functions that accept the output of <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot</a></code>. For example, users can use <code>boot.ci</code> to get the 90% percentile confidence interval as below:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>The 95% confidence interval of the standardized moderation effect is -0.2051 to -0.0108.</p>
+<p>By default, the original output from <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot</a></code> is stored in the element <code>boot_out</code>. Users can use functions that accept the output of <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code>. For example, users can use <code><a href="https://rdrr.io/pkg/boot/man/boot.ci.html" class="external-link">boot::boot.ci()</a></code> to get the 90% percentile confidence interval as below:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">boot</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/boot/man/boot.ci.html" class="external-link">boot.ci</a></span><span class="op">(</span><span class="va">out_boot</span><span class="op">$</span><span class="va">boot_out</span>, conf <span class="op">=</span> <span class="fl">.90</span>, type <span class="op">=</span> <span class="st">"perc"</span><span class="op">)</span>
 <span class="co">#&gt; BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS</span>
 <span class="co">#&gt; Based on 2000 bootstrap replicates</span>
@@ -219,24 +223,27 @@
 <span class="co">#&gt; Calculations and Intervals on Original Scale</span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="identical-to-the-result-from-moderated-regression-">Identical to the result from moderated regression.<a class="anchor" aria-label="anchor" href="#identical-to-the-result-from-moderated-regression-"></a>
+<h2 id="identical-to-the-results-from-moderated-regression">Identical to the Results from Moderated Regression<a class="anchor" aria-label="anchor" href="#identical-to-the-results-from-moderated-regression"></a>
 </h2>
-<p>For comparison, these are the standardized solution of the same moderated regression model using the normal regression function <code>lm</code> and then processed by <code>stdmod_selected</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">emotional_stability</span><span class="op">*</span><span class="va">conscientiousness</span>, <span class="va">sleep_emo_con</span><span class="op">)</span>
+<p>For comparison, these are the standardized solution of the same moderated regression model using the normal regression function <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> and then processed by <code>stdmod_selected()</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">emotional_stability</span><span class="op">*</span><span class="va">conscientiousness</span>,
+             <span class="va">sleep_emo_con</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">514589</span><span class="op">)</span>
-<span class="va">lm_xwy_std_ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_out</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span> <span class="op">+</span> <span class="va">sleep_duration</span>,
-                                           to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span> <span class="op">+</span> <span class="va">sleep_duration</span>,
-                                           nboot <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">lm_xwy_std_ci</span><span class="op">)</span><span class="op">[</span><span class="st">"emotional_stability:conscientiousness"</span><span class="op">]</span>
+<span class="va">lm_xwy_std_ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_out</span>,
+                  to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span> <span class="op">+</span> <span class="va">sleep_duration</span>,
+                  to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span> <span class="op">+</span> <span class="va">sleep_duration</span>,
+                  nboot <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">lm_xwy_std_ci</span><span class="op">)</span><span class="op">[</span><span class="st">"emotional_stability:conscientiousness"</span><span class="op">]</span>
 <span class="co">#&gt; emotional_stability:conscientiousness </span>
 <span class="co">#&gt;                            -0.1082917</span></code></pre></div>
-<p>We can see that the standardized moderation effect is -0.1082917, equal to that computed by <code>stdmod_lavaan</code>.</p>
+<p>We can see that the standardized moderation effect is -0.1083, equal to that computed by <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="remarks">Remarks<a class="anchor" aria-label="anchor" href="#remarks"></a>
 </h2>
-<p>The function <code>stdmod_lavaan</code> can be used for more complicated path models. The computation of the standardized moderation effect in a path model depends only on the three variables involved (<code>x</code>, <code>w</code>, and <code>y</code>). We used a simple saturated model in this document only for illustration and comparing the results obtained form OLS moderated regression.</p>
+<p>The function <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> can be used for more complicated path models. The computation of the standardized moderation effect in a path model depends only on the three variables involved (<code>x</code>, <code>w</code>, and <code>y</code>). We used a simple saturated model in this document only for illustration and comparing the results obtained form OLS moderated regression.</p>
 </div>
   </div>
 
