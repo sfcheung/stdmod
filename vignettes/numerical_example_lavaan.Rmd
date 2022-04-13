@@ -21,7 +21,8 @@ options(width = 132)
 
 # Purpose
 
-This document demonstrates how to use `stdmod_lavaan` to compute the standarized moderation effect in a path analytic model fitted by `lavaan`.
+This document demonstrates how to use `stdmod_lavaan()` to compute the
+standardized moderation effect in a path analytic model fitted by `lavaan::lavaan()`.
 
 
 # Setup the Environment
@@ -38,24 +39,32 @@ data(sleep_emo_con)
 head(sleep_emo_con)
 ```
 
-This data set has 500 cases of data. The variables are sleep duration, age, gender,  and the scores from two personality scales, emotional stability and conscientiousness of the IPIP Big Five markers. Please refer to (citation to be added) for the detail of the data set.
+This data set has 500 cases of data. The variables are sleep duration, age,
+gender,  and the scores from two personality scales, emotional stability and
+conscientiousness of the IPIP Big Five markers. Please refer to
+(citation to be added) for the detail of the data set.
 
 
-# Compute the product term in the path analytic model
+# Compute the Product Term in the Path Analytic Model
 
-Since the product term cannot be automatically generated through the function in 
-SEM (the way of simply using variable A*variable B to specify the product term will 
-not work in `lavaan`), we need to compute the product term manually.
+Although `lavaan()` supports the colon operator, `:`, in this example,
+we manually compute the product term.
 
 ```{r pro_term}
 sleep_emo_con$emo_con <- 
   sleep_emo_con$emotional_stability * sleep_emo_con$conscientiousness
 ```
 
-# Specify the model in SEM and fit the model by `lavaan`
+# Specify the Model in SEM and Fit the Model by `lavaan::lavaan()`
 
-After computing the product term of the model, the remaining process is just following the normal procedures of constructing SEM in R using `lavaan`.
-We specify the model by using age, gender, emotional stability, conscientiousness and the product term of emotional stability and conscientiousness to predict the sleep duration. Therefore, we conduct the a SEM with a moderator as follow: 
+After computing the product term of the model, the remaining process is just
+following the normal procedures of constructing SEM in R using `lavaan::lavaan()`
+(or related functions such as `lavaan::sem()`).
+
+We specify the model by using age, gender, emotional stability,
+conscientiousness, and the product term of emotional stability and
+conscientiousness to predict the sleep duration. Therefore, we fit the model
+a moderator as follow: 
 
 ```{r mod_sem}
 mod <- 
@@ -68,17 +77,46 @@ fit <- sem(mod, sleep_emo_con, likelihood = "wishart")
 summary(fit)
 ```
 
-The results show that conscientiousness significantly moderates the effect of emotional stability on sleep duration.
+The results show that conscientiousness significantly moderates the effect of
+emotional stability on sleep duration.
 
-*Note*: The argument `Likelihood = wishart` is provided as it ensures that the SEM results are identical to the linear regression results estimated by OLS, for illustration only. Users are not required to use this argument when they are conducting fitting their models in their studies.
+*Note*: The argument `Likelihood = wishart` is provided as it ensures that the
+SEM results are identical to the linear regression results estimated by OLS,
+for illustration only. Users are not required to use this argument when they
+are conducting fitting their models in their studies.
 
-# Compute the standardized moderation effect
+# Compute the Standardized Moderation Effect
 
-After fitting the SEM model by `lavaan`, we can use the function `stdmod_lavaan` to compute the standardized moderation effect. Noted that the function can be slow if nonparametric bootstrapping confidence interval is requested by setting `boot_ci` to `TRUE`. Therefore, we highly suggest using parallel processing if possible when nonparametric bootstrapping confidence interval is to be computed.
+After fitting the SEM model by `lavaan::lavaan()`, we can use the function
+`stdmod_lavaan()` to compute the standardized moderation effect. Noted that
+the function can be slow if nonparametric bootstrapping confidence interval
+is requested by setting `boot_ci` to `TRUE`. Therefore, we highly suggest
+using parallel processing if possible when nonparametric bootstrapping
+confidence interval is to be computed.
 
-If nonparametric bootstrapping confidence interval is requested, `stdmod_lavaan` accepts arguments to be passed to `boot::boot`.  In the following example, the argumetns `parallel`, `ncpus`, and `seed` are arguments for `boot::boot`. For example, `ncpus` specifies the number of CPU cores that users wish to use for parallel processing.
+If nonparametric bootstrapping confidence interval is requested,
+`stdmod_lavaan()` accepts arguments to be passed to `boot::boot()`.
+In the following example, the arguments `parallel`, `ncpus`, and `seed`
+are arguments for `boot::boot()`. For example, `ncpus` specifies the
+number of CPU cores that users wish to use for parallel processing.
 
-```{r}
+
+```{r echo = FALSE}
+if (file.exists("egl_out_boot.rds")) {
+    out_boot <- readRDS("egl_out_boot.rds")
+  } else {
+    set.seed(515464) # Set the random seed
+    out_boot <- stdmod_lavaan(fit = fit, x = "emotional_stability",
+                              y = "sleep_duration",
+                              w = "conscientiousness",
+                              x_w = "emo_con",
+                              boot_ci = TRUE, R = 2000,
+                              parallel = "snow", ncpus = 2)
+    saveRDS(out_boot, "egl_out_boot.rds")
+  }
+```
+
+```{r eval = FALSE}
 set.seed(515464) # Set the random seed
 out_boot <- stdmod_lavaan(fit = fit, x = "emotional_stability",
                           y = "sleep_duration",
@@ -86,11 +124,15 @@ out_boot <- stdmod_lavaan(fit = fit, x = "emotional_stability",
                           x_w = "emo_con",
                           boot_ci = TRUE, R = 2000,
                           parallel = "snow", ncpus = 2)
+```
 
+```{r}
 out_boot$stdmod
 ```
 
-The standardized moderation effect is in the element `stdmod`. In this example, the standardized moderation effect is `r out_boot$stdmod`.
+The standardized moderation effect is in the element `stdmod()`. In this
+example, the standardized moderation effect is 
+`r formatC(out_boot$stdmod, 4, format = "f")`.
 
 Nonparametric bootstrapping confidence interval is in the element `ci`.
 
@@ -98,29 +140,64 @@ Nonparametric bootstrapping confidence interval is in the element `ci`.
 out_boot$ci
 ```
 
-The 95% confidence interval of the standardized moderation effect is `r out_boot$ci["lower_bound"]` to `r out_boot$ci["upper_bound"]`.
+The 95% confidence interval of the standardized moderation effect is
+`r formatC(out_boot$ci["lower_bound"], 4, format = "f")` to
+`r formatC(out_boot$ci["upper_bound"], 4, format = "f")`.
 
-By default, the original output from `boot::boot` is stored in the element `boot_out`. Users can use functions that accept the output of `boot::boot`. For example, users can use `boot.ci` to get the 90% percentile confidence interval as below:
+By default, the original output from `boot::boot` is stored in the
+element `boot_out`. Users can use functions that accept the output
+of `boot::boot()`. For example, users can use `boot::boot.ci()`
+to get the 90% percentile confidence interval as below:
 
 ```{r}
 boot::boot.ci(out_boot$boot_out, conf = .90, type = "perc")
 ```
 
-# Identical to the result from moderated regression.
+# Identical to the Results from Moderated Regression
 
-For comparison, these are the standardized solution of the same moderated regression model using the normal regression function `lm` and then processed by `stdmod_selected`:
+For comparison, these are the standardized solution of the same moderated
+regression model using the normal regression function `lm()` and then
+processed by `stdmod_selected()`:
+
+```{r echo = FALSE}
+if (file.exists("egl_lm_xwy_std_ci")) {
+    lm_out <- readRDS("egl_lm_out.rds")
+    lm_xwy_std_ci <- readRDS("egl_lm_xwy_std_ci.rds")
+  } else {
+    lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness,
+                sleep_emo_con)
+    set.seed(514589)
+    lm_xwy_std_ci <- std_selected_boot(lm_out,
+                      to_center = ~ emotional_stability + conscientiousness + sleep_duration,
+                      to_scale  = ~ emotional_stability + conscientiousness + sleep_duration,
+                      nboot = 2000)
+    saveRDS(lm_out, "egl_lm_out.rds")
+    saveRDS(lm_xwy_std_ci, "egl_lm_xwy_std_ci.rds")
+  }
+```
+
+```{r eval = FALSE}
+lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness,
+             sleep_emo_con)
+set.seed(514589)
+lm_xwy_std_ci <- std_selected_boot(lm_out,
+                  to_center = ~ emotional_stability + conscientiousness + sleep_duration,
+                  to_scale  = ~ emotional_stability + conscientiousness + sleep_duration,
+                  nboot = 2000)
+```
 
 ```{r}
-lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
-set.seed(514589)
-lm_xwy_std_ci <- std_selected_boot(lm_out, to_center = ~ emotional_stability + conscientiousness + sleep_duration,
-                                           to_scale  = ~ emotional_stability + conscientiousness + sleep_duration,
-                                           nboot = 2000)
 coef(lm_xwy_std_ci)["emotional_stability:conscientiousness"]
 ```
 
-We can see that the standardized moderation effect is `r coef(lm_xwy_std_ci)["emotional_stability:conscientiousness"]`, equal to that computed by `stdmod_lavaan`.
+We can see that the standardized moderation effect is
+`r formatC(coef(lm_xwy_std_ci)["emotional_stability:conscientiousness"], 4, format = "f")`,
+equal to that computed by `stdmod_lavaan()`.
 
 # Remarks
 
-The function `stdmod_lavaan` can be used for more complicated path models. The computation of the standardized moderation effect in a path model depends only on the three variables involved (`x`, `w`, and `y`). We used a simple saturated model in this document only for illustration and comparing the results obtained form OLS moderated regression. 
+The function `stdmod_lavaan()` can be used for more complicated path models.
+The computation of the standardized moderation effect in a path model depends
+only on the three variables involved (`x`, `w`, and `y`). We used a simple
+saturated model in this document only for illustration and comparing the
+results obtained form OLS moderated regression. 
