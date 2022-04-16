@@ -1,6 +1,3 @@
-skip("WIP")
-skip_on_cran()
-
 library(testthat)
 library(stdmod)
 
@@ -14,43 +11,40 @@ set.seed(649831074)
 stdmod_wy <- std_selected_boot(lm_raw, to_scale = ~ mod + dv, to_center = ~ mod + dv,
                                nboot = 100,
                                full_output = TRUE)
-vcov_method_def <- vcov(stdmod_wy)
-vcov_method_boot <- vcov(stdmod_wy, type = "boot")
-vcov_method_lm <- vcov(stdmod_wy, type = "lm")
-stdmod_wy_lm <- stdmod_wy
-class(stdmod_wy_lm) <- "lm"
-vcov_lm <- vcov(stdmod_wy_lm)
-vcov_check <- cov(stdmod_wy$boot_out$t)
-colnames(vcov_check) <- rownames(vcov_check) <- colnames(vcov_lm)
+confint_def <- confint(stdmod_wy)
+confint_boot <- confint(stdmod_wy, type = "boot")
+confint_lm <- confint(stdmod_wy, type = "lm")
+confint_boot_parm <- confint(stdmod_wy, parm = "iv:mod", type = "boot")
+confint_boot_conf90 <- confint(stdmod_wy, parm = "iv:mod", level = .90, type = "boot")
 
-stdmod_wy_no_boot <- std_selected(lm_raw, to_scale = ~ mod + dv, to_center = ~ mod + dv)
+stdmod_wy_lm <- std_selected(lm_raw, to_scale = ~ mod + dv, to_center = ~ mod + dv)
+confint_lm_no_boot <- confint(stdmod_wy_lm)
 
-test_that("vcov by method with type boot  == vcov from boot estimates", {
+confint_boot_check <- summary(stdmod_wy)$coefficients[, c("CI Lower", "CI Upper")]
+confint_boot_conf90_check <- boot::boot.ci(stdmod_wy$boot_out, conf = .90,
+                                           type = "perc", index = 7)$percent[4:5]
+
+test_that("confint_def == confint by lm", {
     expect_equivalent(
-        vcov_method_boot, vcov_check
+        confint_def, confint_lm_no_boot
       )
   })
 
-test_that("vcov by method with type lm == vcov from lm", {
+test_that("confint_boot == confint from summary", {
     expect_equivalent(
-        vcov_method_lm, vcov_lm
+        confint_boot, confint_boot_check
       )
   })
 
-test_that("vcov by method default == vcov from lm", {
-    expect_equivalent(
-        vcov_method_def, vcov_lm
+test_that("confint_boot != confint from lm", {
+    expect_false(
+        identical(confint_boot, confint_lm_no_boot)
       )
   })
 
-test_that("No boot: vcov by method default == vcov from lm", {
-    expect_equivalent(
-        vcov(stdmod_wy_no_boot), vcov_lm
+test_that("confint_boot with user confidence level", {
+    expect_true(
+        all(confint_boot_conf90 == confint_boot_conf90_check)
       )
   })
 
-test_that("No boot: vcov by method with type boot returns error", {
-    expect_error(
-        vcov(stdmod_wy_no_boot, type = "boot")
-      )
-  })
