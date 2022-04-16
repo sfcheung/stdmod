@@ -16,20 +16,24 @@
 
 print.summary.std_selected <- function(x, ...) {
   cat("\nSelected variable(s) are centered and/or scaled")
-  cat("\nVariable(s) centered:", x$centered_terms)
-  cat("\nVariable(s) scaled:", x$scaled_terms)
+  cat("\n- Variable(s) centered:", x$centered_terms)
+  cat("\n- Variable(s) scaled:", x$scaled_terms)
   cat("\n")
   dat_sc <- data.frame(centered_by = x$centered_by,
                        scaled_by   = x$scaled_by)
   print(dat_sc)
-  cat("Note:")
-  cat("\nCentered by 0 = No centering; Scaled by 1: No scaling.")
+  cat("\nNote:")
+  cat("\n- Centered by 0 or NA: No centering\n- Scaled by 1 or NA: No scaling")
   if (!is.null(x$nboot)) {
-      cat("\nNonparametric bootstrapping 95% confidence intervals computed.")
-      cat("\nNumber of bootstrap samples is", x$nboot)
+      cat("\n- Nonparametric bootstrapping 95% confidence intervals computed.")
+      cat("\n- The number of bootstrap samples is", x$nboot)
     }
   cat("\n")
-  xlm <- x
-  class(xlm) <- "summary.lm"
-  print(xlm, ...)
+  NextMethod()
+  if (!is.null(x$nboot)) {
+      cat("Note:")
+      cat("\n- [CI Lower, CI Upper] are bootstrap percentile confidence intervals.")
+      cat("\n- Std. Error are standard errors in the original analysis, not bootstrap SEs.")
+      cat("\n")
+    }
   }
