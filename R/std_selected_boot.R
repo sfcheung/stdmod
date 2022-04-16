@@ -116,6 +116,7 @@ std_selected_boot <- function(lm_out,
     tmp <- boot_out$t
     colnames(tmp) <- names(boot_out$t0)
     std_selected_out$boot_est <- tmp
+    std_selected_out$std_selected_boot_call <- match.call()
     if (full_output) {
         std_selected_out$boot_out <- boot_out
       }
