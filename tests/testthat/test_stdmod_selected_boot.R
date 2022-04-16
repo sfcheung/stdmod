@@ -5,6 +5,8 @@ library(stdmod)
 
 set.seed(8970808)
 
+nboot <- 1000
+
 context("Check standardizing selected variables with std_selected with bootstrapping")
 
 dat <- test_x_1_w_1_v_1_cat1_n_500
@@ -27,13 +29,13 @@ lm_cxsw  <- lm(dv ~ iv*mod + v1 + cat1, dplyr::mutate(dat, iv = scale(iv, scale 
                                                   mod = scale(mod, scale = sd(dat$mod), center = FALSE)[, 1]))
                                                   
 
-stdmod_wy <- std_selected_boot(lm_raw, to_scale = ~ mod + dv, to_center = ~ mod + dv, nboot = 2000)
-stdmod_xwy <- std_selected_boot(lm_raw, to_scale = ~ mod + iv + dv, to_center = ~ iv + mod + dv, nboot = 2000)
+stdmod_wy <- std_selected_boot(lm_raw, to_scale = ~ mod + dv, to_center = ~ mod + dv, nboot = nboot)
+stdmod_xwy <- std_selected_boot(lm_raw, to_scale = ~ mod + iv + dv, to_center = ~ iv + mod + dv, nboot = nboot)
 
 stdmod2_wy <- stdmod_boot(lm_raw, x = iv, y = dv, w =mod,
-                           x_rescale = FALSE, y_rescale = TRUE, w_rescale = TRUE, nboot = 2000)
+                           x_rescale = FALSE, y_rescale = TRUE, w_rescale = TRUE, nboot = nboot)
 stdmod2_xwy <- stdmod_boot(lm_raw, x = iv, y = dv, w =mod,
-                           x_rescale = TRUE, y_rescale = TRUE, w_rescale = TRUE, nboot = 2000)
+                           x_rescale = TRUE, y_rescale = TRUE, w_rescale = TRUE, nboot = nboot)
 
 stdmod3_wy <- std_selected(lm_raw, to_scale = ~ mod + dv, to_center = ~ dv + mod)
 stdmod3_xwy <- std_selected(lm_raw, to_scale = ~ dv + iv + mod,  to_center = ~ mod + iv + dv)
