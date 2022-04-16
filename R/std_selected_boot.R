@@ -30,6 +30,9 @@
 #' @param nboot The number of bootstrap samples. Default is 100.
 #' @param boot_args A named list of arguments to be passed to [boot::boot()]. Default
 #'                 is `NULL`.
+#' @param save_boot_est If `TRUE`, the default, the bootstrap estimates will be saved
+#'                      in the element
+#'                      `boot_est` of the output.
 #' @param full_output Whether the full output from [boot::boot()] is return. Default is 
 #'                   `FALSE`.
 #'
@@ -61,6 +64,7 @@ std_selected_boot <- function(lm_out,
                             conf = .95,
                             nboot = 100,
                             boot_args = NULL,
+                            save_boot_est = TRUE,
                             full_output = FALSE) {
     if (missing(lm_out)) {
         stop("The arguments lm_out cannot be empty.")
@@ -108,6 +112,9 @@ std_selected_boot <- function(lm_out,
     
     std_selected_out$boot_ci <- cis
     std_selected_out$nboot <- nboot
+    tmp <- boot_out$t
+    colnames(tmp) <- names(boot_out$t0)
+    std_selected_out$boot_est <- tmp
     if (full_output) {
         std_selected_out$boot_out <- boot_out
       }
