@@ -30,10 +30,9 @@ vcov.std_selected <- function(object, type = "lm", ...) {
             stop("Bootstrap estimates not available in the object.")
           }
         out <- stats::cov(object$boot_est)
+        return(out)
       }
     if (type == "lm") {
-        class(object) <- "lm"
-        out <- stats::vcov(object)
+        NextMethod()
       }
-    out
   }
