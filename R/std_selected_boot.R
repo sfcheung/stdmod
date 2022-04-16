@@ -12,7 +12,7 @@
 #' random number. Users are recommended to set the seed, e.g., using [set.seed()]
 #' before calling it, to ensure reproducibility.
 #'
-#  The updated \code{lm} output, with the class \code{stdmod} added. It will be
+#  The updated \code{lm} output, with the class \code{std_selected} added. It will be
 #  treated as a usual \code{lm} object by most functions. It has these additional elements:
 #
 #  - \code{scaled}: The terms scaled.
