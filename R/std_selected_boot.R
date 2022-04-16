@@ -112,6 +112,7 @@ std_selected_boot <- function(lm_out,
     
     std_selected_out$boot_ci <- cis
     std_selected_out$nboot <- nboot
+    std_selected_out$conf <- conf
     tmp <- boot_out$t
     colnames(tmp) <- names(boot_out$t0)
     std_selected_out$boot_est <- tmp
