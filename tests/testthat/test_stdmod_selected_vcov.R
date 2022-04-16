@@ -11,7 +11,7 @@ lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
 
 set.seed(649831074)
 stdmod_wy <- std_selected_boot(lm_raw, to_scale = ~ mod + dv, to_center = ~ mod + dv,
-                               nboot = 2000,
+                               nboot = 100,
                                full_output = TRUE)
 vcov_method_def <- vcov(stdmod_wy)
 vcov_method_boot <- vcov(stdmod_wy, type = "boot")
