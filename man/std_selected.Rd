@@ -13,6 +13,7 @@ std_selected_boot(
   conf = 0.95,
   nboot = 100,
   boot_args = NULL,
+  save_boot_est = TRUE,
   full_output = FALSE
 )
 }
@@ -40,6 +41,10 @@ will be centered. Default is NULL.}
 
 \item{boot_args}{A named list of arguments to be passed to \code{\link[boot:boot]{boot::boot()}}. Default
 is \code{NULL}.}
+
+\item{save_boot_est}{If \code{TRUE}, the default, the bootstrap estimates will be saved
+in the element
+\code{boot_est} of the output.}
 
 \item{full_output}{Whether the full output from \code{\link[boot:boot]{boot::boot()}} is return. Default is
 \code{FALSE}.}

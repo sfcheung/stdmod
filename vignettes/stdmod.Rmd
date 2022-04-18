@@ -29,7 +29,7 @@ This guide demonstrates how to use `std_selected()` to:
 regression model, and
 
 - form the confidence intervals of the standardized regression coefficients
-using nonparametric bootstrapping, that take into account the sampling variation
+using nonparametric bootstrapping, taking into account the sampling variation
 in standardization.
 
 # Sample Dataset
@@ -56,10 +56,13 @@ head(dat, 3)
 
 Suppose this is the moderated regression model:
 
-    - Dependent variable: sleep duration (`sleep`)
-    - Independent variable: emotional stability (`emot`)
-    - Moderator: conscientiousness (`cons`)
-    - Control variable: `age` and `gender`.
+- Dependent variable: sleep duration (`sleep`)
+
+- Independent variable: emotional stability (`emot`)
+
+- Moderator: conscientiousness (`cons`)
+
+- Control variable: `age` and `gender`
 
 `stats::lm()` can be used to fit this model:
 
@@ -69,9 +72,10 @@ lm_out <- lm(sleep ~ age + gender + emot*cons,
 summary(lm_out)
 ```
 
-The unstandardized moderation effect is significant, B = `r round(coef(lm_out)["emot:cons"], 4)`.
+The unstandardized moderation effect is significant, B =
+`r formatC(coef(lm_out)["emot:cons"], 4, format = "f")`.
 For each one unit increase of conscientiousness score, the effect of emotional
-stability decreases by `r round(-1 * coef(lm_out)["emot:cons"], 4)`.
+stability decreases by `r formatC(-1 * coef(lm_out)["emot:cons"], 4, format = "f")`.
 
 # Correct Standardization For the Moderated Regression
 
@@ -83,10 +87,16 @@ terms.
 We can pass the `stats::lm()` output to `std_selected()`, and use `. ~ .` for
 the arguments  `to_scale` and `to_center`.
 
-Standardization is equivalent to centering by mean and then scaling by (dividing
-by) standard deviation. `to_center` specifies the variables to be centered
-by means, and `to_scale` specifies the variables to be scaled by standard
-deviation. The formula interface of `lm()` is used in these two arguments,
+Standardization is equivalent to:
+
+- centering by mean, and then
+
+- scaling by (dividing by) standard deviation.
+    
+The argument `to_center` specifies the variables to be centered
+by their means, and the argument `to_scale` specifies the variables to be scaled by
+their standard deviations. The formula interface of `lm()` is used in these two
+arguments,
 with the variables on the right hand side being the variables to be
 centered and/or scaled.
 
@@ -103,14 +113,17 @@ lm_stdall <- std_selected(lm_out,
 summary(lm_stdall)
 ```
 
-The **standardized moderation effect** is significant, B = `r round(coef(lm_stdall)["emot:cons"], 4)`.
+The **standardized moderation effect** is significant, B =
+`r formatC(coef(lm_stdall)["emot:cons"], 4, format = "f")`.
 For each one *standard deviation* increase of conscientiousness score, the
-**standardized effect** of emotional stability decreases by `r round(-1 * coef(lm_stdall)["emot:cons"], 4)`.
+**standardized effect** of emotional stability decreases by
+`r formatC(-1 * coef(lm_stdall)["emot:cons"], 4, format = "f")`.
 
 ## Nonparametric Bootstrapping Confidence Intervals
 
-The confidence intervals based on OLS do not take into account the sampling variation of
-the sample means and standard deviations used in standardization. Cheung, Cheung, Lau, Hui,
+The confidence intervals based on OLS regression fitted to the standardized
+variables do not take into account the sampling variation of
+the sample means and standard deviations. Cheung, Cheung, Lau, Hui,
 and Vong (2022) suggest using nonparametric bootstrapping, with standardization conducted
 in each bootstrap sample.
 
@@ -156,8 +169,9 @@ moderation effect is `r formatC(tmp["emot:cons", "CI Lower"], 4, format = "f")` 
 selected variables.
 
 Suppose we want to standardize only the two continuous psychological variables,
-emotional stability and conscientiousness. We list them on `to_center` and
-`to_scale`:
+emotional stability and conscientiousness, and do not standardize sleep
+duration because hour is a meaningful unit. We list `emot` and `cons` on
+`to_center` and `to_scale`:
 
 ```{r}
 lm_std1 <- std_selected(lm_out,
@@ -213,7 +227,8 @@ moderation effect is `r formatC(tmp["emot:cons", "CI Lower"], 4, format = "f")` 
 # Further Information
 
 Further information on the functions can be found in their help pages
-(`std_selected()` and `std_selected_boot()`)).
+(`std_selected()` and `std_selected_boot()`)). For example, parallel computation
+can be used when doing bootstrapping.
 
 # Reference(s)
 

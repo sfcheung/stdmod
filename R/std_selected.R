@@ -156,7 +156,7 @@ std_selected <- function(lm_out,
     lm_out_mod$centered_terms <- center_terms
     lm_out_mod$scaled_by   <- var_b
     lm_out_mod$centered_by <- var_a
-    
+    lm_out_mod$std_selected_call <- match.call()
     lm_out_mod
     
   }

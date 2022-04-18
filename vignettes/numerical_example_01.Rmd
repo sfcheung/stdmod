@@ -1,10 +1,10 @@
 ---
-title: "Numerical Example - stdmod_selected"
+title: "Numerical Example - std_selected"
 author: "Shu Fai Cheung and David Weng Ngai Vong"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Numerical Example - stdmod_selected}
+  %\VignetteIndexEntry{Numerical Example - std_selected}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

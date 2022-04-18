@@ -22,7 +22,7 @@ remotes::install_github("sfcheung/stdmod")
 
 # Implementation
 
-The main function, `stdmod_selected()`, accepts an `lm()`
+The main function, `std_selected()`, accepts an `lm()`
 output, standardizes variables by users, and update the
 results. If interaction terms are presented, they will be
 formed after the standardization. If bootstrapping
