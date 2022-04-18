@@ -53,10 +53,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/numerical_example_01.html">Numerical Example - stdmod_selected</a>
+      <a href="../articles/numerical_example_01.html">Numerical Example - std_selected</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by stdmod_selected</a>
+      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by std_selected</a>
     </li>
     <li>
       <a href="../articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan</a>
@@ -90,7 +90,7 @@
       <h1 data-toc-skip>Compute Standardized Moderation Effect in SEM using stdmod_lavaan</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung and David Weng Ngai Vong</h4>
             
-            <h4 data-toc-skip class="date">2022-04-13</h4>
+            <h4 data-toc-skip class="date">2022-04-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/numerical_example_lavaan.Rmd" class="external-link"><code>vignettes/numerical_example_lavaan.Rmd</code></a></small>
       <div class="hidden name"><code>numerical_example_lavaan.Rmd</code></div>
@@ -225,7 +225,7 @@
 <div class="section level2">
 <h2 id="identical-to-the-results-from-moderated-regression">Identical to the Results from Moderated Regression<a class="anchor" aria-label="anchor" href="#identical-to-the-results-from-moderated-regression"></a>
 </h2>
-<p>For comparison, these are the standardized solution of the same moderated regression model using the normal regression function <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> and then processed by <code>stdmod_selected()</code>:</p>
+<p>For comparison, these are the standardized solution of the same moderated regression model using the normal regression function <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> and then processed by <code><a href="../reference/std_selected.html">std_selected()</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">emotional_stability</span><span class="op">*</span><span class="va">conscientiousness</span>,
              <span class="va">sleep_emo_con</span><span class="op">)</span>

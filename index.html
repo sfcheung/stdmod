@@ -56,10 +56,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/numerical_example_01.html">Numerical Example - stdmod_selected</a>
+      <a href="articles/numerical_example_01.html">Numerical Example - std_selected</a>
     </li>
     <li>
-      <a href="articles/numerical_example_02.html">Compute the Standardized Moderation Effect by stdmod_selected</a>
+      <a href="articles/numerical_example_02.html">Compute the Standardized Moderation Effect by std_selected</a>
     </li>
     <li>
       <a href="articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan</a>
@@ -109,7 +109,7 @@
 <div class="section level1">
 <h1 id="implementation">Implementation<a class="anchor" aria-label="anchor" href="#implementation"></a>
 </h1>
-<p>The main function, <code>stdmod_selected()</code>, accepts an <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> output, standardizes variables by users, and update the results. If interaction terms are presented, they will be formed after the standardization. If bootstrapping confidence intervals are requested, both standardization and regression will be repeated in each bootstrap sample, ensuring that the sampling variability of the standardizers (e.g., the standard deviations of the selected variables), are also taken into account.</p>
+<p>The main function, <code><a href="reference/std_selected.html">std_selected()</a></code>, accepts an <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> output, standardizes variables by users, and update the results. If interaction terms are presented, they will be formed after the standardization. If bootstrapping confidence intervals are requested, both standardization and regression will be repeated in each bootstrap sample, ensuring that the sampling variability of the standardizers (e.g., the standard deviations of the selected variables), are also taken into account.</p>
 </div>
 <div class="section level1">
 <h1 id="issues">Issues<a class="anchor" aria-label="anchor" href="#issues"></a>

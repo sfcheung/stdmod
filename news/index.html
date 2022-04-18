@@ -35,10 +35,10 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/numerical_example_01.html">Numerical Example - stdmod_selected</a>
+      <a href="../articles/numerical_example_01.html">Numerical Example - std_selected</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by stdmod_selected</a>
+      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by std_selected</a>
     </li>
     <li>
       <a href="../articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan</a>
@@ -71,6 +71,8 @@
 <ul><li>
 <p>0.1.4 (WIP)</p>
 <ul><li>Change the column order of the coefficient table in <code>std_selected_boot</code> output. Bootstrapping confidence intervals are placed next to parameter estimates.</li>
+<li>Add <code>vcov</code> method for <code>std_selected</code> output. If bootstrapping is used, it can return the variance-covariance matrix of the bootstrap estimates.</li>
+<li>Add <code>confint</code> method for <code>std_selected</code> output. If bootstrapping is used, it can return the bootstrap percentile confidence intervals if requested.</li>
 </ul></li>
 <li>
 <p>0.1.3</p>
