@@ -157,10 +157,10 @@ boot::boot.ci(out_boot$boot_out, conf = .90, type = "perc")
 
 For comparison, these are the standardized solution of the same moderated
 regression model using the normal regression function `lm()` and then
-processed by `stdmod_selected()`:
+processed by `std_selected()`:
 
 ```{r echo = FALSE}
-if (file.exists("egl_lm_xwy_std_ci")) {
+if (file.exists("egl_lm_xwy_std_ci.rds")) {
     lm_out <- readRDS("egl_lm_out.rds")
     lm_xwy_std_ci <- readRDS("egl_lm_xwy_std_ci.rds")
   } else {
