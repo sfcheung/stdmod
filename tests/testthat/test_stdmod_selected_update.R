@@ -1,4 +1,8 @@
 skip("WIP")
+
+# This test will not be used. Currently, update() will return an error because
+# it is better to do update before calling std_selected() or std_selected_boot().
+
 library(testthat)
 library(stdmod)
 
