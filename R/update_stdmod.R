@@ -16,12 +16,12 @@
 
 update.std_selected <- function(object, formula., ..., evaluate = TRUE) {
     # Adapted from update.default in stats
-    if (is.null(call <- getCall(object))) {
+    if (is.null(call <- stats::getCall(object))) {
         stop("need an object with call component")
       }
     extras <- match.call(expand.dots = FALSE)$...
     if (!missing(formula.)) {
-        call$formula <- update.formula(formula(object), formula.)
+        call$formula <- stats::update.formula(stats::formula(object), formula.)
       }
     if(length(extras)) {
         existing <- !is.na(match(names(extras), names(call)))
