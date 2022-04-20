@@ -15,7 +15,12 @@ returned.}
 
 \item{level}{The level of confidence. For the confidence intervals returned
 by \link{lm}, default is .95. For the bootstrapping confidence
-intervals, default is the level used in calling \link{std_selected_boot}.}
+intervals, default is the level used in calling
+\link{std_selected_boot}. If a level different from that in the
+original
+call is specified, \code{full_output} needs to be set in the call
+to \link{std_selected_boot} such that the original bootstrap output
+is stored.}
 
 \item{type}{The type of the confidence intervals. Default is "lm",
 returned by the \link{confint} method of \link{lm}. If set to "boot",
