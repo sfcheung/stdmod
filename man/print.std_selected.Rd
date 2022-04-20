@@ -7,9 +7,9 @@
 \method{print}{std_selected}(x, ...)
 }
 \arguments{
-\item{x}{The output of the class \code{summary.std_selected}.}
+\item{x}{The output of the class \code{std_selected}.}
 
-\item{...}{Arguments to be passed to \code{summary.lm}.}
+\item{...}{Arguments to be passed to \code{print.lm}.}
 }
 \value{
 Nothing

@@ -9,16 +9,14 @@
 \arguments{
 \item{object}{The output of the class \code{std_selected}.}
 
-\item{...}{Arguments to be passed to \code{\link[=update]{update()}}.}
-}
-\value{
-An object of class `std_selected``.
+\item{...}{Optional arguments. They will be ignored.}
 }
 \description{
-Like update for \code{\link[=lm]{lm()}} but will also update scaling and centering.
+Intercept the update method and raise an error.
 }
 \details{
-Only accepts update for \code{\link[=lm]{lm()}}.
+\code{\link[=update]{update()}} should be done in the call to \code{\link[=lm]{lm()}} before calling
+\code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.
 }
 \examples{
 # See examples for std_selected.
