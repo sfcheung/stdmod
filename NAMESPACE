@@ -3,6 +3,7 @@
 S3method(confint,std_selected)
 S3method(print,summary.std_selected)
 S3method(summary,std_selected)
+S3method(update,std_selected)
 S3method(vcov,std_selected)
 export(std_selected)
 export(std_selected_boot)
