@@ -32,20 +32,48 @@ termlabels_3 <- eval(parse(text = deparse(attr(terms(lm_3), "term.labels"))))
 termvariables_3 <- deparse(attr(terms(lm_3), "variables"))
 resp_3 <- attr(terms(lm_3), "response")
 
+set.seed(649831074)
 stdmod_1 <- update(stdmod_0, . ~ . + v1)
 termlabels_1std <- eval(parse(text = deparse(attr(terms(stdmod_1), "term.labels"))))
 termvariables_1std <- deparse(attr(terms(stdmod_1), "variables"))
 resp_1std <- attr(terms(stdmod_1), "response")
 
+set.seed(649831074)
 stdmod_2 <- update(stdmod_0, . ~ . - mod)
 termlabels_2std <- eval(parse(text = deparse(attr(terms(stdmod_2), "term.labels"))))
 termvariables_2std <- deparse(attr(terms(stdmod_2), "variables"))
 resp_2std <- attr(terms(stdmod_2), "response")
 
+set.seed(649831074)
 stdmod_2b <- update(stdmod_2, . ~ . + mod)
 termlabels_2bstd <- eval(parse(text = deparse(attr(terms(stdmod_2b), "term.labels"))))
 termvariables_2bstd <- deparse(attr(terms(stdmod_2b), "variables"))
 resp_2stdb <- attr(terms(stdmod_2b), "response")
+
+set.seed(649831074)
+stdmod_1_check <- std_selected_boot(lm_1, to_scale = ~ mod + dv, to_center = ~ mod + dv,
+                               nboot = 100,
+                               full_output = TRUE)
+coef(stdmod_1)
+coef(stdmod_1_check)
+confint(stdmod_1, type = "boot")
+confint(stdmod_1_check, type = "boot")
+
+set.seed(649831074)
+stdmod_2_check <- std_selected_boot(lm_2, to_scale = ~ mod + dv, to_center = ~ mod + dv,
+                               nboot = 100,
+                               full_output = TRUE)
+coef(stdmod_2)
+coef(stdmod_2_check)
+confint(stdmod_2, type = "boot")
+confint(stdmod_2_check, type = "boot")
+
+stdmod_2b_check <- stdmod_0
+coef(stdmod_2b)
+coef(stdmod_2b_check)
+confint(stdmod_2b, type = "boot")
+confint(stdmod_2b_check, type = "boot")
+
 
 # stdmod_3 <- update(stdmod_0, v1 ~ .)
 # termlabels_3std <- eval(parse(text = deparse(attr(terms(stdmod_3), "term.labels"))))
@@ -87,3 +115,39 @@ test_that("Check terms variables 2", {
 #         termvariables_3std, termvariables_3
 #       )
 #   })
+
+test_that("Check coefs 1", {
+    expect_equivalent(
+        coef(stdmod_1), coef(stdmod_1_check)
+      )
+  })
+
+test_that("Check coefs 2", {
+    expect_equivalent(
+        coef(stdmod_2), coef(stdmod_2_check)
+      )
+  })
+
+test_that("Check coefs 2b", {
+    expect_equivalent(
+        coef(stdmod_2b), coef(stdmod_2b_check)
+      )
+  })
+
+test_that("Check boot ci 1", {
+    expect_equivalent(
+        confint(stdmod_1, type = "boot"), confint(stdmod_1_check, type = "boot")
+      )
+  })
+
+test_that("Check boot ci 2", {
+    expect_equivalent(
+        confint(stdmod_2, type = "boot"), confint(stdmod_2_check, type = "boot")
+      )
+  })
+
+test_that("Check boot ci 2b", {
+    expect_equivalent(
+        confint(stdmod_2b, type = "boot"), confint(stdmod_2b_check, type = "boot")
+      )
+  })
