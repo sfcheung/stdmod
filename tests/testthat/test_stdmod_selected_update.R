@@ -1,8 +1,3 @@
-skip("WIP")
-
-# This test will not be used. Currently, update() will return an error because
-# it is better to do update before calling std_selected() or std_selected_boot().
-
 library(testthat)
 library(stdmod)
 
@@ -47,10 +42,15 @@ termlabels_2std <- eval(parse(text = deparse(attr(terms(stdmod_2), "term.labels"
 termvariables_2std <- deparse(attr(terms(stdmod_2), "variables"))
 resp_2std <- attr(terms(stdmod_2), "response")
 
-stdmod_3 <- update(stdmod_0, v1 ~ .)
-termlabels_3std <- eval(parse(text = deparse(attr(terms(stdmod_3), "term.labels"))))
-termvariables_3std <- deparse(attr(terms(stdmod_3), "variables"))
-resp_3std <- attr(terms(stdmod_3), "response")
+stdmod_2b <- update(stdmod_2, . ~ . + mod)
+termlabels_2bstd <- eval(parse(text = deparse(attr(terms(stdmod_2b), "term.labels"))))
+termvariables_2bstd <- deparse(attr(terms(stdmod_2b), "variables"))
+resp_2stdb <- attr(terms(stdmod_2b), "response")
+
+# stdmod_3 <- update(stdmod_0, v1 ~ .)
+# termlabels_3std <- eval(parse(text = deparse(attr(terms(stdmod_3), "term.labels"))))
+# termvariables_3std <- deparse(attr(terms(stdmod_3), "variables"))
+# resp_3std <- attr(terms(stdmod_3), "response")
 
 test_that("Check terms labels 1", {
     expect_equivalent(
@@ -64,11 +64,11 @@ test_that("Check terms labels 2", {
       )
   })
 
-test_that("Check terms labels 3", {
-    expect_equivalent(
-        termlabels_3std, termlabels_3
-      )
-  })
+# test_that("Check terms labels 3", {
+#     expect_equivalent(
+#         termlabels_3std, termlabels_3
+#       )
+#   })
 
 test_that("Check terms variables 1", {
     expect_equivalent(
@@ -82,8 +82,8 @@ test_that("Check terms variables 2", {
       )
   })
 
-test_that("Check terms variables 3", {
-    expect_equivalent(
-        termvariables_3std, termvariables_3
-      )
-  })
+# test_that("Check terms variables 3", {
+#     expect_equivalent(
+#         termvariables_3std, termvariables_3
+#       )
+#   })
