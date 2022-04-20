@@ -2,21 +2,25 @@
 % Please edit documentation in R/update_stdmod.R
 \name{update.std_selected}
 \alias{update.std_selected}
-\title{update method for \code{std_selected} class output}
+\title{Update method for \code{std_selected} class output}
 \usage{
-\method{update}{std_selected}(object, ...)
+\method{update}{std_selected}(object, formula., ..., evaluate = TRUE)
 }
 \arguments{
 \item{object}{The output of the class \code{std_selected}.}
 
-\item{...}{Optional arguments. They will be ignored.}
+\item{formula.}{Changes to the formula.}
+
+\item{...}{Optional arguments to be changed.}
+
+\item{evaluate}{Whether the call will be evaluated.}
 }
 \description{
-Intercept the update method and raise an error.
+Update method and raise an error.
 }
 \details{
-\code{\link[=update]{update()}} should be done in the call to \code{\link[=lm]{lm()}} before calling
-\code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.
+This should be used only to update the call to \code{\link[=lm]{lm()}},
+not to the call to \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_out]{std_selected_out()}}.
 }
 \examples{
 # See examples for std_selected.
