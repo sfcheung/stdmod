@@ -3,7 +3,7 @@
 #'@description Update method and raise an error.
 #'
 #'@details This should be used only to update the call to [lm()],
-#'          not to the call to [std_selected()] or [std_selected_out()].
+#'          not to the call to [std_selected()] or [std_selected_boot()].
 #'
 #'@param object The output of the class \code{std_selected}.
 #'@param formula. Changes to the formula.
