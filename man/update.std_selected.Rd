@@ -20,7 +20,7 @@ Update method and raise an error.
 }
 \details{
 This should be used only to update the call to \code{\link[=lm]{lm()}},
-not to the call to \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_out]{std_selected_out()}}.
+not to the call to \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.
 }
 \examples{
 # See examples for std_selected.
