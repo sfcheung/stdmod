@@ -137,7 +137,13 @@ boot_i_gen <- function(fit, x, y, w, x_w) {
         } else {
           dat_i <- dat[i, ]
         }
-      fit_i <- tryCatch(lavaan::update(fit, data = dat_i),
+      fit_i <- tryCatch(lavaan::update(fit,
+                                       data = dat_i,
+                                       se = "none",
+                                       h1 = FALSE,
+                                       baseline = FALSE,
+                                       test = "standard"
+                                       ),
                         error = function(e) NA,
                         warning = function(e) NA)
       if (!inherits(fit_i, "lavaan")) {
