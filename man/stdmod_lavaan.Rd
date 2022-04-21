@@ -2,7 +2,7 @@
 % Please edit documentation in R/stdmod_lavaan.R
 \name{stdmod_lavaan}
 \alias{stdmod_lavaan}
-\title{Standardized moderation effect and bootstrapping CI in lavaan}
+\title{Standardized Moderation Effect and Bootstrap CI in 'lavaan'}
 \usage{
 stdmod_lavaan(fit, x, y, w, x_w, boot_ci = FALSE, R = 100, conf = 0.95, ...)
 }
@@ -38,23 +38,30 @@ confidence interval not requested.
 }
 }
 \description{
-Compute the standardized moderation effect and bootstrapping CI given a lavaan output
+Compute the standardized moderation effect in a structural
+equation model fitted by \code{\link[lavaan:lavaan]{lavaan::lavaan()}} and
+form its nonparametric bootstrap confidence interval.
 }
 \details{
-\code{\link[=stdmod_lavaan]{stdmod_lavaan()}} accepts a \link[lavaan:lavaan-class]{lavaan::lavaan} object, the SEM output generated
-by \code{\link[lavaan:lavaan]{lavaan::lavaan()}} and its sibling (e.g, \code{\link[lavaan:sem]{lavaan::sem()}}) and compute
+\code{\link[=stdmod_lavaan]{stdmod_lavaan()}} accepts a \link[lavaan:lavaan-class]{lavaan::lavaan} object, the
+structural equation model output returned
+by \code{\link[lavaan:lavaan]{lavaan::lavaan()}} and its wrappers (e.g, \code{\link[lavaan:sem]{lavaan::sem()}}) and computes
 the standardized moderation effect.
 
 The standard deviations of the independent variable, moderator, and outcome
-are computed from the implied covariance matrix returned by \code{\link[lavaan:lavInspect]{lavaan::lavInspect()}}.
+variable are computed from the implied covariance matrix returned by
+\code{\link[lavaan:lavInspect]{lavaan::lavInspect()}}. Therefore, models fitted to data sets with missing
+data (e.g., with \code{missing = "fiml"}) are also supported.
 
-If nonparametric bootstrapping confidence is requested with \code{R} bootstrapping
-samples, the model will be fitted \code{R} times to these samples, and the standardized
-moderation effect will be computed in each sample. This enasures that all
-componenets used in the computation, including the standard deviations, are
+If nonparametric bootstrap confidence interval is requested with \code{R}
+bootstrap samples, the model will be fitted \code{R} times to these samples,
+and the standardized
+moderation effect will be computed in each sample. This ensures that all
+components used in the computation, including the standard deviations, are
 also computed from the bootstrapping samples.
 
-Note that the compuation can be slow because \code{\link[lavaan:lavaan]{lavaan::lavaan()}} will be called
+Note that the computation can be slow because \code{\link[lavaan:lavaan]{lavaan::lavaan()}}
+will be called
 \code{R} times.
 }
 \examples{
@@ -71,7 +78,7 @@ dat$iv <- (dat$iv - 10)
 # Form the product term for the moderation
 dat$iv_mod <- dat$iv * dat$mod
 
-mod <- 
+mod <-
 "
 dv ~ iv + mod + mod + v1 + v2 + iv_mod
 "
@@ -85,20 +92,19 @@ out_noboot <- stdmod_lavaan(fit = fit, x = "iv",
                                 x_w = "iv_mod")
 out_noboot$stdmod
 
-\donttest{
-# Compute the standardized moderation effect and 
+# Compute the standardized moderation effect and
 # its confidence interval based on nonparametric bootstrapping
 set.seed(8479075)
 system.time(out_boot <- stdmod_lavaan(fit = fit, x = "iv",
                                 y = "dv",
                                 w = "mod",
                                 x_w = "iv_mod",
-                          boot_ci = TRUE, R = 200))
+                          boot_ci = TRUE, R = 50))
 # In real analysis, R should be at least 2000.
 out_boot$ci
 
 # Use boot.ci to compute the confidence interval using other settings
 library(boot)
 boot.ci(out_boot$boot_out, conf = .90, type = "perc")
-}
+
 }

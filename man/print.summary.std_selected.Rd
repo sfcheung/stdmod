@@ -43,5 +43,4 @@ lm_std_boot <- std_selected_boot(lm_raw, to_scale = ~ .,
                                          nboot = 100)
 summary(lm_std_boot)
 
-
 }

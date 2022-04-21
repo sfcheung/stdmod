@@ -1,17 +1,40 @@
-#'@title Update method for \code{std_selected} class output
+#' @title Update method for of an 'std_selected' Class Object
 #'
-#'@description Update method and raise an error.
-#'
-#'@details This should be used only to update the call to [lm()],
+#' @description This should be used only to update the call to [lm()],
 #'          not to the call to [std_selected()] or [std_selected_boot()].
 #'
-#'@param object The output of the class \code{std_selected}.
-#'@param formula. Changes to the formula.
-#'@param ...  Optional arguments to be changed.
-#'@param evaluate Whether the call will be evaluated.
+#' @details Although supported, it is not recommended to update an analysis
+#'          processed by [std_selected()] or [std_selected_boot()]. It is
+#'          recommended to call [lm()] again and pass the output to
+#'          [std_selected()] or [std_selected_boot()].
 #'
-#'@examples
-#' # See examples for std_selected.
+#' @param object The output of the class [std_selected()].
+#' @param formula. Changes to the formula.
+#' @param ...  Optional arguments to be changed.
+#' @param evaluate Whether the call will be evaluated.
+#'
+#' @examples
+#'
+#' # Load a sample data set
+#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
+#' # one categorical covariate (cat1) with three groups, and one dv (dv).
+#' dat <- test_x_1_w_1_v_1_cat1_n_500
+#' head(dat)
+#'
+#' # Do a moderated regression by lm
+#' lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+#' summary(lm_raw)
+#'
+#' # Standardize all variables except for categorical variables.
+#' # Interaction terms are formed after standardization.
+#' lm_std <- std_selected(lm_raw, to_scale = ~ .,
+#'                                to_center = ~ .)
+#' summary(lm_std)
+#'
+#' # Update the model
+#' lm_std2 <- update(lm_std, . ~ . - v1)
+#' summary(lm_std2)
+#'
 #' @export
 
 update.std_selected <- function(object, formula., ..., evaluate = TRUE) {

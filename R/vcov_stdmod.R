@@ -1,23 +1,59 @@
-#'@title vcov method for \code{std_selected} class output
+#'@title vcov method for a 'std_selected' Class Object
 #'
 #'@description Compute the variance-covariance matrix
-#' of estimates in a \code{std_selected} class output
+#' of estimates in the output of [std_selected()] or
+#' [std_selected_boot()].
 #'
-#'@details If bootstrapping is used to form the confidence interval,
+#'@details If bootstrapping was used to form the confidence intervals,
 #' users can request the variance-covariance matrix of the bootstrap estimates.
 #'
 #'@return
 #'  A matrix of the variances and covariances.
 #'
-#'@param object The output of the class \code{std_selected}.
-#'@param type The type of variance-covariance matrix. Default is "lm",
-#'            returned by the [vcov] method of [lm]. If set to "boot",
+#'@param object The output of [std_selected()] or [std_selected_boot()].
+#'@param type The type of variance-covariance matrix. Default is `"lm"`,
+#'            returned by the [stats::vcov()] method for the output of
+#'            [lm()]. If set to `"boot"`,
 #'            the variance-covariance matrix of the bootstrap estimates
 #'            is returned.
-#'@param ...  Arguments to be passed to \code{summary.lm}.
+#'@param ...  Arguments to be passed to [stats::vcov()].
 #'
 #'@examples
-#' # See examples for std_selected.
+#' # Load a sample data set
+#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
+#' # one categorical covariate (cat1) with three groups, and one dv (dv).
+#' dat <- test_x_1_w_1_v_1_cat1_n_500
+#' head(dat)
+#'
+#' # Do a moderated regression by lm
+#' lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+#' summary(lm_raw)
+#'
+#' # Standardize all variables except for categorical variables.
+#' # Interaction terms are formed after standardization.
+#' lm_std <- std_selected(lm_raw, to_scale = ~ .,
+#'                                to_center = ~ .)
+#' summary(lm_std)
+#'
+#' # VCOV of lm output
+#' vcov(lm_std)
+#'
+#' # Standardize all variables as in std_selected above, and compute the
+#' # nonparametric bootstrapping percentile confidence intervals.
+#' lm_std_boot <- std_selected_boot(lm_raw,
+#'                                  to_scale = ~ .,
+#'                                  to_center = ~ .,
+#'                                  conf = .95,
+#'                                  nboot = 100)
+#' # In real analysis, nboot should be at least 2000.
+#' summary(lm_std_boot)
+#'
+#' # VCOV of lm output
+#' vcov(lm_std_boot)
+#'
+#' # VCOV of bootstrap estimates
+#' vcov(lm_std_boot, type = "boot")
+#'
 #' @export
 
 

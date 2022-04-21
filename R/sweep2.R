@@ -1,5 +1,5 @@
-#' Similar to sweep, but will skip columns that are not numeric. 
-#' It sweep only on the columns. 
+#' Similar to sweep, but will skip columns that are not numeric.
+#' It sweep only on the columns.
 #' @param x The data frame.
 #' @param values A named vector with length equal to the number of columns
 #'        in data.

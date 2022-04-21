@@ -2,25 +2,46 @@
 % Please edit documentation in R/summary_stdmod.R
 \name{summary.std_selected}
 \alias{summary.std_selected}
-\title{Summary method for \code{std_selected} class output}
+\title{Summary Method for a 'std_selected' Class Object}
 \usage{
 \method{summary}{std_selected}(object, ...)
 }
 \arguments{
-\item{object}{The output of the class \code{std_selected}.}
+\item{object}{The output of \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.}
 
-\item{...}{Arguments to be passed to \code{summary.lm}.}
+\item{...}{Arguments to be passed to \code{\link[=summary.lm]{summary.lm()}}.}
 }
 \value{
-An object of class \code{summary.std_selected}, with bootstrapping confidence intervals
-added if present.
+An object of class \code{summary.std_selected}, with
+bootstrap confidence intervals added if present.
 }
 \description{
-Summary method for \code{std_selected} class output
-}
-\details{
-Summary method for \code{std_selected} class output
+Summarize the results of \code{\link[=std_selected]{std_selected()}} or
+\code{\link[=std_selected_boot]{std_selected_boot()}}.
 }
 \examples{
-# See examples for std_selected.
+
+# Load a sample data set
+# It has one predictor (iv), one moderator (mod), on covariate (v1),
+# one categorical covariate (cat1) with three groups, and one dv (dv).
+dat <- test_x_1_w_1_v_1_cat1_n_500
+
+# Do a moderated regression by lm
+lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+summary(lm_raw)
+
+# Standardize all variables except for categorical variables.
+# Interaction terms are formed after standardization.
+lm_std <- std_selected(lm_raw, to_scale = ~ .,
+                               to_center = ~ .)
+summary(lm_std)
+
+# With bootstrapping
+# nboot = 100 just for illustration. nboot >= 2000 should be used in read
+# research.
+lm_std_boot <- std_selected_boot(lm_raw, to_scale = ~ .,
+                                         to_center = ~ .,
+                                         nboot = 100)
+summary(lm_std_boot)
+
 }

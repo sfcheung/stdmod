@@ -48,7 +48,7 @@
 #'                                to_center = ~ .)
 #' summary(lm_std)
 #' confint(lm_std)
-#' 
+#'
 #' # With bootstrapping
 #' # nboot = 100 just for illustration. nboot >= 2000 should be used in read
 #' # research.

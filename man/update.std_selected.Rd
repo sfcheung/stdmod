@@ -2,12 +2,12 @@
 % Please edit documentation in R/update_stdmod.R
 \name{update.std_selected}
 \alias{update.std_selected}
-\title{Update method for \code{std_selected} class output}
+\title{Update method for of an 'std_selected' Class Object}
 \usage{
 \method{update}{std_selected}(object, formula., ..., evaluate = TRUE)
 }
 \arguments{
-\item{object}{The output of the class \code{std_selected}.}
+\item{object}{The output of the class \code{\link[=std_selected]{std_selected()}}.}
 
 \item{formula.}{Changes to the formula.}
 
@@ -16,12 +16,35 @@
 \item{evaluate}{Whether the call will be evaluated.}
 }
 \description{
-Update method and raise an error.
-}
-\details{
 This should be used only to update the call to \code{\link[=lm]{lm()}},
 not to the call to \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.
 }
+\details{
+Although supported, it is not recommended to update an analysis
+processed by \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}. It is
+recommended to call \code{\link[=lm]{lm()}} again and pass the output to
+\code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.
+}
 \examples{
-# See examples for std_selected.
+
+# Load a sample data set
+# It has one predictor (iv), one moderator (mod), on covariate (v1),
+# one categorical covariate (cat1) with three groups, and one dv (dv).
+dat <- test_x_1_w_1_v_1_cat1_n_500
+head(dat)
+
+# Do a moderated regression by lm
+lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+summary(lm_raw)
+
+# Standardize all variables except for categorical variables.
+# Interaction terms are formed after standardization.
+lm_std <- std_selected(lm_raw, to_scale = ~ .,
+                               to_center = ~ .)
+summary(lm_std)
+
+# Update the model
+lm_std2 <- update(lm_std, . ~ . - v1)
+summary(lm_std2)
+
 }

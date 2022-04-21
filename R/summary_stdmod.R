@@ -1,32 +1,54 @@
-#'@title Summary method for \code{std_selected} class output
+#' @title Summary Method for a 'std_selected' Class Object
 #'
-#'@description Summary method for \code{std_selected} class output
+#' @description Summarize the results of [std_selected()] or
+#'             [std_selected_boot()].
 #'
-#'@details Summary method for \code{std_selected} class output
+#' @return
+#'  An object of class `summary.std_selected`, with
+#'  bootstrap confidence intervals added if present.
 #'
-#'@return
-#'  An object of class \code{summary.std_selected}, with bootstrapping confidence intervals
-#'  added if present.
+#' @param object The output of [std_selected()] or [std_selected_boot()].
+#' @param ...  Arguments to be passed to [summary.lm()].
 #'
-#'@param object The output of the class \code{std_selected}.
-#'@param ...  Arguments to be passed to \code{summary.lm}.
+#' @examples
 #'
-#'@examples
-#' # See examples for std_selected.
+#' # Load a sample data set
+#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
+#' # one categorical covariate (cat1) with three groups, and one dv (dv).
+#' dat <- test_x_1_w_1_v_1_cat1_n_500
+#'
+#' # Do a moderated regression by lm
+#' lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+#' summary(lm_raw)
+#'
+#' # Standardize all variables except for categorical variables.
+#' # Interaction terms are formed after standardization.
+#' lm_std <- std_selected(lm_raw, to_scale = ~ .,
+#'                                to_center = ~ .)
+#' summary(lm_std)
+#'
+#' # With bootstrapping
+#' # nboot = 100 just for illustration. nboot >= 2000 should be used in read
+#' # research.
+#' lm_std_boot <- std_selected_boot(lm_raw, to_scale = ~ .,
+#'                                          to_center = ~ .,
+#'                                          nboot = 100)
+#' summary(lm_std_boot)
+#'
 #' @export
 
 summary.std_selected <- function(object, ...) {
-  out <- stats::summary.lm(object, ...)
-  out$scaled_terms <- object$scaled_terms
-  out$centered_terms <- object$centered_terms
-  out$scaled_by <- object$scaled_by
-  out$centered_by <- object$centered_by
-  out$nboot <- object$nboot
-  if (!is.null(object$boot_ci)) {
-    out$coefficients <- cbind(out$coefficients[, 1, drop = FALSE],
-                              object$boot_ci,
-                              out$coefficients[, -1])
-    }
-  class(out) <- c("summary.std_selected", class(out))
-  out
+    out <- stats::summary.lm(object, ...)
+    out$scaled_terms <- object$scaled_terms
+    out$centered_terms <- object$centered_terms
+    out$scaled_by <- object$scaled_by
+    out$centered_by <- object$centered_by
+    out$nboot <- object$nboot
+    if (!is.null(object$boot_ci)) {
+      out$coefficients <- cbind(out$coefficients[, 1, drop = FALSE],
+                                object$boot_ci,
+                                out$coefficients[, -1])
+      }
+    class(out) <- c("summary.std_selected", class(out))
+    out
   }
