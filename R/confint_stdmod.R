@@ -1,35 +1,65 @@
-#'@title confint method for \code{std_selected} class output
+#' @title Confidence Intervals for a 'std_selected' Class Object
 #'
-#'@description Return the confidence intervals of estimates
-#'              in a \code{std_selected} class output
+#' @description Return the confidence intervals of estimates
+#'              in the output of [std_selected()] or [std_selected_boot()].
 #'
-#'@details If bootstrapping is used to form the confidence interval,
+#' @details If bootstrapping is used to form the confidence interval by
+#' [std_selected_boot()],
 #' users can request the percentile confidence intervals of
 #' the bootstrap estimates.
 #'
-#'@return
+#' @return
 #'  A matrix of the confidence intervals.
 #'
-#'@param object The output of the class \code{std_selected}.
-#'@param parm The parameters for which confidence intervals should be returned.
+#' @param object The output of [std_selected()] or [std_selected_boot()].
+#' @param parm The parameters (coefficients) for which confidence intervals
+#'            should be returned.
 #'            If missing, the confidence intervals of all parameters will be
 #'            returned.
-#'@param level The level of confidence. For the confidence intervals returned
-#'             by [lm], default is .95. For the bootstrapping confidence
+#' @param level The level of confidence. For the confidence intervals returned
+#'             by [lm()], default is .95. For the bootstrapping
+#'             percentile confidence
 #'             intervals, default is the level used in calling
-#'             [std_selected_boot]. If a level different from that in the
+#'             [std_selected_boot()]. If a level different from that in the
 #'             original
 #'             call is specified, `full_output` needs to be set in the call
-#'             to [std_selected_boot] such that the original bootstrap output
+#'             to [std_selected_boot()] such that the original bootstrap output
 #'             is stored.
-#'@param type The type of the confidence intervals. Default is "lm",
-#'            returned by the [confint] method of [lm]. If set to "boot",
+#' @param type The type of the confidence intervals. Default is `"lm"`,
+#'            returned by the [confint()] method of [lm()]. If set to `"boot"`,
 #'            the bootstrap percentile confidence intervals are
 #'            returned.
-#'@param ...  Arguments to be passed to \code{summary.lm}.
+#' @param ...  Arguments to be passed to [summary.lm()].
 #'
-#'@examples
-#' # See examples for std_selected.
+#' @examples
+#'
+#' # Load a sample data set
+#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
+#' # one categorical covariate (cat1) with three groups, and one dv (dv).
+#' dat <- test_x_1_w_1_v_1_cat1_n_500
+#'
+#' # Do a moderated regression by lm
+#' lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+#' summary(lm_raw)
+#'
+#' # Standardize all variables except for categorical variables.
+#' # Interaction terms are formed after standardization.
+#' lm_std <- std_selected(lm_raw, to_scale = ~ .,
+#'                                to_center = ~ .)
+#' summary(lm_std)
+#' confint(lm_std)
+#' 
+#' # With bootstrapping
+#' # nboot = 100 just for illustration. nboot >= 2000 should be used in read
+#' # research.
+#' lm_std_boot <- std_selected_boot(lm_raw, to_scale = ~ .,
+#'                                          to_center = ~ .,
+#'                                          nboot = 100)
+#' summary(lm_std_boot)
+#' confint(lm_std_boot)
+#' # Bootstrap percentile intervals
+#' confint(lm_std_boot, type = "boot")
+#'
 #' @export
 
 
@@ -42,7 +72,8 @@ confint.std_selected <- function(object, parm, level = .95, type = "lm", ...) {
             stop("Bootstrap estimates not available in the object.")
           }
         if ((level != object$conf) && is.null(object$boot_out)) {
-            stop("level is different form conf in std_selected_boot but full_output is FALSE.")
+            stop(paste("level is different form conf in",
+                       "std_selected_boot() but full_output is FALSE."))
           }
         if (level == object$conf) {
             out <- object$boot_ci

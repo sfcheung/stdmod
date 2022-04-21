@@ -2,22 +2,19 @@
 % Please edit documentation in R/add1_stdmod.R
 \name{add1.std_selected}
 \alias{add1.std_selected}
-\title{add1 method for \code{std_selected} class output}
+\title{The 'add1' Method for a 'std_selected' Class Object}
 \usage{
 \method{add1}{std_selected}(object, ...)
 }
 \arguments{
-\item{object}{The output of the class \code{std_selected}.}
+\item{object}{The output of \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.}
 
 \item{...}{Optional arguments. They will be ignored.}
 }
 \description{
-Intercept the add1 method and raise an error.
+Intercept the \code{\link[=add1]{add1()}} method and raise an error.
 }
 \details{
-\code{\link[=add1]{add1()}} should be not be used after an \code{lm} object is processed by
-\code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.
-}
-\examples{
-# See examples for std_selected.
+\code{\link[=add1]{add1()}} should be not be used after the output of \code{\link[=lm]{lm()}} is
+processed by \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.
 }

@@ -3,7 +3,8 @@
 \docType{data}
 \name{test_x_1_w_1_v_1_cat1_n_500}
 \alias{test_x_1_w_1_v_1_cat1_n_500}
-\title{One IV, one moderation, two covariates, v1 is contrinuous and cat2 is categorical. n 500}
+\title{One IV, one moderation, two covariates, v1 is contrinuous and cat2 is categorical.
+Sample size is 500.}
 \format{
 An object of class \code{data.frame} with 500 rows and 5 columns.
 }
@@ -11,6 +12,7 @@ An object of class \code{data.frame} with 500 rows and 5 columns.
 test_x_1_w_1_v_1_cat1_n_500
 }
 \description{
-One IV, one moderation, two covariates, v1 is contrinuous and cat2 is categorical. n 500
+One IV, one moderation, two covariates, v1 is contrinuous and cat2 is categorical.
+Sample size is 500.
 }
 \keyword{datasets}
