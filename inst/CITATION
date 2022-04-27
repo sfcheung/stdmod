@@ -9,7 +9,7 @@ citEntry(entry = "Article",
                    as.person("W. N. Vong")),
   journal      = "Health Psychology",
   year         = "2022",
-  doi          = "(To be updated)",
+  doi          = "10.1037/hea0001188",
   note         = "Advance online publication",
   textVersion  =
   paste("Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022).",
