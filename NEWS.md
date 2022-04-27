@@ -1,9 +1,9 @@
-# stdmod 0.1.2 to 0.1.4
+# stdmod 0.1.5
 
 - 0.1.5
 
     - Change the column order of the coefficient table
-      in `std_selected_boot` output. Bootstrapping confidence
+      in `std_selected_boot` output. Bootstrap confidence
       intervals are placed next to parameter estimates.
     - Add `vcov` method for `std_selected` output. If bootstrapping is used,
       it can return the variance-covariance matrix of the bootstrap estimates.
