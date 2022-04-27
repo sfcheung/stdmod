@@ -12,7 +12,7 @@ Authors@R:
            role = c("ctb")))
 Description: Functions for computing a standardized moderation
              effect and forming its confidence interval by
-             nonparametric bootstrapping correctly. Supports
+             nonparametric bootstrap. Supports
              outputs from 'stats::lm()' and 'lavaan::lavaan()'.
 URL: https://sfcheung.github.io/stdmod/
 BugReports: https://github.com/sfcheung/stdmod/issues
