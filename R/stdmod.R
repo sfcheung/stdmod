@@ -4,7 +4,8 @@
 #'                regression model.
 #'
 #' @details Compute the standardized moderation effect given an
-#' [lm()] output. Users specify
+#' [lm()] output using the formula from Cheung, Cheung, Lau, Hui, and Vong
+#' (2022). Users specify
 #' the moderator, the predictor, the outcome variable, and the corresponding
 #' standardized moderation
 #' effect. Users can also select which variable(s) will be standardized.
@@ -27,6 +28,15 @@
 #' @param w_rescale  If `TRUE`, will rescale w by its SD. Default is TRUE.
 #' @param y_rescale  If `TRUE`, will rescale y by its standard deviation.
 #'                   Default is `TRUE`.
+#'
+#'
+#' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
+#'
+#' @references
+#' Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
+#' (2022) Improving an old way to measure moderation effect in standardized
+#' units. Advance online publication. *Health Psychology*.
+#' \doi{10.1037/hea0001188}
 #'
 #' @examples
 #'

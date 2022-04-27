@@ -8,7 +8,8 @@
 #' [stdmod_lavaan()] accepts a [lavaan::lavaan-class] object, the
 #' structural equation model output returned
 #' by [lavaan::lavaan()] and its wrappers (e.g, [lavaan::sem()]) and computes
-#' the standardized moderation effect.
+#' the standardized moderation effect using the formula in the appendix of
+#' Cheung, Cheung, Lau, Hui, and Vong (2022).
 #'
 #' The standard deviations of the independent variable, moderator, and outcome
 #' variable are computed from the implied covariance matrix returned by
@@ -31,7 +32,7 @@
 #'
 #'  - `stdmod`: The standardized moderation effect.
 #'
-#'  - `ci`: The nonparametric bootstrapping confidence interval. `NA` if
+#'  - `ci`: The nonparametric bootstrap confidence interval. `NA` if
 #'            confidence interval not requested.
 #'
 #'  - `boot_out`: The raw output from [boot::boot()]. `NA` if
@@ -48,6 +49,16 @@
 #'          Set this to at least 2000 in actual use.
 #' @param conf The level of confidence. Default is .95.
 #' @param ... Optional arguments to be passed to [boot::boot()].
+#'
+#'
+#' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
+#'
+#'
+#' @references
+#' Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
+#' (2022) Improving an old way to measure moderation effect in standardized
+#' units. Advance online publication. *Health Psychology*.
+#' \doi{10.1037/hea0001188}
 #'
 #' @examples
 #'

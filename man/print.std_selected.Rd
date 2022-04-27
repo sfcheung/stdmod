@@ -44,3 +44,6 @@ lm_std_boot <- std_selected_boot(lm_raw, to_scale = ~ .,
 lm_std_boot
 
 }
+\author{
+Shu Fai Cheung \url{https://orcid.org/0000-0002-9871-9448}
+}

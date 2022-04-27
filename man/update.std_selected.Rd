@@ -48,3 +48,6 @@ lm_std2 <- update(lm_std, . ~ . - v1)
 summary(lm_std2)
 
 }
+\author{
+Shu Fai Cheung \url{https://orcid.org/0000-0002-9871-9448}
+}

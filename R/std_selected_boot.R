@@ -2,8 +2,8 @@
 #' This function is a wrapper of [std_selected()]. It calls [std_selected()]
 #' once
 #' for each bootstrap sample, and then computes the nonparametric
-#' bootstrapping
-#' percentile confidence intervals.
+#' bootstrap
+#' percentile confidence intervals (Cheung, Cheung, Lau, Hui, & Vong, 2022).
 #'
 #' This function intentionally does not have an argument for setting the seed
 #' for
@@ -27,7 +27,7 @@
 #'                    of the output.
 #'
 #' @examples
-#' 
+#'
 #' dat <- test_x_1_w_1_v_1_cat1_n_500
 #' head(dat)
 #'
@@ -46,7 +46,7 @@
 #'
 #' @export
 #' @describeIn std_selected A wrapper of [std_selected()] that forms
-#'                           nonparametric bootstrapping confidence intervals.
+#'                           nonparametric bootstrap confidence intervals.
 #' @order 2
 
 std_selected_boot <- function(lm_out,

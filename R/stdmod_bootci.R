@@ -1,8 +1,9 @@
 #' @details
 #'
 #' [stdmod_boot()] is a wrapper of [stdmod()]. It computes the nonparametric
-#' bootstrap confidence interval of the standardized moderation effect given
-#' the output of [lm()].
+#' bootstrap confidence interval of the standardized moderation effect, as
+#' suggested by Cheung, Cheung, Lau, Hui, and Vong (2022), given
+#' the output of [lm()]
 #'
 #' Percentile interval from [boot::boot.ci()] is returned by this function.
 #' If other types of
@@ -19,6 +20,7 @@
 #'                  Default is `NULL`.
 #' @param full_output Whether the full output from [boot::boot()] is returned.
 #'                   Default is `FALSE`.
+#'
 #'
 #' @examples
 #'

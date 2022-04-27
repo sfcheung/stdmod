@@ -8,6 +8,9 @@
 #' @param object The output of [std_selected()] or [std_selected_boot()].
 #' @param ...  Optional arguments. They will be ignored.
 #'
+#'
+#' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
+#'
 #' @export
 
 add1.std_selected <- function(object, ...) {

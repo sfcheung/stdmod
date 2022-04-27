@@ -70,14 +70,16 @@ regression model.
 }
 \details{
 Compute the standardized moderation effect given an
-\code{\link[=lm]{lm()}} output. Users specify
+\code{\link[=lm]{lm()}} output using the formula from Cheung, Cheung, Lau, Hui, and Vong
+(2022). Users specify
 the moderator, the predictor, the outcome variable, and the corresponding
 standardized moderation
 effect. Users can also select which variable(s) will be standardized.
 
 \code{\link[=stdmod_boot]{stdmod_boot()}} is a wrapper of \code{\link[=stdmod]{stdmod()}}. It computes the nonparametric
-bootstrap confidence interval of the standardized moderation effect given
-the output of \code{\link[=lm]{lm()}}.
+bootstrap confidence interval of the standardized moderation effect, as
+suggested by Cheung, Cheung, Lau, Hui, and Vong (2022), given
+the output of \code{\link[=lm]{lm()}}
 
 Percentile interval from \code{\link[boot:boot.ci]{boot::boot.ci()}} is returned by this function.
 If other types of
@@ -149,4 +151,13 @@ stdmod_xyw_boot <- stdmod_boot(lm_raw, x = iv, w = mod, y = dv,
 stdmod_xyw_boot$ci
 
 
+}
+\references{
+Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
+(2022) Improving an old way to measure moderation effect in standardized
+units. Advance online publication. \emph{Health Psychology}.
+\doi{10.1037/hea0001188}
+}
+\author{
+Shu Fai Cheung \url{https://orcid.org/0000-0002-9871-9448}
 }

@@ -31,7 +31,7 @@ Set this to at least 2000 in actual use.}
 A list with these elements:
 \itemize{
 \item \code{stdmod}: The standardized moderation effect.
-\item \code{ci}: The nonparametric bootstrapping confidence interval. \code{NA} if
+\item \code{ci}: The nonparametric bootstrap confidence interval. \code{NA} if
 confidence interval not requested.
 \item \code{boot_out}: The raw output from \code{\link[boot:boot]{boot::boot()}}. \code{NA} if
 confidence interval not requested.
@@ -46,7 +46,8 @@ form its nonparametric bootstrap confidence interval.
 \code{\link[=stdmod_lavaan]{stdmod_lavaan()}} accepts a \link[lavaan:lavaan-class]{lavaan::lavaan} object, the
 structural equation model output returned
 by \code{\link[lavaan:lavaan]{lavaan::lavaan()}} and its wrappers (e.g, \code{\link[lavaan:sem]{lavaan::sem()}}) and computes
-the standardized moderation effect.
+the standardized moderation effect using the formula in the appendix of
+Cheung, Cheung, Lau, Hui, and Vong (2022).
 
 The standard deviations of the independent variable, moderator, and outcome
 variable are computed from the implied covariance matrix returned by
@@ -107,4 +108,13 @@ out_boot$ci
 library(boot)
 boot.ci(out_boot$boot_out, conf = .90, type = "perc")
 
+}
+\references{
+Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
+(2022) Improving an old way to measure moderation effect in standardized
+units. Advance online publication. \emph{Health Psychology}.
+\doi{10.1037/hea0001188}
+}
+\author{
+Shu Fai Cheung \url{https://orcid.org/0000-0002-9871-9448}
 }

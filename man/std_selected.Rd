@@ -75,7 +75,8 @@ selected variables in a regression model and refit the model
 \details{
 \code{\link[=std_selected]{std_selected()}} was originally developed to compute the standardized
 moderation effect and the standardized coefficients for other predictors
-given an \code{\link[=lm]{lm()}} output. It has been revised such that users can be specify
+given an \code{\link[=lm]{lm()}} output (Cheung, Cheung, Lau, Hui, & Vong, 2022).
+It has been revised such that users can be specify
 which variables in a regression model is mean-centered and/or rescaled by
 their standard deviations. If the model has one or more interaction terms,
 they will be formed after the transformation, yielding the correct
@@ -92,8 +93,8 @@ in the regression model.
 This function is a wrapper of \code{\link[=std_selected]{std_selected()}}. It calls \code{\link[=std_selected]{std_selected()}}
 once
 for each bootstrap sample, and then computes the nonparametric
-bootstrapping
-percentile confidence intervals.
+bootstrap
+percentile confidence intervals (Cheung, Cheung, Lau, Hui, & Vong, 2022).
 
 This function intentionally does not have an argument for setting the seed
 for
@@ -107,7 +108,7 @@ before calling it, to ensure reproducibility.
 scale selected variables in a regression model
 
 \item \code{std_selected_boot}: A wrapper of \code{\link[=std_selected]{std_selected()}} that forms
-nonparametric bootstrapping confidence intervals.
+nonparametric bootstrap confidence intervals.
 }}
 
 \examples{
@@ -158,4 +159,13 @@ lm_std_boot <- std_selected_boot(lm_raw,
 # In real analysis, nboot should be at least 2000.
 summary(lm_std_boot)
 
+}
+\references{
+Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
+(2022) Improving an old way to measure moderation effect in standardized
+units. Advance online publication. \emph{Health Psychology}.
+\doi{10.1037/hea0001188}
+}
+\author{
+Shu Fai Cheung \url{https://orcid.org/0000-0002-9871-9448}
 }

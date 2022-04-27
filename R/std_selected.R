@@ -6,7 +6,8 @@
 #' @details
 #' [std_selected()] was originally developed to compute the standardized
 #' moderation effect and the standardized coefficients for other predictors
-#' given an [lm()] output. It has been revised such that users can be specify
+#' given an [lm()] output (Cheung, Cheung, Lau, Hui, & Vong, 2022).
+#' It has been revised such that users can be specify
 #' which variables in a regression model is mean-centered and/or rescaled by
 #' their standard deviations. If the model has one or more interaction terms,
 #' they will be formed after the transformation, yielding the correct
@@ -51,6 +52,14 @@
 #'        interaction term.
 #'        Specify only the original variables. If `NULL`, then no term
 #'        will be centered. Default is `NULL``.
+#'
+#' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
+#'
+#' @references
+#' Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
+#' (2022) Improving an old way to measure moderation effect in standardized
+#' units. Advance online publication. *Health Psychology*.
+#' \doi{10.1037/hea0001188}
 #'
 #' @examples
 #'

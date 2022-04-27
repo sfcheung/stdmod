@@ -10,6 +10,9 @@
 #' @param object The output of [std_selected()] or [std_selected_boot()].
 #' @param ...  Arguments to be passed to [summary.lm()].
 #'
+#'
+#' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
+#'
 #' @examples
 #'
 #' # Load a sample data set

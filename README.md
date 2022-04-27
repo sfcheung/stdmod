@@ -1,6 +1,6 @@
 # stdmod: Standardized Moderation
 
-This package includes functions for computing a standardized moderation effect and forming its confidence interval by nonparametric bootstrapping correctly. It was described briefly in the following publication ([OSF project page](https://osf.io/ac8de/)) It supports moderated regression conducted by `stats::lm()` and path analysis with product term conducted by `lavaan::lavaan()`.
+This package includes functions for computing a standardized moderation effect and forming its confidence interval by nonparametric bootstrapping correctly. It was described briefly in the following publication ([OSF project page](https://osf.io/ac8de/)). It supports moderated regression conducted by `stats::lm()` and path analysis with product term conducted by `lavaan::lavaan()`.
 
 - Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
 

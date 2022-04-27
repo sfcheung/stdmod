@@ -74,3 +74,6 @@ confint(lm_std_boot)
 confint(lm_std_boot, type = "boot")
 
 }
+\author{
+Shu Fai Cheung \url{https://orcid.org/0000-0002-9871-9448}
+}

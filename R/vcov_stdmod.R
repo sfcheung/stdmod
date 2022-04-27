@@ -7,6 +7,9 @@
 #'@details If bootstrapping was used to form the confidence intervals,
 #' users can request the variance-covariance matrix of the bootstrap estimates.
 #'
+#'
+#' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
+#'
 #'@return
 #'  A matrix of the variances and covariances.
 #'

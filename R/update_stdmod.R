@@ -13,6 +13,9 @@
 #' @param ...  Optional arguments to be changed.
 #' @param evaluate Whether the call will be evaluated.
 #'
+#'
+#' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
+#'
 #' @examples
 #'
 #' # Load a sample data set

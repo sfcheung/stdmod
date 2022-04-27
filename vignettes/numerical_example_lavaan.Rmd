@@ -1,10 +1,10 @@
 ---
-title: "Compute Standardized Moderation Effect in SEM using stdmod_lavaan"
+title: "Compute Standardized Moderation Effect in SEM using stdmod_lavaan()"
 author: "Shu Fai Cheung and David Weng Ngai Vong"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Compute Standardized Moderation Effect in SEM using stdmod_lavaan}
+  %\VignetteIndexEntry{Compute Standardized Moderation Effect in SEM using stdmod_lavaan()}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width  = 6, 
+  fig.width  = 6,
   fig.height = 6
 )
 options(width = 132)
@@ -64,7 +64,7 @@ following the normal procedures of constructing SEM in R using `lavaan::lavaan()
 We specify the model by using age, gender, emotional stability,
 conscientiousness, and the product term of emotional stability and
 conscientiousness to predict the sleep duration. Therefore, we fit the model
-a moderator as follow: 
+with a moderator as follow: 
 
 ```{r mod_sem}
 mod <- 
@@ -89,12 +89,12 @@ are conducting fitting their models in their studies.
 
 After fitting the SEM model by `lavaan::lavaan()`, we can use the function
 `stdmod_lavaan()` to compute the standardized moderation effect. Noted that
-the function can be slow if nonparametric bootstrapping confidence interval
+the function can be slow if nonparametric bootstrap confidence interval
 is requested by setting `boot_ci` to `TRUE`. Therefore, we highly suggest
 using parallel processing if possible when nonparametric bootstrapping
 confidence interval is to be computed.
 
-If nonparametric bootstrapping confidence interval is requested,
+If nonparametric bootstrap confidence interval is requested,
 `stdmod_lavaan()` accepts arguments to be passed to `boot::boot()`.
 In the following example, the arguments `parallel`, `ncpus`, and `seed`
 are arguments for `boot::boot()`. For example, `ncpus` specifies the
@@ -134,7 +134,7 @@ The standardized moderation effect is in the element `stdmod()`. In this
 example, the standardized moderation effect is 
 `r formatC(out_boot$stdmod, 4, format = "f")`.
 
-Nonparametric bootstrapping confidence interval is in the element `ci`.
+Nonparametric bootstrap confidence interval is in the element `ci`.
 
 ```{r}
 out_boot$ci
@@ -201,3 +201,14 @@ The computation of the standardized moderation effect in a path model depends
 only on the three variables involved (`x`, `w`, and `y`). We used a simple
 saturated model in this document only for illustration and comparing the
 results obtained form OLS moderated regression. 
+
+# Reference(s)
+
+The computation of the standardized moderation effect is based on the simple
+formula presented in the following manuscript, using the standard deviations of
+the outcome variable, focal variable, and the moderator:
+
+Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022)
+Improving an old way to measure moderation effect in standardized units.
+Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
+
