@@ -1,10 +1,10 @@
 ---
-title: "Compute the Standardized Moderation Effect by std_selected"
+title: "Compute the Standardized Moderation Effect by std_selected()"
 author: "Shu Fai Cheung and David Weng Ngai Vong"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Compute the Standardized Moderation Effect by std_selected}
+  %\VignetteIndexEntry{Compute the Standardized Moderation Effect by std_selected()}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -76,24 +76,25 @@ product term formed *after* standardization, we can use `std_selected()`.
 
 If we want to standardize or mean-center all variables, we can use `~ .` as a
 shortcut. Note that `std_selected()` will  automatically skip categorical
-variables(i.e., factors or string variables in the regression model of `lm()`).
+variables (i.e., factors or string variables in the regression model of `lm()`).
 
 ```{r}
 lm_stdall <- std_selected(lm_out, to_center = ~ .,
-                                   to_scale  = ~ .)
+                                  to_scale  = ~ .)
 summary(lm_stdall)
 ```
 
 The coefficient in this solution,  `r round(coef(lm_stdall)["emotional_stability:conscientiousness"], 5)`, can be interpreted as the increase in the standardized effect of `emotional_stability` for each one standard
-deviation increase of `conscientiousness`.
+deviation increase of `conscientiousness`. Naturally, this can be called the
+*standardized moderation effect* of `conscientiousness` (Cheung, Cheung, Lau, Hui, & Vong, 2022).
 
-The output from `std_selected()` can be passed to other functions that accept the
-output of `lm()`. For example, we can use `visreg` to visualize the moderation
+The output of `std_selected()` can be passed to other functions that accept the
+output of `lm()`. For example, we can use `visreg()` to visualize the moderation
 effect using the standardized solution.
 
 ```{r}
-visreg(lm_stdall, "emotional_stability", "conscientiousness", 
-            breaks = 2, overlay = TRUE)
+visreg(lm_stdall, "emotional_stability", "conscientiousness",
+       breaks = 2, overlay = TRUE)
 ```
 
 # The Usual (Incorrect) Standardized Solution
@@ -111,19 +112,20 @@ The coefficient of the *standardized* product term is
 *cannot* be interpreted as the change in the standardized effect of
 `emotional_stability` for each one standard deviation increase of `conscientiousness`.
 
-# The Standardized Solution With Nonparametric Bootstrapping Confidence Intervals
+# The Standardized Solution With Nonparametric Bootstrap Confidence Intervals
 
 It has been shown (e.g., Yuan & Chan, 2011) that the standard errors of
 standardized regression coefficients computed just by rescaling the variables
 are biased, and consequently the confidence intervals are also invalid. The
 function `std_selected_boot()` is a version of `std_selected()` that also
-reports the confidence interval of the regression coefficients when rescaling
-is conducted.
+report the confidence interval of the regression coefficients when rescaling is conducted,
+using nonparametric bootstrapping as suggested by Cheung, Cheung, Lau, Hui, & Vong (2022).
 
 We use the same example above that standardizes all variables except for
 categorical variables to illustrate this function. The argument `nboot`
-specifies the number of nonparametric bootstrap samples. Currently,
-only the 95% confidence intervals will be reported.
+specifies the number of nonparametric bootstrap samples.
+The level of confidence set by `conf`. The default is .95, denoting a 95%
+confidence. If this is the desired level, this argument can be omitted.
 
 ```{r echo = FALSE}
 if (file.exists("eg2_lm_xwy_std_ci.rds")) {
@@ -155,15 +157,21 @@ tmp <- summary(lm_xwy_std_ci)$coefficients
 
 The standardized moderation effect is 
 `r formatC(tmp["emotional_stability:conscientiousness", "Estimate"], 4, format = "f")`,
-and the 95% nonparametric bootstrapping confidence interval is
+and the 95% nonparametric bootstrap confidence interval is
 `r formatC(tmp["emotional_stability:conscientiousness", "CI Lower"], 4, format = "f")` to
 `r formatC(tmp["emotional_stability:conscientiousness", "CI Upper"], 4, format = "f")`.
 
-Note: As a side product, the nonparametric bootstrapping confidence of the other
+Note: As a side product, the nonparametric bootstrap percentile confidence of the other
 coefficients are also reported. They can be used for other variables that are
 standardized in the same model, whether they are involved in the moderation or not.
 
 # Reference(s)
+
+
+Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022)
+Improving an old way to measure moderation effect in standardized units.
+Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
+
 
 Yuan, K.-H., & Chan, W. (2011). Biases and standard errors of standardized
 regression coefficients. *Psychometrika, 76*(4), 670–690.

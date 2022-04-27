@@ -3,7 +3,7 @@
 \name{std_selected}
 \alias{std_selected}
 \alias{std_selected_boot}
-\title{Standardized moderation effect given an \code{lm} output}
+\title{Standardize Variables in a Regression Model}
 \usage{
 std_selected(lm_out, to_scale = NULL, to_center = NULL)
 
@@ -18,78 +18,104 @@ std_selected_boot(
 )
 }
 \arguments{
-\item{lm_out}{The output from \code{lm}.}
+\item{lm_out}{The output from \code{\link[=lm]{lm()}}.}
 
-\item{to_scale}{Specify the terms to be rescaled by standard deviation,
-using a formula as in \code{lm}. For example, if the terms to be scale
-is x1 and x3, use \code{~ x1 + x3}. No need to specify the interaction term.
-Specify only the original variables. If NULL, then no terms
-will be rescaled by standard deviation. Variables that are not numeric will
-will be ignored. Default is NULL.}
+\item{to_scale}{The terms to be rescaled by standard deviation,
+using a formula as in \code{\link[=lm]{lm()}}. For example, if the terms to be scale
+is \code{x1} and \code{x3}, use \code{~ x1 + x3}. No need to specify the
+interaction
+term.
+Specify only the original variables. If \code{NULL}, then no terms
+will be rescaled by standard deviation. Variables that are not
+numeric will be ignored. Default is \code{NULL}.}
 
-\item{to_center}{Specify the terms to be mean-centered, using a formula
-as in \code{lm}. For example, if the terms to be scale
-is x1 and x3, use \code{~ x1 + x3}. No need to specify the interaction term.
-Specify only the original variables. If NULL, then no terms
-will be centered. Default is NULL.}
+\item{to_center}{The terms to be mean-centered, using a formula
+as in \code{\link[=lm]{lm()}}. For example, if the terms to be centered
+is \code{x1} and \code{x3}, use \code{~ x1 + x3}. No need to specify the
+interaction term.
+Specify only the original variables. If \code{NULL}, then no term
+will be centered. Default is `NULL``.}
 
-\item{...}{Arguments to be passed to \code{std_selected}.}
+\item{...}{Arguments to be passed to \code{\link[=std_selected]{std_selected()}}.}
 
-\item{conf}{The level of confidence for the confidence interval. Default is .95.}
+\item{conf}{The level of confidence for the confidence interval.
+Default is .95.}
 
 \item{nboot}{The number of bootstrap samples. Default is 100.}
 
-\item{boot_args}{A named list of arguments to be passed to \code{\link[boot:boot]{boot::boot()}}. Default
-is \code{NULL}.}
+\item{boot_args}{A named list of arguments to be passed to \code{\link[boot:boot]{boot::boot()}}.
+Default is \code{NULL}.}
 
-\item{save_boot_est}{If \code{TRUE}, the default, the bootstrap estimates will be saved
-in the element
+\item{save_boot_est}{If \code{TRUE}, the default, the bootstrap estimates will
+be saved in the element
 \code{boot_est} of the output.}
 
-\item{full_output}{Whether the full output from \code{\link[boot:boot]{boot::boot()}} is return. Default is
-\code{FALSE}.}
+\item{full_output}{Whether the full output from \code{\link[boot:boot]{boot::boot()}} is returned.
+Default is \code{FALSE}. If \code{TRUE}, the full output from
+\code{\link[boot:boot]{boot::boot()}} will be saved in the element \code{boot_out}
+of the output.}
 }
 \value{
-The updated \code{lm} output, with the class \code{std_selected} added. It will be
-treated as a usual \code{lm} object by most functions. It has these additional elements:
+The updated \code{\link[=lm]{lm()}} output, with the class \code{std_selected} added. It will be
+treated as a usual \code{\link[=lm]{lm()}} object by most functions. These are the major
+additional elements:
 \itemize{
 \item \code{scaled}: The terms scaled.
 \item \code{centered}: The terms centered.
-\item \code{scaled_by}: The scaling factors. The value is 1 for terms not scaled.
-\item \code{centered}: The values used for centering. The value is 0 for terms not centered.
+\item \code{scaled_by}: The scaling factors. The value is 1 for terms
+not scaled.
+\item \code{centered_by}: The values used for centering. The value is 0 for
+terms not centered.
 }
 }
 \description{
-Compute the standardized moderation effect as well as the standardized coefficients for other predictors given an \code{lm} output
+Standardize, mean-center, or scale by standard deviation
+selected variables in a regression model and refit the model
 }
 \details{
-\code{\link[=std_selected]{std_selected()}} was originally developed to compute the standardized moderation effect and the standardized coefficietns for other predictors given an \code{lm} output. It has been revised such that users can be specify which variables in a regression model is mean-centered and rescaled by their
-standard deviations. If the model has interaction terms, they will be formed after the transformation, yielding the correct standardized solution for a moderated regression model. Moreover, categorical predictors will be automatically skipped in mean-centering and rescaling.
+\code{\link[=std_selected]{std_selected()}} was originally developed to compute the standardized
+moderation effect and the standardized coefficients for other predictors
+given an \code{\link[=lm]{lm()}} output (Cheung, Cheung, Lau, Hui, & Vong, 2022).
+It has been revised such that users can be specify
+which variables in a regression model is mean-centered and/or rescaled by
+their standard deviations. If the model has one or more interaction terms,
+they will be formed after the transformation, yielding the correct
+standardized solution for a moderated regression model. Moreover,
+categorical predictors will be automatically skipped in mean-centering
+and rescaling.
 
-Standardization is conducted when a variable is mean-centered and then rescaled by its standard deviation. Therefore, if the goal is to get the standardized solution of a moderated regression, users
-just instruct the function to standardize all non-categorical variables in the regression model.
+Standardization is conducted when a variable is mean-centered and then
+rescaled by its standard deviation. Therefore, if the goal is to get the
+standardized solution of a moderated regression, users
+just instruct the function to standardize all non-categorical variables
+in the regression model.
 
-This function is a wrapper of \code{\link[=std_selected]{std_selected()}}. It calls \code{\link[=std_selected]{std_selected()}} once
-for each bootstrap sample, and then compute the nonparametric bootstrapping
-percentile confidence intervals.
+This function is a wrapper of \code{\link[=std_selected]{std_selected()}}. It calls \code{\link[=std_selected]{std_selected()}}
+once
+for each bootstrap sample, and then computes the nonparametric
+bootstrap
+percentile confidence intervals (Cheung, Cheung, Lau, Hui, & Vong, 2022).
 
-This function intentionally does not have an argument for setting the seed for
-random number. Users are recommended to set the seed, e.g., using \code{\link[=set.seed]{set.seed()}}
+This function intentionally does not have an argument for setting the seed
+for
+random number. Users are recommended to set the seed, e.g., using
+\code{\link[=set.seed]{set.seed()}}
 before calling it, to ensure reproducibility.
 }
 \section{Functions}{
 \itemize{
-\item \code{std_selected}: The base function to center or scale selected variables
+\item \code{std_selected}: The base function to center or
+scale selected variables in a regression model
 
 \item \code{std_selected_boot}: A wrapper of \code{\link[=std_selected]{std_selected()}} that forms
-nonparametrc bootstrapping confidence intervals.
+nonparametric bootstrap confidence intervals.
 }}
 
 \examples{
 
 # Load a sample data set
 # It has one predictor (iv), one moderator (mod), on covariate (v1),
-# one categorial covariate (cat1) with three groups, and one dv (dv).
+# one categorical covariate (cat1) with three groups, and one dv (dv).
 dat <- test_x_1_w_1_v_1_cat1_n_500
 head(dat)
 
@@ -116,7 +142,7 @@ lm_std <- std_selected(lm_raw, to_scale = ~ .,
                                to_center = ~ .)
 summary(lm_std)
 
-\donttest{
+
 dat <- test_x_1_w_1_v_1_cat1_n_500
 head(dat)
 
@@ -124,13 +150,22 @@ head(dat)
 lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
 summary(lm_raw)
 # Standardize all variables as in std_selected above, and compute the
-# nonparametric boostrapping percentile confidence intervals.
-lm_std_boot <- std_selected_boot(lm_raw, 
-                                    to_scale = ~ .,
-                                    to_center = ~ .,
-                                    conf = .95,
-                                    nboot = 500)
-# In read analysis, nboot should be at least 2000.
+# nonparametric bootstrapping percentile confidence intervals.
+lm_std_boot <- std_selected_boot(lm_raw,
+                                 to_scale = ~ .,
+                                 to_center = ~ .,
+                                 conf = .95,
+                                 nboot = 100)
+# In real analysis, nboot should be at least 2000.
 summary(lm_std_boot)
+
 }
+\references{
+Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
+(2022) Improving an old way to measure moderation effect in standardized
+units. Advance online publication. \emph{Health Psychology}.
+\doi{10.1037/hea0001188}
+}
+\author{
+Shu Fai Cheung \url{https://orcid.org/0000-0002-9871-9448}
 }

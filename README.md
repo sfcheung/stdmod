@@ -1,12 +1,18 @@
 # stdmod: Standardized Moderation
 
-This package includes functions for computing a standardized moderation effect and forming its confidence interval by nonparametric bootstrapping correctly. It was described briefly in the following publication ([OSF project page](https://osf.io/ac8de/)) It supports moderated regression conducted by `stats::lm()` and path analysis with product term conducted by `lavaan::lavaan()`.
+This package includes functions for computing a standardized moderation effect and forming its confidence interval by nonparametric bootstrapping correctly. It was described briefly in the following publication ([OSF project page](https://osf.io/ac8de/)). It supports moderated regression conducted by `stats::lm()` and path analysis with product term conducted by `lavaan::lavaan()`.
 
-Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. *Health Psychology*. [DOI to be included].
+- Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
 
-For more information on this package, e.g., a Quick Start guide, please visit its GitHub page:
+For more information on this package, please visit its GitHub page:
 
 https://sfcheung.github.io/stdmod/
+
+## Quick Links:
+
+- `vignette("stdmod")`: A quick start on how to use `std_selected()` and `std_selected_boot()`, the two main functions.
+
+- `vignette("numerical_example_01")`: Demonstrates how `std_selected()` and `std_selected_boot()` can also be used for mean-center or standardize selected variables in any regression model, not just moderated regression models.
 
 # Installation
 

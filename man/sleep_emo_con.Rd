@@ -3,7 +3,7 @@
 \docType{data}
 \name{sleep_emo_con}
 \alias{sleep_emo_con}
-\title{A real dataset of 216 working Hong Kong adults with the following variables
+\title{A real dataset of 500 Hong Kong adults with the following variables
 case_id
 sleep_duration (in hours)
 conscientiousness
@@ -15,7 +15,7 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 sleep_emo_con
 }
 \description{
-A real dataset of 216 working Hong Kong adults with the following variables
+A real dataset of 500 Hong Kong adults with the following variables
 case_id
 sleep_duration (in hours)
 conscientiousness

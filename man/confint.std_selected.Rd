@@ -2,40 +2,78 @@
 % Please edit documentation in R/confint_stdmod.R
 \name{confint.std_selected}
 \alias{confint.std_selected}
-\title{confint method for \code{std_selected} class output}
+\title{Confidence Intervals for a 'std_selected' Class Object}
 \usage{
 \method{confint}{std_selected}(object, parm, level = 0.95, type = "lm", ...)
 }
 \arguments{
-\item{object}{The output of the class \code{std_selected}.}
+\item{object}{The output of \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.}
 
-\item{parm}{The parameters for which confidence intervals should be returned.
+\item{parm}{The parameters (coefficients) for which confidence intervals
+should be returned.
 If missing, the confidence intervals of all parameters will be
 returned.}
 
 \item{level}{The level of confidence. For the confidence intervals returned
-by \link{lm}, default is .95. For the bootstrapping confidence
-intervals, default is the level used in calling \link{std_selected_boot}.}
+by \code{\link[=lm]{lm()}}, default is .95. For the bootstrapping
+percentile confidence
+intervals, default is the level used in calling
+\code{\link[=std_selected_boot]{std_selected_boot()}}. If a level different from that in the
+original
+call is specified, \code{full_output} needs to be set in the call
+to \code{\link[=std_selected_boot]{std_selected_boot()}} such that the original bootstrap output
+is stored.}
 
-\item{type}{The type of the confidence intervals. Default is "lm",
-returned by the \link{confint} method of \link{lm}. If set to "boot",
+\item{type}{The type of the confidence intervals. Default is \code{"lm"},
+returned by the \code{\link[=confint]{confint()}} method of \code{\link[=lm]{lm()}}. If set to \code{"boot"},
 the bootstrap percentile confidence intervals are
 returned.}
 
-\item{...}{Arguments to be passed to \code{summary.lm}.}
+\item{...}{Arguments to be passed to \code{\link[=summary.lm]{summary.lm()}}.}
 }
 \value{
 A matrix of the confidence intervals.
 }
 \description{
 Return the confidence intervals of estimates
-in a \code{std_selected} class output
+in the output of \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.
 }
 \details{
-If bootstrapping is used to form the confidence interval,
+If bootstrapping is used to form the confidence interval by
+\code{\link[=std_selected_boot]{std_selected_boot()}},
 users can request the percentile confidence intervals of
 the bootstrap estimates.
 }
 \examples{
-# See examples for std_selected.
+
+# Load a sample data set
+# It has one predictor (iv), one moderator (mod), on covariate (v1),
+# one categorical covariate (cat1) with three groups, and one dv (dv).
+dat <- test_x_1_w_1_v_1_cat1_n_500
+
+# Do a moderated regression by lm
+lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+summary(lm_raw)
+
+# Standardize all variables except for categorical variables.
+# Interaction terms are formed after standardization.
+lm_std <- std_selected(lm_raw, to_scale = ~ .,
+                               to_center = ~ .)
+summary(lm_std)
+confint(lm_std)
+
+# With bootstrapping
+# nboot = 100 just for illustration. nboot >= 2000 should be used in read
+# research.
+lm_std_boot <- std_selected_boot(lm_raw, to_scale = ~ .,
+                                         to_center = ~ .,
+                                         nboot = 100)
+summary(lm_std_boot)
+confint(lm_std_boot)
+# Bootstrap percentile intervals
+confint(lm_std_boot, type = "boot")
+
+}
+\author{
+Shu Fai Cheung \url{https://orcid.org/0000-0002-9871-9448}
 }

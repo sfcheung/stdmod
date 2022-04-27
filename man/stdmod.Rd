@@ -4,7 +4,7 @@
 \name{stdmod}
 \alias{stdmod}
 \alias{stdmod_boot}
-\title{Standardized moderation effect given an \code{lm} output}
+\title{Standardized Moderation Effect Given an \code{\link[=lm]{lm()}} Output}
 \usage{
 stdmod(
   lm_out,
@@ -26,62 +26,75 @@ stdmod_boot(
 )
 }
 \arguments{
-\item{lm_out}{The output from \code{lm}.}
+\item{lm_out}{The output from \code{\link[=lm]{lm()}}.}
 
 \item{x}{The independent variable, that is, the variable with its effect
-being moderated. If supplied, it's standard deviation will be used
-for rescaling. Default is NULL.}
+being moderated. If supplied, its standard deviation will be
+used
+for rescaling. Default is \code{NULL}.}
 
-\item{w}{The moderator. If supplied, it's standard deviation will be used
-for rescaling. Default is NULL.}
+\item{w}{The moderator. If supplied, its standard deviation will be
+used
+for rescaling. Default is \code{NULL}.}
 
-\item{y}{The dependent (outcome) variable. If supplied, it's standard
+\item{y}{The dependent (outcome) variable. If supplied, its standard
 deviation will be used for rescaling. Default is NULL.}
 
-\item{x_rescale}{If TRUE, will rescale x by its SD. Default is TRUE.}
+\item{x_rescale}{If \code{TRUE}, will rescale x by its standard deviation.
+Default is \code{TRUE}.}
 
-\item{w_rescale}{If TRUE, will rescale w by its SD. Default is TRUE.}
+\item{w_rescale}{If \code{TRUE}, will rescale w by its SD. Default is TRUE.}
 
-\item{y_rescale}{If TRUE, will rescale y by its SD. Default is TRUE.}
+\item{y_rescale}{If \code{TRUE}, will rescale y by its standard deviation.
+Default is \code{TRUE}.}
 
-\item{...}{Parameters to be passed to stdmod}
+\item{...}{Parameters to be passed to \code{\link[=stdmod]{stdmod()}}.}
 
-\item{nboot}{The number of bootstrapping samples. Default is 100}
+\item{nboot}{The number of bootstrap samples. Default is 100.}
 
-\item{conf}{The level of confidence for the confidence interval. Default is .95.}
+\item{conf}{The level of confidence for the confidence interval.
+Default is .95.}
 
-\item{boot_args}{A named list of arguments to be passed to \code{boot}. Default
-is NULL.}
+\item{boot_args}{A named list of arguments to be passed to \code{\link[boot:boot]{boot::boot()}}.
+Default is \code{NULL}.}
 
-\item{full_output}{Whether the full output from \code{boot} is return. Default is
-FALSE.}
+\item{full_output}{Whether the full output from \code{\link[boot:boot]{boot::boot()}} is returned.
+Default is \code{FALSE}.}
 }
 \value{
 The standardized moderation effect.
 }
 \description{
-Compute the standardized moderation effect given an \code{lm} output.
+Compute the standardized moderation effect in a moderated
+regression model.
 }
 \details{
-Compute the standardized moderation effect given an \code{lm} output. Users specify
-the moderator, the predictor, the outcome variable, and the corresponding standardized moderation
+Compute the standardized moderation effect given an
+\code{\link[=lm]{lm()}} output using the formula from Cheung, Cheung, Lau, Hui, and Vong
+(2022). Users specify
+the moderator, the predictor, the outcome variable, and the corresponding
+standardized moderation
 effect. Users can also select which variable(s) will be standardized.
 
-\code{\link[=stdmod_boot]{stdmod_boot()}} is a wrapper of \code{\link[=stdmod]{stdmod()}}. It computes the nonparametric bootstrapping
-confidence interval of the standardized moderation effect given
-the \code{lm} output.
+\code{\link[=stdmod_boot]{stdmod_boot()}} is a wrapper of \code{\link[=stdmod]{stdmod()}}. It computes the nonparametric
+bootstrap confidence interval of the standardized moderation effect, as
+suggested by Cheung, Cheung, Lau, Hui, and Vong (2022), given
+the output of \code{\link[=lm]{lm()}}
 
-Percentile interval from \code{\link[boot:boot.ci]{boot::boot.ci()}} is returned by this function. If other types of
-confidence intervals are desired, set \code{full_output = TRUE} and use \code{\link[boot:boot.ci]{boot::boot.ci()}} on the
-element \code{boot_out} in the output of this function.
+Percentile interval from \code{\link[boot:boot.ci]{boot::boot.ci()}} is returned by this function.
+If other types of
+confidence intervals are desired, set \code{full_output = TRUE} and use
+\code{\link[boot:boot.ci]{boot::boot.ci()}} on the element \code{boot_out} in the output of this
+function.
 }
 \section{Functions}{
 \itemize{
-\item \code{stdmod}: The base function compute standardized moderation effect
+\item \code{stdmod}: The base function for computing standardized
+moderation effect
 
 \item \code{stdmod_boot}: A wrapper of \code{\link[=stdmod]{stdmod()}} that computes the nonparametric
-bootstrapping confidence interval of the standardized
-moderation effect
+bootstrap confidence interval of the standardized
+moderation effect.
 }}
 
 \examples{
@@ -95,7 +108,7 @@ dat <- test_x_1_w_1_v_2_n_500
 lm_raw <- lm(dv ~ iv*mod + v1 + v2, dat)
 summary(lm_raw)
 
-# The standard deivations of iv, dv, and mod:
+# The standard deviations of iv, dv, and mod:
 sds <- apply(dat, 2, sd)
 sds
 
@@ -108,39 +121,43 @@ stdmod_xyw
 coef(lm_raw)["iv:mod"] * sds["iv"] * sds["mod"] / sds["dv"]
 
 # Standardize only the iv, i.e., do not standardized dv and the moderator:
-stdmod_x <- stdmod(lm_raw, x = iv, y = dv, w = mod, 
+stdmod_x <- stdmod(lm_raw, x = iv, y = dv, w = mod,
                    x_rescale = TRUE,  y_rescale = FALSE, w_rescale = FALSE)
 stdmod_x
 # Check against self-computed moderation effect with only iv standardized:
 coef(lm_raw)["iv:mod"] * sds["iv"]
 
 
-\donttest{
-
 dat <- test_x_1_w_1_v_2_n_500
 # Do regression as usual:
 lm_raw <- lm(dv ~ iv*mod + v1 + v2, dat)
 
-# Compute the standardized moderation effect, generates its confidence interval 
-# by nonparametric bootstrappinng.
+# Compute the standardized moderation effect.
+# Form its confidence interval by nonparametric bootstrapping.
 set.seed(85740917)
-stdmod_xyw_boot <- stdmod_boot(lm_raw, x = iv, w = mod, y = dv, nboot = 500)
+stdmod_xyw_boot <- stdmod_boot(lm_raw, x = iv, w = mod, y = dv, nboot = 100)
+# In real analysis, nboot should be at least 2000.
 
 # Print the ci
 stdmod_xyw_boot$ci
 
 # Repeat the analysis but keep the results from boot:
 set.seed(85740917)
-stdmod_xyw_boot <- stdmod_boot(lm_raw, x = iv, w = mod, y = dv, 
-                                 nboot = 500, full_output = TRUE)
+stdmod_xyw_boot <- stdmod_boot(lm_raw, x = iv, w = mod, y = dv,
+                                 nboot = 200, full_output = TRUE)
+# In real analysis, nboot should be at least 2000.
 
-# Print the 95\% percential confidence interval
+# Print the 95\% percentile confidence interval
 stdmod_xyw_boot$ci
 
-# Compute the confidence interval with other settings using boot.ci.
-# For example, request the 90\% BCa confidence interval:
-library(boot)
-boot.ci(stdmod_xyw_boot$boot_out, conf = .90, type = "bca")
-} 
 
+}
+\references{
+Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
+(2022) Improving an old way to measure moderation effect in standardized
+units. Advance online publication. \emph{Health Psychology}.
+\doi{10.1037/hea0001188}
+}
+\author{
+Shu Fai Cheung \url{https://orcid.org/0000-0002-9871-9448}
 }

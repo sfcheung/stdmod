@@ -1,13 +1,12 @@
 ---
-title: "A Quick Start Guide on Using std_selected"
+title: "A Quick Start Guide on Using std_selected()"
 author: "Shu Fai Cheung"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{A Quick Start Guide on Using std_selected}
+  %\VignetteIndexEntry{A Quick Start Guide on Using std_selected()}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  %\VignetteDepends{magrittr}
 ---
 
 ```{r, include = FALSE}
@@ -113,13 +112,14 @@ lm_stdall <- std_selected(lm_out,
 summary(lm_stdall)
 ```
 
-The **standardized moderation effect** is significant, B =
+The coefficient of the product term, which naturally can be called the  
+**standardized moderation effect**, is significant, B =
 `r formatC(coef(lm_stdall)["emot:cons"], 4, format = "f")`.
 For each one *standard deviation* increase of conscientiousness score, the
 **standardized effect** of emotional stability decreases by
 `r formatC(-1 * coef(lm_stdall)["emot:cons"], 4, format = "f")`.
 
-## Nonparametric Bootstrapping Confidence Intervals
+## Nonparametric Bootstrap Confidence Intervals
 
 The confidence intervals based on OLS regression fitted to the standardized
 variables do not take into account the sampling variation of
@@ -127,7 +127,7 @@ the sample means and standard deviations. Cheung, Cheung, Lau, Hui,
 and Vong (2022) suggest using nonparametric bootstrapping, with standardization conducted
 in each bootstrap sample.
 
-This can be done by `std_selected_boot()` instead of `std_selected()` and add
+This can be done by `std_selected_boot()` instead of `std_selected()`, using
 `nboot` to specify the number of bootstrap samples:
 
 ```{r echo = FALSE}
@@ -186,7 +186,7 @@ For each one *standard deviation* increase of conscientiousness score, the
 *partially* standardized effect of emotional stability decreases by
 `r formatC(-1 * coef(lm_std1)["emot:cons"], 4, format = "f")`.
 
-## Nonparametric Bootstrapping Confidence Intervals
+## Nonparametric Bootstrap Confidence Intervals
 
 The function `std_selected_boot()` can also be used to form the nonparametric
 bootstrap confidence interval when only some of the variables are standardized:
@@ -234,4 +234,4 @@ can be used when doing bootstrapping.
 
 Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022)
 Improving an old way to measure moderation effect in standardized units.
-Advance online publication. *Health Psychology*. [DOI to be included].
+Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.

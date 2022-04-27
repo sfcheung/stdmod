@@ -1,10 +1,10 @@
 ---
-title: "Numerical Example - std_selected"
+title: "Numerical Example - std_selected()"
 author: "Shu Fai Cheung and David Weng Ngai Vong"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Numerical Example - std_selected}
+  %\VignetteIndexEntry{Numerical Example - std_selected()}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width  = 6, 
+  fig.width  = 6,
   fig.height = 6
 )
 options(width = 132)
@@ -68,8 +68,8 @@ emotional stability on sleep duration.
 To know the effect of emotional stability when conscientiousness is equal to its
 mean, we can center conscientiousness by its mean in the data and redo the
 moderated regression. Instead of creating the new variable and rerun the
-regression, we can pass the previous output to `std_selected()` and specify the
-variables to be mean centered.
+regression, we can pass the `lm()` output to `std_selected()` and specify the
+variables to be mean centered:
 
 
 ```{r}
@@ -98,7 +98,7 @@ visreg(lm_xw_centered, "emotional_stability", "conscientiousness",
 
 # Standardize Both Conscientiousness and Emotional Stability
 
-To standardize a variablex we first mean center it and then scale it by its
+To standardize a variable we first mean center it and then scale it by its
 standard deviation. Scaling is done by listing the variable on `to_scale`.
 The input format is identical to that of `to_center`.
 
@@ -114,7 +114,7 @@ visreg(lm_xw_std, "emotional_stability", "conscientiousness",
 
 # Standardize Conscientiousness, Emotional Stability, and Sleep Duration
 
-Note that we can also mean center or standardize the dependent variable. We
+We can also mean center or standardize the dependent variable. We
 just add the variable to the right hand side of `~` in `to_center` and
 `to_scale` as appropriate.
 
@@ -130,7 +130,7 @@ visreg(lm_xwy_std, "emotional_stability", "conscientiousness",
 # Standardize All Variables
 
 If we want to standardize all variables, we can use `~ .` as a shortcut. Note
-that `std_selected()` will skip categorical variables (i.e., factors or string
+that `std_selected()` will automatically skip categorical variables (i.e., factors or string
 variables in the regression model of `lm()`).
 
 ```{r}
@@ -151,18 +151,20 @@ lm_usual_std <- lm.beta(lm_raw)
 summary(lm_usual_std)
 ```
 
-# Standardize Conscientiousness, Emotional Stability, and Sleep_Duration: With Nonparametric Bootstrapping Confidence Interval
+# Nonparametric Bootstrap Confidence Interval For Betas
 
 It has been shown (e.g., Yuan & Chan, 2011) that the standard errors of
-standardized regression coefficients computed just by rescaling the variables
+standardized regression coefficients (betas) computed just by rescaling the variables
 are biased, and consequently the confidence intervals are also invalid. The
 function `std_selected_boot()` is a version of `std_selected()` that also
-report the confidence interval of the regression coefficients when rescaling is conducted.
+report the confidence interval of the regression coefficients when rescaling is conducted,
+using nonparametric bootstrapping as suggested by Cheung, Cheung, Lau, Hui, & Vong (2022).
 
 We use the same example above that standardizes emotional stability,
 conscientiousness, and sleep duration, to illustrate this function.
 The argument `nboot` specifies the number of nonparametric bootstrap samples.
-Currently, only the 95% confidence intervals will be reported.
+The level of confidence set by `conf`. The default is .95, denoting a 95%
+confidence. If this is the desired level, this argument can be omitted.
 
 ```{r echo = FALSE}
 if (file.exists("eg_lm_xwy_std_ci.rds")) {
@@ -178,7 +180,7 @@ if (file.exists("eg_lm_xwy_std_ci.rds")) {
 ```
 
 ```{r eval = FALSE}
-lm_xwy_std_ci <- std_selected_boot(lm_raw, 
+lm_xwy_std_ci <- std_selected_boot(lm_raw,
         to_center = ~ emotional_stability + conscientiousness + sleep_duration,
         to_scale  = ~ emotional_stability + conscientiousness + sleep_duration,
         nboot = 2000)
@@ -193,15 +195,19 @@ tmp <- summary(lm_xwy_std_ci)$coefficients
 ```
 
 The standardized moderation effect is `r formatC(tmp["emotional_stability:conscientiousness", "Estimate"], 4, format = "f")`
-, and the 95% nonparametric bootstrapping confidence interval is 
+, and the 95% nonparametric bootstrap percentile confidence interval is 
 `r formatC(tmp["emotional_stability:conscientiousness", "CI Lower"], 4, format = "f")` to
 `r formatC(tmp["emotional_stability:conscientiousness", "CI Upper"], 4, format = "f")`.
 
-Note: As a side product, the nonparametric Bootstrapping confidence of the
+Note: As a side product, the nonparametric bootstrap confidence of the
 other coefficients are also reported. They can be used for other variables that
 are standardized in the same model, whether they are involved in the moderation or not.
 
 # Reference
+
+Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022)
+Improving an old way to measure moderation effect in standardized units.
+Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
 
 Yuan, K.-H., & Chan, W. (2011). Biases and standard errors of standardized
 regression coefficients. *Psychometrika, 76*(4), 670–690. https://doi.org/10.1007/s11336-011-9224-6

@@ -1,6 +1,6 @@
 Package: stdmod
 Title: Standardized Moderation Effect and Its Confidence Interval
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: 
     c(person(given = "Shu Fai",
            family = "Cheung",
@@ -9,12 +9,10 @@ Authors@R:
            comment = c(ORCID = "0000-0002-9871-9448")),
       person(given = "David Weng Ngai",
            family = "Vong",
-           role = c("ctb"),
-           email = "ckwvong@gmail.com")
-           )
+           role = c("ctb")))
 Description: Functions for computing a standardized moderation
              effect and forming its confidence interval by
-             nonparametric bootstrapping correctly. Supports
+             nonparametric bootstrap. Supports
              outputs from 'stats::lm()' and 'lavaan::lavaan()'.
 URL: https://sfcheung.github.io/stdmod/
 BugReports: https://github.com/sfcheung/stdmod/issues
