@@ -14,7 +14,7 @@
 <script src="pkgdown.js"></script><meta property="og:title" content="Standardized Moderation Effect and Its Confidence Interval">
 <meta property="og:description" content="Functions for computing a standardized moderation
              effect and forming its confidence interval by
-             nonparametric bootstrapping correctly. Supports
+             nonparametric bootstrap. Supports
              outputs from stats::lm() and lavaan::lavaan().">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
       </span>
     </div>
 
@@ -56,13 +56,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/numerical_example_01.html">Numerical Example - std_selected</a>
+      <a href="articles/numerical_example_01.html">Numerical Example - std_selected()</a>
     </li>
     <li>
-      <a href="articles/numerical_example_02.html">Compute the Standardized Moderation Effect by std_selected</a>
+      <a href="articles/numerical_example_02.html">Compute the Standardized Moderation Effect by std_selected()</a>
     </li>
     <li>
-      <a href="articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan</a>
+      <a href="articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan()</a>
     </li>
   </ul>
 </li>
@@ -93,10 +93,18 @@
 <div class="section level1">
 <div class="page-header"><h1 id="stdmod-standardized-moderation">stdmod: Standardized Moderation<a class="anchor" aria-label="anchor" href="#stdmod-standardized-moderation"></a>
 </h1></div>
-<p>This package includes functions for computing a standardized moderation effect and forming its confidence interval by nonparametric bootstrapping correctly. It was described briefly in the following publication (<a href="https://osf.io/ac8de/" class="external-link">OSF project page</a>) It supports moderated regression conducted by <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code> and path analysis with product term conducted by <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan::lavaan()</a></code>.</p>
-<p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. <em>Health Psychology</em>. [DOI to be included].</p>
-<p>For more information on this package, e.g., a Quick Start guide, please visit its GitHub page:</p>
+<p>This package includes functions for computing a standardized moderation effect and forming its confidence interval by nonparametric bootstrapping correctly. It was described briefly in the following publication (<a href="https://osf.io/ac8de/" class="external-link">OSF project page</a>). It supports moderated regression conducted by <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code> and path analysis with product term conducted by <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan::lavaan()</a></code>.</p>
+<ul><li>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. <em>Health Psychology</em>. <a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</li></ul>
+<p>For more information on this package, please visit its GitHub page:</p>
 <p><a href="https://sfcheung.github.io/stdmod/" class="external-link uri">https://sfcheung.github.io/stdmod/</a></p>
+<div class="section level2">
+<h2 id="quick-links">Quick Links:<a class="anchor" aria-label="anchor" href="#quick-links"></a>
+</h2>
+<ul>
+<li><p><code><a href="articles/stdmod.html">vignette("stdmod")</a></code>: A quick start on how to use <code><a href="reference/std_selected.html">std_selected()</a></code> and <code><a href="reference/std_selected.html">std_selected_boot()</a></code>, the two main functions.</p></li>
+<li><p><code><a href="articles/numerical_example_01.html">vignette("numerical_example_01")</a></code>: Demonstrates how <code><a href="reference/std_selected.html">std_selected()</a></code> and <code><a href="reference/std_selected.html">std_selected_boot()</a></code> can also be used for mean-center or standardize selected variables in any regression model, not just moderated regression models.</p></li>
+</ul>
+</div>
 </div>
 <div class="section level1">
 <h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>

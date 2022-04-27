@@ -31,10 +31,16 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/add1.std_selected.html</loc>
+  </url>
+  <url>
     <loc>/reference/confint.std_selected.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/print.std_selected.html</loc>
   </url>
   <url>
     <loc>/reference/print.summary.std_selected.html</loc>
@@ -59,6 +65,9 @@
   </url>
   <url>
     <loc>/reference/test_x_1_w_1_v_2_n_500.html</loc>
+  </url>
+  <url>
+    <loc>/reference/update.std_selected.html</loc>
   </url>
   <url>
     <loc>/reference/vcov.std_selected.html</loc>

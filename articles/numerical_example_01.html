@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Numerical Example - std_selected • stdmod</title>
+<title>Numerical Example - std_selected() • stdmod</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Numerical Example - std_selected">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Numerical Example - std_selected()">
 <meta property="og:description" content="stdmod">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
       </span>
     </div>
 
@@ -53,13 +53,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/numerical_example_01.html">Numerical Example - std_selected</a>
+      <a href="../articles/numerical_example_01.html">Numerical Example - std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by std_selected</a>
+      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan</a>
+      <a href="../articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan()</a>
     </li>
   </ul>
 </li>
@@ -87,7 +87,7 @@
       </header><script src="numerical_example_01_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Numerical Example - std_selected</h1>
+      <h1 data-toc-skip>Numerical Example - std_selected()</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung and David Weng Ngai Vong</h4>
             
             <h4 data-toc-skip class="date">2022-04-27</h4>
@@ -165,7 +165,7 @@
 <div class="section level2">
 <h2 id="mean-center-conscientiousness">Mean Center Conscientiousness<a class="anchor" aria-label="anchor" href="#mean-center-conscientiousness"></a>
 </h2>
-<p>To know the effect of emotional stability when conscientiousness is equal to its mean, we can center conscientiousness by its mean in the data and redo the moderated regression. Instead of creating the new variable and rerun the regression, we can pass the previous output to <code><a href="../reference/std_selected.html">std_selected()</a></code> and specify the variables to be mean centered.</p>
+<p>To know the effect of emotional stability when conscientiousness is equal to its mean, we can center conscientiousness by its mean in the data and redo the moderated regression. Instead of creating the new variable and rerun the regression, we can pass the <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> output to <code><a href="../reference/std_selected.html">std_selected()</a></code> and specify the variables to be mean centered:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_w_centered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">conscientiousness</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_w_centered</span><span class="op">)</span>
@@ -262,7 +262,7 @@
 <div class="section level2">
 <h2 id="standardize-both-conscientiousness-and-emotional-stability">Standardize Both Conscientiousness and Emotional Stability<a class="anchor" aria-label="anchor" href="#standardize-both-conscientiousness-and-emotional-stability"></a>
 </h2>
-<p>To standardize a variablex we first mean center it and then scale it by its standard deviation. Scaling is done by listing the variable on <code>to_scale</code>. The input format is identical to that of <code>to_center</code>.</p>
+<p>To standardize a variable we first mean center it and then scale it by its standard deviation. Scaling is done by listing the variable on <code>to_scale</code>. The input format is identical to that of <code>to_center</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_xw_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>,
                 to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span>,
@@ -312,7 +312,7 @@
 <div class="section level2">
 <h2 id="standardize-conscientiousness-emotional-stability-and-sleep-duration">Standardize Conscientiousness, Emotional Stability, and Sleep Duration<a class="anchor" aria-label="anchor" href="#standardize-conscientiousness-emotional-stability-and-sleep-duration"></a>
 </h2>
-<p>Note that we can also mean center or standardize the dependent variable. We just add the variable to the right hand side of <code>~</code> in <code>to_center</code> and <code>to_scale</code> as appropriate.</p>
+<p>We can also mean center or standardize the dependent variable. We just add the variable to the right hand side of <code>~</code> in <code>to_center</code> and <code>to_scale</code> as appropriate.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_xwy_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>,
                 to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span> <span class="op">+</span> <span class="va">sleep_duration</span>,
@@ -362,7 +362,7 @@
 <div class="section level2">
 <h2 id="standardize-all-variables">Standardize All Variables<a class="anchor" aria-label="anchor" href="#standardize-all-variables"></a>
 </h2>
-<p>If we want to standardize all variables, we can use <code>~ .</code> as a shortcut. Note that <code><a href="../reference/std_selected.html">std_selected()</a></code> will skip categorical variables (i.e., factors or string variables in the regression model of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>).</p>
+<p>If we want to standardize all variables, we can use <code>~ .</code> as a shortcut. Note that <code><a href="../reference/std_selected.html">std_selected()</a></code> will automatically skip categorical variables (i.e., factors or string variables in the regression model of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_all_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,
                                    to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span>
@@ -440,12 +440,12 @@
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="standardize-conscientiousness-emotional-stability-and-sleep_duration-with-nonparametric-bootstrapping-confidence-interval">Standardize Conscientiousness, Emotional Stability, and Sleep_Duration: With Nonparametric Bootstrapping Confidence Interval<a class="anchor" aria-label="anchor" href="#standardize-conscientiousness-emotional-stability-and-sleep_duration-with-nonparametric-bootstrapping-confidence-interval"></a>
+<h2 id="nonparametric-bootstrap-confidence-interval-for-betas">Nonparametric Bootstrap Confidence Interval For Betas<a class="anchor" aria-label="anchor" href="#nonparametric-bootstrap-confidence-interval-for-betas"></a>
 </h2>
-<p>It has been shown (e.g., Yuan &amp; Chan, 2011) that the standard errors of standardized regression coefficients computed just by rescaling the variables are biased, and consequently the confidence intervals are also invalid. The function <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> is a version of <code><a href="../reference/std_selected.html">std_selected()</a></code> that also report the confidence interval of the regression coefficients when rescaling is conducted.</p>
-<p>We use the same example above that standardizes emotional stability, conscientiousness, and sleep duration, to illustrate this function. The argument <code>nboot</code> specifies the number of nonparametric bootstrap samples. Currently, only the 95% confidence intervals will be reported.</p>
+<p>It has been shown (e.g., Yuan &amp; Chan, 2011) that the standard errors of standardized regression coefficients (betas) computed just by rescaling the variables are biased, and consequently the confidence intervals are also invalid. The function <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> is a version of <code><a href="../reference/std_selected.html">std_selected()</a></code> that also report the confidence interval of the regression coefficients when rescaling is conducted, using nonparametric bootstrapping as suggested by Cheung, Cheung, Lau, Hui, &amp; Vong (2022).</p>
+<p>We use the same example above that standardizes emotional stability, conscientiousness, and sleep duration, to illustrate this function. The argument <code>nboot</code> specifies the number of nonparametric bootstrap samples. The level of confidence set by <code>conf</code>. The default is .95, denoting a 95% confidence. If this is the desired level, this argument can be omitted.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_xwy_std_ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_raw</span>, 
+<code class="sourceCode R"><span class="va">lm_xwy_std_ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_raw</span>,
         to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span> <span class="op">+</span> <span class="va">sleep_duration</span>,
         to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span> <span class="op">+</span> <span class="va">sleep_duration</span>,
         nboot <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></code></pre></div>
@@ -494,12 +494,13 @@
 <span class="co">#&gt; Note:</span>
 <span class="co">#&gt; - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
 <span class="co">#&gt; - Std. Error are standard errors in the original analysis, not bootstrap SEs.</span></code></pre></div>
-<p>The standardized moderation effect is -0.1083 , and the 95% nonparametric bootstrapping confidence interval is -0.2005 to -0.0077.</p>
-<p>Note: As a side product, the nonparametric Bootstrapping confidence of the other coefficients are also reported. They can be used for other variables that are standardized in the same model, whether they are involved in the moderation or not.</p>
+<p>The standardized moderation effect is -0.1083 , and the 95% nonparametric bootstrap percentile confidence interval is -0.2005 to -0.0077.</p>
+<p>Note: As a side product, the nonparametric bootstrap confidence of the other coefficients are also reported. They can be used for other variables that are standardized in the same model, whether they are involved in the moderation or not.</p>
 </div>
 <div class="section level2">
 <h2 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
 </h2>
+<p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. <em>Health Psychology</em>. <a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</p>
 <p>Yuan, K.-H., &amp; Chan, W. (2011). Biases and standard errors of standardized regression coefficients. <em>Psychometrika, 76</em>(4), 670–690. <a href="https://doi.org/10.1007/s11336-011-9224-6" class="external-link uri">https://doi.org/10.1007/s11336-011-9224-6</a></p>
 </div>
   </div>

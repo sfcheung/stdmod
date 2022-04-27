@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Quick Start Guide on Using std_selected • stdmod</title>
+<title>A Quick Start Guide on Using std_selected() • stdmod</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="A Quick Start Guide on Using std_selected">
+<script src="../pkgdown.js"></script><meta property="og:title" content="A Quick Start Guide on Using std_selected()">
 <meta property="og:description" content="stdmod">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
       </span>
     </div>
 
@@ -53,13 +53,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/numerical_example_01.html">Numerical Example - std_selected</a>
+      <a href="../articles/numerical_example_01.html">Numerical Example - std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by std_selected</a>
+      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan</a>
+      <a href="../articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan()</a>
     </li>
   </ul>
 </li>
@@ -87,7 +87,7 @@
       </header><script src="stdmod_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>A Quick Start Guide on Using std_selected</h1>
+      <h1 data-toc-skip>A Quick Start Guide on Using std_selected()</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung</h4>
             
             <h4 data-toc-skip class="date">2022-04-27</h4>
@@ -222,12 +222,12 @@
 <span class="co">#&gt; Residual standard error: 0.9771 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span></code></pre></div>
-<p>The <strong>standardized moderation effect</strong> is significant, B = -0.1083. For each one <em>standard deviation</em> increase of conscientiousness score, the <strong>standardized effect</strong> of emotional stability decreases by 0.1083.</p>
+<p>The coefficient of the product term, which naturally can be called the<br><strong>standardized moderation effect</strong>, is significant, B = -0.1083. For each one <em>standard deviation</em> increase of conscientiousness score, the <strong>standardized effect</strong> of emotional stability decreases by 0.1083.</p>
 <div class="section level3">
-<h3 id="nonparametric-bootstrapping-confidence-intervals">Nonparametric Bootstrapping Confidence Intervals<a class="anchor" aria-label="anchor" href="#nonparametric-bootstrapping-confidence-intervals"></a>
+<h3 id="nonparametric-bootstrap-confidence-intervals">Nonparametric Bootstrap Confidence Intervals<a class="anchor" aria-label="anchor" href="#nonparametric-bootstrap-confidence-intervals"></a>
 </h3>
 <p>The confidence intervals based on OLS regression fitted to the standardized variables do not take into account the sampling variation of the sample means and standard deviations. Cheung, Cheung, Lau, Hui, and Vong (2022) suggest using nonparametric bootstrapping, with standardization conducted in each bootstrap sample.</p>
-<p>This can be done by <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> instead of <code><a href="../reference/std_selected.html">std_selected()</a></code> and add <code>nboot</code> to specify the number of bootstrap samples:</p>
+<p>This can be done by <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> instead of <code><a href="../reference/std_selected.html">std_selected()</a></code>, using <code>nboot</code> to specify the number of bootstrap samples:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">870432</span><span class="op">)</span>
 <span class="va">lm_stdall_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_out</span>,
@@ -329,7 +329,7 @@
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span></code></pre></div>
 <p>The <em>partially</em> standardized moderation effect is significant, B = -0.1534. For each one <em>standard deviation</em> increase of conscientiousness score, the <em>partially</em> standardized effect of emotional stability decreases by 0.1534.</p>
 <div class="section level3">
-<h3 id="nonparametric-bootstrapping-confidence-intervals-1">Nonparametric Bootstrapping Confidence Intervals<a class="anchor" aria-label="anchor" href="#nonparametric-bootstrapping-confidence-intervals-1"></a>
+<h3 id="nonparametric-bootstrap-confidence-intervals-1">Nonparametric Bootstrap Confidence Intervals<a class="anchor" aria-label="anchor" href="#nonparametric-bootstrap-confidence-intervals-1"></a>
 </h3>
 <p>The function <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> can also be used to form the nonparametric bootstrap confidence interval when only some of the variables are standardized:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -393,7 +393,7 @@
 <div class="section level2">
 <h2 id="references">Reference(s)<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. <em>Health Psychology</em>. [DOI to be included].</p>
+<p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. <em>Health Psychology</em>. <a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</p>
 </div>
   </div>
 
