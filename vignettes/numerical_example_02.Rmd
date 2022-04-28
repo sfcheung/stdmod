@@ -55,7 +55,10 @@ we conduct a moderated regression as follow:
 lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
 summary(lm_out)
 visreg(lm_out, "emotional_stability", "conscientiousness",
-            breaks = 2, overlay = TRUE)
+       breaks = 2, overlay = TRUE,
+       partial = FALSE,
+       band = FALSE,
+       rug = FALSE)
 ```
 
 The results show that conscientiousness significantly moderates the effect of
@@ -94,7 +97,10 @@ effect using the standardized solution.
 
 ```{r}
 visreg(lm_stdall, "emotional_stability", "conscientiousness",
-       breaks = 2, overlay = TRUE)
+       breaks = 2, overlay = TRUE,
+       partial = FALSE,
+       band = FALSE,
+       rug = FALSE)
 ```
 
 # The Usual (Incorrect) Standardized Solution

@@ -57,7 +57,10 @@ Therefore, we conduct a moderated regression as follow:
 lm_raw <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
 summary(lm_raw)
 visreg(lm_raw, "emotional_stability", "conscientiousness",
-            breaks = 2, overlay = TRUE)
+       breaks = 2, overlay = TRUE,
+       partial = FALSE,
+       band = FALSE,
+       rug = FALSE)
 ```
 
 The results show that conscientiousness significantly moderates the effect of
@@ -76,7 +79,10 @@ variables to be mean centered:
 lm_w_centered <- std_selected(lm_raw, to_center = ~ conscientiousness)
 summary(lm_w_centered)
 visreg(lm_w_centered, "emotional_stability", "conscientiousness",
-            breaks = 2, overlay = TRUE)
+       breaks = 2, overlay = TRUE,
+       partial = FALSE,
+       band = FALSE,
+       rug = FALSE)
 ```
 
 The argument for meaning centering is `to_center`. The variable is specified
@@ -93,7 +99,10 @@ placed after `~` and joined by `+`.
 lm_xw_centered <- std_selected(lm_raw, to_center = ~ emotional_stability + conscientiousness)
 summary(lm_xw_centered)
 visreg(lm_xw_centered, "emotional_stability", "conscientiousness",
-            breaks = 2, overlay = TRUE)
+       breaks = 2, overlay = TRUE,
+       partial = FALSE,
+       band = FALSE,
+       rug = FALSE)
 ```
 
 # Standardize Both Conscientiousness and Emotional Stability
@@ -109,7 +118,10 @@ lm_xw_std <- std_selected(lm_raw,
                 to_scale  = ~ emotional_stability + conscientiousness)
 summary(lm_xw_std)
 visreg(lm_xw_std, "emotional_stability", "conscientiousness",
-            breaks = 2, overlay = TRUE)
+       breaks = 2, overlay = TRUE,
+       partial = FALSE,
+       band = FALSE,
+       rug = FALSE)
 ```
 
 # Standardize Conscientiousness, Emotional Stability, and Sleep Duration
@@ -124,7 +136,10 @@ lm_xwy_std <- std_selected(lm_raw,
                 to_scale  = ~ emotional_stability + conscientiousness + sleep_duration)
 summary(lm_xwy_std)
 visreg(lm_xwy_std, "emotional_stability", "conscientiousness",
-            breaks = 2, overlay = TRUE)
+       breaks = 2, overlay = TRUE,
+       partial = FALSE,
+       band = FALSE,
+       rug = FALSE)
 ```
 
 # Standardize All Variables
@@ -138,7 +153,10 @@ lm_all_std <- std_selected(lm_raw, to_center = ~ .,
                                    to_scale  = ~ .)
 summary(lm_all_std)
 visreg(lm_all_std, "emotional_stability", "conscientiousness",
-            breaks = 2, overlay = TRUE)
+       breaks = 2, overlay = TRUE,
+       partial = FALSE,
+       band = FALSE,
+       rug = FALSE)
 ```
 
 # The Usual Standardized Solution
