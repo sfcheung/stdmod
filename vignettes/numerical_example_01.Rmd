@@ -29,7 +29,6 @@ model is used as an example.
 
 ```{r setup}
 library(stdmod)
-library(visreg) # For visualizing the moderation effect
 library(lm.beta) # For generating the typical standardized solution
 ```
 
@@ -56,15 +55,25 @@ Therefore, we conduct a moderated regression as follow:
 ```{r mod_reg}
 lm_raw <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
 summary(lm_raw)
-visreg(lm_raw, "emotional_stability", "conscientiousness",
-       breaks = 2, overlay = TRUE,
-       partial = FALSE,
-       band = FALSE,
-       rug = FALSE)
 ```
 
 The results show that conscientiousness significantly moderates the effect of
 emotional stability on sleep duration.
+
+This package has a simple function, `plotmod()`, for generating a typical plot
+of the moderation effect:
+
+```{r}
+plotmod(lm_raw,
+        x = "emotional_stability",
+        w = "conscientiousness",
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")
+```
+
+The function `plotmod()` also prints the conditional effects of the predictor,
+emotional stability in this example.
 
 # Mean Center Conscientiousness
 
@@ -78,11 +87,12 @@ variables to be mean centered:
 ```{r}
 lm_w_centered <- std_selected(lm_raw, to_center = ~ conscientiousness)
 summary(lm_w_centered)
-visreg(lm_w_centered, "emotional_stability", "conscientiousness",
-       breaks = 2, overlay = TRUE,
-       partial = FALSE,
-       band = FALSE,
-       rug = FALSE)
+plotmod(lm_w_centered,
+        x = "emotional_stability",
+        w = "conscientiousness",
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")
 ```
 
 The argument for meaning centering is `to_center`. The variable is specified
@@ -98,11 +108,12 @@ placed after `~` and joined by `+`.
 ```{r}
 lm_xw_centered <- std_selected(lm_raw, to_center = ~ emotional_stability + conscientiousness)
 summary(lm_xw_centered)
-visreg(lm_xw_centered, "emotional_stability", "conscientiousness",
-       breaks = 2, overlay = TRUE,
-       partial = FALSE,
-       band = FALSE,
-       rug = FALSE)
+plotmod(lm_xw_centered,
+        x = "emotional_stability",
+        w = "conscientiousness",
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")
 ```
 
 # Standardize Both Conscientiousness and Emotional Stability
@@ -117,12 +128,16 @@ lm_xw_std <- std_selected(lm_raw,
                 to_center = ~ emotional_stability + conscientiousness,
                 to_scale  = ~ emotional_stability + conscientiousness)
 summary(lm_xw_std)
-visreg(lm_xw_std, "emotional_stability", "conscientiousness",
-       breaks = 2, overlay = TRUE,
-       partial = FALSE,
-       band = FALSE,
-       rug = FALSE)
+plotmod(lm_xw_std,
+        x = "emotional_stability",
+        w = "conscientiousness",
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")
 ```
+
+The function `plotmod()` automatically checks whether a variable is
+standardized. If yes, it will report this in the plot.
 
 # Standardize Conscientiousness, Emotional Stability, and Sleep Duration
 
@@ -135,11 +150,12 @@ lm_xwy_std <- std_selected(lm_raw,
                 to_center = ~ emotional_stability + conscientiousness + sleep_duration,
                 to_scale  = ~ emotional_stability + conscientiousness + sleep_duration)
 summary(lm_xwy_std)
-visreg(lm_xwy_std, "emotional_stability", "conscientiousness",
-       breaks = 2, overlay = TRUE,
-       partial = FALSE,
-       band = FALSE,
-       rug = FALSE)
+plotmod(lm_xwy_std,
+        x = "emotional_stability",
+        w = "conscientiousness",
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")
 ```
 
 # Standardize All Variables
@@ -152,11 +168,12 @@ variables in the regression model of `lm()`).
 lm_all_std <- std_selected(lm_raw, to_center = ~ .,
                                    to_scale  = ~ .)
 summary(lm_all_std)
-visreg(lm_all_std, "emotional_stability", "conscientiousness",
-       breaks = 2, overlay = TRUE,
-       partial = FALSE,
-       band = FALSE,
-       rug = FALSE)
+plotmod(lm_all_std,
+        x = "emotional_stability",
+        w = "conscientiousness",
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")
 ```
 
 # The Usual Standardized Solution
@@ -228,4 +245,4 @@ Improving an old way to measure moderation effect in standardized units.
 Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
 
 Yuan, K.-H., & Chan, W. (2011). Biases and standard errors of standardized
-regression coefficients. *Psychometrika, 76*(4), 670–690. https://doi.org/10.1007/s11336-011-9224-6
+regression coefficients. *Psychometrika, 76*(4), 670-690. https://doi.org/10.1007/s11336-011-9224-6

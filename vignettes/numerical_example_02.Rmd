@@ -27,7 +27,6 @@ This document demonstrates how to use `std_selected()` to compute the correct st
 
 ```{r setup}
 library(stdmod) # For computing the standardized moderation effect conveniently
-library(visreg) # For visualizing the moderation effect
 library(lm.beta) # For generating the typical standardized solution
 ```
 
@@ -54,11 +53,12 @@ we conduct a moderated regression as follow:
 ```{r mod_reg}
 lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
 summary(lm_out)
-visreg(lm_out, "emotional_stability", "conscientiousness",
-       breaks = 2, overlay = TRUE,
-       partial = FALSE,
-       band = FALSE,
-       rug = FALSE)
+plotmod(lm_out,
+        x = "emotional_stability",
+        w = "conscientiousness",
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")
 ```
 
 The results show that conscientiousness significantly moderates the effect of
@@ -93,15 +93,20 @@ deviation increase of `conscientiousness`. Naturally, this can be called the
 
 The output of `std_selected()` can be passed to other functions that accept the
 output of `lm()`. For example, we can use `visreg()` to visualize the moderation
-effect using the standardized solution.
+effect using the standardized solution. This package also has a simple function, `plotmod()`, for generating a typical plot
+of the moderation effect:
 
 ```{r}
-visreg(lm_stdall, "emotional_stability", "conscientiousness",
-       breaks = 2, overlay = TRUE,
-       partial = FALSE,
-       band = FALSE,
-       rug = FALSE)
+plotmod(lm_stdall,
+        x = "emotional_stability",
+        w = "conscientiousness",
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")
 ```
+
+The function `plotmod()` also prints the conditional effects of the predictor,
+emotional stability in this example.
 
 # The Usual (Incorrect) Standardized Solution
 
