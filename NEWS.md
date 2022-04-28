@@ -1,16 +1,19 @@
-# stdmod 0.1.6
+# stdmod 0.1.6 (latest: 0.1.6.1001)
 
-- Add `plotmod` for plotting moderation effects. This function will check
+- Add `plotmod()` for plotting moderation effects. This function will check
   whether a variable is standardized. If yes, will note this in the plot.
+  (Added in 0.1.6.1001)
+- Update vignettes to use `plotmod()` instead of `visreg::visreg()`.
+
 
 # stdmod 0.1.5
 
 - Change the column order of the coefficient table
-  in `std_selected_boot` output. Bootstrap confidence
+  in `std_selected_boot()` output. Bootstrap confidence
   intervals are placed next to parameter estimates.
-- Add `vcov` method for `std_selected` output. If bootstrapping is used,
+- Add `vcov()` method for `std_selected()` output. If bootstrapping is used,
   it can return the variance-covariance matrix of the bootstrap estimates.
-- Add `confint` method for `std_selected` output. If bootstrapping is used,
+- Add `confint()` method for `std_selected()` output. If bootstrapping is used,
   it can return the bootstrap percentile confidence intervals if requested.
 - Other minor fixes.
 
@@ -20,7 +23,7 @@
 
 # stdmod 0.1.2
 
-- Update the methods for `std_selected`.
+- Update the methods for `std_selected()`.
 
 # stdmod 0.1.1
 
