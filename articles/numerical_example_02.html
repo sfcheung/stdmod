@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1001</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
       <h1 data-toc-skip>Compute the Standardized Moderation Effect by std_selected()</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung and David Weng Ngai Vong</h4>
             
-            <h4 data-toc-skip class="date">2022-04-27</h4>
+            <h4 data-toc-skip class="date">2022-04-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/numerical_example_02.Rmd" class="external-link"><code>vignettes/numerical_example_02.Rmd</code></a></small>
       <div class="hidden name"><code>numerical_example_02.Rmd</code></div>
@@ -109,7 +109,6 @@
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/" class="external-link">stdmod</a></span><span class="op">)</span> <span class="co"># For computing the standardized moderation effect conveniently</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://pbreheny.github.io/visreg" class="external-link">visreg</a></span><span class="op">)</span> <span class="co"># For visualizing the moderation effect</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lm.beta</span><span class="op">)</span> <span class="co"># For generating the typical standardized solution</span></code></pre></div>
 </div>
 <div class="section level2">
@@ -157,8 +156,12 @@
 <span class="co">#&gt; Residual standard error: 1.384 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
-<span class="fu"><a href="http://pbreheny.github.io/visreg/reference/visreg.html" class="external-link">visreg</a></span><span class="op">(</span><span class="va">lm_out</span>, <span class="st">"emotional_stability"</span>, <span class="st">"conscientiousness"</span>,
-            breaks <span class="op">=</span> <span class="fl">2</span>, overlay <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_out</span>,
+        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
+        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
+        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
+        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
+        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
 <p><img src="numerical_example_02_files/figure-html/mod_reg-1.png" width="576"></p>
 <p>The results show that conscientiousness significantly moderates the effect of emotional stability on sleep duration.</p>
 </div>
@@ -214,11 +217,16 @@
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span></code></pre></div>
 <p>The coefficient in this solution, -0.10829, can be interpreted as the increase in the standardized effect of <code>emotional_stability</code> for each one standard deviation increase of <code>conscientiousness</code>. Naturally, this can be called the <em>standardized moderation effect</em> of <code>conscientiousness</code> (Cheung, Cheung, Lau, Hui, &amp; Vong, 2022).</p>
-<p>The output of <code><a href="../reference/std_selected.html">std_selected()</a></code> can be passed to other functions that accept the output of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>. For example, we can use <code><a href="http://pbreheny.github.io/visreg/reference/visreg.html" class="external-link">visreg()</a></code> to visualize the moderation effect using the standardized solution.</p>
+<p>The output of <code><a href="../reference/std_selected.html">std_selected()</a></code> can be passed to other functions that accept the output of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>. For example, we can use <code>visreg()</code> to visualize the moderation effect using the standardized solution. This package also has a simple function, <code><a href="../reference/plotmod.html">plotmod()</a></code>, for generating a typical plot of the moderation effect:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="http://pbreheny.github.io/visreg/reference/visreg.html" class="external-link">visreg</a></span><span class="op">(</span><span class="va">lm_stdall</span>, <span class="st">"emotional_stability"</span>, <span class="st">"conscientiousness"</span>,
-       breaks <span class="op">=</span> <span class="fl">2</span>, overlay <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_stdall</span>,
+        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
+        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
+        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
+        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
+        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
 <p><img src="numerical_example_02_files/figure-html/unnamed-chunk-3-1.png" width="576"></p>
+<p>The function <code><a href="../reference/plotmod.html">plotmod()</a></code> also prints the conditional effects of the predictor, emotional stability in this example.</p>
 </div>
 <div class="section level2">
 <h2 id="the-usual-incorrect-standardized-solution">The Usual (Incorrect) Standardized Solution<a class="anchor" aria-label="anchor" href="#the-usual-incorrect-standardized-solution"></a>

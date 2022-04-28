@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1001</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
       <h1 data-toc-skip>Numerical Example - std_selected()</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung and David Weng Ngai Vong</h4>
             
-            <h4 data-toc-skip class="date">2022-04-27</h4>
+            <h4 data-toc-skip class="date">2022-04-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/numerical_example_01.Rmd" class="external-link"><code>vignettes/numerical_example_01.Rmd</code></a></small>
       <div class="hidden name"><code>numerical_example_01.Rmd</code></div>
@@ -109,7 +109,6 @@
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/" class="external-link">stdmod</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://pbreheny.github.io/visreg" class="external-link">visreg</a></span><span class="op">)</span> <span class="co"># For visualizing the moderation effect</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lm.beta</span><span class="op">)</span> <span class="co"># For generating the typical standardized solution</span></code></pre></div>
 </div>
 <div class="section level2">
@@ -156,17 +155,24 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residual standard error: 1.384 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
-<span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
-<span class="fu"><a href="http://pbreheny.github.io/visreg/reference/visreg.html" class="external-link">visreg</a></span><span class="op">(</span><span class="va">lm_raw</span>, <span class="st">"emotional_stability"</span>, <span class="st">"conscientiousness"</span>,
-            breaks <span class="op">=</span> <span class="fl">2</span>, overlay <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_01_files/figure-html/mod_reg-1.png" width="576"></p>
+<span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span></code></pre></div>
 <p>The results show that conscientiousness significantly moderates the effect of emotional stability on sleep duration.</p>
+<p>This package has a simple function, <code><a href="../reference/plotmod.html">plotmod()</a></code>, for generating a typical plot of the moderation effect:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,
+        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
+        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
+        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
+        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
+        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
+<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-2-1.png" width="576"></p>
+<p>The function <code><a href="../reference/plotmod.html">plotmod()</a></code> also prints the conditional effects of the predictor, emotional stability in this example.</p>
 </div>
 <div class="section level2">
 <h2 id="mean-center-conscientiousness">Mean Center Conscientiousness<a class="anchor" aria-label="anchor" href="#mean-center-conscientiousness"></a>
 </h2>
 <p>To know the effect of emotional stability when conscientiousness is equal to its mean, we can center conscientiousness by its mean in the data and redo the moderated regression. Instead of creating the new variable and rerun the regression, we can pass the <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> output to <code><a href="../reference/std_selected.html">std_selected()</a></code> and specify the variables to be mean centered:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_w_centered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">conscientiousness</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_w_centered</span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -206,16 +212,20 @@
 <span class="co">#&gt; Residual standard error: 1.384 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
-<span class="fu"><a href="http://pbreheny.github.io/visreg/reference/visreg.html" class="external-link">visreg</a></span><span class="op">(</span><span class="va">lm_w_centered</span>, <span class="st">"emotional_stability"</span>, <span class="st">"conscientiousness"</span>,
-            breaks <span class="op">=</span> <span class="fl">2</span>, overlay <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-2-1.png" width="576"></p>
+<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_w_centered</span>,
+        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
+        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
+        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
+        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
+        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
+<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-3-1.png" width="576"></p>
 <p>The argument for meaning centering is <code>to_center</code>. The variable is specified in the formula form.</p>
 </div>
 <div class="section level2">
 <h2 id="mean-center-conscientiousness-and-emotional-stability">Mean Center Conscientiousness and Emotional Stability<a class="anchor" aria-label="anchor" href="#mean-center-conscientiousness-and-emotional-stability"></a>
 </h2>
 <p>This example demonstrates centering more than one variable. In the following model, both emotional stability and conscientiousness are centered. They are placed after <code>~</code> and joined by <code>+</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_xw_centered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_xw_centered</span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -255,15 +265,19 @@
 <span class="co">#&gt; Residual standard error: 1.384 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
-<span class="fu"><a href="http://pbreheny.github.io/visreg/reference/visreg.html" class="external-link">visreg</a></span><span class="op">(</span><span class="va">lm_xw_centered</span>, <span class="st">"emotional_stability"</span>, <span class="st">"conscientiousness"</span>,
-            breaks <span class="op">=</span> <span class="fl">2</span>, overlay <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-3-1.png" width="576"></p>
+<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_xw_centered</span>,
+        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
+        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
+        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
+        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
+        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
+<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
 </div>
 <div class="section level2">
 <h2 id="standardize-both-conscientiousness-and-emotional-stability">Standardize Both Conscientiousness and Emotional Stability<a class="anchor" aria-label="anchor" href="#standardize-both-conscientiousness-and-emotional-stability"></a>
 </h2>
 <p>To standardize a variable we first mean center it and then scale it by its standard deviation. Scaling is done by listing the variable on <code>to_scale</code>. The input format is identical to that of <code>to_center</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_xw_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>,
                 to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span>,
                 to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span><span class="op">)</span>
@@ -305,15 +319,20 @@
 <span class="co">#&gt; Residual standard error: 1.384 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
-<span class="fu"><a href="http://pbreheny.github.io/visreg/reference/visreg.html" class="external-link">visreg</a></span><span class="op">(</span><span class="va">lm_xw_std</span>, <span class="st">"emotional_stability"</span>, <span class="st">"conscientiousness"</span>,
-            breaks <span class="op">=</span> <span class="fl">2</span>, overlay <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
+<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_xw_std</span>,
+        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
+        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
+        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
+        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
+        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
+<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
+<p>The function <code><a href="../reference/plotmod.html">plotmod()</a></code> automatically checks whether a variable is standardized. If yes, it will report this in the plot.</p>
 </div>
 <div class="section level2">
 <h2 id="standardize-conscientiousness-emotional-stability-and-sleep-duration">Standardize Conscientiousness, Emotional Stability, and Sleep Duration<a class="anchor" aria-label="anchor" href="#standardize-conscientiousness-emotional-stability-and-sleep-duration"></a>
 </h2>
 <p>We can also mean center or standardize the dependent variable. We just add the variable to the right hand side of <code>~</code> in <code>to_center</code> and <code>to_scale</code> as appropriate.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_xwy_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>,
                 to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span> <span class="op">+</span> <span class="va">sleep_duration</span>,
                 to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span> <span class="op">+</span> <span class="va">sleep_duration</span><span class="op">)</span>
@@ -355,15 +374,19 @@
 <span class="co">#&gt; Residual standard error: 0.9771 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
-<span class="fu"><a href="http://pbreheny.github.io/visreg/reference/visreg.html" class="external-link">visreg</a></span><span class="op">(</span><span class="va">lm_xwy_std</span>, <span class="st">"emotional_stability"</span>, <span class="st">"conscientiousness"</span>,
-            breaks <span class="op">=</span> <span class="fl">2</span>, overlay <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
+<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_xwy_std</span>,
+        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
+        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
+        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
+        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
+        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
+<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
 </div>
 <div class="section level2">
 <h2 id="standardize-all-variables">Standardize All Variables<a class="anchor" aria-label="anchor" href="#standardize-all-variables"></a>
 </h2>
 <p>If we want to standardize all variables, we can use <code>~ .</code> as a shortcut. Note that <code><a href="../reference/std_selected.html">std_selected()</a></code> will automatically skip categorical variables (i.e., factors or string variables in the regression model of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>).</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_all_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,
                                    to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_all_std</span><span class="op">)</span>
@@ -404,15 +427,19 @@
 <span class="co">#&gt; Residual standard error: 0.9771 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
-<span class="fu"><a href="http://pbreheny.github.io/visreg/reference/visreg.html" class="external-link">visreg</a></span><span class="op">(</span><span class="va">lm_all_std</span>, <span class="st">"emotional_stability"</span>, <span class="st">"conscientiousness"</span>,
-            breaks <span class="op">=</span> <span class="fl">2</span>, overlay <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
+<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_all_std</span>,
+        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
+        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
+        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
+        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
+        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
+<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
 </div>
 <div class="section level2">
 <h2 id="the-usual-standardized-solution">The Usual Standardized Solution<a class="anchor" aria-label="anchor" href="#the-usual-standardized-solution"></a>
 </h2>
 <p>For comparison, this is the results of standardizing all variables, including the product term and the categorical variable.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_usual_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lm.beta/man/lm.beta.html" class="external-link">lm.beta</a></span><span class="op">(</span><span class="va">lm_raw</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_usual_std</span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -444,12 +471,12 @@
 </h2>
 <p>It has been shown (e.g., Yuan &amp; Chan, 2011) that the standard errors of standardized regression coefficients (betas) computed just by rescaling the variables are biased, and consequently the confidence intervals are also invalid. The function <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> is a version of <code><a href="../reference/std_selected.html">std_selected()</a></code> that also report the confidence interval of the regression coefficients when rescaling is conducted, using nonparametric bootstrapping as suggested by Cheung, Cheung, Lau, Hui, &amp; Vong (2022).</p>
 <p>We use the same example above that standardizes emotional stability, conscientiousness, and sleep duration, to illustrate this function. The argument <code>nboot</code> specifies the number of nonparametric bootstrap samples. The level of confidence set by <code>conf</code>. The default is .95, denoting a 95% confidence. If this is the desired level, this argument can be omitted.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_xwy_std_ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_raw</span>,
         to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span> <span class="op">+</span> <span class="va">sleep_duration</span>,
         to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span> <span class="op">+</span> <span class="va">sleep_duration</span>,
         nboot <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_xwy_std_ci</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Selected variable(s) are centered and/or scaled</span>
@@ -501,7 +528,7 @@
 <h2 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
 </h2>
 <p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. <em>Health Psychology</em>. <a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</p>
-<p>Yuan, K.-H., &amp; Chan, W. (2011). Biases and standard errors of standardized regression coefficients. <em>Psychometrika, 76</em>(4), 670–690. <a href="https://doi.org/10.1007/s11336-011-9224-6" class="external-link uri">https://doi.org/10.1007/s11336-011-9224-6</a></p>
+<p>Yuan, K.-H., &amp; Chan, W. (2011). Biases and standard errors of standardized regression coefficients. <em>Psychometrika, 76</em>(4), 670-690. <a href="https://doi.org/10.1007/s11336-011-9224-6" class="external-link uri">https://doi.org/10.1007/s11336-011-9224-6</a></p>
 </div>
   </div>
 

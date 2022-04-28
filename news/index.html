@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1001</span>
       </span>
     </div>
 
@@ -67,21 +67,23 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.1.5" id="stdmod-015">stdmod 0.1.5<a class="anchor" aria-label="anchor" href="#stdmod-015"></a></h2>
-<ul><li>
-<p>0.1.5</p>
-<ul><li>Change the column order of the coefficient table in <code>std_selected_boot</code> output. Bootstrap confidence intervals are placed next to parameter estimates.</li>
-<li>Add <code>vcov</code> method for <code>std_selected</code> output. If bootstrapping is used, it can return the variance-covariance matrix of the bootstrap estimates.</li>
-<li>Add <code>confint</code> method for <code>std_selected</code> output. If bootstrapping is used, it can return the bootstrap percentile confidence intervals if requested.</li>
-<li>Other minor fixes.</li>
-</ul></li>
-<li>
-<p>0.1.3</p>
-<ul><li>Setup gh-pages and fix dependency in vignette.</li></ul></li>
-<li>
-<p>0.1.2</p>
-<ul><li>Update the methods for <code>std_selected</code>.</li></ul></li>
+<h2 class="page-header" data-toc-text="0.1.6" id="stdmod-016-latest-0161001">stdmod 0.1.6 (latest: 0.1.6.1001)<a class="anchor" aria-label="anchor" href="#stdmod-016-latest-0161001"></a></h2>
+<ul><li>Add <code><a href="../reference/plotmod.html">plotmod()</a></code> for plotting moderation effects. This function will check whether a variable is standardized. If yes, will note this in the plot. (Added in 0.1.6.1001)</li>
+<li>Update vignettes to use <code><a href="../reference/plotmod.html">plotmod()</a></code> instead of <code><a href="http://pbreheny.github.io/visreg/reference/visreg.html" class="external-link">visreg::visreg()</a></code>.</li>
 </ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.5" id="stdmod-015">stdmod 0.1.5<a class="anchor" aria-label="anchor" href="#stdmod-015"></a></h2>
+<ul><li>Change the column order of the coefficient table in <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> output. Bootstrap confidence intervals are placed next to parameter estimates.</li>
+<li>Add <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov()</a></code> method for <code><a href="../reference/std_selected.html">std_selected()</a></code> output. If bootstrapping is used, it can return the variance-covariance matrix of the bootstrap estimates.</li>
+<li>Add <code><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint()</a></code> method for <code><a href="../reference/std_selected.html">std_selected()</a></code> output. If bootstrapping is used, it can return the bootstrap percentile confidence intervals if requested.</li>
+<li>Other minor fixes.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.3" id="stdmod-013">stdmod 0.1.3<a class="anchor" aria-label="anchor" href="#stdmod-013"></a></h2>
+<ul><li>Setup gh-pages and fix dependency in vignette.</li></ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.2" id="stdmod-012">stdmod 0.1.2<a class="anchor" aria-label="anchor" href="#stdmod-012"></a></h2>
+<ul><li>Update the methods for <code><a href="../reference/std_selected.html">std_selected()</a></code>.</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.1" id="stdmod-011">stdmod 0.1.1<a class="anchor" aria-label="anchor" href="#stdmod-011"></a></h2>
 <ul><li>The first version.</li></ul></div>

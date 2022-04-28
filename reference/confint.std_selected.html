@@ -18,7 +18,7 @@ in the output of std_selected() or std_selected_boot()."><!-- mathjax --><script
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1001</span>
       </span>
     </div>
 
@@ -242,14 +242,14 @@ the bootstrap estimates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -1.96117 -0.39474 -0.02285  0.37579  2.11040 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate CI Lower CI Upper Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.06458 -0.01076  0.15344    0.04825   1.338   0.1814    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.73738  0.69132  0.77297    0.02736  26.948   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.25990  0.21424  0.32172    0.02737   9.496   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.03427 -0.08970  0.01467    0.02733  -1.254   0.2104    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.14501 -0.29513 -0.01093    0.06565  -2.209   0.0276 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.03945 -0.19487  0.08440    0.06880  -0.573   0.5666    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.03209 -0.02182  0.07891    0.02545   1.261   0.2080    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate  CI Lower  CI Upper Std. Error t value Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.064582 -0.008456  0.154953   0.048250   1.338   0.1814    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.737384  0.684439  0.785335   0.027363  26.948   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.259899  0.203026  0.324710   0.027369   9.496   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.034271 -0.109491  0.005501   0.027325  -1.254   0.2104    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.145006 -0.274727 -0.011141   0.065647  -2.209   0.0276 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.039448 -0.176612  0.075185   0.068799  -0.573   0.5666    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.032087 -0.023072  0.073407   0.025451   1.261   0.2080    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -271,14 +271,14 @@ the bootstrap estimates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.01791790  0.08209267</span>
 <span class="r-in"><span class="co"># Bootstrap percentile intervals</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span>, type <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   2.5 %      97.5 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.01076373  0.15344101</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.69132092  0.77297201</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.21424141  0.32171770</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.08970173  0.01466542</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.29513307 -0.01093121</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.19487135  0.08440134</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.02181533  0.07890879</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    2.5 %       97.5 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.008455914  0.154952813</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.684439292  0.785335166</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.203026387  0.324709535</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.109490791  0.005501258</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.274726776 -0.011140577</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.176611572  0.075184576</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.023071694  0.073407485</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
