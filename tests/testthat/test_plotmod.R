@@ -31,3 +31,14 @@ plotmod(output = lm_xw_centered,
         x_label = "Emotional Stability",
         w_label = "Conscientiousness",
         y_label = "Sleep Duration")
+
+lm_std <- std_selected(lm_out, to_center = ~ .,
+                               to_scale = ~ .)
+summary(lm_std)
+
+plotmod(output = lm_std,
+        x = emotional_stability,
+        w = conscientiousness,
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")

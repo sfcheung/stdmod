@@ -103,6 +103,9 @@
 #'                       mulipltied by 100, are the precentiles. For example,
 #'                       .25 is the 25th percentile, and .75 is the 75th
 #'                       percentile.
+#' @param note_standardized If `TRUE`, will check whether a variable has SD
+#'                          equal to one. If yes, will report this in the plot.
+#'                          Default is `TRUE`.
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
@@ -144,7 +147,8 @@ plotmod <- function(output, y, x, w, xw,
                             w_sd_to_percentiles,
                             x_sd_to_percentiles,
                             plot_x_vlines,
-                            x_vlines_unit = "sd"
+                            x_vlines_unit = "sd",
+                            note_standardized = TRUE
                     ) {
     w_method <- tolower(w_method)
     if (!w_method %in% c("sd", "percentile")) {
@@ -196,19 +200,6 @@ plotmod <- function(output, y, x, w, xw,
     y <- colnames(stats::model.frame(output))[
                     attr(stats::terms(output), "response")
                   ]
-    if (missing(x_label)) x_label <- x
-    if (missing(w_label)) w_label <- w
-    if (missing(y_label)) y_label <- y
-    if (missing(title)) {
-        if (standardized) {
-            title <- paste0("The Moderation Effect of ", w_label,
-                            " on ", x_label, "'s effect on ", y_label,
-                            " (Standardized)")
-          } else {
-            title <- paste0("The Moderation Effect of ", w_label,
-                            " on ", x_label, "'s effect on ", y_label)
-          }
-      }
     # if (missing(xw)) {
     #     all_prods <- find_all_products(lavaan::lavInspect(fit, "data"))
     #     tmp <- sapply(all_prods, function(a) {
@@ -329,6 +320,33 @@ plotmod <- function(output, y, x, w, xw,
     mf2[, w] <- c(w_lo, w_hi, w_lo, w_hi)
     mf2$predicted <- stats::predict(output, mf2)
 
+    if (missing(x_label)) x_label <- x
+    if (missing(w_label)) w_label <- w
+    if (missing(y_label)) y_label <- y
+    if (note_standardized) {
+        if (isTRUE(all.equal(sd(mf0[, x]), 1))) {
+            x_label <- paste0(x_label, " (Standardized)")
+          }
+        if (isTRUE(all.equal(sd(mf0[, w]), 1))) {
+            w_label <- paste0(w_label, " (Standardized)")
+          }
+        if (isTRUE(all.equal(sd(mf0[, y]), 1))) {
+            y_label <- paste0(y_label, " (Standardized)")
+          }
+      }
+    if (missing(title)) {
+    # Standardization should be done before calling plotmod
+        # if (standardized) {
+        #     # title <- paste0("The Moderation Effect of ", w_label,
+        #     #                 " on ", x_label, "'s effect on ", y_label,
+        #     #                 " (Standardized)")
+        #   } else {
+        #     # title <- paste0("The Moderation Effect of ", w_label,
+        #     #                 " on ", x_label, "'s effect on ", y_label)
+        #   }
+        title <- "Moderation Effect"
+      }
+
     p <- ggplot2::ggplot() +
           ggplot2::geom_point(ggplot2::aes_string(x = x,
                                                   y = "predicted",
@@ -357,7 +375,7 @@ plotmod <- function(output, y, x, w, xw,
     subtxt <- paste0(w_label, " low: ", x_label, " effect = ",
                      sprintf(b_format,
                              dat_plot[dat_plot$w == "Low", "b"]),
-                     "; ",
+                     "\n",
                      w_label, " high: ", x_label, " effect = ",
                      sprintf(b_format,
                              dat_plot[dat_plot$w == "High", "b"])
@@ -392,7 +410,14 @@ plotmod <- function(output, y, x, w, xw,
       ggplot2::labs(title = title,
                     subtitle = subtxt,
                     caption = cap_txt) +
-      ggplot2::theme(axis.text.y = ggplot2::element_blank())
+      # ggplot2::theme(axis.text.y = ggplot2::element_blank()) +
+      ggplot2::theme(legend.position = "top",
+                     plot.caption = element_text(hjust = .5),
+                     plot.title = element_text(hjust = .5),
+                     plot.subtitle = element_text(hjust = .5)) +
+      ggplot2::xlab(x_label) +
+      ggplot2::ylab(y_label) +
+      ggplot2::guides(colour = ggplot2::guide_legend(title = w_label))
     # TOFIX: plot_x_vlines
     if (!missing(plot_x_vlines)) {
         if (x_vlines_unit == "sd") {
