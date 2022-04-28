@@ -22,7 +22,9 @@ plotmod(
   w_sd_to_percentiles,
   x_sd_to_percentiles,
   note_standardized = TRUE,
-  no_title = FALSE
+  no_title = FALSE,
+  line_width = 1,
+  point_size = 5
 )
 }
 \arguments{
@@ -146,6 +148,12 @@ plot.
 Default is \code{TRUE}.}
 
 \item{no_title}{If \code{TRUE}, title will be suppressed. Default is \code{FALSE}.}
+
+\item{line_width}{The width of the lines as used in \code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}}.
+Default is 1.}
+
+\item{point_size}{The size of the points as used in \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.
+Default is 5.}
 }
 \value{
 A \link{ggplot2} graph. Plotted if not assigned to a name. It can
@@ -168,12 +176,24 @@ It is not intended to be a flexible tool for a fine control on the plots.
 # Do a moderated regression by lm
 lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
 summary(lm_out)
+plotmod(lm_out,
+        x = emotional_stability,
+        w = conscientiousness,
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")
 
 # Standardize all variables except for categorical variables
 lm_std <- std_selected(lm_out,
                        to_scale = ~ .,
                        to_center = ~ .)
 summary(lm_std)
+plotmod(lm_std,
+        x = emotional_stability,
+        w = conscientiousness,
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")
 
 }
 \author{

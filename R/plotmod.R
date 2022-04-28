@@ -123,6 +123,10 @@
 #'                          plot.
 #'                          Default is `TRUE`.
 #' @param no_title If `TRUE`, title will be suppressed. Default is `FALSE`.
+#' @param line_width The width of the lines as used in [ggplot2::geom_segment()].
+#'                   Default is 1.
+#' @param point_size The size of the points as used in [ggplot2::geom_point()].
+#'                    Default is 5.
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
@@ -131,12 +135,24 @@
 #' # Do a moderated regression by lm
 #' lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
 #' summary(lm_out)
+#' plotmod(lm_out,
+#'         x = emotional_stability,
+#'         w = conscientiousness,
+#'         x_label = "Emotional Stability",
+#'         w_label = "Conscientiousness",
+#'         y_label = "Sleep Duration")
 #'
 #' # Standardize all variables except for categorical variables
 #' lm_std <- std_selected(lm_out,
 #'                        to_scale = ~ .,
 #'                        to_center = ~ .)
 #' summary(lm_std)
+#' plotmod(lm_std,
+#'         x = emotional_stability,
+#'         w = conscientiousness,
+#'         x_label = "Emotional Stability",
+#'         w_label = "Conscientiousness",
+#'         y_label = "Sleep Duration")
 #'
 #' @export
 
@@ -155,7 +171,9 @@ plotmod <- function(output, x, w,
                             w_sd_to_percentiles,
                             x_sd_to_percentiles,
                             note_standardized = TRUE,
-                            no_title = FALSE
+                            no_title = FALSE,
+                            line_width = 1,
+                            point_size = 5
                     ) {
     w_method <- match.arg(w_method)
     x_method <- match.arg(x_method)
@@ -297,14 +315,15 @@ plotmod <- function(output, x, w,
           ggplot2::geom_point(ggplot2::aes_string(x = x,
                                                   y = "predicted",
                                                   colour = "w_level"),
-                              data = mf2) +
+                              data = mf2,
+                              size = point_size) +
           ggplot2::geom_segment(ggplot2::aes(
                 x = mf2[mf2$x_level == "Low", x],
                 xend = mf2[mf2$x_level == "High", x],
                 y = mf2[mf2$x_level == "Low", "predicted"],
                 yend = mf2[mf2$x_level == "High", "predicted"],
                 colour = mf2[mf2$x_level == "Low", "w_level"]
-              ))
+              ), size = line_width)
     find_b <- function(w_i) {
         mf_i <- mf2[mf2[, w] == w_i, ]
         b_i <- (mf_i[mf_i$x_level == "High", "predicted"] -
@@ -355,9 +374,11 @@ plotmod <- function(output, x, w,
                     subtitle = subtxt,
                     caption = cap_txt) +
       ggplot2::theme(legend.position = "top",
-                     plot.caption = ggplot2::element_text(hjust = .5),
+                     plot.caption = ggplot2::element_text(hjust = .5,
+                                                          size = 9),
                      plot.title = ggplot2::element_text(hjust = .5),
-                     plot.subtitle = ggplot2::element_text(hjust = .5)) +
+                     plot.subtitle = ggplot2::element_text(hjust = .5,
+                                                           size = 9)) +
       ggplot2::xlab(x_label) +
       ggplot2::ylab(y_label) +
       ggplot2::guides(colour = ggplot2::guide_legend(title = w_label))
