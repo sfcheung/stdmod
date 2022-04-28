@@ -1,91 +1,115 @@
-#' @title Plot the moderation effect in a path model
+#' @title Moderation Effect Plot
 #'
-#' @description Plot the moderation effect in a path model
+#' @description Plot the moderation effect in a regression model
 #'
-#' @details This function extracts the information stored
-#'          in the `lavaan` fit object to plot a two-line
-#'          graph, one for the relation between the focal variale (`x`) and
-#'          the outcome variable (`y`) when the moderator (`w`) is one stanard
-#'          deviation below mean, and one when the moderator is one standard
-#'          deviation above mean.
+#' @details This function generate a basic [ggplot2] graph
+#'          typically found psychology manuscripts. It tries to
+#'          check whether one or more variables are standardized, and
+#'          report this in the plot if required.
 #'
 #' @return
-#'  A [ggplot2] graph.
+#'  A [ggplot2] graph. Plotted if not assigned to a name. It can
+#'  be further modified like a usual [ggplot2] graph.
 #'
-#' @param fit The output from [lavaan::lavaan] or its wrapper, such as
-#'            [lavaan::sem].
-#' @param y The name of the outcome variable as in the data set in `fit`. It
-#'          can be the name of the variable, with or without quotes. 
-#' @param x The name of the focal variable as in the data set in
-#'           It
-#'          can be the name of the variable, with or without quotes.`fit`.
-#' @param w The name of the moderator as in the data set in `fit`.
-#'           It
+#' @param output An object of the class `lm`, such as the output
+#'                  of [stats::lm()], [std_selected()], or
+#'                  [std_selected_boot()].
+#'
+#' @param x The name of the focal variable (x-axis) in the output. It
 #'          can be the name of the variable, with or without quotes.
-#' @param xw The name of the product term, `x * w`. If not supplied,
-#'           The function will try to find it in the data set.
-#'             It
+#'          Currently only numeric variables are supported.
+#' @param w The name of the moderator in the output. It
 #'          can be the name of the variable, with or without quotes.
-#' @param x_label The label for the X-axis. Default is the vlaues of `x`.
-#' @param w_label The label for the legend for the lines. Default is the value of`w`.
-#' @param y_label The label for the Y-axis. Default is the value of `y`.
-#' @param title The title of the graph. If not supplied, will be generated from the variable
-#'               names.
-#' @param a_shift Default is 0. Can be ignored for now.
-#' @param expansion How much tha lower and upper limits of the axis will be adjusted.
-#' @param standardized Logical. Plot the moderation effect in standardized metric. All three
-#'                     variables, `x`, `w`, and `y` will be standardized. Default
-#'                     is `FALSE`
+#'          Currently only numeric variables are supported.
+#' @param x_label The label for the X-axis. Default is the value of `x`.
+#' @param w_label The label for the legend for the lines.
+#'                Default is the value of`w`.
+#' @param y_label The label for the Y-axis. Default is the
+#'                name of the response variable in the model.
+#' @param title The title of the graph. If not supplied, will be
+#'               generated from the variable
+#'               names or labels (in `x_label`, `y_label`,
+#'               and `w_label`). If `""`, no title will be printed.
+#'               This can be used when the plot is for manuscript
+#'               submission and figures are requried to have no
+#'               titles.
+#' @param expansion How much tha lower and upper limits of the axis
+#'                  will be adjusted. Default is .1
 #' @param digits Number of decimal digits to print. Default is 3.
-#' @param x_from_mean_in_sd How many SD from mean is used to define "low" and
-#'                          "high" for the focal variable. Default is 1.
-#' @param w_from_mean_in_sd How many SD from mean is used to define "low" and
+#' @param x_from_mean_in_sd How many SD from mean is used to define
+#'                          "low" and
+#'                          "high" for the focal variable.
+#'                          Default is 1.
+#' @param w_from_mean_in_sd How many SD from mean is used to define
+#'                          "low" and
 #'                          "high" for the moderator. Default is 1.
 #' @param w_method How to define "high" and "low" for the moderator levels.
 #'                  Default is in terms of the
-#'                  standard deviation of the moderator, "sd". If equal to
-#'                  "percentile", then percentiles of the moderator in the
-#'                  dataset is used.
-#' @param w_percentiles If `w_method` is "percentile", then this argument
-#'                      specifies the two percentiles to be used, divided by 100.
+#'                  standard deviation of the moderator, `"sd".
+#'                  If equal to
+#'                  `"percentile"`, then percentiles of the moderator in
+#'                  the
+#'                  dataset are used.
+#' @param w_percentiles If `w_method` is `"percentile"`, then this
+#'                      argument
+#'                      specifies the two percentiles to be used,
+#'                      divided by 100.
 #'                        It must be a
-#'                      vector of two numbers. The default is `c(.16, .84)`,
+#'                      vector of two numbers. The default is
+#'                      `c(.16, .84)`,
 #'                      the 16th and 84th percentiles,
 #'                      which corresponds approximately
 #'                      to one SD below and above mean for a
-#'                      normal distributoin, respectively.
-#' @param x_method How to define "high" and "low" for the focal variable levels.
+#'                      normal distribution, respectively.
+#' @param x_method How to define "high" and "low" for the focal
+#'                  variable levels.
 #'                  Default is in terms of the
-#'                  standard deviation of the focal variable, "sd". If equal to
-#'                  "percentile", then percentiles of the focal variable in the
+#'                  standard deviation of the focal variable, `"sd"`.
+#'                  If equal to
+#'                  `"percentile"`, then the percentiles of the
+#'                  focal variable in the
 #'                  dataset is used.
-#' @param x_percentiles If `x_method` is "percentile", then this argument
-#'                      specifies the two percentiles to be used, divided by 100.
+#' @param x_percentiles If `x_method` is `"percentile"`, then this
+#'                      argument
+#'                      specifies the two percentiles to be used,
+#'                      divided by 100.
 #'                        It must be a
-#'                      vector of two numbers. The default is `c(.16, .84)`,
+#'                      vector of two numbers. The default is
+#'                      `c(.16, .84)`,
 #'                      the 16th and 84th percentiles,
 #'                      which corresponds approximately
 #'                      to one SD below and above mean for a
-#'                      normal distributoin, respectively.
-#' @param w_sd_to_percentiles If `w_method` is "percentile" and this argument is
-#'                            set to a number, this number will be used to
-#'                            to determine the percentiles to be used. The
-#'                            lower percentile is the percentile in a normal
+#'                      normal distribution, respectively.
+#' @param w_sd_to_percentiles If `w_method` is `"percentile"` and
+#'                            this argument is
+#'                            set to a number, this number will be
+#'                            used to
+#'                            to determine the percentiles to be used.
+#'                            The
+#'                            lower percentile is the percentile in a
+#'                            normal
 #'                            distribution
-#'                            that is `w_sd_to_percentiles` SD below the mean.
-#'                            The upper percentile is the percentil in a normal
-#'                            distribution that is `w_sd_to_percentiles` SD
+#'                            that is `w_sd_to_percentiles` SD below
+#'                            the mean.
+#'                            The upper percentile is the percentile in
+#'                            a normal
+#'                            distribution that is `w_sd_to_percentiles`
+#'                            SD
 #'                            above the mean. Therefore, if
-#'                            `w_sd_to_percentiles` is set to 1, then the lower
+#'                            `w_sd_to_percentiles` is set to 1, then the
+#'                            lower
 #'                            and upper percentiles are 16th and 84th,
 #'                            respectively.
-#' @param x_sd_to_percentiles If `x_method` is "percentile" and this argument is
-#'                            set to a number, this number will be used to
+#' @param x_sd_to_percentiles If `x_method` is `"percentile"` and this 
+#'                            argument is
+#'                            set to a number, this number will be used
+#'                            to
 #'                            to determine the percentiles to be used. The
-#'                            lower percentile is the percentile in a normal
+#'                            lower percentile is the percentile in a
+#'                            normal
 #'                            distribution
 #'                            that is `x_sd_to_percentiles` SD below the mean.
-#'                            The upper percentile is the percentil in a normal
+#'                            The upper percentile is the percentile in a normal
 #'                            distribution that is `x_sd_to_percentiles` SD
 #'                            above the mean. Therefore, if
 #'                            `x_sd_to_percentiles` is set to 1, then the lower
@@ -96,36 +120,32 @@
 #'                       vector of numbers, indicating the levels to be plotted.
 #'                       How these numbers are interpreted depends on
 #'                       `x_vlines_unit`.
-#' @param x_vlines_unit If equal to "sd", then the values of `plot_x_vlines`
+#' @param x_vlines_unit If equal to `"sd"`, then the values of `plot_x_vlines`
 #'                       will be interpreted as the deviation from the mean.
 #'                       For example, 1 is 1 SD above mean, and -1 is 1 SD
 #'                       below mean. If equal to "percentile", then the numbers,
-#'                       mulipltied by 100, are the precentiles. For example,
+#'                       multiplied by 100, are the percentiles. For example,
 #'                       .25 is the 25th percentile, and .75 is the 75th
 #'                       percentile.
 #' @param note_standardized If `TRUE`, will check whether a variable has SD
-#'                          equal to one. If yes, will report this in the plot.
+#'                          nearly equal to one. If yes, will report this in the
+#'                          plot.
 #'                          Default is `TRUE`.
+#' @param a_shift Default is 0. Ignored for now.
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
 #' @examples
 #'
-#' dat <- test_x_1_w_1_v_1_cat1_n_500
-#' head(dat)
-#'
 #' # Do a moderated regression by lm
-#' lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
-#' summary(lm_raw)
-#' # Standardize all variables as in std_selected above, and compute the
-#' # nonparametric bootstrapping percentile confidence intervals.
-#' lm_std_boot <- std_selected_boot(lm_raw,
-#'                                  to_scale = ~ .,
-#'                                  to_center = ~ .,
-#'                                  conf = .95,
-#'                                  nboot = 100)
-#' # In real analysis, nboot should be at least 2000.
-#' summary(lm_std_boot)
+#' lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
+#' summary(lm_out)
+#'
+#' # Standardize all variables except for categorical variables
+#' lm_std <- std_selected(lm_out,
+#'                        to_scale = ~ .,
+#'                        to_center = ~ .)
+#' summary(lm_std)z
 #'
 #' @export
 
@@ -134,9 +154,7 @@ plotmod <- function(output, y, x, w, xw,
                             w_label,
                             y_label,
                             title,
-                            a_shift = 0,
                             expansion = .1,
-                            standardized = FALSE,
                             digits = 3,
                             x_from_mean_in_sd = 1,
                             w_from_mean_in_sd = 1,
@@ -148,7 +166,8 @@ plotmod <- function(output, y, x, w, xw,
                             x_sd_to_percentiles,
                             plot_x_vlines,
                             x_vlines_unit = "sd",
-                            note_standardized = TRUE
+                            note_standardized = TRUE,
+                            a_shift = 0
                     ) {
     w_method <- tolower(w_method)
     if (!w_method %in% c("sd", "percentile")) {
@@ -200,35 +219,6 @@ plotmod <- function(output, y, x, w, xw,
     y <- colnames(stats::model.frame(output))[
                     attr(stats::terms(output), "response")
                   ]
-    # if (missing(xw)) {
-    #     all_prods <- find_all_products(lavaan::lavInspect(fit, "data"))
-    #     tmp <- sapply(all_prods, function(a) {
-    #                       if (length(a) != 2) {
-    #                           return(FALSE)
-    #                         } else {
-    #                           if (all(c(x, w) %in% a)) {
-    #                               return(TRUE)
-    #                             } else {
-    #                               return(FALSE)
-    #                             }
-    #                         }
-    #                     })
-    #     if (all(!tmp)) {
-    #         stop("xw was not supplied but the product term could be found.")
-    #       }
-    #     if (sum(tmp) != 1) {
-    #         stop("xw was not supplied but more than one possible product term was found.")
-    #       }
-    #     xw <- names(tmp[tmp])
-    #   } else {
-    #     xw0 <- deparse(substitute(xw))
-    #     if (inherits(tryCatch(xw00 <- as.character(xw), error = function(e) e),
-    #                 "simpleError")) {
-    #         xw <- xw0
-    #       } else {
-    #         xw <- xw00
-    #       }
-    #   }
     xw1 <- paste(x, w, sep = ":")
     xw2 <- paste(w, x, sep = ":")
     coef_names <- names(stats::coef(output))
@@ -248,18 +238,6 @@ plotmod <- function(output, y, x, w, xw,
     bx_raw <- coef0[x]
     bw_raw <- coef0[w]
     bxw_raw <- coef0[xw]
-    # Standardization should be done before calling plotmod
-    # if (standardized) {
-    #     std_t <- lavaan::standardizedSolution(fit)
-    #     x_sd <- 1
-    #     w_sd <- 1
-    #     x_mean <- 0
-    #     w_mean <- 0
-    #     bx <- (bx_raw + bxw_raw * w_mean_raw) * x_sd_raw / y_sd_raw
-    #     bw <- (bw_raw + bxw_raw * x_mean_raw) * w_sd_raw / y_sd_raw
-    #     bxw <- par_t[par_t$lhs == y & par_t$rhs == xw, "est"] *
-    #                   x_sd_raw * w_sd_raw / y_sd_raw
-    #   } else {
     x_sd <- x_sd_raw
     w_sd <- w_sd_raw
     x_mean <- x_mean_raw
@@ -276,11 +254,6 @@ plotmod <- function(output, y, x, w, xw,
         x_percs <- stats::quantile(mf0[, x], x_percentiles, na.rm = TRUE)
         x_lo <- x_percs[1]
         x_hi <- x_percs[2]
-        # Standardization should be done before calling plotmod
-        # if (standardized) {
-        #     x_lo <- (x_lo - x_mean_raw) / x_sd_raw
-        #     x_hi <- (x_hi - x_mean_raw) / x_sd_raw
-        #   }
       }
     if (w_method == "sd") {
         w_lo <- w_mean - w_from_mean_in_sd * w_sd
@@ -290,11 +263,6 @@ plotmod <- function(output, y, x, w, xw,
         w_percs <- stats::quantile(fit_data[, w], w_percentiles, na.rm = TRUE)
         w_lo <- w_percs[1]
         w_hi <- w_percs[2]
-        # # Standardization should be done before calling plotmod
-        # if (standardized) {
-        #     w_lo <- (w_lo - w_mean_raw) / w_sd_raw
-        #     w_hi <- (w_hi - w_mean_raw) / w_sd_raw
-        #   }
       }
     mf1 <- mf0
     tmpfct <- function(x, type = "mean") {
@@ -335,15 +303,6 @@ plotmod <- function(output, y, x, w, xw,
           }
       }
     if (missing(title)) {
-    # Standardization should be done before calling plotmod
-        # if (standardized) {
-        #     # title <- paste0("The Moderation Effect of ", w_label,
-        #     #                 " on ", x_label, "'s effect on ", y_label,
-        #     #                 " (Standardized)")
-        #   } else {
-        #     # title <- paste0("The Moderation Effect of ", w_label,
-        #     #                 " on ", x_label, "'s effect on ", y_label)
-        #   }
         title <- "Moderation Effect"
       }
 
@@ -401,11 +360,6 @@ plotmod <- function(output, y, x, w, xw,
     #                               limits = c(y_min - expansion * y_range,
     #                                          y_max + expansion * y_range)) +
     #   ggplot2::scale_linetype(name = w_label) +
-    #   ggplot2::geom_abline(data = dat_plot,
-    #               mapping = ggplot2::aes(slope = b,
-    #                                      intercept = a,
-    #                                      linetype = factor(w)),
-    #                                      size = 1) +
     out <- p +
       ggplot2::labs(title = title,
                     subtitle = subtxt,

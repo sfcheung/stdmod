@@ -2,10 +2,10 @@
 % Please edit documentation in R/plotmod.R
 \name{plotmod}
 \alias{plotmod}
-\title{Plot the moderation effect in a path model}
+\title{Moderation Effect Plot}
 \usage{
 plotmod(
-  fit,
+  output,
   y,
   x,
   w,
@@ -14,9 +14,7 @@ plotmod(
   w_label,
   y_label,
   title,
-  a_shift = 0,
   expansion = 0.1,
-  standardized = FALSE,
   digits = 3,
   x_from_mean_in_sd = 1,
   w_from_mean_in_sd = 1,
@@ -27,104 +25,124 @@ plotmod(
   w_sd_to_percentiles,
   x_sd_to_percentiles,
   plot_x_vlines,
-  x_vlines_unit = "sd"
+  x_vlines_unit = "sd",
+  note_standardized = TRUE,
+  a_shift = 0
 )
 }
 \arguments{
-\item{fit}{The output from \link[lavaan:lavaan]{lavaan::lavaan} or its wrapper, such as
-\link[lavaan:sem]{lavaan::sem}.}
+\item{output}{An object of the class \code{lm}, such as the output
+of \code{\link[stats:lm]{stats::lm()}}, \code{\link[=std_selected]{std_selected()}}, or
+\code{\link[=std_selected_boot]{std_selected_boot()}}.}
 
-\item{y}{The name of the outcome variable as in the data set in \code{fit}. It
-can be the name of the variable, with or without quotes.}
+\item{x}{The name of the focal variable (x-axis) in the output. It
+can be the name of the variable, with or without quotes.
+Currently only numeric variables are supported.}
 
-\item{x}{The name of the focal variable as in the data set in
-It
-can be the name of the variable, with or without quotes.\code{fit}.}
+\item{w}{The name of the moderator in the output. It
+can be the name of the variable, with or without quotes.
+Currently only numeric variables are supported.}
 
-\item{w}{The name of the moderator as in the data set in \code{fit}.
-It
-can be the name of the variable, with or without quotes.}
+\item{x_label}{The label for the X-axis. Default is the value of \code{x}.}
 
-\item{xw}{The name of the product term, \code{x * w}. If not supplied,
-The function will try to find it in the data set.
-It
-can be the name of the variable, with or without quotes.}
+\item{w_label}{The label for the legend for the lines.
+Default is the value of\code{w}.}
 
-\item{x_label}{The label for the X-axis. Default is the vlaues of \code{x}.}
+\item{y_label}{The label for the Y-axis. Default is the
+name of the response variable in the model.}
 
-\item{w_label}{The label for the legend for the lines. Default is the value of\code{w}.}
+\item{title}{The title of the graph. If not supplied, will be
+generated from the variable
+names or labels (in \code{x_label}, \code{y_label},
+and \code{w_label}). If \code{""}, no title will be printed.
+This can be used when the plot is for manuscript
+submission and figures are requried to have no
+titles.}
 
-\item{y_label}{The label for the Y-axis. Default is the value of \code{y}.}
-
-\item{title}{The title of the graph. If not supplied, will be generated from the variable
-names.}
-
-\item{a_shift}{Default is 0. Can be ignored for now.}
-
-\item{expansion}{How much tha lower and upper limits of the axis will be adjusted.}
-
-\item{standardized}{Logical. Plot the moderation effect in standardized metric. All three
-variables, \code{x}, \code{w}, and \code{y} will be standardized. Default
-is \code{FALSE}}
+\item{expansion}{How much tha lower and upper limits of the axis
+will be adjusted. Default is .1}
 
 \item{digits}{Number of decimal digits to print. Default is 3.}
 
-\item{x_from_mean_in_sd}{How many SD from mean is used to define "low" and
-"high" for the focal variable. Default is 1.}
+\item{x_from_mean_in_sd}{How many SD from mean is used to define
+"low" and
+"high" for the focal variable.
+Default is 1.}
 
-\item{w_from_mean_in_sd}{How many SD from mean is used to define "low" and
+\item{w_from_mean_in_sd}{How many SD from mean is used to define
+"low" and
 "high" for the moderator. Default is 1.}
 
 \item{w_method}{How to define "high" and "low" for the moderator levels.
 Default is in terms of the
-standard deviation of the moderator, "sd". If equal to
-"percentile", then percentiles of the moderator in the
-dataset is used.}
+standard deviation of the moderator, \verb{"sd". If equal to }"percentile"`, then percentiles of the moderator in
+the
+dataset are used.}
 
-\item{w_percentiles}{If \code{w_method} is "percentile", then this argument
-specifies the two percentiles to be used, divided by 100.
+\item{w_percentiles}{If \code{w_method} is \code{"percentile"}, then this
+argument
+specifies the two percentiles to be used,
+divided by 100.
 It must be a
-vector of two numbers. The default is \code{c(.16, .84)},
+vector of two numbers. The default is
+\code{c(.16, .84)},
 the 16th and 84th percentiles,
 which corresponds approximately
 to one SD below and above mean for a
-normal distributoin, respectively.}
+normal distribution, respectively.}
 
-\item{x_method}{How to define "high" and "low" for the focal variable levels.
+\item{x_method}{How to define "high" and "low" for the focal
+variable levels.
 Default is in terms of the
-standard deviation of the focal variable, "sd". If equal to
-"percentile", then percentiles of the focal variable in the
+standard deviation of the focal variable, \code{"sd"}.
+If equal to
+\code{"percentile"}, then the percentiles of the
+focal variable in the
 dataset is used.}
 
-\item{x_percentiles}{If \code{x_method} is "percentile", then this argument
-specifies the two percentiles to be used, divided by 100.
+\item{x_percentiles}{If \code{x_method} is \code{"percentile"}, then this
+argument
+specifies the two percentiles to be used,
+divided by 100.
 It must be a
-vector of two numbers. The default is \code{c(.16, .84)},
+vector of two numbers. The default is
+\code{c(.16, .84)},
 the 16th and 84th percentiles,
 which corresponds approximately
 to one SD below and above mean for a
-normal distributoin, respectively.}
+normal distribution, respectively.}
 
-\item{w_sd_to_percentiles}{If \code{w_method} is "percentile" and this argument is
-set to a number, this number will be used to
-to determine the percentiles to be used. The
-lower percentile is the percentile in a normal
+\item{w_sd_to_percentiles}{If \code{w_method} is \code{"percentile"} and
+this argument is
+set to a number, this number will be
+used to
+to determine the percentiles to be used.
+The
+lower percentile is the percentile in a
+normal
 distribution
-that is \code{w_sd_to_percentiles} SD below the mean.
-The upper percentile is the percentil in a normal
-distribution that is \code{w_sd_to_percentiles} SD
+that is \code{w_sd_to_percentiles} SD below
+the mean.
+The upper percentile is the percentile in
+a normal
+distribution that is \code{w_sd_to_percentiles}
+SD
 above the mean. Therefore, if
-\code{w_sd_to_percentiles} is set to 1, then the lower
+\code{w_sd_to_percentiles} is set to 1, then the
+lower
 and upper percentiles are 16th and 84th,
 respectively.}
 
-\item{x_sd_to_percentiles}{If \code{x_method} is "percentile" and this argument is
-set to a number, this number will be used to
+\item{x_sd_to_percentiles}{If \code{x_method} is \code{"percentile"} and this
+argument is
+set to a number, this number will be used
+to
 to determine the percentiles to be used. The
-lower percentile is the percentile in a normal
+lower percentile is the percentile in a
+normal
 distribution
 that is \code{x_sd_to_percentiles} SD below the mean.
-The upper percentile is the percentil in a normal
+The upper percentile is the percentile in a normal
 distribution that is \code{x_sd_to_percentiles} SD
 above the mean. Therefore, if
 \code{x_sd_to_percentiles} is set to 1, then the lower
@@ -137,45 +155,45 @@ vector of numbers, indicating the levels to be plotted.
 How these numbers are interpreted depends on
 \code{x_vlines_unit}.}
 
-\item{x_vlines_unit}{If equal to "sd", then the values of \code{plot_x_vlines}
+\item{x_vlines_unit}{If equal to \code{"sd"}, then the values of \code{plot_x_vlines}
 will be interpreted as the deviation from the mean.
 For example, 1 is 1 SD above mean, and -1 is 1 SD
 below mean. If equal to "percentile", then the numbers,
-mulipltied by 100, are the precentiles. For example,
+multiplied by 100, are the percentiles. For example,
 .25 is the 25th percentile, and .75 is the 75th
 percentile.}
+
+\item{note_standardized}{If \code{TRUE}, will check whether a variable has SD
+nearly equal to one. If yes, will report this in the
+plot.
+Default is \code{TRUE}.}
+
+\item{a_shift}{Default is 0. Ignored for now.}
 }
 \value{
-A \link{ggplot2} graph.
+A \link{ggplot2} graph. Plotted if not assigned to a name. It can
+be further modified like a usual \link{ggplot2} graph.
 }
 \description{
-Plot the moderation effect in a path model
+Plot the moderation effect in a regression model
 }
 \details{
-This function extracts the information stored
-in the \code{lavaan} fit object to plot a two-line
-graph, one for the relation between the focal variale (\code{x}) and
-the outcome variable (\code{y}) when the moderator (\code{w}) is one stanard
-deviation below mean, and one when the moderator is one standard
-deviation above mean.
+This function generate a basic \link{ggplot2} graph
+typically found psychology manuscripts. It tries to
+check whether one or more variables are standardized, and
+report this in the plot if required.
 }
 \examples{
 
-dat <- test_x_1_w_1_v_1_cat1_n_500
-head(dat)
-
 # Do a moderated regression by lm
-lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
-summary(lm_raw)
-# Standardize all variables as in std_selected above, and compute the
-# nonparametric bootstrapping percentile confidence intervals.
-lm_std_boot <- std_selected_boot(lm_raw,
-                                 to_scale = ~ .,
-                                 to_center = ~ .,
-                                 conf = .95,
-                                 nboot = 100)
-# In real analysis, nboot should be at least 2000.
-summary(lm_std_boot)
+lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
+summary(lm_out)
+
+# Standardize all variables except for categorical variables
+lm_std <- std_selected(lm_out,
+                       to_scale = ~ .,
+                       to_center = ~ .)
+summary(lm_std)
 
 }
 \author{

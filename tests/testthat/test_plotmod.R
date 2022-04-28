@@ -1,57 +1,34 @@
 skip("WIP")
 
-library(stdmod)
 library(testthat)
+library(stdmod)
 library(ggplot2)
 
-dat <- test_x_1_w_1_v_1_cat1_n_500
-head(dat)
+dat <- sleep_emo_con
+lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, dat)
+lm_std <- std_selected(lm_out,
+                      to_center = ~ .,
+                      to_scale = ~ .)
+dat_std <- data.frame(scale(dat[, 2:5]), gender = dat$gender)
+lm_std_check <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness,
+                   dat_std)
+identical(coef(lm_std), coef(lm_std_check))
 
-# Do a moderated regression by lm
-lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
-summary(lm_raw)
-# Standardize all variables as in std_selected above, and compute the
-# nonparametric bootstrapping percentile confidence intervals.
-lm_std_boot <- std_selected_boot(lm_raw,
-                                 to_scale = ~ .,
-                                 to_center = ~ .,
-                                 conf = .95,
-                                 nboot = 100)
-# In real analysis, nboot should be at least 2000.
-summary(lm_std_boot)
-
-
-lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
-lm_xw_centered <- std_selected(lm_out, to_center = ~ emotional_stability + conscientiousness)
-lm_out_check <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness,
-                   model.frame(lm_xw_centered))
-
-p0 <- plotmod(output = lm_xw_centered,
+p0 <- plotmod(output = lm_out,
         x = emotional_stability,
         w = conscientiousness,
         x_label = "Emotional Stability",
         w_label = "Conscientiousness",
         y_label = "Sleep Duration")
 p0
+
 p0ylim <- layer_scales(p0)$y$range$range
 p0xlim <- layer_scales(p0)$x$range$range
-
-summary(lm_xw_centered)
-visreg::visreg(lm_xw_centered, "emotional_stability", "conscientiousness",
-            breaks = 2, overlay = TRUE)
+wlo <- mean(dat$conscientiousness) - sd(dat$conscientiousness)
+whi <- mean(dat$conscientiousness) + sd(dat$conscientiousness)
 
 
-tmp <- model.frame(lm_xw_centered)
-lm_out_check <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness,
-                   tmp)
-all.equal(coef(lm_out_check), coef(lm_xw_centered))
-visreg::visreg(lm_out_check, "emotional_stability", "conscientiousness",
-            breaks = 2, overlay = TRUE)
-wlo <- mean(tmp$conscientiousness) - sd(tmp$conscientiousness)
-whi <- mean(tmp$conscientiousness) + sd(tmp$conscientiousness)
-xlo <- mean(tmp$emotional_stability) - sd(tmp$emotional_stability)
-xhi <- mean(tmp$emotional_stability) + sd(tmp$emotional_stability)
-visreg::visreg(lm_out_check, "emotional_stability", "conscientiousness",
+visreg::visreg(lm_out, "emotional_stability", "conscientiousness",
             breaks = c(wlo, whi), overlay = TRUE,
             partial = FALSE,
             band = FALSE,
@@ -62,10 +39,10 @@ visreg::visreg(lm_out_check, "emotional_stability", "conscientiousness",
                      plot.caption = element_text(hjust = .5),
                      plot.title = element_text(hjust = .5),
                      plot.subtitle = element_text(hjust = .5))
-
+p0
 
 library(sjPlot)
-p <- plot_model(lm_out_check,
+p <- plot_model(lm_out,
            type = "pred", terms = c("emotional_stability",
                                     "conscientiousness"),
            mdrt.values = "meansd",
@@ -77,7 +54,7 @@ p + xlim(p0xlim[1], p0xlim[2]) + ylim(p0ylim[1], p0ylim[2]) +
                      plot.subtitle = element_text(hjust = .5))
 
 library(interactions)
-interact_plot(model = lm_out_check,
+interact_plot(model = lm_out,
               pred = emotional_stability,
               modx = conscientiousness) +
               xlim(p0xlim[1], p0xlim[2]) + ylim(p0ylim[1], p0ylim[2]) +
@@ -86,13 +63,45 @@ interact_plot(model = lm_out_check,
                      plot.title = element_text(hjust = .5),
                      plot.subtitle = element_text(hjust = .5))
 
-lm_std <- std_selected(lm_out, to_center = ~ .,
-                               to_scale = ~ .)
-summary(lm_std)
-
-plotmod(output = lm_std,
+p1 <- plotmod(output = lm_std,
         x = emotional_stability,
         w = conscientiousness,
         x_label = "Emotional Stability",
         w_label = "Conscientiousness",
         y_label = "Sleep Duration")
+p1
+p1ylim <- layer_scales(p1)$y$range$range
+p1xlim <- layer_scales(p1)$x$range$range
+
+visreg::visreg(lm_std, "emotional_stability", "conscientiousness",
+            breaks = c(-1, 1), overlay = TRUE,
+            partial = FALSE,
+            band = FALSE,
+            rug = FALSE,
+            gg = TRUE) +
+            xlim(p1xlim[1], p1xlim[2]) + ylim(p1ylim[1], p1ylim[2]) +
+               theme(legend.position = "top",
+                     plot.caption = element_text(hjust = .5),
+                     plot.title = element_text(hjust = .5),
+                     plot.subtitle = element_text(hjust = .5))
+p1
+p <- plot_model(lm_std,
+           type = "pred", terms = c("emotional_stability",
+                                    "conscientiousness"),
+           mdrt.values = "meansd",
+           ci.lvl = NA)
+p + xlim(p1xlim[1], p1xlim[2]) + ylim(p1ylim[1], p1ylim[2]) +
+               theme(legend.position = "top",
+                     plot.caption = element_text(hjust = .5),
+                     plot.title = element_text(hjust = .5),
+                     plot.subtitle = element_text(hjust = .5))
+
+interact_plot(model = lm_std,
+              pred = emotional_stability,
+              modx = conscientiousness) +
+              xlim(p1xlim[1], p1xlim[2]) + ylim(p1ylim[1], p1ylim[2]) +
+               theme(legend.position = "top",
+                     plot.caption = element_text(hjust = .5),
+                     plot.title = element_text(hjust = .5),
+                     plot.subtitle = element_text(hjust = .5))
+p1
