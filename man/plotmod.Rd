@@ -6,28 +6,23 @@
 \usage{
 plotmod(
   output,
-  y,
   x,
   w,
-  xw,
   x_label,
   w_label,
   y_label,
   title,
-  expansion = 0.1,
   digits = 3,
   x_from_mean_in_sd = 1,
   w_from_mean_in_sd = 1,
-  w_method = "sd",
+  w_method = c("sd", "percentile"),
   w_percentiles = c(0.16, 0.84),
-  x_method = "sd",
+  x_method = c("sd", "percentile"),
   x_percentiles = c(0.16, 0.84),
   w_sd_to_percentiles,
   x_sd_to_percentiles,
-  plot_x_vlines,
-  x_vlines_unit = "sd",
   note_standardized = TRUE,
-  a_shift = 0
+  no_title = FALSE
 )
 }
 \arguments{
@@ -40,8 +35,7 @@ can be the name of the variable, with or without quotes.
 Currently only numeric variables are supported.}
 
 \item{w}{The name of the moderator in the output. It
-can be the name of the variable, with or without quotes.
-Currently only numeric variables are supported.}
+can be the name of the variable, with or without quotes.}
 
 \item{x_label}{The label for the X-axis. Default is the value of \code{x}.}
 
@@ -56,11 +50,8 @@ generated from the variable
 names or labels (in \code{x_label}, \code{y_label},
 and \code{w_label}). If \code{""}, no title will be printed.
 This can be used when the plot is for manuscript
-submission and figures are requried to have no
+submission and figures are required to have no
 titles.}
-
-\item{expansion}{How much tha lower and upper limits of the axis
-will be adjusted. Default is .1}
 
 \item{digits}{Number of decimal digits to print. Default is 3.}
 
@@ -71,13 +62,12 @@ Default is 1.}
 
 \item{w_from_mean_in_sd}{How many SD from mean is used to define
 "low" and
-"high" for the moderator. Default is 1.}
+"high" for the moderator. Default is 1.
+Ignored if \code{w} is categorical.}
 
 \item{w_method}{How to define "high" and "low" for the moderator levels.
 Default is in terms of the
-standard deviation of the moderator, \verb{"sd". If equal to }"percentile"`, then percentiles of the moderator in
-the
-dataset are used.}
+standard deviation of the moderator, \verb{"sd". If equal to }"percentile"\verb{, then percentiles of the moderator in the dataset are used. Ignored if }w` is categorical.}
 
 \item{w_percentiles}{If \code{w_method} is \code{"percentile"}, then this
 argument
@@ -89,7 +79,8 @@ vector of two numbers. The default is
 the 16th and 84th percentiles,
 which corresponds approximately
 to one SD below and above mean for a
-normal distribution, respectively.}
+normal distribution, respectively.
+Ignored if \code{w} is categorical.}
 
 \item{x_method}{How to define "high" and "low" for the focal
 variable levels.
@@ -149,26 +140,12 @@ above the mean. Therefore, if
 and upper percentiles are 16th and 84th,
 respectively.}
 
-\item{plot_x_vlines}{If supplied, vertical lines to indicate the levels of
-the focal variable will be plotted. This should be a
-vector of numbers, indicating the levels to be plotted.
-How these numbers are interpreted depends on
-\code{x_vlines_unit}.}
-
-\item{x_vlines_unit}{If equal to \code{"sd"}, then the values of \code{plot_x_vlines}
-will be interpreted as the deviation from the mean.
-For example, 1 is 1 SD above mean, and -1 is 1 SD
-below mean. If equal to "percentile", then the numbers,
-multiplied by 100, are the percentiles. For example,
-.25 is the 25th percentile, and .75 is the 75th
-percentile.}
-
 \item{note_standardized}{If \code{TRUE}, will check whether a variable has SD
 nearly equal to one. If yes, will report this in the
 plot.
 Default is \code{TRUE}.}
 
-\item{a_shift}{Default is 0. Ignored for now.}
+\item{no_title}{If \code{TRUE}, title will be suppressed. Default is \code{FALSE}.}
 }
 \value{
 A \link{ggplot2} graph. Plotted if not assigned to a name. It can
@@ -182,6 +159,9 @@ This function generate a basic \link{ggplot2} graph
 typically found psychology manuscripts. It tries to
 check whether one or more variables are standardized, and
 report this in the plot if required.
+
+This function only has features for typical plots of moderation effects.
+It is not intended to be a flexible tool for a fine control on the plots.
 }
 \examples{
 
