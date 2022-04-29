@@ -4,34 +4,37 @@
 #'
 #'
 #' @return
-#' The data frame of conditional effects.
+#' A data frame of the conditional effects.
 #'
-#' @param lm_out The output from [lm()].
+#' @param lm_out The output from [stats::lm()]. It can also accept the output
+#'               from
+#'               [std_selected()] or [std_selected_boot()].
 #' @param x      The independent variable, that is, the variable with its effect
-#'              being moderated. If supplied, its standard deviation will be
-#'              used
-#'              for rescaling. Default is `NULL`.
-#' @param w      The moderator. If supplied, its standard deviation will be
-#'              used
-#'              for rescaling. Default is `NULL`.
-#' @param w_method How to define "high" and "low" for the moderator levels.
-#'                  Default is in terms of the
-#'                  standard deviation of the moderator, `"sd".
+#'              being moderated. It must be a numeric variable.
+#' @param w      The moderator. Both numeric variables and categorical variables
+#'               (character or factor) are supported.
+#' @param w_method How to define "low", "medium", and "high" for the moderator
+#'                  levels.
+#'                  Default is in terms of mean and
+#'                  standard deviation (SD) of the moderator, `"sd"`:
+#'                  "low", "medium", and "high" are one SD below mean,
+#'                  mean, and one SD above mean, respectively.
 #'                  If equal to
 #'                  `"percentile"`, then percentiles of the moderator in
 #'                  the
-#'                  dataset are used.
+#'                  dataset are used: "low", "medium", and "high" are
+#'                  16th, 50th (median), and 84th percentiles, respectively.
 #'                  Ignored if `w` is categorical.
 #' @param w_percentiles If `w_method` is `"percentile"`, then this
 #'                      argument
-#'                      specifies the two percentiles to be used,
+#'                      specifies the three percentiles to be used,
 #'                      divided by 100.
 #'                        It must be a
 #'                      vector of two numbers. The default is
-#'                      `c(.16, .84)`,
-#'                      the 16th and 84th percentiles,
+#'                      `c(.16, .50, .84)`,
+#'                      the 16th, 50th, and 84th percentiles,
 #'                      which corresponds approximately
-#'                      to one SD below and above mean for a
+#'                      to one SD below and above mean in a
 #'                      normal distribution, respectively.
 #'                      Ignored if `w` is categorical.
 #' @param w_sd_to_percentiles If `w_method` is `"percentile"` and
@@ -61,11 +64,6 @@
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
-#' @references
-#' Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
-#' (2022) Improving an old way to measure moderation effect in standardized
-#' units. Advance online publication. *Health Psychology*.
-#' \doi{10.1037/hea0001188}
 #'
 #' @examples
 #' # TODO
@@ -76,7 +74,7 @@ cond_effect <- function(output,
                       x = NULL,
                       w = NULL,
                       w_method = c("sd", "percentile"),
-                      w_percentiles = c(.16, .84),
+                      w_percentiles = c(.16, .50, .84),
                       w_sd_to_percentiles,
                       w_from_mean_in_sd = 1
                       ) {
@@ -107,10 +105,11 @@ cond_effect <- function(output,
     if (w_method == "percentile") {
         if (!missing(w_sd_to_percentiles)) {
             w_percentiles <- c(stats::pnorm(-1 * abs(w_sd_to_percentiles)),
+                               .50,
                                stats::pnorm(abs(w_sd_to_percentiles)))
           }
-        if (w_percentiles[1] > w_percentiles[2]) {
-            stop("In w_percentiles, the first percentile must be lower than the second percentile.")
+        if ((order(w_percentiles) != 1:3) || any(duplicated(w_percentiles))) {
+            stop("w_percentiles are not three numbers ordered from smallest to largest.")
           }
       }
     if (!w_numeric) {
@@ -129,11 +128,13 @@ cond_effect <- function(output,
     if (w_numeric) {
         if (w_method == "sd") {
             w_lo <- w_mean - w_from_mean_in_sd * w_sd
+            w_me <- w_mean
             w_hi <- w_mean + w_from_mean_in_sd * w_sd
           } else {
             w_percs <- stats::quantile(mf0[, w], w_percentiles, na.rm = TRUE)
             w_lo <- w_percs[1]
-            w_hi <- w_percs[2]
+            w_me <- w_percs[2]
+            w_hi <- w_percs[3]
           }
       }
     output0 <- output
@@ -146,16 +147,22 @@ cond_effect <- function(output,
         mf_w_lo[, w] <- mf_w_lo[, w] - w_lo
         lm_w_lo <- stats::update(output0, data = mf_w_lo)
         lm_w_lo_summary <- summary(lm_w_lo)
+        mf_w_me <- mf0
+        mf_w_me[, w] <- mf_w_me[, w] - w_me
+        lm_w_me <- stats::update(output0, data = mf_w_me)
+        lm_w_me_summary <- summary(lm_w_me)
         mf_w_hi <- mf0
         mf_w_hi[, w] <- mf_w_hi[, w] - w_hi
         lm_w_hi <- stats::update(output0, data = mf_w_hi)
         lm_w_hi_summary <- summary(lm_w_hi)
         out0 <- rbind(lm_w_hi_summary$coefficients[x, ],
+                      lm_w_me_summary$coefficients[x, ],
                       lm_w_lo_summary$coefficients[x, ])
-        out0 <- data.frame(Level = c("High", "Low"),
-                           w = c(w_hi, w_lo),
+        out0 <- data.frame(Level = c("High", "Medium", "Low"),
+                           w = c(w_hi, w_me, w_lo),
                            out0, check.names = FALSE)
         colnames(out0)[2] <- w
+        colnames(out0)[3] <- "x's Effect"
       } else {
         tmpfct <- function(w_i, mf0) {
             mf_i <- mf0
@@ -164,13 +171,15 @@ cond_effect <- function(output,
             stats::update(output0, data = mf_i)
           }
         out_all <- lapply(w_levels, tmpfct, mf0 = mf0)
-        sum_all <- lapply(out_all, function(x, xvar) summary(x)$coefficients[xvar, ],
+        sum_all <- lapply(out_all,
+                          function(x, xvar) summary(x)$coefficients[xvar, ],
                           xvar = x)
         out0 <- do.call(rbind, sum_all)
         out0 <- data.frame(Level = w_levels,
                            w = w_levels,
                            out0, check.names = FALSE)
         colnames(out0)[2] <- w
+        colnames(out0)[3] <- "x's Effect"
       }
     out0
   }

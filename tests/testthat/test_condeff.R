@@ -8,9 +8,28 @@ lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousne
 lm_std <- std_selected(lm_out,
                       to_center = ~ .,
                       to_scale = ~ .)
-out_ustd <- cond_effect(lm_out, x = "emotional_stability", w = "conscientiousness")
+out_ustd <- cond_effect(lm_out, x = "emotional_stability", w = "conscientiousness",
+                        w_from_mean_in_sd = 1.25)
 out_std <- cond_effect(lm_std, x = "emotional_stability", w = "conscientiousness")
 
+w_mean <- mean(dat$conscientiousness)
+w_sd <- sd(dat$conscientiousness)
+dat$w_lo <- dat$conscientiousness - (w_mean - 1.25 * w_sd)
+dat$w_me <- dat$conscientiousness - w_mean
+dat$w_hi <- dat$conscientiousness - (w_mean + 1.25 * w_sd)
+lm_out_lo <-  lm(sleep_duration ~ age + gender + emotional_stability*w_lo, dat)
+lm_out_me <-  lm(sleep_duration ~ age + gender + emotional_stability*w_me, dat)
+lm_out_hi <-  lm(sleep_duration ~ age + gender + emotional_stability*w_hi, dat)
+out_ustd_check <- c(coef(lm_out_hi)["emotional_stability"],
+                    coef(lm_out_me)["emotional_stability"],
+                    coef(lm_out_lo)["emotional_stability"])
+out_ustd[, 3]
+
+test_that("Check ustd, mean +/- a SD", {
+    expect_equivalent(
+        out_ustd_check, out_ustd[, 3]
+      )
+  })
 
 
 # Categorical Moderator
