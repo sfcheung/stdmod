@@ -56,7 +56,7 @@
 #'                            `w_sd_to_percentiles` is set to 1, then the
 #'                            lower
 #'                            and upper percentiles are 16th and 84th,
-#'                            respectively.
+#'                            respectively. Default is `NA`.
 #' @param w_from_mean_in_sd How many SD from mean is used to define
 #'                          "low" and
 #'                          "high" for the moderator. Default is 1.
@@ -75,7 +75,7 @@ cond_effect <- function(output,
                       w = NULL,
                       w_method = c("sd", "percentile"),
                       w_percentiles = c(.16, .50, .84),
-                      w_sd_to_percentiles,
+                      w_sd_to_percentiles = NA,
                       w_from_mean_in_sd = 1
                       ) {
     mf0 <- model.frame(output)
@@ -102,84 +102,55 @@ cond_effect <- function(output,
     if (!x_numeric) {
         stop("x variable must be a numeric variable.")
       }
-    if (w_method == "percentile") {
-        if (!missing(w_sd_to_percentiles)) {
-            w_percentiles <- c(stats::pnorm(-1 * abs(w_sd_to_percentiles)),
-                               .50,
-                               stats::pnorm(abs(w_sd_to_percentiles)))
-          }
-        if ((order(w_percentiles) != 1:3) || any(duplicated(w_percentiles))) {
-            stop("w_percentiles are not three numbers ordered from smallest to largest.")
-          }
-      }
-    if (!w_numeric) {
-        w_sd_raw <- NA
-        w_mean_raw <- NA
-        w_levels <- levels(as.factor(mf0[, w]))
-        w_nlevels <- nlevels(as.factor(mf0[, w]))
-      } else {
-        w_sd_raw <- stats::sd(mf0[, w])
-        w_mean_raw <- mean(mf0[, w])
-        w_levels <- NA
-        w_nlevels <- NA
-      }
-    w_sd <- w_sd_raw
-    w_mean <- w_mean_raw
-    if (w_numeric) {
-        if (w_method == "sd") {
-            w_lo <- w_mean - w_from_mean_in_sd * w_sd
-            w_me <- w_mean
-            w_hi <- w_mean + w_from_mean_in_sd * w_sd
-          } else {
-            w_percs <- stats::quantile(mf0[, w], w_percentiles, na.rm = TRUE)
-            w_lo <- w_percs[1]
-            w_me <- w_percs[2]
-            w_hi <- w_percs[3]
-          }
-      }
     output0 <- output
     if (inherits(output, "std_selected")) {
         tmp <- class(output0)
         class(output0) <- tmp[!(tmp %in% "std_selected")]
       }
     if (w_numeric) {
-        mf_w_lo <- mf0
-        mf_w_lo[, w] <- mf_w_lo[, w] - w_lo
-        lm_w_lo <- stats::update(output0, data = mf_w_lo)
-        lm_w_lo_summary <- summary(lm_w_lo)
-        mf_w_me <- mf0
-        mf_w_me[, w] <- mf_w_me[, w] - w_me
-        lm_w_me <- stats::update(output0, data = mf_w_me)
-        lm_w_me_summary <- summary(lm_w_me)
-        mf_w_hi <- mf0
-        mf_w_hi[, w] <- mf_w_hi[, w] - w_hi
-        lm_w_hi <- stats::update(output0, data = mf_w_hi)
-        lm_w_hi_summary <- summary(lm_w_hi)
-        out0 <- rbind(lm_w_hi_summary$coefficients[x, ],
-                      lm_w_me_summary$coefficients[x, ],
-                      lm_w_lo_summary$coefficients[x, ])
-        out0 <- data.frame(Level = c("High", "Medium", "Low"),
-                           w = c(w_hi, w_me, w_lo),
-                           out0, check.names = FALSE)
-        colnames(out0)[2] <- w
-        colnames(out0)[3] <- "x's Effect"
+        w_levels <- gen_levels(mf0[, w],
+                              method = w_method,
+                              from_mean_in_sd = w_from_mean_in_sd,
+                              levels = c(-1, 0, 1),
+                              sd_to_percentiles = w_sd_to_percentiles,
+                              sd_levels = w_from_mean_in_sd,
+                              percentiles = w_percentiles)
+        w_levels <- sort(w_levels, decreasing = TRUE)
+        w_levels_labels <- c("High", "Medium", "Low")
       } else {
-        tmpfct <- function(w_i, mf0) {
-            mf_i <- mf0
-            mf_i[, w] <- stats::relevel(as.factor(mf_i[, w]),
-                                        ref = w_i)
-            stats::update(output0, data = mf_i)
-          }
-        out_all <- lapply(w_levels, tmpfct, mf0 = mf0)
-        sum_all <- lapply(out_all,
-                          function(x, xvar) summary(x)$coefficients[xvar, ],
-                          xvar = x)
-        out0 <- do.call(rbind, sum_all)
-        out0 <- data.frame(Level = w_levels,
-                           w = w_levels,
-                           out0, check.names = FALSE)
-        colnames(out0)[2] <- w
-        colnames(out0)[3] <- "x's Effect"
+        w_levels <- levels(as.factor(mf0[, w]))
+        w_levels_labels <- w_levels
       }
+    if (w_numeric) {
+        out_all <- lapply(w_levels, cond_numeric_i,
+                          output = output0,
+                          w = w)
+      } else {
+        out_all <- lapply(w_levels, cond_categorical_i,
+                          output = output0,
+                          w = w)
+      }
+    coef_all <- lapply(out_all, function(xi) summary(xi)$coefficients[x, ])
+    out0 <- do.call(rbind, coef_all)
+    out0 <- data.frame(Level = w_levels_labels,
+                       w = w_levels,
+                       out0, check.names = FALSE)
+    colnames(out0)[2] <- w
+    colnames(out0)[3] <- "x's Effect"
     out0
+  }
+
+cond_numeric_i <- function(w_i, output, w) {
+    mf_i <- stats::model.frame(output)
+    mf_i[, w] <- mf_i[, w] - w_i
+    out <- stats::update(output, data = mf_i)
+    out
+  }
+
+cond_categorical_i <- function(w_i, output, w) {
+    mf_i <- stats::model.frame(output)
+    mf_i[, w] <- stats::relevel(as.factor(mf_i[, w]),
+                                ref = w_i)
+    out <- stats::update(output, data = mf_i)
+    out
   }

@@ -48,6 +48,12 @@ test_that("Check std, mean +/- a SD", {
       )
   })
 
+out_ustd_p <- cond_effect(lm_out, x = "emotional_stability", w = "conscientiousness",
+                          w_method = "percentile")
+out_std_p <- cond_effect(lm_std, x = "emotional_stability", w = "conscientiousness",
+                          w_method = "percentile")
+
+
 # Categorical Moderator
 
 
