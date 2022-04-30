@@ -19,8 +19,8 @@ plotmod(
   w_percentiles = c(0.16, 0.84),
   x_method = c("sd", "percentile"),
   x_percentiles = c(0.16, 0.84),
-  w_sd_to_percentiles,
-  x_sd_to_percentiles,
+  w_sd_to_percentiles = NA,
+  x_sd_to_percentiles = NA,
   note_standardized = TRUE,
   no_title = FALSE,
   line_width = 1,
@@ -124,7 +124,7 @@ above the mean. Therefore, if
 \code{w_sd_to_percentiles} is set to 1, then the
 lower
 and upper percentiles are 16th and 84th,
-respectively.}
+respectively. Default is \code{NA}.}
 
 \item{x_sd_to_percentiles}{If \code{x_method} is \code{"percentile"} and this
 argument is
@@ -140,7 +140,7 @@ distribution that is \code{x_sd_to_percentiles} SD
 above the mean. Therefore, if
 \code{x_sd_to_percentiles} is set to 1, then the lower
 and upper percentiles are 16th and 84th,
-respectively.}
+respectively. Default is \code{NA}.}
 
 \item{note_standardized}{If \code{TRUE}, will check whether a variable has SD
 nearly equal to one. If yes, will report this in the
@@ -149,7 +149,8 @@ Default is \code{TRUE}.}
 
 \item{no_title}{If \code{TRUE}, title will be suppressed. Default is \code{FALSE}.}
 
-\item{line_width}{The width of the lines as used in \code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}}.
+\item{line_width}{The width of the lines as used in
+\code{\link[ggplot2:geom_segment]{ggplot2::geom_segment()}}.
 Default is 1.}
 
 \item{point_size}{The size of the points as used in \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.
