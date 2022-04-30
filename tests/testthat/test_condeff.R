@@ -49,10 +49,45 @@ test_that("Check std, mean +/- a SD", {
   })
 
 out_ustd_p <- cond_effect(lm_out, x = "emotional_stability", w = "conscientiousness",
-                          w_method = "percentile")
+                          w_method = "percentile", w_percentiles = c(.20, .40, .90))
 out_std_p <- cond_effect(lm_std, x = "emotional_stability", w = "conscientiousness",
-                          w_method = "percentile")
+                          w_method = "percentile", w_sd_to_percentiles = 1.25)
 
+dat$w_p1 <- dat$conscientiousness - quantile(dat$conscientiousness, .20)
+dat$w_p2 <- dat$conscientiousness - quantile(dat$conscientiousness, .40)
+dat$w_p3 <- dat$conscientiousness - quantile(dat$conscientiousness, .90)
+lm_out_p1 <-  lm(sleep_duration ~ age + gender + emotional_stability*w_p1, dat)
+lm_out_p2 <-  lm(sleep_duration ~ age + gender + emotional_stability*w_p2, dat)
+lm_out_p3 <-  lm(sleep_duration ~ age + gender + emotional_stability*w_p3, dat)
+out_ustd_p_check <- c(coef(lm_out_p3)["emotional_stability"],
+                    coef(lm_out_p2)["emotional_stability"],
+                    coef(lm_out_p1)["emotional_stability"])
+out_ustd_p[, 3]
+
+dat_std <- data.frame(scale(dat[, 2:5]), gender = dat$gender)
+dat_std$w_p1 <- dat_std$conscientiousness - quantile(dat_std$conscientiousness, stats::pnorm(-1.25))
+dat_std$w_p2 <- dat_std$conscientiousness - quantile(dat_std$conscientiousness, stats::pnorm(0))
+dat_std$w_p3 <- dat_std$conscientiousness - quantile(dat_std$conscientiousness, stats::pnorm(1.25))
+lm_std_p1 <-  lm(sleep_duration ~ age + gender + emotional_stability*w_p1, dat_std)
+lm_std_p2 <-  lm(sleep_duration ~ age + gender + emotional_stability*w_p2, dat_std)
+lm_std_p3 <-  lm(sleep_duration ~ age + gender + emotional_stability*w_p3, dat_std)
+out_std_p_check <- c(coef(lm_std_p3)["emotional_stability"],
+                    coef(lm_std_p2)["emotional_stability"],
+                    coef(lm_std_p1)["emotional_stability"])
+out_std_p[, 3]
+
+
+test_that("Check ustd, percentile", {
+    expect_equivalent(
+        out_ustd_p[, 3], out_ustd_p_check
+      )
+  })
+
+test_that("Check ustd, percentile", {
+    expect_equivalent(
+        out_std_p[, 3], out_std_p_check
+      )
+  })
 
 # Categorical Moderator
 
@@ -71,6 +106,18 @@ identical(coef(lm_std_wcat3), coef(lm_std_wcat3_check))
 
 out_ustd_wcat3 <- cond_effect(lm_out_wcat3, x = "emotional_stability", w = "city")
 out_std_wcat3 <- cond_effect(lm_std_wcat3, x = "emotional_stability", w = "city")
+
+dat_tmp <- dat
+dat_tmp$city <- relevel(factor(dat_tmp$city), ref = "Alpha")
+lm_out_Alpha <-  lm(sleep_duration ~ age + city*emotional_stability + conscientiousness, dat_tmp)
+dat_tmp$city <- relevel(factor(dat_tmp$city), ref = "Beta")
+lm_out_Beta <-  lm(sleep_duration ~ age + city*emotional_stability + conscientiousness, dat_tmp)
+dat_tmp$city <- relevel(factor(dat_tmp$city), ref = "Gamma")
+lm_out_Gamma <-  lm(sleep_duration ~ age + city*emotional_stability + conscientiousness, dat_tmp)
+out_ustd_wcat3_check <- c(coef(lm_out_Alpha)["emotional_stability"],
+                         coef(lm_out_Beta)["emotional_stability"],
+                         coef(lm_out_Gamma)["emotional_stability"])
+out_ustd_wcat3[, 3]
 
 
 dat_tmp <- dat

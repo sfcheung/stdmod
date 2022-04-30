@@ -111,9 +111,8 @@ cond_effect <- function(output,
         w_levels <- gen_levels(mf0[, w],
                               method = w_method,
                               from_mean_in_sd = w_from_mean_in_sd,
-                              levels = c(-1, 0, 1),
+                              sd_levels = c(-1, 0, 1),
                               sd_to_percentiles = w_sd_to_percentiles,
-                              sd_levels = w_from_mean_in_sd,
                               percentiles = w_percentiles)
         w_levels <- sort(w_levels, decreasing = TRUE)
         w_levels_labels <- c("High", "Medium", "Low")
