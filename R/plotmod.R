@@ -294,18 +294,48 @@ plotmod <- function(output, x, w,
     if (missing(x_label)) x_label <- x
     if (missing(w_label)) w_label <- w
     if (missing(y_label)) y_label <- y
+    if (isTRUE(all.equal(stats::sd(mf0[, x]), 1)) &&
+        isTRUE(all.equal(mean(mf0[, x]), 0))) {
+        x_standardized <- TRUE
+      } else {
+        x_standardized <- FALSE
+      }
+    if (w_numeric) {
+        if (isTRUE(all.equal(stats::sd(mf0[, w]), 1)) &&
+            isTRUE(all.equal(mean(mf0[, w]), 0))) {
+            w_standardized <- TRUE
+          } else {
+            w_standardized <- FALSE
+          }
+      } else {
+        w_standardized <- FALSE
+      }
+      if (isTRUE(all.equal(stats::sd(mf0[, y]), 1)) &&
+          isTRUE(all.equal(mean(mf0[, y]), 0))) {
+          y_standardized <- TRUE
+        } else {
+          y_standardized <- FALSE
+        }
     if (note_standardized) {
-        if (isTRUE(all.equal(stats::sd(mf0[, x]), 1))) {
-            x_label <- paste0(x_label, " (Standardized)")
+        if (any(c(x_standardized,
+                  w_standardized,
+                  y_standardized))) {
+            tmp <- ifelse(c(x_standardized,
+                              w_standardized,
+                              y_standardized),
+                            c(x_label,
+                              w_label,
+                              y_label),
+                            c(NA, NA, NA))
+            cap_std <-
+              paste0(na.omit(tmp), collapse = ", ")
+            cap_std <- paste0(cap_std, " standardized")
+          } else {
+            cap_std <- NULL
           }
-        if (w_numeric) {
-            if (isTRUE(all.equal(stats::sd(mf0[, w]), 1))) {
-                w_label <- paste0(w_label, " (Standardized)")
-              }
-          }
-        if (isTRUE(all.equal(stats::sd(mf0[, y]), 1))) {
-            y_label <- paste0(y_label, " (Standardized)")
-          }
+        # x_label <- paste0(x_label, " (Standardized)")
+        # w_label <- paste0(w_label, " (Standardized)")
+        # y_label <- paste0(y_label, " (Standardized)")
       }
     if (missing(title)) {
         title <- "Moderation Effect"
@@ -368,6 +398,13 @@ plotmod <- function(output, x, w,
           }
       } else {
         cap_txt <- NULL
+      }
+    if (note_standardized & !is.null(cap_std)) {
+        if (!is.null(cap_txt)) {
+            cap_txt <- paste0(cap_txt, "\n", cap_std)
+          } else {
+            cap_txt <- cap_std
+          }
       }
     out <- p +
       ggplot2::labs(title = title,
