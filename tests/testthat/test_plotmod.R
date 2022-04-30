@@ -24,6 +24,7 @@ p0 <- plotmod(output = lm_out,
         w_label = "Conscientiousness",
         y_label = "Sleep Duration")
 p0
+p0 + coord_fixed(ratio = (1/.3)*sd(dat$emotional_stability)/sd(dat$sleep_duration))
 
 p0ylim <- layer_scales(p0)$y$range$range
 p0xlim <- layer_scales(p0)$x$range$range
@@ -97,6 +98,8 @@ p1 <- plotmod(output = lm_std,
         w_label = "Conscientiousness",
         y_label = "Sleep Duration")
 p1
+p1 + coord_fixed(ratio = (1/.3))
+
 p1ylim <- layer_scales(p1)$y$range$range
 p1xlim <- layer_scales(p1)$x$range$range
 
