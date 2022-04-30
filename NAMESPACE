@@ -2,11 +2,13 @@
 
 S3method(add1,std_selected)
 S3method(confint,std_selected)
+S3method(print,cond_effect)
 S3method(print,std_selected)
 S3method(print,summary.std_selected)
 S3method(summary,std_selected)
 S3method(update,std_selected)
 S3method(vcov,std_selected)
+export(cond_effect)
 export(plotmod)
 export(std_selected)
 export(std_selected_boot)

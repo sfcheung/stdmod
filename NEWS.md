@@ -1,9 +1,11 @@
-# stdmod 0.1.6 (latest: 0.1.6.1001)
+# stdmod 0.1.6 (latest: 0.1.6.1002)
 
 - Add `plotmod()` for plotting moderation effects. This function will check
   whether a variable is standardized. If yes, will note this in the plot.
-  (Added in 0.1.6.1001)
 - Update vignettes to use `plotmod()` instead of `visreg::visreg()`.
+- Add `cond_effect()` for computing conditional effects. This function
+  will check which variable(s) is/are standardized. If yes, will note
+  this in the printout.
 
 
 # stdmod 0.1.5
