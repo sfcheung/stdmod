@@ -4,9 +4,11 @@
 #'
 #'
 #' @return
-#' A data frame of the conditional effects.
+#' A data-frame-like object of the conditional effects. The class is
+#' `cond_effect` and the print method will print additional information of
+#' the conditional effects.
 #'
-#' @param lm_out The output from [stats::lm()]. It can also accept the output
+#' @param output The output from [stats::lm()]. It can also accept the output
 #'               from
 #'               [std_selected()] or [std_selected_boot()].
 #' @param x      The independent variable, that is, the variable with its effect
@@ -66,7 +68,16 @@
 #'
 #'
 #' @examples
-#' # TODO
+#'
+#' # Load a sample data set
+#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
+#' # one categorical covariate (cat1) with three groups, and one dv (dv).
+#' dat <- test_x_1_w_1_v_1_cat1_n_500
+#'
+#' # Do a moderated regression by lm
+#' lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+#' summary(lm_raw)
+#' cond_effect(lm_raw, x = iv, w = mod)
 #'
 #' @export
 
@@ -78,7 +89,7 @@ cond_effect <- function(output,
                       w_sd_to_percentiles = NA,
                       w_from_mean_in_sd = 1
                       ) {
-    mf0 <- model.frame(output)
+    mf0 <- stats::model.frame(output)
     w_method <- match.arg(w_method)
     x0 <- deparse(substitute(x))
     if (inherits(tryCatch(x00 <- as.character(x), error = function(e) e),
@@ -111,6 +122,7 @@ cond_effect <- function(output,
         w_levels <- gen_levels(mf0[, w],
                               method = w_method,
                               from_mean_in_sd = w_from_mean_in_sd,
+                              levels = c(-1, 0, 1),
                               sd_levels = c(-1, 0, 1),
                               sd_to_percentiles = w_sd_to_percentiles,
                               percentiles = w_percentiles)
@@ -136,6 +148,32 @@ cond_effect <- function(output,
                        out0, check.names = FALSE)
     colnames(out0)[2] <- w
     colnames(out0)[3] <- "x's Effect"
+    mycall <- match.call()
+    attr(out0, "call") <- mycall
+    attr(out0, "output") <- output
+    attr(out0, "x") <- x
+    attr(out0, "y") <- y
+    attr(out0, "w") <- w
+    attr(out0, "w_method") <- w_method
+    attr(out0, "w_percentiles") <- w_percentiles
+    attr(out0, "w_sd_to_percentiles") <- w_sd_to_percentiles
+    attr(out0, "w_from_mean_in_sd") <- w_from_mean_in_sd
+    if (w_numeric) {
+        wecdf <- stats::ecdf(mf0[, w])
+        w_pq <- wecdf(w_levels)
+        w_mean <- mean(mf0[, w], na.rm = TRUE)
+        w_sd  <- stats::sd(mf0[, w], na.rm = TRUE)
+        w_z <- (w_levels - w_mean) / w_sd 
+      } else {
+        w_pq <- rep(NA, length(w_levels))
+        w_z <- rep(NA, length(w_levels))
+      }
+    attr(out0, "w_empirical_percentiles") <- w_pq
+    attr(out0, "w_empirical_z") <- w_z
+    attr(out0, "y_standardized") <- is_standardized(mf0[, y])
+    attr(out0, "x_standardized") <- is_standardized(mf0[, x])
+    attr(out0, "w_standardized") <- is_standardized(mf0[, w])
+    class(out0) <- c("cond_effect", class(out0))
     out0
   }
 

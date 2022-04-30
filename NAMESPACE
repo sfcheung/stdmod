@@ -2,6 +2,7 @@
 
 S3method(add1,std_selected)
 S3method(confint,std_selected)
+S3method(print,cond_effect)
 S3method(print,std_selected)
 S3method(print,summary.std_selected)
 S3method(summary,std_selected)

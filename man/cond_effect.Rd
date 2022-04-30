@@ -9,35 +9,45 @@ cond_effect(
   x = NULL,
   w = NULL,
   w_method = c("sd", "percentile"),
-  w_percentiles = c(0.16, 0.84),
-  w_sd_to_percentiles,
+  w_percentiles = c(0.16, 0.5, 0.84),
+  w_sd_to_percentiles = NA,
   w_from_mean_in_sd = 1
 )
 }
 \arguments{
+\item{output}{The output from \code{\link[stats:lm]{stats::lm()}}. It can also accept the output
+from
+\code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.}
+
 \item{x}{The independent variable, that is, the variable with its effect
-being moderated. If supplied, its standard deviation will be
-used
-for rescaling. Default is \code{NULL}.}
+being moderated. It must be a numeric variable.}
 
-\item{w}{The moderator. If supplied, its standard deviation will be
-used
-for rescaling. Default is \code{NULL}.}
+\item{w}{The moderator. Both numeric variables and categorical variables
+(character or factor) are supported.}
 
-\item{w_method}{How to define "high" and "low" for the moderator levels.
-Default is in terms of the
-standard deviation of the moderator, \verb{"sd". If equal to }"percentile"\verb{, then percentiles of the moderator in the dataset are used. Ignored if }w` is categorical.}
+\item{w_method}{How to define "low", "medium", and "high" for the moderator
+levels.
+Default is in terms of mean and
+standard deviation (SD) of the moderator, \code{"sd"}:
+"low", "medium", and "high" are one SD below mean,
+mean, and one SD above mean, respectively.
+If equal to
+\code{"percentile"}, then percentiles of the moderator in
+the
+dataset are used: "low", "medium", and "high" are
+16th, 50th (median), and 84th percentiles, respectively.
+Ignored if \code{w} is categorical.}
 
 \item{w_percentiles}{If \code{w_method} is \code{"percentile"}, then this
 argument
-specifies the two percentiles to be used,
+specifies the three percentiles to be used,
 divided by 100.
 It must be a
 vector of two numbers. The default is
-\code{c(.16, .84)},
-the 16th and 84th percentiles,
+\code{c(.16, .50, .84)},
+the 16th, 50th, and 84th percentiles,
 which corresponds approximately
-to one SD below and above mean for a
+to one SD below and above mean in a
 normal distribution, respectively.
 Ignored if \code{w} is categorical.}
 
@@ -60,30 +70,33 @@ above the mean. Therefore, if
 \code{w_sd_to_percentiles} is set to 1, then the
 lower
 and upper percentiles are 16th and 84th,
-respectively.}
+respectively. Default is \code{NA}.}
 
 \item{w_from_mean_in_sd}{How many SD from mean is used to define
 "low" and
 "high" for the moderator. Default is 1.
 Ignored if \code{w} is categorical.}
-
-\item{lm_out}{The output from \code{\link[=lm]{lm()}}.}
 }
 \value{
-The data frame of conditional effects.
+A data-frame-like object of the conditional effects. The class is
+\code{cond_effect} and the print method will print additional information of
+the conditional effects.
 }
 \description{
 Compute the conditional effects in a moderated regression model.
 }
 \examples{
-# TODO
 
-}
-\references{
-Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
-(2022) Improving an old way to measure moderation effect in standardized
-units. Advance online publication. \emph{Health Psychology}.
-\doi{10.1037/hea0001188}
+# Load a sample data set
+# It has one predictor (iv), one moderator (mod), on covariate (v1),
+# one categorical covariate (cat1) with three groups, and one dv (dv).
+dat <- test_x_1_w_1_v_1_cat1_n_500
+
+# Do a moderated regression by lm
+lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+summary(lm_raw)
+cond_effect(lm_raw, x = iv, w = mod)
+
 }
 \author{
 Shu Fai Cheung \url{https://orcid.org/0000-0002-9871-9448}
