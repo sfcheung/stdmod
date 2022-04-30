@@ -127,7 +127,7 @@ test_that("Check plotmod lm, std", {
 p1ylim <- layer_scales(p1)$y$range$range
 p1xlim <- layer_scales(p1)$x$range$range
 
-visreg::visreg(lm_std, "emotional_stability", "conscientiousness",
+visreg::visreg(lm_std_check, "emotional_stability", "conscientiousness",
             breaks = c(-1, 1), overlay = TRUE,
             partial = FALSE,
             band = FALSE,
@@ -165,7 +165,7 @@ test_that("Check plotmod lm, std, percentiles", {
 p1pylim <- layer_scales(p1p)$y$range$range
 p1pxlim <- layer_scales(p1p)$x$range$range
 
-visreg::visreg(lm_std, "emotional_stability", "conscientiousness",
+visreg::visreg(lm_std_check, "emotional_stability", "conscientiousness",
             overlay = TRUE,
             partial = FALSE,
             band = FALSE,
@@ -284,7 +284,7 @@ p0_wcat
 #                      plot.subtitle = element_text(hjust = .5))
 # p0_wcat
 
-visreg::visreg(lm_std_wcat, "emotional_stability", "gender",
+visreg::visreg(lm_std_wcat_check, "emotional_stability", "gender",
             overlay = TRUE,
             partial = FALSE,
             band = FALSE,
