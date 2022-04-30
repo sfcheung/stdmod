@@ -205,20 +205,17 @@ plotmod <- function(output, x, w,
                            method = x_method,
                            from_mean_in_sd = x_from_mean_in_sd,
                            levels = c(-1, 1),
+                           sd_levels = c(-1, 1),
                            sd_to_percentiles = x_sd_to_percentiles,
-                           sd_levels = x_from_mean_in_sd,
                            percentiles = x_percentiles)
     if (w_numeric) {
         w_levels <- gen_levels(mf0[, w],
                               method = w_method,
                               from_mean_in_sd = w_from_mean_in_sd,
                               levels = c(-1, 1),
+                              sd_levels = c(-1, 1),
                               sd_to_percentiles = w_sd_to_percentiles,
-                              sd_levels = w_from_mean_in_sd,
                               percentiles = w_percentiles)
-        w_lo <- w_levels[1]
-        w_hi <- w_levels[2]
-        w_levels <- c(w_lo, w_hi)
       } else {
         w_lo <- NA
         w_hi <- NA
