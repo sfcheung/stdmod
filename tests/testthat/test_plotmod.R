@@ -1,8 +1,3 @@
-skip("WIP")
-skip_if(!interactive(),
-        message = "plotmod not tested if not interactive")
-
-
 library(testthat)
 library(stdmod)
 library(ggplot2)
@@ -26,11 +21,20 @@ p0 <- plotmod(output = lm_out,
 p0
 p0 + coord_fixed(ratio = (1/.3)*sd(dat$emotional_stability)/sd(dat$sleep_duration))
 
+p0_check <- structure(list(x = c(1.95023867728441, 1.95023867728441), xend = c(3.47616132271559, 
+3.47616132271559), y = c(6.35285945290502, 7.02951847531317),
+    yend = c(6.98563044473979, 7.04856589701016)), class = "data.frame", row.names = c(NA,
+-2L))
+
+test_that("Check plotmod lm", {
+  expect_equal(layer_data(p0, 2)[, 2:5],
+               p0_check)
+  })
+
 p0ylim <- layer_scales(p0)$y$range$range
 p0xlim <- layer_scales(p0)$x$range$range
 wlo <- mean(dat$conscientiousness) - sd(dat$conscientiousness)
 whi <- mean(dat$conscientiousness) + sd(dat$conscientiousness)
-
 
 visreg::visreg(lm_out, "emotional_stability", "conscientiousness",
             breaks = c(wlo, whi), overlay = TRUE,
@@ -53,7 +57,17 @@ p0p <- plotmod(output = lm_out,
         y_label = "Sleep Duration",
         w_method = "percentile",
         w_percentiles = c(.10, .90))
-p0p
+
+p0p_check <- structure(list(x = c(1.95023867728441, 1.95023867728441), xend = c(3.47616132271559, 
+3.47616132271559), y = c(6.22106675827842, 7.11313925511082),
+    yend = c(6.97337252373737, 7.05634339117116)), class = "data.frame", row.names = c(NA,
+-2L))
+
+test_that("Check plotmod lm, percentiles", {
+  expect_equal(layer_data(p0p, 2)[, 2:5],
+               p0p_check)
+  })
+
 p0pylim <- layer_scales(p0p)$y$range$range
 p0pxlim <- layer_scales(p0p)$x$range$range
 visreg::visreg(lm_out, "emotional_stability", "conscientiousness",
@@ -100,6 +114,16 @@ p1 <- plotmod(output = lm_std,
 p1
 p1 + coord_fixed(ratio = (1/.3))
 
+p1_check <- structure(list(x = c(-1, -1), xend = c(1, 1), y = c(-0.298888468949575, 
+0.178698434412524), yend = c(0.147722199821573, 0.192142131820008
+)), class = "data.frame", row.names = c(NA, -2L))
+
+test_that("Check plotmod lm, std", {
+  expect_equal(layer_data(p1, 2)[, 2:5],
+               p1_check)
+  })
+
+
 p1ylim <- layer_scales(p1)$y$range$range
 p1xlim <- layer_scales(p1)$x$range$range
 
@@ -126,6 +150,18 @@ p1p <- plotmod(output = lm_std,
         w_method = "percentile",
         w_percentiles = c(.10, .90))
 p1p
+
+p1p_check <- structure(list(x = c(-1, -1), xend = c(1, 1), y = c(-0.391907940837296, 
+0.237718100090162), yend = c(0.139070541690466, 0.197631498294497
+)), class = "data.frame", row.names = c(NA, -2L))
+
+test_that("Check plotmod lm, std, percentiles", {
+  expect_equal(layer_data(p1p, 2)[, 2:5],
+               p1p_check)
+  })
+
+
+
 p1pylim <- layer_scales(p1p)$y$range$range
 p1pxlim <- layer_scales(p1p)$x$range$range
 
@@ -185,6 +221,18 @@ p0_wcat <- plotmod(output = lm_out_wcat,
         w_label = "Gender",
         y_label = "Sleep Duration")
 p0_wcat
+
+p0_wcat_check <- structure(list(x = c(1.95023867728441, 1.95023867728441), xend = c(3.47616132271559, 
+3.47616132271559), y = c(6.62226556199772, 6.59876556910144),
+    yend = c(7.02520488312402, 6.54759945860682)), class = "data.frame", row.names = c(NA,
+-2L))
+
+test_that("Check plotmod lm, std, percentiles", {
+  expect_equal(layer_data(p0_wcat, 2)[, 2:5],
+               p0_wcat_check)
+  })
+
+
 
 p0wcatylim <- layer_scales(p0_wcat)$y$range$range
 p0wcatxlim <- layer_scales(p0_wcat)$x$range$range
@@ -295,6 +343,19 @@ p0_wcat3 <- plotmod(output = lm_out_wcat3,
         y_label = "Sleep Duration")
 p0_wcat3
 
+
+p0_wcat_check <- structure(list(x = c(1.95023867728441, 1.95023867728441, 1.95023867728441
+), xend = c(3.47616132271559, 3.47616132271559, 3.47616132271559
+), y = c(6.94522100731477, 6.51682495584239, 6.39424169437123
+), yend = c(7.08950964764363, 6.83129421896357, 6.88894193948001
+)), class = "data.frame", row.names = c(NA, -3L))
+
+test_that("Check plotmod lm, std, percentiles", {
+  expect_equal(layer_data(p0_wcat3, 2)[, 2:5],
+               p0_wcat_check)
+  })
+
+
 p0wcat3ylim <- layer_scales(p0_wcat3)$y$range$range
 p0wcat3xlim <- layer_scales(p0_wcat3)$x$range$range
 
@@ -305,6 +366,17 @@ p1_wcat3 <- plotmod(output = lm_std_wcat3,
         w_label = "City",
         y_label = "Sleep Duration")
 p1_wcat3
+
+p1_wcat3_check <- structure(list(x = c(-1, -1, -1), xend = c(1, 1, 1), y = c(0.119201161237405, 
+-0.183161383057221, -0.269680823885312), yend = c(0.221040289428956,
+0.0387914714870233, 0.0794793148698632)), class = "data.frame", row.names = c(NA, 
+-3L))
+
+test_that("Check plotmod lm, std, percentiles", {
+  expect_equal(layer_data(p1_wcat3, 2)[, 2:5],
+               p1_wcat3_check)
+  })
+
 
 p1wcat3ylim <- layer_scales(p1_wcat3)$y$range$range
 p1wcat3xlim <- layer_scales(p1_wcat3)$x$range$range
@@ -322,7 +394,7 @@ visreg::visreg(lm_out_wcat3, "emotional_stability", "city",
                      plot.subtitle = element_text(hjust = .5))
 p0_wcat3
 
-visreg::visreg(lm_std_wcat3, "emotional_stability", "city",
+visreg::visreg(lm_std_wcat3_check, "emotional_stability", "city",
             overlay = TRUE,
             partial = FALSE,
             band = FALSE,
