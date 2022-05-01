@@ -78,7 +78,7 @@ print.summary.std_selected <- function(x, ...) {
 format_dat_sc <- function(x) {
   dat_sc <- data.frame(centered_by = x$centered_by,
                       scaled_by   = x$scaled_by)
-  nonnumeric <- attr(terms(x), "dataClasses") != "numeric"
+  nonnumeric <- attr(stats::terms(x), "dataClasses") != "numeric"
   dat_sc[nonnumeric, ] <- NA
   centered <- dat_sc$centered_by != 0
   scaled <- dat_sc$scaled_by != 1
