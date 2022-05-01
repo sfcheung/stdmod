@@ -2,7 +2,7 @@
 % Please edit documentation in R/print_cond_eff.R
 \name{print.cond_effect}
 \alias{print.cond_effect}
-\title{Print the Summary of a 'cond_effect' Class Object}
+\title{Print a 'cond_effect' Class Object}
 \usage{
 \method{print}{cond_effect}(x, nd = 3, nd_stat = 3, nd_p = 3, ...)
 }

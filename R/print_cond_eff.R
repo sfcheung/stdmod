@@ -1,4 +1,4 @@
-#' @title Print the Summary of a 'cond_effect' Class Object
+#' @title Print a 'cond_effect' Class Object
 #'
 #' @description Print the output of [cond_effect()].
 #'

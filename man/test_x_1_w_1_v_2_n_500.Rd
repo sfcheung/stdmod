@@ -3,14 +3,21 @@
 \docType{data}
 \name{test_x_1_w_1_v_2_n_500}
 \alias{test_x_1_w_1_v_2_n_500}
-\title{Sample dataset for testing}
+\title{Sample Dataset: One IV, One Moderator, Two Covariates}
 \format{
-An object of class \code{data.frame} with 500 rows and 5 columns.
+A data frame with 500 rows and five variables:
+\describe{
+\item{dv}{Dependent variable, continuous}
+\item{iv}{Independent variable, continuous}
+\item{mod}{Moderator variable, continuous}
+\item{v1}{Covariate, continuous}
+\item{v2}{Covariate, continuous}
+}
 }
 \usage{
 test_x_1_w_1_v_2_n_500
 }
 \description{
-One IV, one moderation, two covariates, n 500
+All variables are continuous. For testing.
 }
 \keyword{datasets}

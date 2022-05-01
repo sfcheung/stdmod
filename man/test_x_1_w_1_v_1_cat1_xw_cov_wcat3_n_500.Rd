@@ -3,16 +3,23 @@
 \docType{data}
 \name{test_x_1_w_1_v_1_cat1_xw_cov_wcat3_n_500}
 \alias{test_x_1_w_1_v_1_cat1_xw_cov_wcat3_n_500}
-\title{One IV, one moderation, two covariates, v1 is continuous
-and cat2 is categorical. Moderator is a three-category
-string variable. IV and the moderator are associated.}
+\title{Sample Dataset: One IV, One 3-Category Moderator, Two Covariates}
 \format{
-An object of class \code{data.frame} with 500 rows and 5 columns.
+A data frame with 500 rows and 5 variables:
+\describe{
+\item{dv}{Dependent variable, continuous}
+\item{iv}{Independent variable, continuous}
+\item{mod}{Moderator variable, categorical with three categories}
+\item{v1}{Covariate, continuous}
+\item{cat1}{Covariate, categorical with two categories}
+}
 }
 \usage{
 test_x_1_w_1_v_1_cat1_xw_cov_wcat3_n_500
 }
 \description{
-Sample size is 500.
+The independent variable and the categorical
+moderator are
+associated. For demonstrating the use of tumble graph.
 }
 \keyword{datasets}

@@ -3,22 +3,23 @@
 \docType{data}
 \name{sleep_emo_con}
 \alias{sleep_emo_con}
-\title{A real dataset of 500 Hong Kong adults with the following variables
-case_id
-sleep_duration (in hours)
-conscientiousness
-emotional_stability}
+\title{Sample Dataset: Predicting Sleep Duration}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 500 rows and 6 columns.
+A data frame with 500 rows and six variables:
+\describe{
+\item{case_id}{Case ID, integer}
+\item{sleep_duration}{Sleep duration in hours}
+\item{conscientiousness}{Conscientiousness score, continuous}
+\item{emotional_stability}{Emotional stability score, continuous}
+\item{age}{Age in years}
+\item{gender}{Gender, string, "female" or "male"}
+}
 }
 \usage{
 sleep_emo_con
 }
 \description{
-A real dataset of 500 Hong Kong adults with the following variables
-case_id
-sleep_duration (in hours)
-conscientiousness
-emotional_stability
+A random subset from a real dataset. For
+illustration.
 }
 \keyword{datasets}

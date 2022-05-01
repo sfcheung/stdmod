@@ -4,7 +4,7 @@
 \name{stdmod}
 \alias{stdmod}
 \alias{stdmod_boot}
-\title{Standardized Moderation Effect Given an \code{\link[=lm]{lm()}} Output}
+\title{Standardized Moderation Effect Given an 'lm' Output}
 \usage{
 stdmod(
   lm_out,
@@ -69,7 +69,17 @@ Compute the standardized moderation effect in a moderated
 regression model.
 }
 \details{
-Compute the standardized moderation effect given an
+Two more general functions, \code{\link[=std_selected]{std_selected()}} and
+\code{\link[=std_selected_boot]{std_selected_boot()}}, have been developed and can do what these functions
+do and more. Users are recommended to use them instead of \code{\link[=stdmod]{stdmod()}} and
+\code{\link[=stdmod_boot]{stdmod_boot()}}.
+
+Nevertheless, if computing the standardized moderation effect and
+forming its nonparametric
+bootstrap interval are what users need, then these functions can still
+be used.
+
+\code{\link[=stdmod]{stdmod()}} computes the standardized moderation effect given an
 \code{\link[=lm]{lm()}} output using the formula from Cheung, Cheung, Lau, Hui, and Vong
 (2022). Users specify
 the moderator, the predictor, the outcome variable, and the corresponding

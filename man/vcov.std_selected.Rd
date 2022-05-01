@@ -2,7 +2,7 @@
 % Please edit documentation in R/vcov_stdmod.R
 \name{vcov.std_selected}
 \alias{vcov.std_selected}
-\title{vcov method for a 'std_selected' Class Object}
+\title{The 'vcov' Method for a 'std_selected' Class Object}
 \usage{
 \method{vcov}{std_selected}(object, type = "lm", ...)
 }

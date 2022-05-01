@@ -3,16 +3,22 @@
 \docType{data}
 \name{test_x_1_w_1_v_1_cat1_n_500}
 \alias{test_x_1_w_1_v_1_cat1_n_500}
-\title{One IV, one moderation, two covariates, v1 is contrinuous and cat2 is categorical.
-Sample size is 500.}
+\title{Sample Dataset: One IV, One Moderator, Two Covariates}
 \format{
-An object of class \code{data.frame} with 500 rows and 5 columns.
+A data frame with 500 rows and five variables:
+\describe{
+\item{dv}{Dependent variable, continuous}
+\item{iv}{Independent variable, continuous}
+\item{mod}{Moderator variable, continuous}
+\item{v1}{Covariate, continuous}
+\item{cat1}{Covariate, categorical}
+}
 }
 \usage{
 test_x_1_w_1_v_1_cat1_n_500
 }
 \description{
-One IV, one moderation, two covariates, v1 is contrinuous and cat2 is categorical.
-Sample size is 500.
+The IV (iv1) continuous; The moderator (cat2) is
+categorical. For testing.
 }
 \keyword{datasets}
