@@ -23,7 +23,7 @@
 #'   \item{iv}{Independent variable, continuous}
 #'   \item{mod}{Moderator variable, continuous}
 #'   \item{v1}{Covariate, continuous}
-#'   \item{cat}{Covariate, categorical}
+#'   \item{cat1}{Covariate, categorical}
 #' }
 #'
 "test_x_1_w_1_v_1_cat1_n_500"

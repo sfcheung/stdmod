@@ -9,7 +9,7 @@
 #'   \item{iv}{Independent variable, continuous}
 #'   \item{mod}{Moderator variable, continuous}
 #'   \item{v1}{Covariate, continuous}
-#'   \item{cat}{Covariate, categorical}
+#'   \item{cat1}{Covariate, categorical}
 #' }
 #'
 "test_x_1_w_1_v_1_cat1_xw_cov_n_500"
@@ -26,7 +26,7 @@
 #'   \item{iv}{Independent variable, continuous}
 #'   \item{mod}{Moderator variable, categorical with three categories}
 #'   \item{v1}{Covariate, continuous}
-#'   \item{cat}{Covariate, categorical with two categories}
+#'   \item{cat1}{Covariate, categorical with two categories}
 #' }
 #'
 "test_x_1_w_1_v_1_cat1_xw_cov_wcat3_n_500"
