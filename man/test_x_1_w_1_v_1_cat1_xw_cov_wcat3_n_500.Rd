@@ -11,7 +11,7 @@ A data frame with 500 rows and 5 variables:
 \item{iv}{Independent variable, continuous}
 \item{mod}{Moderator variable, categorical with three categories}
 \item{v1}{Covariate, continuous}
-\item{cat}{Covariate, categorical with two categories}
+\item{cat1}{Covariate, categorical with two categories}
 }
 }
 \usage{
