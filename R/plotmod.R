@@ -166,6 +166,15 @@
 #'         w_label = "Conscientiousness",
 #'         y_label = "Sleep Duration")
 #'
+#' # Tumble Graph
+#' plotmod(lm_std,
+#'         x = emotional_stability,
+#'         w = conscientiousness,
+#'         x_label = "Emotional Stability",
+#'         w_label = "Conscientiousness",
+#'         y_label = "Sleep Duration",
+#'         graph_type = "tumble")
+#'
 #' @export
 
 plotmod <- function(output, x, w,

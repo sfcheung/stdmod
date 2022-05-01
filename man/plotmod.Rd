@@ -202,6 +202,15 @@ plotmod(lm_std,
         w_label = "Conscientiousness",
         y_label = "Sleep Duration")
 
+# Tumble Graph
+plotmod(lm_std,
+        x = emotional_stability,
+        w = conscientiousness,
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration",
+        graph_type = "tumble")
+
 }
 \references{
 Bodner, T. E. (2016). Tumble graphs: Avoiding misleading end point
