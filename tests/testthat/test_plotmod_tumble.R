@@ -12,12 +12,13 @@ lm_std_check <- lm(sleep_duration ~ age + gender + emotional_stability*conscient
                    dat_std)
 identical(coef(lm_std), coef(lm_std_check))
 
-p0 <- plotmod_tumble(output = lm_out,
+p0 <- plotmod(output = lm_out,
         x = emotional_stability,
         w = conscientiousness,
         x_label = "Emotional Stability",
         w_label = "Conscientiousness",
-        y_label = "Sleep Duration")
+        y_label = "Sleep Duration",
+        graph_type = "tumble")
 p0
 p0 + coord_fixed(ratio = (1/.3)*sd(dat$emotional_stability)/sd(dat$sleep_duration))
 
@@ -31,14 +32,15 @@ test_that("Check plotmod_tumble lm", {
                p0_check)
   })
 
-p0p <- plotmod_tumble(output = lm_out,
+p0p <- plotmod(output = lm_out,
         x = emotional_stability,
         w = conscientiousness,
         x_label = "Emotional Stability",
         w_label = "Conscientiousness",
         y_label = "Sleep Duration",
         w_method = "percentile",
-        w_percentiles = c(.10, .90))
+        w_percentiles = c(.10, .90),
+        graph_type = "tumble")
 p0p
 
 p0p_check <- structure(list(x = c(1.76424143533983, 2.22284685095342), xend = c(3.28509189799351, 
@@ -51,12 +53,13 @@ test_that("Check plotmod_tumble lm, percentiles", {
                p0p_check)
   })
 
-p1 <- plotmod_tumble(output = lm_std,
+p1 <- plotmod(output = lm_std,
         x = emotional_stability,
         w = conscientiousness,
         x_label = "Emotional Stability",
         w_label = "Conscientiousness",
-        y_label = "Sleep Duration")
+        y_label = "Sleep Duration",
+        graph_type = "tumble")
 p1
 p1 + coord_fixed(ratio = (1/.3))
 
@@ -71,14 +74,15 @@ test_that("Check plotmod_tumble lm, std", {
   })
 
 
-p1p <- plotmod_tumble(output = lm_std,
+p1p <- plotmod(output = lm_std,
         x = emotional_stability,
         w = conscientiousness,
         x_label = "Emotional Stability",
         w_label = "Conscientiousness",
         y_label = "Sleep Duration",
         w_method = "percentile",
-        w_percentiles = c(.10, .90))
+        w_percentiles = c(.10, .90),
+        graph_type = "tumble")
 p1p
 
 p1p_check <- structure(list(x = c(-1.24378331693482, -0.642697256659458), 
@@ -106,12 +110,13 @@ lm_std_wcat_check <- lm(sleep_duration ~ age + gender*emotional_stability + cons
                    dat_std)
 identical(coef(lm_std_wcat), coef(lm_std_wcat_check))
 
-p0_wcat <- plotmod_tumble(output = lm_out_wcat,
+p0_wcat <- plotmod(output = lm_out_wcat,
         x = emotional_stability,
         w = gender,
         x_label = "Emotional Stability",
         w_label = "Gender",
-        y_label = "Sleep Duration")
+        y_label = "Sleep Duration",
+        graph_type = "tumble")
 p0_wcat
 
 p0_wcat_check <- structure(list(x = c(1.92857619767485, 2.05891627554369), xend = c(3.45889368184323, 
@@ -125,12 +130,14 @@ test_that("Check plotmod_tumble lm, std, percentiles", {
   })
 
 
-p1_wcat <- plotmod_tumble(output = lm_std_wcat,
+p1_wcat <- plotmod(output = lm_std_wcat,
         x = emotional_stability,
         w = gender,
         x_label = "Emotional Stability",
         w_label = "Gender",
-        y_label = "Sleep Duration")
+        y_label = "Sleep Duration",
+        graph_type = "tumble")
+
 p1_wcat
 
 p1_wcat_check <- structure(list(x = c(-1.02839263140163, -0.857558181491475), 
@@ -160,12 +167,13 @@ lm_std_wcat3_check <- lm(sleep_duration ~ age + city*emotional_stability + consc
                    dat_std)
 identical(coef(lm_std_wcat3), coef(lm_std_wcat3_check))
 
-p0_wcat3 <- plotmod_tumble(output = lm_out_wcat3,
+p0_wcat3 <- plotmod(output = lm_out_wcat3,
         x = emotional_stability,
         w = city,
         x_label = "Emotional Stability",
         w_label = "City",
-        y_label = "Sleep Duration")
+        y_label = "Sleep Duration",
+        graph_type = "tumble")
 p0_wcat3
 
 
@@ -181,12 +189,13 @@ test_that("Check plotmod_tumble lm, std, percentiles", {
   })
 
 
-p1_wcat3 <- plotmod_tumble(output = lm_std_wcat3,
+p1_wcat3 <- plotmod(output = lm_std_wcat3,
         x = emotional_stability,
         w = city,
         x_label = "Emotional Stability",
         w_label = "City",
-        y_label = "Sleep Duration")
+        y_label = "Sleep Duration",
+        graph_type = "tumble")
 p1_wcat3
 
 p1_wcat3_check <- structure(list(x = c(-0.979260806703231, -1.07732082977996, -0.937046365330035

@@ -24,7 +24,8 @@ plotmod(
   note_standardized = TRUE,
   no_title = FALSE,
   line_width = 1,
-  point_size = 5
+  point_size = 5,
+  graph_type = c("default", "tumble")
 )
 }
 \arguments{
@@ -155,6 +156,11 @@ Default is 1.}
 
 \item{point_size}{The size of the points as used in \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}.
 Default is 5.}
+
+\item{graph_type}{If \code{"default"}, the typical line-graph with equal end-points
+will be plotted. If \code{"tubmle"}, then the tumble graph
+proposed by Bodner (2016) will be plotted. Default is
+\code{"default"}.}
 }
 \value{
 A \link{ggplot2} graph. Plotted if not assigned to a name. It can
@@ -196,6 +202,12 @@ plotmod(lm_std,
         w_label = "Conscientiousness",
         y_label = "Sleep Duration")
 
+}
+\references{
+Bodner, T. E. (2016). Tumble graphs: Avoiding misleading end point
+extrapolation when graphing interactions from a moderated multiple
+regression analysis. \emph{Journal of Educational and Behavioral
+Statistics, 41}(6), 593-604. \doi{10.3102/1076998616657080}
 }
 \author{
 Shu Fai Cheung \url{https://orcid.org/0000-0002-9871-9448}
