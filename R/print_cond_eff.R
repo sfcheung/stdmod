@@ -26,6 +26,9 @@
 #' summary(lm_raw)
 #' cond_effect(lm_raw, x = iv, w = mod)
 #'
+#' lm_std <- std_selected(lm_raw, to_scale = ~ iv + mod, to_center = ~ iv + mod)
+#' cond_effect(lm_std, x = iv, w = mod)
+#'
 #' @export
 
 print.cond_effect <- function(x,
@@ -44,12 +47,12 @@ print.cond_effect <- function(x,
     ci_se <- which(cnames == "Std. Error")
     ci_t <- which(cnames == "t value")
     ci_p <- which(cnames == "Pr(>|t|)")
-    cat(paste0("The effects of ",
-              iv,
-              " on ",
-              y,
-              ", conditional on ",
-              w, ":\n\n"))
+    cat("The effects of ",
+        iv,
+        " on ",
+        y,
+        ", conditional on ",
+        w, ":\n\n", sep = "")
 
     colnames(xdf)[3] <- paste0(iv, " Effect")
     colnames(xdf)[ci_se] <- "S.E."
@@ -71,7 +74,7 @@ print.cond_effect <- function(x,
     print(xdf, row.names = FALSE)
 
     cat("\nThe regression model:\n")
-    cat(paste0("\n\t", deparse(stats::formula(orgoutput))), "\n")
+    cat("\n\t", deparse(stats::formula(orgoutput)), "\n", sep = "")
 
     if (w_numeric) {
         w_df <- xdf[, 1:2]
@@ -81,7 +84,8 @@ print.cond_effect <- function(x,
         print(w_df, row.names = FALSE)
         cat("\n")
         cat("- % Below: The percent of cases equal to or less than a level.\n")
-        cat("- From Mean (in SD): Distance of a level from the mean, in standard deviation (+ve above, -ve below).\n")
+        cat("- From Mean (in SD): Distance of a level from the mean,\n",
+            "  in standard deviation (+ve above, -ve below).\n", sep = "")
       }
     y_std <- attr(x, "y_standardized")
     x_std <- attr(x, "x_standardized")
@@ -93,12 +97,12 @@ print.cond_effect <- function(x,
         v_std <- paste0(stats::na.omit(tmp), collapse = ", ")
         v_txt <- paste0("- The variable(s) ", v_std, " is/are standardized.")
         cat("\nNote:\n\n")
-        cat(paste0(v_txt, "\n"))
+        cat(v_txt, "\n", sep = "")
         if (y_std & x_std) {
-            cat(paste0("- The conditional effects are the standardized effects of ",
-                      iv,
-                      " on ",
-                      y, "."))
+            cat("- The conditional effects are the standardized effects of ",
+                iv,
+                " on ",
+                y, ".", sep = "")
           }
       }
     cat("\n")
