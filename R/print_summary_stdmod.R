@@ -40,25 +40,62 @@
 #' @export
 
 print.summary.std_selected <- function(x, ...) {
-  cat("\nSelected variable(s) are centered and/or scaled")
-  cat("\n- Variable(s) centered:", x$centered_terms)
-  cat("\n- Variable(s) scaled:", x$scaled_terms)
-  cat("\n")
-  dat_sc <- data.frame(centered_by = x$centered_by,
-                       scaled_by   = x$scaled_by)
+  scaled_or_centered <- any(c(!is.null(x$centered_terms), !is.null(x$scaled_terms)))
+  if (scaled_or_centered) {
+      cat("\nSelected variable(s) are centered by mean and/or scaled by SD")
+      if (!is.null(x$centered_terms)) {
+          cat("\n- Variable(s) centered:", x$centered_terms)
+        }
+      if (!is.null(x$scaled_terms)) {
+          cat("\n- Variable(s) scaled:", x$scaled_terms)
+        }
+      cat("\n\n")
+    } else {
+      cat("\nNo variables are centered by mean or scaled by SD by std_selected().")
+      cat("\n\n")
+    }
+  dat_sc <- format_dat_sc(x)
   print(dat_sc)
-  cat("\nNote:")
-  cat("\n- Centered by 0 or NA: No centering\n- Scaled by 1 or NA: No scaling")
   if (!is.null(x$nboot)) {
+      cat("\nNote:")
       cat("\n- Nonparametric bootstrapping 95% confidence intervals computed.")
-      cat("\n- The number of bootstrap samples is", x$nboot)
+      cat("\n- The number of bootstrap samples is ", x$nboot, ".", sep = "")
     }
   cat("\n")
   NextMethod()
-  if (!is.null(x$nboot)) {
-      cat("Note:")
-      cat("\n- [CI Lower, CI Upper] are bootstrap percentile confidence intervals.")
-      cat("\n- Std. Error are standard errors in the original analysis, not bootstrap SEs.")
-      cat("\n")
+  cat("Note:")
+  if (scaled_or_centered) {
+      cat("\n- Estimates and their statistics are based on the data after\n",
+            "  mean-centering, scaling, or standardization.", sep = "")
     }
-  }
+  if (!is.null(x$nboot)) {
+      cat("\n- [CI Lower, CI Upper] are bootstrap percentile confidence intervals.")
+      cat("\n- Std. Error are not bootstrap SEs.")
+    }
+  cat("\n")
+}
+
+format_dat_sc <- function(x) {
+  dat_sc <- data.frame(centered_by = x$centered_by,
+                      scaled_by   = x$scaled_by)
+  nonnumeric <- attr(stats::terms(x), "dataClasses") != "numeric"
+  dat_sc[nonnumeric, ] <- NA
+  centered <- dat_sc$centered_by != 0
+  scaled <- dat_sc$scaled_by != 1
+  centered[is.na(centered)] <- FALSE
+  scaled[is.na(scaled)] <- FALSE
+  dat_sc$Note <- ""
+  tmpfct <- function(xc, xs) {
+      if (xc && xs) {
+        return("Standardized (mean = 0, SD = 1)")
+      }
+      if (xc) return("Centered (mean = 0)")
+      if (xs) return("Scaled (SD = 1)")
+      return("")
+    }
+  dat_sc$Note <- format(mapply(tmpfct, centered, scaled))
+  dat_sc[is.na(dat_sc$centered_by) &
+        is.na(dat_sc$scaled_by), "Note"] <- "Nonnumeric"
+  dat_sc$Note <- format(dat_sc$Note)
+  dat_sc
+}

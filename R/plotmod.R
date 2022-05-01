@@ -102,8 +102,8 @@
 #'                            `w_sd_to_percentiles` is set to 1, then the
 #'                            lower
 #'                            and upper percentiles are 16th and 84th,
-#'                            respectively.
-#' @param x_sd_to_percentiles If `x_method` is `"percentile"` and this 
+#'                            respectively. Default is `NA`.
+#' @param x_sd_to_percentiles If `x_method` is `"percentile"` and this
 #'                            argument is
 #'                            set to a number, this number will be used
 #'                            to
@@ -117,13 +117,14 @@
 #'                            above the mean. Therefore, if
 #'                            `x_sd_to_percentiles` is set to 1, then the lower
 #'                            and upper percentiles are 16th and 84th,
-#'                            respectively.
+#'                            respectively. Default is `NA`.
 #' @param note_standardized If `TRUE`, will check whether a variable has SD
 #'                          nearly equal to one. If yes, will report this in the
 #'                          plot.
 #'                          Default is `TRUE`.
 #' @param no_title If `TRUE`, title will be suppressed. Default is `FALSE`.
-#' @param line_width The width of the lines as used in [ggplot2::geom_segment()].
+#' @param line_width The width of the lines as used in
+#'                   [ggplot2::geom_segment()].
 #'                   Default is 1.
 #' @param point_size The size of the points as used in [ggplot2::geom_point()].
 #'                    Default is 5.
@@ -168,8 +169,8 @@ plotmod <- function(output, x, w,
                             w_percentiles = c(.16, .84),
                             x_method = c("sd", "percentile"),
                             x_percentiles = c(.16, .84),
-                            w_sd_to_percentiles,
-                            x_sd_to_percentiles,
+                            w_sd_to_percentiles = NA,
+                            x_sd_to_percentiles= NA,
                             note_standardized = TRUE,
                             no_title = FALSE,
                             line_width = 1,
@@ -177,15 +178,6 @@ plotmod <- function(output, x, w,
                     ) {
     w_method <- match.arg(w_method)
     x_method <- match.arg(x_method)
-    if (x_method == "percentile") {
-        if (!missing(x_sd_to_percentiles)) {
-            x_percentiles <- c(stats::pnorm(-1 * abs(x_sd_to_percentiles)),
-                               stats::pnorm(abs(x_sd_to_percentiles)))
-          }
-        if (x_percentiles[1] > x_percentiles[2]) {
-            stop("In x_percentiles, the first percentile must be lower than the second percentile.")
-          }
-      }
     x0 <- deparse(substitute(x))
     if (inherits(tryCatch(x00 <- as.character(x), error = function(e) e),
                  "simpleError")) {
@@ -203,90 +195,51 @@ plotmod <- function(output, x, w,
     y <- colnames(stats::model.frame(output))[
                     attr(stats::terms(output), "response")
                   ]
-    xw1 <- paste(x, w, sep = ":")
-    xw2 <- paste(w, x, sep = ":")
-    coef_names <- names(stats::coef(output))
-    coef0 <- stats::coef(output)
     mf0 <- stats::model.frame(output)
     x_numeric <- is.numeric(mf0[, x])
     w_numeric <- is.numeric(mf0[, w])
     if (!x_numeric) {
         stop("x variable must be a numeric variable.")
       }
-    if (w_method == "percentile") {
-        if (!missing(w_sd_to_percentiles)) {
-            w_percentiles <- c(stats::pnorm(-1 * abs(w_sd_to_percentiles)),
-                               stats::pnorm(abs(w_sd_to_percentiles)))
-          }
-        if (w_percentiles[1] > w_percentiles[2]) {
-            stop("In w_percentiles, the first percentile must be lower than the second percentile.")
-          }
-      }
-    x_sd_raw <- stats::sd(mf0[, x])
-    x_mean_raw <- mean(mf0[, x])
-    x_sd <- x_sd_raw
-    x_mean <- x_mean_raw
-    if (!w_numeric) {
-        w_sd_raw <- NA
-        w_mean_raw <- NA
+    x_levels <- gen_levels(mf0[, x],
+                           method = x_method,
+                           from_mean_in_sd = x_from_mean_in_sd,
+                           levels = c(-1, 1),
+                           sd_levels = c(-1, 1),
+                           sd_to_percentiles = x_sd_to_percentiles,
+                           percentiles = x_percentiles)
+    if (w_numeric) {
+        w_levels <- gen_levels(mf0[, w],
+                              method = w_method,
+                              from_mean_in_sd = w_from_mean_in_sd,
+                              levels = c(-1, 1),
+                              sd_levels = c(-1, 1),
+                              sd_to_percentiles = w_sd_to_percentiles,
+                              percentiles = w_percentiles)
+      } else {
+        w_lo <- NA
+        w_hi <- NA
         w_levels <- levels(as.factor(mf0[, w]))
-        w_nlevels <- nlevels(as.factor(mf0[, w]))
-      } else {
-        w_sd_raw <- stats::sd(mf0[, w])
-        w_mean_raw <- mean(mf0[, w])
-        w_levels <- NA
-        w_nlevels <- NA
-      }
-    w_sd <- w_sd_raw
-    w_mean <- w_mean_raw
-    if (x_method == "sd") {
-        x_lo <- x_mean - x_from_mean_in_sd * x_sd
-        x_hi <- x_mean + x_from_mean_in_sd * x_sd
-      } else {
-        x_percs <- stats::quantile(mf0[, x], x_percentiles, na.rm = TRUE)
-        x_lo <- x_percs[1]
-        x_hi <- x_percs[2]
       }
     if (w_numeric) {
-        if (w_method == "sd") {
-            w_lo <- w_mean - w_from_mean_in_sd * w_sd
-            w_hi <- w_mean + w_from_mean_in_sd * w_sd
-          } else {
-            w_percs <- stats::quantile(mf0[, w], w_percentiles, na.rm = TRUE)
-            w_lo <- w_percs[1]
-            w_hi <- w_percs[2]
-          }
-      }
-    mf1 <- mf0
-    tmpfct <- function(x, type = "mean") {
-        if (is.numeric(x)) {
-            if (type == "mean") {
-                return(mean(x))
-              }
-          }
-        if (is.factor(x)) {
-            return(as.ordered(x)[1])
-          }
-        if (is.character(x)) {
-            return(as.ordered(as.factor(x)[1]))
-          }
-        return(mean(as.numeric(x)))
-      }
-    mf2 <- data.frame(lapply(mf1, tmpfct))
-    if (w_numeric) {
-        mf2 <- rbind(mf2, mf2, mf2, mf2)
-        mf2 <- data.frame(x_level = c("Low", "Low", "High", "High"),
-                          w_level = c("Low", "High", "Low", "High"),
-                          mf2)
-        mf2[, x] <- c(x_lo, x_lo, x_hi, x_hi)
-        mf2[, w] <- c(w_lo, w_hi, w_lo, w_hi)
+        mf2 <- plot_df_meansd_w_numeric(output = output,
+                                        x = x,
+                                        w = w,
+                                        x_levels,
+                                        w_levels,
+                                        x_levels_labels = c("Low", "High"),
+                                        w_levels_labels = c("Low", "High"),
+                                        other_numeric_on = "mean",
+                                        other_categorical_on = "reference")
       } else {
-        mf2 <- do.call(rbind, replicate(2 * w_nlevels, mf2, simplify = FALSE))
-        mf2 <- data.frame(x_level = rep(c("Low", "High"), each = w_nlevels),
-                          w_level = rep(levels(as.factor(mf0[, w])), 2),
-                          mf2)
-        mf2[, x] <- rep(c(x_lo, x_hi), each = w_nlevels)
-        mf2[, w] <- rep(w_levels, 2)
+        mf2 <- plot_df_meansd_w_categorical(output = output,
+                                        x = x,
+                                        w = w,
+                                        x_levels,
+                                        w_levels,
+                                        x_levels_labels = c("Low", "High"),
+                                        other_numeric_on = "mean",
+                                        other_categorical_on = "reference")
       }
 
     mf2$predicted <- stats::predict(output, mf2)
@@ -294,23 +247,32 @@ plotmod <- function(output, x, w,
     if (missing(x_label)) x_label <- x
     if (missing(w_label)) w_label <- w
     if (missing(y_label)) y_label <- y
+
+    x_standardized <- is_standardized(mf0[, x])
+    w_standardized <- is_standardized(mf0[, w])
+    y_standardized <- is_standardized(mf0[, y])
+
     if (note_standardized) {
-        if (isTRUE(all.equal(stats::sd(mf0[, x]), 1))) {
-            x_label <- paste0(x_label, " (Standardized)")
-          }
-        if (w_numeric) {
-            if (isTRUE(all.equal(stats::sd(mf0[, w]), 1))) {
-                w_label <- paste0(w_label, " (Standardized)")
-              }
-          }
-        if (isTRUE(all.equal(stats::sd(mf0[, y]), 1))) {
-            y_label <- paste0(y_label, " (Standardized)")
+        if (any(c(x_standardized,
+                  w_standardized,
+                  y_standardized))) {
+            tmp <- ifelse(c(x_standardized,
+                              w_standardized,
+                              y_standardized),
+                            c(x_label,
+                              w_label,
+                              y_label),
+                            c(NA, NA, NA))
+            cap_std <-
+              paste0(stats::na.omit(tmp), collapse = ", ")
+            cap_std <- paste0(cap_std, " standardized")
+          } else {
+            cap_std <- NULL
           }
       }
     if (missing(title)) {
         title <- "Moderation Effect"
       }
-
     p <- ggplot2::ggplot() +
           ggplot2::geom_point(ggplot2::aes_string(x = x,
                                                   y = "predicted",
@@ -324,20 +286,10 @@ plotmod <- function(output, x, w,
                 yend = mf2[mf2$x_level == "High", "predicted"],
                 colour = mf2[mf2$x_level == "Low", "w_level"]
               ), size = line_width)
-    find_b <- function(w_i) {
-        mf_i <- mf2[mf2[, w] == w_i, ]
-        b_i <- (mf_i[mf_i$x_level == "High", "predicted"] -
-                mf_i[mf_i$x_level == "Low", "predicted"]) /
-              (mf_i[mf_i$x_level == "High", x] -
-                mf_i[mf_i$x_level == "Low", x])
-        b_i
-      }
-    if (w_numeric) {
-        b_all <- sapply(c(w_lo, w_hi), find_b)
-      } else {
-        b_all <- sapply(w_levels, find_b)
-      }
+
+    b_all <- find_bs(mf = mf2, x = x, w = w, w_levels = w_levels)
     b_format <- paste0("%.", digits, "f")
+
     if (w_numeric) {
         subtxt <- paste0(w_label, " low: ", x_label, " effect = ",
                          sprintf(b_format, b_all[1]),
@@ -358,7 +310,7 @@ plotmod <- function(output, x, w,
             cap_txt <- paste0(w_label, " levels: ",
                               "Low: ", 100 * w_percentiles[1],
                               "th percentile; Hi: ",
-                              100*w_percentiles[2], "th percentile")
+                              100 * w_percentiles[2], "th percentile")
           }
         if (w_method == "sd") {
             cap_txt <- paste0(w_label, " levels: ",
@@ -368,6 +320,13 @@ plotmod <- function(output, x, w,
           }
       } else {
         cap_txt <- NULL
+      }
+    if (note_standardized & !is.null(cap_std)) {
+        if (!is.null(cap_txt)) {
+            cap_txt <- paste0(cap_txt, "\n", cap_std)
+          } else {
+            cap_txt <- cap_std
+          }
       }
     out <- p +
       ggplot2::labs(title = title,
