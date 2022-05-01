@@ -1,4 +1,4 @@
-#'@title vcov method for a 'std_selected' Class Object
+#'@title The 'vcov' Method for a 'std_selected' Class Object
 #'
 #'@description Compute the variance-covariance matrix
 #' of estimates in the output of [std_selected()] or

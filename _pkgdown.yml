@@ -12,9 +12,9 @@ reference:
 - contents:
   - std_selected
   - std_selected_boot
+  - stdmod_lavaan
   - stdmod
   - stdmod_boot
-  - stdmod_lavaan
 - title: Helper Functions
   desc:  >
     Plot moderation effects or compute conditional effects for specific

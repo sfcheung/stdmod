@@ -1,4 +1,4 @@
-#' @title Update method for of an 'std_selected' Class Object
+#' @title The 'update' Method for a 'std_selected' Class Object
 #'
 #' @description This should be used only to update the call to [lm()],
 #'          not to the call to [std_selected()] or [std_selected_boot()].

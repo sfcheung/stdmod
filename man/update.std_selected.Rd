@@ -2,7 +2,7 @@
 % Please edit documentation in R/update_stdmod.R
 \name{update.std_selected}
 \alias{update.std_selected}
-\title{Update method for of an 'std_selected' Class Object}
+\title{The 'update' Method for a 'std_selected' Class Object}
 \usage{
 \method{update}{std_selected}(object, formula., ..., evaluate = TRUE)
 }
