@@ -128,8 +128,19 @@
 #'                   Default is 1.
 #' @param point_size The size of the points as used in [ggplot2::geom_point()].
 #'                    Default is 5.
+#' @param graph_type If `"default"`, the typical line-graph with equal end-points
+#'                   will be plotted. If `"tubmle"`, then the tumble graph
+#'                   proposed by Bodner (2016) will be plotted. Default is
+#'                   `"default"`.
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
+#'
+#' @references
+#'
+#' Bodner, T. E. (2016). Tumble graphs: Avoiding misleading end point
+#' extrapolation when graphing interactions from a moderated multiple
+#' regression analysis. *Journal of Educational and Behavioral
+#' Statistics, 41*(6), 593-604. \doi{10.3102/1076998616657080}
 #'
 #' @examples
 #'
@@ -155,6 +166,15 @@
 #'         w_label = "Conscientiousness",
 #'         y_label = "Sleep Duration")
 #'
+#' # Tumble Graph
+#' plotmod(lm_std,
+#'         x = emotional_stability,
+#'         w = conscientiousness,
+#'         x_label = "Emotional Stability",
+#'         w_label = "Conscientiousness",
+#'         y_label = "Sleep Duration",
+#'         graph_type = "tumble")
+#'
 #' @export
 
 plotmod <- function(output, x, w,
@@ -174,10 +194,12 @@ plotmod <- function(output, x, w,
                             note_standardized = TRUE,
                             no_title = FALSE,
                             line_width = 1,
-                            point_size = 5
+                            point_size = 5,
+                            graph_type = c("default", "tumble")
                     ) {
     w_method <- match.arg(w_method)
     x_method <- match.arg(x_method)
+    graph_type <- match.arg(graph_type)
     x0 <- deparse(substitute(x))
     if (inherits(tryCatch(x00 <- as.character(x), error = function(e) e),
                  "simpleError")) {
@@ -201,13 +223,6 @@ plotmod <- function(output, x, w,
     if (!x_numeric) {
         stop("x variable must be a numeric variable.")
       }
-    x_levels <- gen_levels(mf0[, x],
-                           method = x_method,
-                           from_mean_in_sd = x_from_mean_in_sd,
-                           levels = c(-1, 1),
-                           sd_levels = c(-1, 1),
-                           sd_to_percentiles = x_sd_to_percentiles,
-                           percentiles = x_percentiles)
     if (w_numeric) {
         w_levels <- gen_levels(mf0[, w],
                               method = w_method,
@@ -221,25 +236,77 @@ plotmod <- function(output, x, w,
         w_hi <- NA
         w_levels <- levels(as.factor(mf0[, w]))
       }
+    if (graph_type == "default") {
+        x_levels <- gen_levels(mf0[, x],
+                              method = x_method,
+                              from_mean_in_sd = x_from_mean_in_sd,
+                              levels = c(-1, 1),
+                              sd_levels = c(-1, 1),
+                              sd_to_percentiles = x_sd_to_percentiles,
+                              percentiles = x_percentiles)
+      }
+    if (graph_type == "tumble") {
+        x_subsets <- lapply(w_levels, x_for_w,
+                            mf = mf0, x = x, w = w, w_numeric = w_numeric)
+        x_levels_list <- lapply(x_subsets,
+                                gen_levels,
+                                method = x_method,
+                                from_mean_in_sd = x_from_mean_in_sd,
+                                levels = c(-1, 1),
+                                sd_levels = c(-1, 1),
+                                sd_to_percentiles = x_sd_to_percentiles,
+                                percentiles = x_percentiles)
+      }
     if (w_numeric) {
-        mf2 <- plot_df_meansd_w_numeric(output = output,
-                                        x = x,
-                                        w = w,
-                                        x_levels,
-                                        w_levels,
-                                        x_levels_labels = c("Low", "High"),
-                                        w_levels_labels = c("Low", "High"),
-                                        other_numeric_on = "mean",
-                                        other_categorical_on = "reference")
+        if (graph_type == "default") {
+            mf2 <- plot_df_meansd_w_numeric(output = output,
+                                            x = x,
+                                            w = w,
+                                            x_levels,
+                                            w_levels,
+                                            x_levels_labels = c("Low", "High"),
+                                            w_levels_labels = c("Low", "High"),
+                                            other_numeric_on = "mean",
+                                            other_categorical_on = "reference")
+          }
+        if (graph_type == "tumble") {
+            mf_list <- mapply(plot_df_meansd_w_numeric,
+                              x_levels = x_levels_list,
+                              w_levels = w_levels,
+                              w_levels_labels = c("Low", "High"),
+                              MoreArgs = list(output = output,
+                                              x = x,
+                                              w = w,
+                                              x_levels_labels = c("Low", "High"),
+                                              other_numeric_on = "mean",
+                                              other_categorical_on = "reference"),
+                              SIMPLIFY = FALSE)
+            mf2 <- do.call(rbind, mf_list)
+          }
       } else {
-        mf2 <- plot_df_meansd_w_categorical(output = output,
-                                        x = x,
-                                        w = w,
-                                        x_levels,
-                                        w_levels,
-                                        x_levels_labels = c("Low", "High"),
-                                        other_numeric_on = "mean",
-                                        other_categorical_on = "reference")
+        if (graph_type == "default") {
+            mf2 <- plot_df_meansd_w_categorical(output = output,
+                                            x = x,
+                                            w = w,
+                                            x_levels,
+                                            w_levels,
+                                            x_levels_labels = c("Low", "High"),
+                                            other_numeric_on = "mean",
+                                            other_categorical_on = "reference")
+          }
+        if (graph_type == "tumble") {
+            mf_list <- mapply(plot_df_meansd_w_categorical,
+                              x_levels = x_levels_list,
+                              w_levels = w_levels,
+                              MoreArgs = list(output = output,
+                                              x = x,
+                                              w = w,
+                                              x_levels_labels = c("Low", "High"),
+                                              other_numeric_on = "mean",
+                                              other_categorical_on = "reference"),
+                              SIMPLIFY = FALSE)
+            mf2 <- do.call(rbind, mf_list)
+          }
       }
 
     mf2$predicted <- stats::predict(output, mf2)

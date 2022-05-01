@@ -1,4 +1,4 @@
-# stdmod 0.1.6 (latest: 0.1.6.1004)
+# stdmod 0.1.6 (latest: 0.1.6.1005)
 
 - Add `plotmod()` for plotting moderation effects. This function will check
   whether a variable is standardized. If yes, will note this in the plot.
@@ -8,6 +8,8 @@
   this in the printout.
 - Update the print method for the summary of `std_selected()` and
   `std_selected_boot()`.
+- `plotmod()` can plot a Tumble graph (Bodner, 2016) if `graph_type` is
+  set to `"tumble"`.
 
 
 # stdmod 0.1.5
