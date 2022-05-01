@@ -18,7 +18,7 @@ in the output of std_selected() or std_selected_boot()."><!-- mathjax --><script
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1004</span>
       </span>
     </div>
 
@@ -163,19 +163,17 @@ the bootstrap estimates.</p>
 <span class="r-in">                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered and/or scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: dv iv mod v1 cat1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) scaled: dv iv mod v1 cat1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      centered_by   scaled_by</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dv    6565.02965 1094.244465</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv      15.01576    2.039154</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod    100.39502    5.040823</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1      10.13884    2.938932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Centered by 0 or NA: No centering</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Scaled by 1 or NA: No scaling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      centered_by   scaled_by                            Note</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dv    6565.02965 1094.244465 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv      15.01576    2.039154 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod    100.39502    5.040823 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1      10.13884    2.938932 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA Nonnumeric                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)</span>
@@ -200,6 +198,9 @@ the bootstrap estimates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   2.5 %      97.5 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.03021975  0.15938347</span>
@@ -218,21 +219,20 @@ the bootstrap estimates.</p>
 <span class="r-in">                                         nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered and/or scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: dv iv mod v1 cat1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) scaled: dv iv mod v1 cat1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      centered_by   scaled_by</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dv    6565.02965 1094.244465</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv      15.01576    2.039154</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod    100.39502    5.040823</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1      10.13884    2.938932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      centered_by   scaled_by                            Note</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dv    6565.02965 1094.244465 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv      15.01576    2.039154 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod    100.39502    5.040823 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1      10.13884    2.938932 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA Nonnumeric                     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Centered by 0 or NA: No centering</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Scaled by 1 or NA: No scaling</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Nonparametric bootstrapping 95% confidence intervals computed.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - The number of bootstrap samples is 100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - The number of bootstrap samples is 100.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)</span>
@@ -243,13 +243,13 @@ the bootstrap estimates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate  CI Lower  CI Upper Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.064582 -0.008456  0.154953   0.048250   1.338   0.1814    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.737384  0.684439  0.785335   0.027363  26.948   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.259899  0.203026  0.324710   0.027369   9.496   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.034271 -0.109491  0.005501   0.027325  -1.254   0.2104    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.145006 -0.274727 -0.011141   0.065647  -2.209   0.0276 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.039448 -0.176612  0.075185   0.068799  -0.573   0.5666    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.032087 -0.023072  0.073407   0.025451   1.261   0.2080    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.064582 -0.006238  0.147036   0.048250   1.338   0.1814    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.737384  0.686629  0.789983   0.027363  26.948   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.259899  0.211008  0.320469   0.027369   9.496   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.034271 -0.090407  0.027097   0.027325  -1.254   0.2104    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.145006 -0.253999 -0.014544   0.065647  -2.209   0.0276 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.039448 -0.196403  0.062321   0.068799  -0.573   0.5666    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.032087 -0.027306  0.074511   0.025451   1.261   0.2080    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -258,8 +258,10 @@ the bootstrap estimates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Std. Error are standard errors in the original analysis, not bootstrap SEs.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Std. Error are not bootstrap SEs.</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   2.5 %      97.5 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.03021975  0.15938347</span>
@@ -271,14 +273,14 @@ the bootstrap estimates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.01791790  0.08209267</span>
 <span class="r-in"><span class="co"># Bootstrap percentile intervals</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span>, type <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    2.5 %       97.5 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.008455914  0.154952813</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.684439292  0.785335166</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.203026387  0.324709535</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.109490791  0.005501258</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.274726776 -0.011140577</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.176611572  0.075184576</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.023071694  0.073407485</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    2.5 %      97.5 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.006237779  0.14703643</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.686628831  0.78998307</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.211008185  0.32046877</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.090407439  0.02709668</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.253999490 -0.01454380</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.196402789  0.06232071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.027305846  0.07451063</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

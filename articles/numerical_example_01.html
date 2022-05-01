@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1004</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
       <h1 data-toc-skip>Numerical Example - std_selected()</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung and David Weng Ngai Vong</h4>
             
-            <h4 data-toc-skip class="date">2022-04-28</h4>
+            <h4 data-toc-skip class="date">2022-05-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/numerical_example_01.Rmd" class="external-link"><code>vignettes/numerical_example_01.Rmd</code></a></small>
       <div class="hidden name"><code>numerical_example_01.Rmd</code></div>
@@ -176,19 +176,16 @@
 <code class="sourceCode R"><span class="va">lm_w_centered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">conscientiousness</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_w_centered</span><span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Selected variable(s) are centered and/or scaled</span>
+<span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="co">#&gt; - Variable(s) centered: conscientiousness</span>
-<span class="co">#&gt; - Variable(s) scaled:</span>
-<span class="co">#&gt;                     centered_by scaled_by</span>
-<span class="co">#&gt; sleep_duration           0.0000         1</span>
-<span class="co">#&gt; age                      0.0000         1</span>
-<span class="co">#&gt; gender                   0.0000         1</span>
-<span class="co">#&gt; emotional_stability      0.0000         1</span>
-<span class="co">#&gt; conscientiousness        3.3432         1</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Centered by 0 or NA: No centering</span>
-<span class="co">#&gt; - Scaled by 1 or NA: No scaling</span>
+<span class="co">#&gt;                     centered_by scaled_by                Note</span>
+<span class="co">#&gt; sleep_duration           0.0000         1                    </span>
+<span class="co">#&gt; age                      0.0000         1                    </span>
+<span class="co">#&gt; gender                       NA        NA Nonnumeric         </span>
+<span class="co">#&gt; emotional_stability      0.0000         1                    </span>
+<span class="co">#&gt; conscientiousness        3.3432         1 Centered (mean = 0)</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
@@ -212,6 +209,10 @@
 <span class="co">#&gt; Residual standard error: 1.384 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
+<span class="co">#&gt;   mean-centering, scaling, or standardization.</span>
 <span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_w_centered</span>,
         x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
         w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
@@ -229,19 +230,16 @@
 <code class="sourceCode R"><span class="va">lm_xw_centered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_xw_centered</span><span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Selected variable(s) are centered and/or scaled</span>
+<span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="co">#&gt; - Variable(s) centered: emotional_stability conscientiousness</span>
-<span class="co">#&gt; - Variable(s) scaled:</span>
-<span class="co">#&gt;                     centered_by scaled_by</span>
-<span class="co">#&gt; sleep_duration           0.0000         1</span>
-<span class="co">#&gt; age                      0.0000         1</span>
-<span class="co">#&gt; gender                   0.0000         1</span>
-<span class="co">#&gt; emotional_stability      2.7132         1</span>
-<span class="co">#&gt; conscientiousness        3.3432         1</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Centered by 0 or NA: No centering</span>
-<span class="co">#&gt; - Scaled by 1 or NA: No scaling</span>
+<span class="co">#&gt;                     centered_by scaled_by                Note</span>
+<span class="co">#&gt; sleep_duration           0.0000         1                    </span>
+<span class="co">#&gt; age                      0.0000         1                    </span>
+<span class="co">#&gt; gender                       NA        NA Nonnumeric         </span>
+<span class="co">#&gt; emotional_stability      2.7132         1 Centered (mean = 0)</span>
+<span class="co">#&gt; conscientiousness        3.3432         1 Centered (mean = 0)</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
@@ -265,6 +263,10 @@
 <span class="co">#&gt; Residual standard error: 1.384 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
+<span class="co">#&gt;   mean-centering, scaling, or standardization.</span>
 <span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_xw_centered</span>,
         x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
         w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
@@ -283,19 +285,17 @@
                 to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_xw_std</span><span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Selected variable(s) are centered and/or scaled</span>
+<span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="co">#&gt; - Variable(s) centered: emotional_stability conscientiousness</span>
 <span class="co">#&gt; - Variable(s) scaled: emotional_stability conscientiousness</span>
-<span class="co">#&gt;                     centered_by scaled_by</span>
-<span class="co">#&gt; sleep_duration           0.0000 1.0000000</span>
-<span class="co">#&gt; age                      0.0000 1.0000000</span>
-<span class="co">#&gt; gender                   0.0000 1.0000000</span>
-<span class="co">#&gt; emotional_stability      2.7132 0.7629613</span>
-<span class="co">#&gt; conscientiousness        3.3432 0.6068198</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Centered by 0 or NA: No centering</span>
-<span class="co">#&gt; - Scaled by 1 or NA: No scaling</span>
+<span class="co">#&gt;                     centered_by scaled_by                            Note</span>
+<span class="co">#&gt; sleep_duration           0.0000 1.0000000                                </span>
+<span class="co">#&gt; age                      0.0000 1.0000000                                </span>
+<span class="co">#&gt; gender                       NA        NA Nonnumeric                     </span>
+<span class="co">#&gt; emotional_stability      2.7132 0.7629613 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; conscientiousness        3.3432 0.6068198 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
@@ -319,6 +319,10 @@
 <span class="co">#&gt; Residual standard error: 1.384 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
+<span class="co">#&gt;   mean-centering, scaling, or standardization.</span>
 <span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_xw_std</span>,
         x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
         w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
@@ -338,19 +342,17 @@
                 to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span> <span class="op">+</span> <span class="va">sleep_duration</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_xwy_std</span><span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Selected variable(s) are centered and/or scaled</span>
+<span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="co">#&gt; - Variable(s) centered: emotional_stability conscientiousness sleep_duration</span>
 <span class="co">#&gt; - Variable(s) scaled: emotional_stability conscientiousness sleep_duration</span>
-<span class="co">#&gt;                     centered_by scaled_by</span>
-<span class="co">#&gt; sleep_duration         6.776333 1.4168291</span>
-<span class="co">#&gt; age                    0.000000 1.0000000</span>
-<span class="co">#&gt; gender                 0.000000 1.0000000</span>
-<span class="co">#&gt; emotional_stability    2.713200 0.7629613</span>
-<span class="co">#&gt; conscientiousness      3.343200 0.6068198</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Centered by 0 or NA: No centering</span>
-<span class="co">#&gt; - Scaled by 1 or NA: No scaling</span>
+<span class="co">#&gt;                     centered_by scaled_by                            Note</span>
+<span class="co">#&gt; sleep_duration         6.776333 1.4168291 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; age                    0.000000 1.0000000                                </span>
+<span class="co">#&gt; gender                       NA        NA Nonnumeric                     </span>
+<span class="co">#&gt; emotional_stability    2.713200 0.7629613 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; conscientiousness      3.343200 0.6068198 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
@@ -374,6 +376,10 @@
 <span class="co">#&gt; Residual standard error: 0.9771 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
+<span class="co">#&gt;   mean-centering, scaling, or standardization.</span>
 <span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_xwy_std</span>,
         x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
         w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
@@ -391,19 +397,17 @@
                                    to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_all_std</span><span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Selected variable(s) are centered and/or scaled</span>
+<span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="co">#&gt; - Variable(s) centered: sleep_duration age gender emotional_stability conscientiousness</span>
 <span class="co">#&gt; - Variable(s) scaled: sleep_duration age gender emotional_stability conscientiousness</span>
-<span class="co">#&gt;                     centered_by scaled_by</span>
-<span class="co">#&gt; sleep_duration         6.776333 1.4168291</span>
-<span class="co">#&gt; age                   22.274000 2.9407857</span>
-<span class="co">#&gt; gender                       NA        NA</span>
-<span class="co">#&gt; emotional_stability    2.713200 0.7629613</span>
-<span class="co">#&gt; conscientiousness      3.343200 0.6068198</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Centered by 0 or NA: No centering</span>
-<span class="co">#&gt; - Scaled by 1 or NA: No scaling</span>
+<span class="co">#&gt;                     centered_by scaled_by                            Note</span>
+<span class="co">#&gt; sleep_duration         6.776333 1.4168291 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; age                   22.274000 2.9407857 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; gender                       NA        NA Nonnumeric                     </span>
+<span class="co">#&gt; emotional_stability    2.713200 0.7629613 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; conscientiousness      3.343200 0.6068198 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
@@ -427,6 +431,10 @@
 <span class="co">#&gt; Residual standard error: 0.9771 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
+<span class="co">#&gt;   mean-centering, scaling, or standardization.</span>
 <span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_all_std</span>,
         x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
         w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
@@ -479,21 +487,20 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_xwy_std_ci</span><span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Selected variable(s) are centered and/or scaled</span>
+<span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="co">#&gt; - Variable(s) centered: emotional_stability conscientiousness sleep_duration</span>
 <span class="co">#&gt; - Variable(s) scaled: emotional_stability conscientiousness sleep_duration</span>
-<span class="co">#&gt;                     centered_by scaled_by</span>
-<span class="co">#&gt; sleep_duration         6.776333 1.4168291</span>
-<span class="co">#&gt; age                    0.000000 1.0000000</span>
-<span class="co">#&gt; gender                 0.000000 1.0000000</span>
-<span class="co">#&gt; emotional_stability    2.713200 0.7629613</span>
-<span class="co">#&gt; conscientiousness      3.343200 0.6068198</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;                     centered_by scaled_by                            Note</span>
+<span class="co">#&gt; sleep_duration         6.776333 1.4168291 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; age                    0.000000 1.0000000                                </span>
+<span class="co">#&gt; gender                       NA        NA Nonnumeric                     </span>
+<span class="co">#&gt; emotional_stability    2.713200 0.7629613 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; conscientiousness      3.343200 0.6068198 Standardized (mean = 0, SD = 1)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Centered by 0 or NA: No centering</span>
-<span class="co">#&gt; - Scaled by 1 or NA: No scaling</span>
 <span class="co">#&gt; - Nonparametric bootstrapping 95% confidence intervals computed.</span>
-<span class="co">#&gt; - The number of bootstrap samples is 2000</span>
+<span class="co">#&gt; - The number of bootstrap samples is 2000.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
@@ -519,8 +526,10 @@
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
+<span class="co">#&gt;   mean-centering, scaling, or standardization.</span>
 <span class="co">#&gt; - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
-<span class="co">#&gt; - Std. Error are standard errors in the original analysis, not bootstrap SEs.</span></code></pre></div>
+<span class="co">#&gt; - Std. Error are not bootstrap SEs.</span></code></pre></div>
 <p>The standardized moderation effect is -0.1083 , and the 95% nonparametric bootstrap percentile confidence interval is -0.2005 to -0.0077.</p>
 <p>Note: As a side product, the nonparametric bootstrap confidence of the other coefficients are also reported. They can be used for other variables that are standardized in the same model, whether they are involved in the moderation or not.</p>
 </div>

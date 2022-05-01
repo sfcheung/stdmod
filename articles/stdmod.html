@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1004</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
       <h1 data-toc-skip>A Quick Start Guide on Using std_selected()</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung</h4>
             
-            <h4 data-toc-skip class="date">2022-04-28</h4>
+            <h4 data-toc-skip class="date">2022-05-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/stdmod.Rmd" class="external-link"><code>vignettes/stdmod.Rmd</code></a></small>
       <div class="hidden name"><code>stdmod.Rmd</code></div>
@@ -187,19 +187,17 @@
                         to_center <span class="op">=</span> <span class="va">.</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_stdall</span><span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Selected variable(s) are centered and/or scaled</span>
+<span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="co">#&gt; - Variable(s) centered: sleep age gender emot cons</span>
 <span class="co">#&gt; - Variable(s) scaled: sleep age gender emot cons</span>
-<span class="co">#&gt;        centered_by scaled_by</span>
-<span class="co">#&gt; sleep     6.776333 1.4168291</span>
-<span class="co">#&gt; age      22.274000 2.9407857</span>
-<span class="co">#&gt; gender          NA        NA</span>
-<span class="co">#&gt; emot      2.713200 0.7629613</span>
-<span class="co">#&gt; cons      3.343200 0.6068198</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Centered by 0 or NA: No centering</span>
-<span class="co">#&gt; - Scaled by 1 or NA: No scaling</span>
+<span class="co">#&gt;        centered_by scaled_by                            Note</span>
+<span class="co">#&gt; sleep     6.776333 1.4168291 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; age      22.274000 2.9407857 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; gender          NA        NA Nonnumeric                     </span>
+<span class="co">#&gt; emot      2.713200 0.7629613 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; cons      3.343200 0.6068198 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep ~ age + gender + emot * cons, data = dat_mod)</span>
@@ -221,7 +219,11 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residual standard error: 0.9771 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
-<span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span></code></pre></div>
+<span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
+<span class="co">#&gt;   mean-centering, scaling, or standardization.</span></code></pre></div>
 <p>The coefficient of the product term, which naturally can be called the<br><strong>standardized moderation effect</strong>, is significant, B = -0.1083. For each one <em>standard deviation</em> increase of conscientiousness score, the <strong>standardized effect</strong> of emotional stability decreases by 0.1083.</p>
 <div class="section level3">
 <h3 id="nonparametric-bootstrap-confidence-intervals">Nonparametric Bootstrap Confidence Intervals<a class="anchor" aria-label="anchor" href="#nonparametric-bootstrap-confidence-intervals"></a>
@@ -237,21 +239,20 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_stdall_boot</span><span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Selected variable(s) are centered and/or scaled</span>
+<span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="co">#&gt; - Variable(s) centered: sleep age gender emot cons</span>
 <span class="co">#&gt; - Variable(s) scaled: sleep age gender emot cons</span>
-<span class="co">#&gt;        centered_by scaled_by</span>
-<span class="co">#&gt; sleep     6.776333 1.4168291</span>
-<span class="co">#&gt; age      22.274000 2.9407857</span>
-<span class="co">#&gt; gender          NA        NA</span>
-<span class="co">#&gt; emot      2.713200 0.7629613</span>
-<span class="co">#&gt; cons      3.343200 0.6068198</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;        centered_by scaled_by                            Note</span>
+<span class="co">#&gt; sleep     6.776333 1.4168291 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; age      22.274000 2.9407857 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; gender          NA        NA Nonnumeric                     </span>
+<span class="co">#&gt; emot      2.713200 0.7629613 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; cons      3.343200 0.6068198 Standardized (mean = 0, SD = 1)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Centered by 0 or NA: No centering</span>
-<span class="co">#&gt; - Scaled by 1 or NA: No scaling</span>
 <span class="co">#&gt; - Nonparametric bootstrapping 95% confidence intervals computed.</span>
-<span class="co">#&gt; - The number of bootstrap samples is 5000</span>
+<span class="co">#&gt; - The number of bootstrap samples is 5000.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep ~ age + gender + emot * cons, data = dat_mod)</span>
@@ -276,8 +277,10 @@
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
+<span class="co">#&gt;   mean-centering, scaling, or standardization.</span>
 <span class="co">#&gt; - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
-<span class="co">#&gt; - Std. Error are standard errors in the original analysis, not bootstrap SEs.</span></code></pre></div>
+<span class="co">#&gt; - Std. Error are not bootstrap SEs.</span></code></pre></div>
 <p>The 95% bootstrap percentile confidence interval of the standardized moderation effect is -0.2043 to -0.0090.</p>
 </div>
 </div>
@@ -292,19 +295,17 @@
                         to_center <span class="op">=</span> <span class="va">.</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std1</span><span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Selected variable(s) are centered and/or scaled</span>
+<span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="co">#&gt; - Variable(s) centered: emot cons</span>
 <span class="co">#&gt; - Variable(s) scaled: emot cons</span>
-<span class="co">#&gt;        centered_by scaled_by</span>
-<span class="co">#&gt; sleep       0.0000 1.0000000</span>
-<span class="co">#&gt; age         0.0000 1.0000000</span>
-<span class="co">#&gt; gender      0.0000 1.0000000</span>
-<span class="co">#&gt; emot        2.7132 0.7629613</span>
-<span class="co">#&gt; cons        3.3432 0.6068198</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Centered by 0 or NA: No centering</span>
-<span class="co">#&gt; - Scaled by 1 or NA: No scaling</span>
+<span class="co">#&gt;        centered_by scaled_by                            Note</span>
+<span class="co">#&gt; sleep       0.0000 1.0000000                                </span>
+<span class="co">#&gt; age         0.0000 1.0000000                                </span>
+<span class="co">#&gt; gender          NA        NA Nonnumeric                     </span>
+<span class="co">#&gt; emot        2.7132 0.7629613 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; cons        3.3432 0.6068198 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep ~ age + gender + emot * cons, data = dat_mod)</span>
@@ -326,7 +327,11 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residual standard error: 1.384 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
-<span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span></code></pre></div>
+<span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
+<span class="co">#&gt;   mean-centering, scaling, or standardization.</span></code></pre></div>
 <p>The <em>partially</em> standardized moderation effect is significant, B = -0.1534. For each one <em>standard deviation</em> increase of conscientiousness score, the <em>partially</em> standardized effect of emotional stability decreases by 0.1534.</p>
 <div class="section level3">
 <h3 id="nonparametric-bootstrap-confidence-intervals-1">Nonparametric Bootstrap Confidence Intervals<a class="anchor" aria-label="anchor" href="#nonparametric-bootstrap-confidence-intervals-1"></a>
@@ -341,21 +346,20 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std1_boot</span><span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Selected variable(s) are centered and/or scaled</span>
+<span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="co">#&gt; - Variable(s) centered: emot cons</span>
 <span class="co">#&gt; - Variable(s) scaled: emot cons</span>
-<span class="co">#&gt;        centered_by scaled_by</span>
-<span class="co">#&gt; sleep       0.0000 1.0000000</span>
-<span class="co">#&gt; age         0.0000 1.0000000</span>
-<span class="co">#&gt; gender      0.0000 1.0000000</span>
-<span class="co">#&gt; emot        2.7132 0.7629613</span>
-<span class="co">#&gt; cons        3.3432 0.6068198</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;        centered_by scaled_by                            Note</span>
+<span class="co">#&gt; sleep       0.0000 1.0000000                                </span>
+<span class="co">#&gt; age         0.0000 1.0000000                                </span>
+<span class="co">#&gt; gender          NA        NA Nonnumeric                     </span>
+<span class="co">#&gt; emot        2.7132 0.7629613 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; cons        3.3432 0.6068198 Standardized (mean = 0, SD = 1)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Centered by 0 or NA: No centering</span>
-<span class="co">#&gt; - Scaled by 1 or NA: No scaling</span>
 <span class="co">#&gt; - Nonparametric bootstrapping 95% confidence intervals computed.</span>
-<span class="co">#&gt; - The number of bootstrap samples is 5000</span>
+<span class="co">#&gt; - The number of bootstrap samples is 5000.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep ~ age + gender + emot * cons, data = dat_mod)</span>
@@ -380,8 +384,10 @@
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
+<span class="co">#&gt;   mean-centering, scaling, or standardization.</span>
 <span class="co">#&gt; - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
-<span class="co">#&gt; - Std. Error are standard errors in the original analysis, not bootstrap SEs.</span></code></pre></div>
+<span class="co">#&gt; - Std. Error are not bootstrap SEs.</span></code></pre></div>
 <p>The 95% bootstrap percentile confidence interval of the partially standardized moderation effect is -0.2915 to -0.0124.</p>
 </div>
 </div>

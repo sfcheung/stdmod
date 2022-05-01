@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1004</span>
       </span>
     </div>
 
@@ -87,8 +87,8 @@
   w_percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.16</span>, <span class="fl">0.84</span><span class="op">)</span>,
   x_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sd"</span>, <span class="st">"percentile"</span><span class="op">)</span>,
   x_percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.16</span>, <span class="fl">0.84</span><span class="op">)</span>,
-  <span class="va">w_sd_to_percentiles</span>,
-  <span class="va">x_sd_to_percentiles</span>,
+  w_sd_to_percentiles <span class="op">=</span> <span class="cn">NA</span>,
+  x_sd_to_percentiles <span class="op">=</span> <span class="cn">NA</span>,
   note_standardized <span class="op">=</span> <span class="cn">TRUE</span>,
   no_title <span class="op">=</span> <span class="cn">FALSE</span>,
   line_width <span class="op">=</span> <span class="fl">1</span>,
@@ -195,7 +195,7 @@ above the mean. Therefore, if
 <code>w_sd_to_percentiles</code> is set to 1, then the
 lower
 and upper percentiles are 16th and 84th,
-respectively.</p></dd>
+respectively. Default is <code>NA</code>.</p></dd>
 <dt>x_sd_to_percentiles</dt>
 <dd><p>If <code>x_method</code> is <code>"percentile"</code> and this
 argument is
@@ -211,7 +211,7 @@ distribution that is <code>x_sd_to_percentiles</code> SD
 above the mean. Therefore, if
 <code>x_sd_to_percentiles</code> is set to 1, then the lower
 and upper percentiles are 16th and 84th,
-respectively.</p></dd>
+respectively. Default is <code>NA</code>.</p></dd>
 <dt>note_standardized</dt>
 <dd><p>If <code>TRUE</code>, will check whether a variable has SD
 nearly equal to one. If yes, will report this in the
@@ -220,7 +220,8 @@ Default is <code>TRUE</code>.</p></dd>
 <dt>no_title</dt>
 <dd><p>If <code>TRUE</code>, title will be suppressed. Default is <code>FALSE</code>.</p></dd>
 <dt>line_width</dt>
-<dd><p>The width of the lines as used in <code><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">ggplot2::geom_segment()</a></code>.
+<dd><p>The width of the lines as used in
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">ggplot2::geom_segment()</a></code>.
 Default is 1.</p></dd>
 <dt>point_size</dt>
 <dd><p>The size of the points as used in <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">ggplot2::geom_point()</a></code>.
@@ -289,19 +290,17 @@ It is not intended to be a flexible tool for a fine control on the plots.</p>
 <span class="r-in">                       to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered and/or scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: sleep_duration age gender emotional_stability conscientiousness</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) scaled: sleep_duration age gender emotional_stability conscientiousness</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     centered_by scaled_by</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sleep_duration         6.776333 1.4168291</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age                   22.274000 2.9407857</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gender                       NA        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> emotional_stability    2.713200 0.7629613</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> conscientiousness      3.343200 0.6068198</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Centered by 0 or NA: No centering</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Scaled by 1 or NA: No scaling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     centered_by scaled_by                            Note</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sleep_duration         6.776333 1.4168291 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age                   22.274000 2.9407857 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gender                       NA        NA Nonnumeric                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> emotional_stability    2.713200 0.7629613 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conscientiousness      3.343200 0.6068198 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
@@ -326,6 +325,9 @@ It is not intended to be a flexible tool for a fine control on the plots.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.0548,	Adjusted R-squared:  0.04523 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
 <span class="r-in"><span class="fu">plotmod</span><span class="op">(</span><span class="va">lm_std</span>,</span>
 <span class="r-in">        x <span class="op">=</span> <span class="va">emotional_stability</span>,</span>
 <span class="r-in">        w <span class="op">=</span> <span class="va">conscientiousness</span>,</span>

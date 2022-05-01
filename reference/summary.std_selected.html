@@ -18,7 +18,7 @@ std_selected_boot()."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1004</span>
       </span>
     </div>
 
@@ -137,19 +137,17 @@ bootstrap confidence intervals added if present.</p>
 <span class="r-in">                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered and/or scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: dv iv mod v1 cat1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) scaled: dv iv mod v1 cat1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      centered_by   scaled_by</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dv    6565.02965 1094.244465</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv      15.01576    2.039154</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod    100.39502    5.040823</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1      10.13884    2.938932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Centered by 0 or NA: No centering</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Scaled by 1 or NA: No scaling</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      centered_by   scaled_by                            Note</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dv    6565.02965 1094.244465 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv      15.01576    2.039154 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod    100.39502    5.040823 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1      10.13884    2.938932 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA Nonnumeric                     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)</span>
@@ -174,6 +172,9 @@ bootstrap confidence intervals added if present.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># With bootstrapping</span></span>
 <span class="r-in"><span class="co"># nboot = 100 just for illustration. nboot &gt;= 2000 should be used in read</span></span>
@@ -183,21 +184,20 @@ bootstrap confidence intervals added if present.</p>
 <span class="r-in">                                         nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered and/or scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: dv iv mod v1 cat1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) scaled: dv iv mod v1 cat1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      centered_by   scaled_by</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dv    6565.02965 1094.244465</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv      15.01576    2.039154</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod    100.39502    5.040823</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1      10.13884    2.938932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      centered_by   scaled_by                            Note</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dv    6565.02965 1094.244465 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv      15.01576    2.039154 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod    100.39502    5.040823 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1      10.13884    2.938932 Standardized (mean = 0, SD = 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA Nonnumeric                     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Centered by 0 or NA: No centering</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Scaled by 1 or NA: No scaling</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Nonparametric bootstrapping 95% confidence intervals computed.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - The number of bootstrap samples is 100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - The number of bootstrap samples is 100.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)</span>
@@ -223,8 +223,10 @@ bootstrap confidence intervals added if present.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Std. Error are standard errors in the original analysis, not bootstrap SEs.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Std. Error are not bootstrap SEs.</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
