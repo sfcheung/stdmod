@@ -79,6 +79,14 @@
 #' summary(lm_raw)
 #' cond_effect(lm_raw, x = iv, w = mod)
 #'
+#' lm_std <- std_selected(lm_raw, to_scale = ~ iv + mod, to_center = ~ iv + mod)
+#' cond_effect(lm_std, x = iv, w = mod)
+#'
+#' # Categorical moderator
+#' lm_cat <- lm(dv ~ iv*cat1 + v1, dat)
+#' summary(lm_cat)
+#' cond_effect(lm_cat, x = iv, w = cat1)
+#'
 #' @export
 
 cond_effect <- function(output,
