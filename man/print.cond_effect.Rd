@@ -35,6 +35,9 @@ lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
 summary(lm_raw)
 cond_effect(lm_raw, x = iv, w = mod)
 
+lm_std <- std_selected(lm_raw, to_scale = ~ iv + mod, to_center = ~ iv + mod)
+cond_effect(lm_std, x = iv, w = mod)
+
 }
 \author{
 Shu Fai Cheung \url{https://orcid.org/0000-0002-9871-9448}
