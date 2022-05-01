@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1006</span>
       </span>
     </div>
 
@@ -66,90 +66,93 @@
     </div>
 
     <table class="ref-index"><colgroup><col class="alias"><col class="title"></colgroup><tbody><tr><th colspan="2">
-          <h2 id="all-functions">All functions <a href="#all-functions" class="anchor" aria-hidden="true"></a></h2>
-          <p class="section-desc"></p>
+          <h2 id="standardized-moderation-effect">Standardized Moderation Effect <a href="#standardized-moderation-effect" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Standardize selected variables and form nonparametric bootstrapping confidence intervals. <code><a href="../reference/std_selected.html">std_selected()</a></code> and <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> also support mean-centering and regression models without interaction terms. <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> provides preliminary support for interaction terms in a model fitted by <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan::lavaan()</a></code>.</p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="add1.std_selected.html">add1(<i>&lt;std_selected&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>The 'add1' Method for a 'std_selected' Class Object</p></td>
-      </tr><tr><td>
-          <p><code><a href="cond_effect.html">cond_effect()</a></code> </p>
-        </td>
-        <td><p>Conditional Effects</p></td>
-      </tr><tr><td>
-          <p><code><a href="confint.std_selected.html">confint(<i>&lt;std_selected&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Confidence Intervals for a 'std_selected' Class Object</p></td>
-      </tr><tr><td>
-          <p><code><a href="plotmod.html">plotmod()</a></code> </p>
-        </td>
-        <td><p>Moderation Effect Plot</p></td>
-      </tr><tr><td>
-          <p><code><a href="print.cond_effect.html">print(<i>&lt;cond_effect&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print the Summary of a 'cond_effect' Class Object</p></td>
-      </tr><tr><td>
-          <p><code><a href="print.std_selected.html">print(<i>&lt;std_selected&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print Basic Information of a 'std_selected' Class Object</p></td>
-      </tr><tr><td>
-          <p><code><a href="print.summary.std_selected.html">print(<i>&lt;summary.std_selected&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print the Summary of a 'std_selected' Class Object</p></td>
-      </tr><tr><td>
-          <p><code><a href="sleep_emo_con.html">sleep_emo_con</a></code> </p>
-        </td>
-        <td><p>A real dataset of 500 Hong Kong adults with the following variables
-case_id
-sleep_duration (in hours)
-conscientiousness
-emotional_stability</p></td>
-      </tr><tr><td>
           <p><code><a href="std_selected.html">std_selected()</a></code> <code><a href="std_selected.html">std_selected_boot()</a></code> </p>
         </td>
         <td><p>Standardize Variables in a Regression Model</p></td>
-      </tr><tr><td>
-          <p><code><a href="stdmod.html">stdmod()</a></code> <code><a href="stdmod.html">stdmod_boot()</a></code> </p>
-        </td>
-        <td><p>Standardized Moderation Effect Given an <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> Output</p></td>
       </tr><tr><td>
           <p><code><a href="stdmod_lavaan.html">stdmod_lavaan()</a></code> </p>
         </td>
         <td><p>Standardized Moderation Effect and Bootstrap CI in 'lavaan'</p></td>
       </tr><tr><td>
+          <p><code><a href="stdmod.html">stdmod()</a></code> <code><a href="stdmod.html">stdmod_boot()</a></code> </p>
+        </td>
+        <td><p>Standardized Moderation Effect Given an 'lm' Output</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="helper-functions">Helper Functions <a href="#helper-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Plot moderation effects or compute conditional effects for specific levels of the moderators.</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="plotmod.html">plotmod()</a></code> </p>
+        </td>
+        <td><p>Moderation Effect Plot</p></td>
+      </tr><tr><td>
+          <p><code><a href="cond_effect.html">cond_effect()</a></code> </p>
+        </td>
+        <td><p>Conditional Effects</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="other-functions">Other Functions <a href="#other-functions" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
           <p><code><a href="summary.std_selected.html">summary(<i>&lt;std_selected&gt;</i>)</a></code> </p>
         </td>
         <td><p>Summary Method for a 'std_selected' Class Object</p></td>
       </tr><tr><td>
-          <p><code><a href="test_x_1_w_1_v_1_cat1_n_500.html">test_x_1_w_1_v_1_cat1_n_500</a></code> </p>
-        </td>
-        <td><p>One IV, one moderation, two covariates, v1 is contrinuous and cat2 is categorical.
-Sample size is 500.</p></td>
-      </tr><tr><td>
-          <p><code><a href="test_x_1_w_1_v_1_cat1_xw_cov_n_500.html">test_x_1_w_1_v_1_cat1_xw_cov_n_500</a></code> </p>
-        </td>
-        <td><p>One IV, one moderation, two covariates, v1 is continuous
-and cat2 is categorical. IV and moderator have a nonlinear
-relation.</p></td>
-      </tr><tr><td>
-          <p><code><a href="test_x_1_w_1_v_1_cat1_xw_cov_wcat3_n_500.html">test_x_1_w_1_v_1_cat1_xw_cov_wcat3_n_500</a></code> </p>
-        </td>
-        <td><p>One IV, one moderation, two covariates, v1 is continuous
-and cat2 is categorical. Moderator is a three-category
-string variable. IV and the moderator are associated.</p></td>
-      </tr><tr><td>
-          <p><code><a href="test_x_1_w_1_v_2_n_500.html">test_x_1_w_1_v_2_n_500</a></code> </p>
-        </td>
-        <td><p>Sample dataset for testing</p></td>
-      </tr><tr><td>
           <p><code><a href="update.std_selected.html">update(<i>&lt;std_selected&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Update method for of an 'std_selected' Class Object</p></td>
+        <td><p>The 'update' Method for a 'std_selected' Class Object</p></td>
       </tr><tr><td>
           <p><code><a href="vcov.std_selected.html">vcov(<i>&lt;std_selected&gt;</i>)</a></code> </p>
         </td>
-        <td><p>vcov method for a 'std_selected' Class Object</p></td>
+        <td><p>The 'vcov' Method for a 'std_selected' Class Object</p></td>
+      </tr><tr><td>
+          <p><code><a href="add1.std_selected.html">add1(<i>&lt;std_selected&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>The 'add1' Method for a 'std_selected' Class Object</p></td>
+      </tr><tr><td>
+          <p><code><a href="confint.std_selected.html">confint(<i>&lt;std_selected&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Confidence Intervals for a 'std_selected' Class Object</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.std_selected.html">print(<i>&lt;std_selected&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print Basic Information of a 'std_selected' Class Object</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.cond_effect.html">print(<i>&lt;cond_effect&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print a 'cond_effect' Class Object</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.summary.std_selected.html">print(<i>&lt;summary.std_selected&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print the Summary of a 'std_selected' Class Object</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="datasets">Datasets <a href="#datasets" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p><p>Datasets used in examples.</p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="sleep_emo_con.html">sleep_emo_con</a></code> </p>
+        </td>
+        <td><p>Sample Dataset: Predicting Sleep Duration</p></td>
+      </tr><tr><td>
+          <p><code><a href="test_x_1_w_1_v_1_cat1_n_500.html">test_x_1_w_1_v_1_cat1_n_500</a></code> </p>
+        </td>
+        <td><p>Sample Dataset: One IV, One Moderator, Two Covariates</p></td>
+      </tr><tr><td>
+          <p><code><a href="test_x_1_w_1_v_1_cat1_xw_cov_n_500.html">test_x_1_w_1_v_1_cat1_xw_cov_n_500</a></code> </p>
+        </td>
+        <td><p>Sample Dataset: One IV, One Moderator, Two Covariates</p></td>
+      </tr><tr><td>
+          <p><code><a href="test_x_1_w_1_v_1_cat1_xw_cov_wcat3_n_500.html">test_x_1_w_1_v_1_cat1_xw_cov_wcat3_n_500</a></code> </p>
+        </td>
+        <td><p>Sample Dataset: One IV, One 3-Category Moderator, Two Covariates</p></td>
+      </tr><tr><td>
+          <p><code><a href="test_x_1_w_1_v_2_n_500.html">test_x_1_w_1_v_2_n_500</a></code> </p>
+        </td>
+        <td><p>Sample Dataset: One IV, One Moderator, Two Covariates</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

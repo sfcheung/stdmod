@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1006</span>
       </span>
     </div>
 
@@ -95,14 +95,14 @@
 </h1></div>
 <p>This package includes functions for computing a standardized moderation effect and forming its confidence interval by nonparametric bootstrapping correctly. It was described briefly in the following publication (<a href="https://osf.io/ac8de/" class="external-link">OSF project page</a>). It supports moderated regression conducted by <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code> and path analysis with product term conducted by <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan::lavaan()</a></code>.</p>
 <ul><li>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. <em>Health Psychology</em>. <a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</li></ul>
-<p>For more information on this package, please visit its GitHub page:</p>
+<p>More information on this package:</p>
 <p><a href="https://sfcheung.github.io/stdmod/" class="external-link uri">https://sfcheung.github.io/stdmod/</a></p>
 <div class="section level2">
 <h2 id="quick-links">Quick Links:<a class="anchor" aria-label="anchor" href="#quick-links"></a>
 </h2>
 <ul>
 <li><p><code><a href="articles/stdmod.html">vignette("stdmod")</a></code>: A quick start on how to use <code><a href="reference/std_selected.html">std_selected()</a></code> and <code><a href="reference/std_selected.html">std_selected_boot()</a></code>, the two main functions.</p></li>
-<li><p><code><a href="articles/numerical_example_01.html">vignette("numerical_example_01")</a></code>: Demonstrates how <code><a href="reference/std_selected.html">std_selected()</a></code> and <code><a href="reference/std_selected.html">std_selected_boot()</a></code> can also be used for mean-center or standardize selected variables in any regression model, not just moderated regression models.</p></li>
+<li><p><code><a href="articles/numerical_example_01.html">vignette("numerical_example_01")</a></code>: Demonstrates how <code><a href="reference/std_selected.html">std_selected()</a></code> and <code><a href="reference/std_selected.html">std_selected_boot()</a></code> can also be used to mean center or standardize selected variables in any regression models, not just moderated regression models, and how <code><a href="reference/std_selected.html">std_selected_boot()</a></code> can be used to form nonparametric bootstrap confidence intervals for standardized regression coefficients (<em>betas</em> in psychology literature).</p></li>
 </ul>
 </div>
 </div>
@@ -111,13 +111,13 @@
 </h1>
 <p>Stable release versions of this package can be downloaded below:</p>
 <p><a href="https://github.com/sfcheung/stdmod/releases" class="external-link uri">https://github.com/sfcheung/stdmod/releases</a></p>
-<p>The latest developmental version of this package can be installed by <code>remotes::install_github</code>:</p>
+<p>The latest developmental version of this package at GitHub can be installed by <code>remotes::install_github()</code>:</p>
 <pre><code><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"sfcheung/stdmod"</span><span class="op">)</span></code></pre>
 </div>
 <div class="section level1">
 <h1 id="implementation">Implementation<a class="anchor" aria-label="anchor" href="#implementation"></a>
 </h1>
-<p>The main function, <code><a href="reference/std_selected.html">std_selected()</a></code>, accepts an <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> output, standardizes variables by users, and update the results. If interaction terms are presented, they will be formed after the standardization. If bootstrapping confidence intervals are requested, both standardization and regression will be repeated in each bootstrap sample, ensuring that the sampling variability of the standardizers (e.g., the standard deviations of the selected variables), are also taken into account.</p>
+<p>The main function, <code><a href="reference/std_selected.html">std_selected()</a></code>, accepts an <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> output, standardizes variables by users, and update the results. If interaction terms are present, they will be formed after the standardization. If bootstrap confidence intervals are requested using <code><a href="reference/std_selected.html">std_selected_boot()</a></code>, both standardization and regression will be repeated in each bootstrap sample, ensuring that the sampling variability of the standardizers (e.g., the standard deviations of the selected variables), are also taken into account.</p>
 </div>
 <div class="section level1">
 <h1 id="issues">Issues<a class="anchor" aria-label="anchor" href="#issues"></a>
