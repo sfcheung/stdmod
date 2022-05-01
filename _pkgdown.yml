@@ -1,1 +1,38 @@
 destination: docs
+
+reference:
+- title: Standardized Moderation Effect
+  desc:  >
+    Standardize selected variables and form nonparametric bootstrapping
+    confidence intervals.
+    `std_selected()` and `std_selected_boot()` also support mean-centering
+    and regression models without interaction terms. `stdmod_lavaan()`
+    provides preliminary support for interaction terms in a model
+    fitted by `lavaan::lavaan()`.
+- contents:
+  - std_selected
+  - std_selected_boot
+  - stdmod
+  - stdmod_boot
+  - stdmod_lavaan
+- title: Helper Functions
+  desc:  >
+    Plot moderation effects or compute conditional effects for specific
+    levels of the moderators.
+- contents:
+  - plotmod
+  - cond_effect
+- title: Other Functions
+- contents:
+  - summary.std_selected
+  - update.std_selected
+  - vcov.std_selected
+  - add1.std_selected
+  - confint.std_selected
+  - print.std_selected
+  - print.cond_effect
+  - print.summary.std_selected
+- title: Datasets
+  desc: Datasets used in examples.
+- contents:
+  - has_keyword("datasets")
