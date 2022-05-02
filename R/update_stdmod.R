@@ -59,7 +59,9 @@ update.std_selected <- function(object, formula., ..., evaluate = TRUE) {
           }
       }
     lm_out_call <- call
-    lm_out_call$data <- object$lm_out_call$data
+    if (is.null(extras$data)) {
+        lm_out_call$data <- object$lm_out_call$data
+      }
     if (evaluate) {
         # lm_out <- eval(lm_out_call, parent.frame())
         if (!is.null(object$std_selected_boot_call)) {
