@@ -39,6 +39,7 @@ print.cond_effect <- function(x,
     xdf <- as.data.frame(x)
     orgcall <- attr(x, "call")
     orgoutput <- attr(x, "output")
+    has_bootci <- is.call(attr(x, "cond_effect_boot_call"))
     w_numeric <- is.numeric(x[, 2])
     iv <- attr(x, "x")
     w <- attr(x, "w")
@@ -47,6 +48,12 @@ print.cond_effect <- function(x,
     ci_se <- which(cnames == "Std. Error")
     ci_t <- which(cnames == "t value")
     ci_p <- which(cnames == "Pr(>|t|)")
+    if (has_bootci) {
+        ci_bcilo <- which(cnames == "CI Lower")
+        ci_bcihi <- which(cnames == "CI Upper")
+      } else {
+        ci_bcilo <- ci_bcihi <- NA
+      }
     cat("The effects of ",
         iv,
         " on ",
@@ -65,6 +72,10 @@ print.cond_effect <- function(x,
     xdf[, ci_se] <- formatC(x[, ci_se], nd, format = "f")
     xdf[, ci_t] <- formatC(x[, ci_t], nd_stat, format = "f")
     xdf[, ci_p] <- formatC(x[, ci_p], nd_p, format = "f")
+    if (has_bootci) {
+        xdf[, ci_bcilo] <- formatC(x[, ci_bcilo], nd, format = "f")
+        xdf[, ci_bcihi] <- formatC(x[, ci_bcihi], nd, format = "f")
+      }
     sig <- stats::symnum(x[, ci_p],
                          corr = FALSE,
                          na = FALSE,
@@ -72,6 +83,17 @@ print.cond_effect <- function(x,
                          symbols = c("***", "**", "*", " "))
     xdf$Sig <- format(sig)
     print(xdf, row.names = FALSE)
+
+    if (has_bootci) {
+        nboot <- attr(x, "nboot")
+        conf <- attr(x, "conf")
+        cat("\n[CI Lower, CI Upper] shows the ",
+             round(conf* 100, 2),
+             "% nonparametric bootstrap confidence interval(s)",
+             sep = "")
+        cat("\n (based on ", nboot, " bootstrap samples)")
+        cat("\n")
+      }
 
     cat("\nThe regression model:\n")
     cat("\n\t", deparse(stats::formula(orgoutput)), "\n", sep = "")

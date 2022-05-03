@@ -4,8 +4,8 @@ library(stdmod)
 context("Check standardized moderation effect given a lavaan output")
 
 test_that("stdmod_lavaan", {
-  skip_if(!interactive(),
-          message = "stdmod_lavaan not tested if not interactive")
+  # skip_if(!interactive(),
+  #         message = "stdmod_lavaan not tested if not interactive")
 
   dat <- test_x_1_w_1_v_2_n_500
 
@@ -54,14 +54,14 @@ test_that("stdmod_lavaan", {
   set.seed(6589107)
   stdmod_xyw_boot <- stdmod_boot(lm_raw, x = iv, y = dv, w = mod, 
                                     x_rescale = TRUE, y_rescale = TRUE, w_rescale = TRUE,
-                                    nboot = 2000)
+                                    nboot = 100)
   stdmod_xyw_boot$ci
   set.seed(6589107)
   system.time(out_boot <- stdmod_lavaan(fit = fit, x = "iv",
                                   y = "dv",
                                   w = "mod",
                                   x_w = "iv_mod",
-                            boot_ci = TRUE, R = 2000))
+                            boot_ci = TRUE, R = 100))
   out_boot$ci
   round(stdmod_xyw_boot$ci, 5)
   round(out_boot$ci, 5)

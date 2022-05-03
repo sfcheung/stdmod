@@ -169,7 +169,7 @@ identical(coef(lm_std_wcat3), coef(lm_std_wcat3_check))
 
 p0_wcat3 <- plotmod(output = lm_out_wcat3,
         x = emotional_stability,
-        w = city,
+        w = "city",
         x_label = "Emotional Stability",
         w_label = "City",
         y_label = "Sleep Duration",
@@ -191,7 +191,7 @@ test_that("Check plotmod_tumble lm, std, percentiles", {
 
 p1_wcat3 <- plotmod(output = lm_std_wcat3,
         x = emotional_stability,
-        w = city,
+        w = "city",
         x_label = "Emotional Stability",
         w_label = "City",
         y_label = "Sleep Duration",
