@@ -119,7 +119,11 @@ stdmod_lavaan <- function(fit,
                                     x_w = x_w)
     dat_org <- lavaan::lavInspect(fit, "data")
     if (!boot_ci) {
-        stdmod <- boot_i(dat_org)
+        stdmod <- stdmod_from_fit(fit = fit,
+                                  x = x,
+                                  y = y,
+                                  w = w,
+                                  x_w = x_w)
         boot_out <- NA
         stdmod_ci <- NA
       } else {
@@ -160,13 +164,22 @@ boot_i_gen <- function(fit, x, y, w, x_w) {
       if (!inherits(fit_i, "lavaan")) {
           return(NA)
         } else {
-          fit_cov_implied <- lavaan::lavInspect(fit_i, "implied")
-          x_sd <- sqrt(diag(fit_cov_implied$cov)[x])
-          w_sd <- sqrt(diag(fit_cov_implied$cov)[w])
-          y_sd <- sqrt(diag(fit_cov_implied$cov)[y])
-          x_w_i <- lavaan::coef(fit_i)[paste0(y, "~", x_w)]
-          x_w_std_i <- x_w_i * x_sd * w_sd / y_sd
+          x_w_std_i <- stdmod_from_fit(fit = fit_i,
+                                       x = x,
+                                       y = y,
+                                       w = w,
+                                       x_w = x_w)
           return(x_w_std_i)
         }
     }
+  }
+
+stdmod_from_fit <- function(fit, x, y, w, x_w) {
+    fit_cov_implied <- lavaan::lavInspect(fit, "implied")
+    x_sd <- sqrt(diag(fit_cov_implied$cov)[x])
+    w_sd <- sqrt(diag(fit_cov_implied$cov)[w])
+    y_sd <- sqrt(diag(fit_cov_implied$cov)[y])
+    x_w_i <- lavaan::coef(fit)[paste0(y, "~", x_w)]
+    x_w_std_i <- x_w_i * x_sd * w_sd / y_sd
+    return(x_w_std_i)
   }
