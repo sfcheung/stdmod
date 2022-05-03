@@ -1,15 +1,19 @@
-# stdmod 0.1.6 (latest: 0.1.6.1007)
+# stdmod 0.1.6 (latest: 0.1.6.1008)
 
 - Add `plotmod()` for plotting moderation effects. This function will check
   whether a variable is standardized. If yes, will note this in the plot.
+- `plotmod()` can also plot a Tumble graph (Bodner, 2016) if `graph_type` is
+  set to `"tumble"`.
 - Update vignettes to use `plotmod()` instead of `visreg::visreg()`.
 - Add `cond_effect()` for computing conditional effects. This function
   will check which variable(s) is/are standardized. If yes, will note
   this in the printout.
+- Add `cond_effect_boot()`, a wrapper of
+  `cond_effect()` that can form nonparametric bootstrap confidence intervals
+  for the conditional effects, which may be partially or completely
+  standardized.
 - Update the print method for the summary of `std_selected()` and
   `std_selected_boot()`.
-- `plotmod()` can plot a Tumble graph (Bodner, 2016) if `graph_type` is
-  set to `"tumble"`.
 
 
 # stdmod 0.1.5
