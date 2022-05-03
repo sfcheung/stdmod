@@ -337,7 +337,7 @@ identical(coef(lm_std_wcat3), coef(lm_std_wcat3_check))
 
 p0_wcat3 <- plotmod(output = lm_out_wcat3,
         x = emotional_stability,
-        w = city,
+        w = "city",
         x_label = "Emotional Stability",
         w_label = "City",
         y_label = "Sleep Duration")
@@ -361,7 +361,7 @@ p0wcat3xlim <- layer_scales(p0_wcat3)$x$range$range
 
 p1_wcat3 <- plotmod(output = lm_std_wcat3,
         x = emotional_stability,
-        w = city,
+        w = "city",
         x_label = "Emotional Stability",
         w_label = "City",
         y_label = "Sleep Duration")
