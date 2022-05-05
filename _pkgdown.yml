@@ -42,3 +42,16 @@ reference:
 - contents:
   - has_keyword("datasets")
 
+articles:
+- title: Get Started
+  navbar: ~
+  contents:
+  - stdmod
+- title: Articles
+  navbar: ~
+  contents:
+  - numerical_example_02
+  - numerical_example_01
+  - plotmod
+  - cond_effect
+  - numerical_example_lavaan

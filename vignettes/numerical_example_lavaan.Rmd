@@ -1,10 +1,10 @@
 ---
-title: "Compute Standardized Moderation Effect in SEM using stdmod_lavaan()"
+title: "Standardized Moderation Effect in SEM by stdmod_lavaan()"
 author: "Shu Fai Cheung and David Weng Ngai Vong"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Compute Standardized Moderation Effect in SEM using stdmod_lavaan()}
+  %\VignetteIndexEntry{Standardized Moderation Effect in SEM by stdmod_lavaan()}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -1,10 +1,10 @@
 ---
-title: "Plot Moderation Effects by plotmod()"
+title: "Moderation Effects Plots by plotmod()"
 author: "Shu Fai Cheung"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Plot Moderation Effects by plotmod()}
+  %\VignetteIndexEntry{Moderation Effects Plots by plotmod()}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

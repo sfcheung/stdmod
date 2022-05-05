@@ -17,16 +17,24 @@ https://sfcheung.github.io/stdmod/
 
 - `vignette("stdmod")`: A quick start on how to use
   `std_selected()` and `std_selected_boot()`, the
-  two main functions.
+  two main functions, to standardize selected variables
+  in a regression model and refit the model.
 
-- `vignette("numerical_example_01")`: Demonstrates
-  how `std_selected()` and `std_selected_boot()` can
-  also be used to mean center or standardize selected
-  variables in any regression models, not just moderated
-  regression models, and how `std_selected_boot()` can be
-  used to form nonparametric bootstrap confidence intervals
+- `vignette("numerical_example_01")`: How to use
+  `std_selected()` to mean center or standardize selected
+  variables in any regression models, and use
+  `std_selected_boot()` to form nonparametric
+  bootstrap confidence intervals
   for standardized regression coefficients (*betas* in
   psychology literature).
+
+- `vignette("plotmod")`: How to generate a typical plot of
+  moderation effect using `plotmod()`.
+
+- `vignette("cond_effect")`: How to compute conditional
+  effects of the predictor for selected
+  levels of the moderator, and form nonparametric bootstrap
+  confidence intervals these effects.
 
 # Installation
 
