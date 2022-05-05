@@ -15,12 +15,16 @@ https://sfcheung.github.io/stdmod/
 
 ## Quick Links:
 
-- `vignette("stdmod")`: A quick start on how to use
+- [stdmod](https://sfcheung.github.io/stdmod/articles/stdmod.html): A quick start on how to use
   `std_selected()` and `std_selected_boot()`, the
   two main functions, to standardize selected variables
   in a regression model and refit the model.
 
-- `vignette("numerical_example_01")`: How to use
+- [moderation](https://sfcheung.github.io/stdmod/articles/moderation.html): How
+  to use `std_selected()` and `std_selected_boot()` to compute standardized
+  moderation effect and form its nonparametric bootstrap confidence interval.
+
+- [std_selected](https://sfcheung.github.io/stdmod/articles/std_selected.html): How to use
   `std_selected()` to mean center or standardize selected
   variables in any regression models, and use
   `std_selected_boot()` to form nonparametric
@@ -28,10 +32,10 @@ https://sfcheung.github.io/stdmod/
   for standardized regression coefficients (*betas* in
   psychology literature).
 
-- `vignette("plotmod")`: How to generate a typical plot of
+- [plotmod](https://sfcheung.github.io/stdmod/articles/plotmod.html): How to generate a typical plot of
   moderation effect using `plotmod()`.
 
-- `vignette("cond_effect")`: How to compute conditional
+- [cond_effect](https://sfcheung.github.io/stdmod/articles/cond_effect.html): How to compute conditional
   effects of the predictor for selected
   levels of the moderator, and form nonparametric bootstrap
   confidence intervals these effects.

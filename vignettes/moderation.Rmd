@@ -13,8 +13,9 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width  = 6, 
-  fig.height = 6
+  fig.width  = 6,
+  fig.height = 4,
+  fig.align = 'center'
 )
 options(width = 132)
 ```
@@ -176,13 +177,21 @@ Note: As a side product, the nonparametric bootstrap percentile confidence of th
 coefficients are also reported. They can be used for other variables that are
 standardized in the same model, whether they are involved in the moderation or not.
 
-# Reference(s)
+# Further Information
 
+`vignette("plotmod"` illustrates how to use `plotmod()` to plot a moderation
+effect. If variables are standardized by `std_selected()`, `plotmod()` can
+indicate this in the plot.
+
+`vignette("cond_effect")` illustrates how to use `cond_effect()` to compute
+conditional effects, the effect of a predictor for selected levels of the moderator.
+`cond_effect()` support outputs from `std_selected()`.
+
+# Reference(s)
 
 Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022)
 Improving an old way to measure moderation effect in standardized units.
 Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
-
 
 Yuan, K.-H., & Chan, W. (2011). Biases and standard errors of standardized
 regression coefficients. *Psychometrika, 76*(4), 670–690.

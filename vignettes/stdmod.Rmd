@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.width  =  6,
-  fig.height =  6,
+  fig.height =  4,
   fig.align = "center"
 )
 ```
@@ -226,8 +226,15 @@ moderation effect is `r formatC(tmp["emot:cons", "CI Lower"], 4, format = "f")` 
 
 # Further Information
 
+A more detailed illustration can be found at `vignette("moderation")`.
+
+`vignette("std_selected")` illustrates how `std_selected()` can be used
+to form nonparametric bootstrap percentile confidence interval for
+standardized regression coefficients ("betas") for regression models
+in general.
+
 Further information on the functions can be found in their help pages
-(`std_selected()` and `std_selected_boot()`)). For example, parallel computation
+(`std_selected()` and `std_selected_boot()`). For example, parallel computation
 can be used when doing bootstrapping.
 
 # Reference(s)
