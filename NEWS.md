@@ -1,39 +1,40 @@
-# stdmod 0.1.6 (latest: 0.1.6.1008)
+# stdmod 0.1.6 (latest: 0.1.6.1009)
 
-- Add `plotmod()` for plotting moderation effects. This function will check
+- Added `plotmod()` for plotting moderation effects. This function will check
   whether a variable is standardized. If yes, will note this in the plot.
 - `plotmod()` can also plot a Tumble graph (Bodner, 2016) if `graph_type` is
   set to `"tumble"`.
-- Update vignettes to use `plotmod()` instead of `visreg::visreg()`.
-- Add `cond_effect()` for computing conditional effects. This function
+- Updated vignettes to use `plotmod()` instead of `visreg::visreg()`.
+- Added `cond_effect()` for computing conditional effects. This function
   will check which variable(s) is/are standardized. If yes, will note
   this in the printout.
-- Add `cond_effect_boot()`, a wrapper of
+- Added `cond_effect_boot()`, a wrapper of
   `cond_effect()` that can form nonparametric bootstrap confidence intervals
   for the conditional effects, which may be partially or completely
   standardized.
-- Update the print method for the summary of `std_selected()` and
+- Updated the print method for the summary of `std_selected()` and
   `std_selected_boot()`.
+- Added more vignettes to introduce the new functions.
 
 
 # stdmod 0.1.5
 
-- Change the column order of the coefficient table
+- Changed the column order of the coefficient table
   in `std_selected_boot()` output. Bootstrap confidence
   intervals are placed next to parameter estimates.
-- Add `vcov()` method for `std_selected()` output. If bootstrapping is used,
+- Added `vcov()` method for `std_selected()` output. If bootstrapping is used,
   it can return the variance-covariance matrix of the bootstrap estimates.
-- Add `confint()` method for `std_selected()` output. If bootstrapping is used,
+- Added `confint()` method for `std_selected()` output. If bootstrapping is used,
   it can return the bootstrap percentile confidence intervals if requested.
 - Other minor fixes.
 
 # stdmod 0.1.3
 
-- Setup gh-pages and fix dependency in vignette.
+- Set up gh-pages and fix dependency in vignette.
 
 # stdmod 0.1.2
 
-- Update the methods for `std_selected()`.
+- Updated the methods for `std_selected()`.
 
 # stdmod 0.1.1
 
