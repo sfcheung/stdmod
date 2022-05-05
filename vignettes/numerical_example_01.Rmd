@@ -1,10 +1,10 @@
 ---
-title: "Numerical Example - std_selected()"
+title: "Mean Center and Standardize Selected Variable by std_selected()"
 author: "Shu Fai Cheung and David Weng Ngai Vong"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Numerical Example - std_selected()}
+  %\VignetteIndexEntry{Mean Center and Standardize Selected Variable by std_selected()}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
