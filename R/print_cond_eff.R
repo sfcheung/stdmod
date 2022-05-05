@@ -146,7 +146,7 @@ print.cond_effect <- function(x,
                       c(NA, NA, NA))
         v_std <- paste0(stats::na.omit(tmp), collapse = ", ")
         v_txt <- paste0("- The variable(s) ", v_std, " is/are standardized.")
-        if (standardized) {
+        if (standardized & !table_only) {
             cat("\nNote:\n\n")
             cat(v_txt, "\n", sep = "")
             if (y_std & x_std) {
