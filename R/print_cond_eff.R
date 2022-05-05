@@ -114,7 +114,7 @@ print.cond_effect <- function(x,
                 round(conf* 100, 2),
                 "% nonparametric bootstrap confidence interval(s)",
                 sep = "")
-            cat("\n (based on ", nboot, " bootstrap samples)")
+            cat("\n (based on", nboot, "bootstrap samples)")
             cat("\n")
           }
       }
