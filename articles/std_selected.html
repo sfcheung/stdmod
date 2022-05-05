@@ -53,10 +53,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/numerical_example_02.html">Standardized Moderation Effect by std_selected()</a>
+      <a href="../articles/moderation.html">Standardized Moderation Effect by std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_01.html">Mean Center and Standardize Selected Variable by std_selected()</a>
+      <a href="../articles/std_selected.html">Mean Center and Standardize Selected Variable by std_selected()</a>
     </li>
     <li>
       <a href="../articles/plotmod.html">Moderation Effects Plots by plotmod()</a>
@@ -65,7 +65,7 @@
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
     </li>
   </ul>
 </li>
@@ -90,7 +90,7 @@
 
       
 
-      </header><script src="numerical_example_01_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="std_selected_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Mean Center and Standardize Selected Variable by std_selected()</h1>
@@ -98,8 +98,8 @@
             
             <h4 data-toc-skip class="date">2022-05-05</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/numerical_example_01.Rmd" class="external-link"><code>vignettes/numerical_example_01.Rmd</code></a></small>
-      <div class="hidden name"><code>numerical_example_01.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/std_selected.Rmd" class="external-link"><code>vignettes/std_selected.Rmd</code></a></small>
+      <div class="hidden name"><code>std_selected.Rmd</code></div>
 
     </div>
 
@@ -114,7 +114,7 @@
 <h2 id="setup-the-environment">Setup the Environment<a class="anchor" aria-label="anchor" href="#setup-the-environment"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/" class="external-link">stdmod</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/">stdmod</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lm.beta</span><span class="op">)</span> <span class="co"># For generating the typical standardized solution</span></code></pre></div>
 </div>
 <div class="section level2">
@@ -171,7 +171,7 @@
         x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
         w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
         y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-2-1.png" width="576"></p>
+<p><img src="std_selected_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The function <code><a href="../reference/plotmod.html">plotmod()</a></code> also prints the conditional effects of the predictor, emotional stability in this example.</p>
 </div>
 <div class="section level2">
@@ -225,7 +225,7 @@
         x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
         w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
         y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-3-1.png" width="576"></p>
+<p><img src="std_selected_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The argument for meaning centering is <code>to_center</code>. The variable is specified in the formula form.</p>
 </div>
 <div class="section level2">
@@ -279,7 +279,7 @@
         x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
         w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
         y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
+<p><img src="std_selected_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="standardize-both-conscientiousness-and-emotional-stability">Standardize Both Conscientiousness and Emotional Stability<a class="anchor" aria-label="anchor" href="#standardize-both-conscientiousness-and-emotional-stability"></a>
@@ -335,7 +335,7 @@
         x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
         w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
         y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
+<p><img src="std_selected_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The function <code><a href="../reference/plotmod.html">plotmod()</a></code> automatically checks whether a variable is standardized. If yes, it will report this in the plot.</p>
 </div>
 <div class="section level2">
@@ -392,7 +392,7 @@
         x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
         w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
         y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
+<p><img src="std_selected_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="standardize-all-variables">Standardize All Variables<a class="anchor" aria-label="anchor" href="#standardize-all-variables"></a>
@@ -447,7 +447,7 @@
         x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
         w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
         y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_01_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
+<p><img src="std_selected_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="the-usual-standardized-solution">The Usual Standardized Solution<a class="anchor" aria-label="anchor" href="#the-usual-standardized-solution"></a>

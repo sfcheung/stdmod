@@ -53,10 +53,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/numerical_example_02.html">Standardized Moderation Effect by std_selected()</a>
+      <a href="../articles/moderation.html">Standardized Moderation Effect by std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_01.html">Mean Center and Standardize Selected Variable by std_selected()</a>
+      <a href="../articles/std_selected.html">Mean Center and Standardize Selected Variable by std_selected()</a>
     </li>
     <li>
       <a href="../articles/plotmod.html">Moderation Effects Plots by plotmod()</a>
@@ -65,7 +65,7 @@
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
     </li>
   </ul>
 </li>
@@ -90,7 +90,7 @@
 
       
 
-      </header><script src="numerical_example_lavaan_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="stdmod_lavaan_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Standardized Moderation Effect in SEM by stdmod_lavaan()</h1>
@@ -98,8 +98,8 @@
             
             <h4 data-toc-skip class="date">2022-05-05</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/numerical_example_lavaan.Rmd" class="external-link"><code>vignettes/numerical_example_lavaan.Rmd</code></a></small>
-      <div class="hidden name"><code>numerical_example_lavaan.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/stdmod_lavaan.Rmd" class="external-link"><code>vignettes/stdmod_lavaan.Rmd</code></a></small>
+      <div class="hidden name"><code>stdmod_lavaan.Rmd</code></div>
 
     </div>
 
@@ -114,7 +114,7 @@
 <h2 id="setup-the-environment">Setup the Environment<a class="anchor" aria-label="anchor" href="#setup-the-environment"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/" class="external-link">stdmod</a></span><span class="op">)</span> <span class="co"># For computing the standardized moderation effect conveniently</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/">stdmod</a></span><span class="op">)</span> <span class="co"># For computing the standardized moderation effect conveniently</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span> <span class="co"># For doing path analysis in lavaan.</span>
 <span class="co">#&gt; This is lavaan 0.6-11</span>
 <span class="co">#&gt; lavaan is FREE software! Please report any bugs.</span></code></pre></div>

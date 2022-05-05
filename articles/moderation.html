@@ -53,10 +53,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/numerical_example_02.html">Standardized Moderation Effect by std_selected()</a>
+      <a href="../articles/moderation.html">Standardized Moderation Effect by std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_01.html">Mean Center and Standardize Selected Variable by std_selected()</a>
+      <a href="../articles/std_selected.html">Mean Center and Standardize Selected Variable by std_selected()</a>
     </li>
     <li>
       <a href="../articles/plotmod.html">Moderation Effects Plots by plotmod()</a>
@@ -65,7 +65,7 @@
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
     </li>
   </ul>
 </li>
@@ -90,7 +90,7 @@
 
       
 
-      </header><script src="numerical_example_02_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="moderation_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Standardized Moderation Effect by std_selected()</h1>
@@ -98,8 +98,8 @@
             
             <h4 data-toc-skip class="date">2022-05-05</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/numerical_example_02.Rmd" class="external-link"><code>vignettes/numerical_example_02.Rmd</code></a></small>
-      <div class="hidden name"><code>numerical_example_02.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/moderation.Rmd" class="external-link"><code>vignettes/moderation.Rmd</code></a></small>
+      <div class="hidden name"><code>moderation.Rmd</code></div>
 
     </div>
 
@@ -114,7 +114,7 @@
 <h2 id="setup-the-environment">Setup the Environment<a class="anchor" aria-label="anchor" href="#setup-the-environment"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/" class="external-link">stdmod</a></span><span class="op">)</span> <span class="co"># For computing the standardized moderation effect conveniently</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/">stdmod</a></span><span class="op">)</span> <span class="co"># For computing the standardized moderation effect conveniently</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lm.beta</span><span class="op">)</span> <span class="co"># For generating the typical standardized solution</span></code></pre></div>
 </div>
 <div class="section level2">
@@ -168,7 +168,7 @@
         x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
         w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
         y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_02_files/figure-html/mod_reg-1.png" width="576"></p>
+<p><img src="moderation_files/figure-html/mod_reg-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The results show that conscientiousness significantly moderates the effect of emotional stability on sleep duration.</p>
 </div>
 <div class="section level2">
@@ -233,7 +233,7 @@
         x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
         w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
         y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
-<p><img src="numerical_example_02_files/figure-html/unnamed-chunk-3-1.png" width="576"></p>
+<p><img src="moderation_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The function <code><a href="../reference/plotmod.html">plotmod()</a></code> also prints the conditional effects of the predictor, emotional stability in this example.</p>
 </div>
 <div class="section level2">
@@ -327,6 +327,12 @@
 <span class="co">#&gt; - Std. Error are not bootstrap SEs.</span></code></pre></div>
 <p>The standardized moderation effect is -0.1083, and the 95% nonparametric bootstrap confidence interval is -0.2040 to -0.0097.</p>
 <p>Note: As a side product, the nonparametric bootstrap percentile confidence of the other coefficients are also reported. They can be used for other variables that are standardized in the same model, whether they are involved in the moderation or not.</p>
+</div>
+<div class="section level2">
+<h2 id="further-information">Further Information<a class="anchor" aria-label="anchor" href="#further-information"></a>
+</h2>
+<p><code>vignette("plotmod"</code> illustrates how to use <code><a href="../reference/plotmod.html">plotmod()</a></code> to plot a moderation effect. If variables are standardized by <code><a href="../reference/std_selected.html">std_selected()</a></code>, <code><a href="../reference/plotmod.html">plotmod()</a></code> can indicate this in the plot.</p>
+<p><code><a href="../articles/cond_effect.html">vignette("cond_effect")</a></code> illustrates how to use <code><a href="../reference/cond_effect.html">cond_effect()</a></code> to compute conditional effects, the effect of a predictor for selected levels of the moderator. <code><a href="../reference/cond_effect.html">cond_effect()</a></code> support outputs from <code><a href="../reference/std_selected.html">std_selected()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="references">Reference(s)<a class="anchor" aria-label="anchor" href="#references"></a>
