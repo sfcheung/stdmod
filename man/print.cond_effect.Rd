@@ -4,7 +4,19 @@
 \alias{print.cond_effect}
 \title{Print a 'cond_effect' Class Object}
 \usage{
-\method{print}{cond_effect}(x, nd = 3, nd_stat = 3, nd_p = 3, ...)
+\method{print}{cond_effect}(
+  x,
+  nd = 3,
+  nd_stat = 3,
+  nd_p = 3,
+  title = TRUE,
+  model = TRUE,
+  level_info = TRUE,
+  standardized = TRUE,
+  boot_info = TRUE,
+  table_only = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{The output of \code{\link[=cond_effect]{cond_effect()}}.}
@@ -14,6 +26,27 @@
 \item{nd_stat}{The number of digits for test statistics (e.g., t).}
 
 \item{nd_p}{The number of digits for p-values.}
+
+\item{title}{If \code{TRUE}, print a title. Default is \code{TRUE}.}
+
+\item{model}{If \code{TRUE}, print the regression model. Default is \code{TRUE}.}
+
+\item{level_info}{If \code{TRUE}, print information for interpreting the
+levels of the moderator, such as the values of
+the levels and distance from the mean. Default
+is \code{TRUE}.}
+
+\item{standardized}{If \code{TRUE} and one or more variables are
+standardized, report it. Default is \code{TRUE}.`}
+
+\item{boot_info}{If \code{TRUE} and bootstrap estimates are in \code{x},
+print information about the bootstrapping,
+such as the number of bootstrap samples.
+Default is \code{TRUE}.}
+
+\item{table_only}{If \code{TRUE}, will suppress of other elements except
+for the table of conditional effects. Override
+arguments such as \code{title}, \code{model}, and \code{level_info}.}
 
 \item{...}{Arguments to be passed to \code{\link[=cond_effect]{cond_effect()}}.}
 }

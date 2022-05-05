@@ -1,0 +1,194 @@
+---
+title: "Conditional Effects by cond_effect()"
+author: "Shu Fai Cheung"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Conditional Effects by cond_effect()}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width  = 6,
+  fig.height = 4,
+  fig.align = 'center'
+)
+options(width = 132)
+```
+
+# What `cond_effect()` Can Do
+
+It can compute the conditional effect of a predictor on an outcome variable
+for selected levels of the moderator:
+
+```{r echo = FALSE}
+library(stdmod)
+data(sleep_emo_con)
+lm_out <- lm(sleep_duration ~ age + gender +
+                              emotional_stability * conscientiousness,
+                              sleep_emo_con)
+cond_out <- cond_effect(output = lm_out,
+                        x = "emotional_stability",
+                        w = "conscientiousness")
+print(cond_out, table_only = TRUE)
+```
+
+It can also compute standardized conditional moderation effect of this predictor:
+
+```{r echo = FALSE}
+data(sleep_emo_con)
+lm_out <- lm(sleep_duration ~ age + gender +
+                              emotional_stability * conscientiousness,
+                              sleep_emo_con)
+lm_std <- std_selected(lm_out,
+                       to_center = ~ .,
+                       to_scale = ~ .)
+cond_std <- cond_effect(output = lm_std,
+                        x = "emotional_stability",
+                        w = "conscientiousness")
+print(cond_std, table_only = TRUE)
+```
+
+Nonparametric bootstrap percentile confidence interval can also be formed
+for standardized conditional effect using `cond_effect_boot()`.
+
+`cond_effect()` is not designed to be a versatile tool. It is designed to
+be a function "good-enough" for common scenarios. Nevertheless, it can
+report some useful information along with the conditional effects,
+as demonstrated below.
+
+# Major Arguments
+
+## Regression Output, Predictor (`x`), and Moderator (`w`)
+
+- `output`: The output of `lm()`, `std_selected()`, or `std_selected_boot()`,
+          with at least one interaction term. Bootstrap estimates in
+          `std_selected_boot()` will be ignored because bootstrapping will be
+          done for each level again.
+
+- `x`: The predictor. The variable in the horizontal axis.
+
+- `w`: The moderator. The variable for which the conditional effects will
+       be plotted.
+
+These are the only required arguments. Just setting them can generate the
+graph:
+
+
+```{r}
+library(stdmod)
+data(sleep_emo_con)
+lm_out <- lm(sleep_duration ~ age + gender +
+                              emotional_stability * conscientiousness,
+                              sleep_emo_con)
+cond_out <- cond_effect(output = lm_out,
+                        x = "emotional_stability",
+                        w = "conscientiousness")
+cond_out
+```
+
+By default, the print method of `cond_effect()` output prints the
+conditional effects, OLS standard errors, *t* statistics, *p*-values,
+and significant test results, along with other information such
+as the value of each level of the moderator, its distance from the mean,
+the percentage of cases equal to or less than this level. The regression
+model is also printed. If only the table of effects is needed, call `print()`
+and set `table_only` to `TRUE`:
+
+```{r}
+print(cond_out, table_only = TRUE)
+```
+
+More options in printing the output can be found in the help page of
+`print.cond_effect()`.
+
+# Levels of the Moderator
+
+## Numeric Moderators
+
+If the moderator is a numeric variable, then, by default, the conditional effects
+for three levels of the moderators will be used: one standard deviation (SD)
+to the mean ("Low"), mean ("Medium"), and one SD above mean ("High").
+
+Users can also use percentiles to define "Low", "Medium", and "High" by setting
+`w_method` to `"percentile"`. The default use 16th percentile and
+84th percentile, which corresponds approximately to one SD below
+and above mean, respectively, for a normal distribution.
+
+```{r}
+data(sleep_emo_con)
+lm_out <- lm(sleep_duration ~ age + gender +
+                              emotional_stability * conscientiousness,
+                              sleep_emo_con)
+cond_out <- cond_effect(output = lm_out,
+                        x = "emotional_stability",
+                        w = "conscientiousness",
+                        w_method = "percentile")
+print(cond_out, title = FALSE, model = FALSE)
+```
+
+Note that the empirical percentage of cases less than or below a level may
+not be exactly equal to that for the requested percentile if the number of
+cases is small and/or the number of unique values of the moderator is small.
+
+## Categorical Moderators
+
+If the moderator is a categorical variable (a string variable or
+  a factor), then the conditional effect of the moderator for each value of
+  this categorical moderator will be printed:
+
+```{r}
+set.seed(61452)
+sleep_emo_con$city <- sample(c("Alpha", "Beta", "Gamma"),
+                               nrow(sleep_emo_con), replace = TRUE)
+lm_cat <- lm(sleep_duration ~ age + gender + emotional_stability*city,
+                              sleep_emo_con)
+cond_out <- cond_effect(lm_cat,
+                        x = "emotional_stability",
+                        w = "city")
+print(cond_out, title = FALSE, model = FALSE)
+```
+
+# Nonparametric Bootstrap Confidence Intervals
+
+If one or more variables are standardized, the OLS confidence intervals are not
+appropriate (Cheung, Cheung, Lau, Hui, & Vong, 2022). Users can
+call `cond_effect_boot()` to use nonparametric bootstrapping to form the
+percentile confidence interval for each conditional effect.
+
+- `conf`: The level of confidence, expressed as a proportion. Default is
+          .95, requesting a 95% confidence interval.
+- `nboot` The number of bootstrap samples to drawn. Should be at least 2000
+          but 5000 is preferable.
+
+```{r}
+lm_out <- lm(sleep_duration ~ age + gender +
+                              emotional_stability * conscientiousness,
+                              sleep_emo_con)
+# Standardize all variables and do the moderated regression again
+lm_std <- std_selected(lm_out,
+                       to_center = ~ .,
+                       to_scale = ~ .)
+# `nboot` is the sufficient. Set it to at least 2000 in real analysis
+cond_std <- cond_effect_boot(output = lm_std,
+                             x = "emotional_stability",
+                             w = "conscientiousness",
+                             nboot = 500)
+print(cond_std, model = FALSE, title = FALSE, level_info = FALSE)
+```
+
+# Further Information
+
+Please refer to the help page of `cond_effect()` and `cond_effect_boot()`
+for other options available, such as defining the number of SDs from
+mean to define "Low" and "High", or the percentiles to be used.
+
+# Reference
+
+Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022)
+Improving an old way to measure moderation effect in standardized units.
+Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
