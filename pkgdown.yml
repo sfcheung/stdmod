@@ -2,9 +2,11 @@ pandoc: 2.7.3
 pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
+  cond_effect: cond_effect.html
   numerical_example_01: numerical_example_01.html
   numerical_example_02: numerical_example_02.html
   numerical_example_lavaan: numerical_example_lavaan.html
+  plotmod: plotmod.html
   stdmod: stdmod.html
-last_built: 2022-05-03T15:14Z
+last_built: 2022-05-05T15:41Z
 

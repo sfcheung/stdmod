@@ -18,7 +18,7 @@ selected variables in a regression model and refit the model"><!-- mathjax --><s
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
       </span>
     </div>
 
@@ -36,13 +36,19 @@ selected variables in a regression model and refit the model"><!-- mathjax --><s
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/numerical_example_01.html">Numerical Example - std_selected()</a>
+      <a href="../articles/numerical_example_02.html">Standardized Moderation Effect by std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by std_selected()</a>
+      <a href="../articles/numerical_example_01.html">Mean Center and Standardize Selected Variable by std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan()</a>
+      <a href="../articles/plotmod.html">Moderation Effects Plots by plotmod()</a>
+    </li>
+    <li>
+      <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
+    </li>
+    <li>
+      <a href="../articles/numerical_example_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
     </li>
   </ul></li>
 <li>
@@ -474,14 +480,14 @@ units. Advance online publication. <em>Health Psychology</em>.
 <span class="r-out co"><span class="r-pr">#&gt;</span> -1.96117 -0.39474 -0.02285  0.37579  2.11040 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate  CI Lower  CI Upper Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.064582 -0.025574  0.123890   0.048250   1.338   0.1814    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.737384  0.696689  0.776942   0.027363  26.948   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.259899  0.203435  0.311127   0.027369   9.496   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.034271 -0.098949  0.022857   0.027325  -1.254   0.2104    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.145006 -0.258621 -0.017455   0.065647  -2.209   0.0276 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.039448 -0.178735  0.103375   0.068799  -0.573   0.5666    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.032087 -0.008609  0.073314   0.025451   1.261   0.2080    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate CI Lower CI Upper Std. Error t value Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.06458 -0.03914  0.14183    0.04825   1.338   0.1814    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.73738  0.70006  0.77377    0.02736  26.948   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.25990  0.20369  0.31583    0.02737   9.496   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.03427 -0.07812  0.03255    0.02733  -1.254   0.2104    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.14501 -0.29544 -0.01662    0.06565  -2.209   0.0276 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.03945 -0.16642  0.13516    0.06880  -0.573   0.5666    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.03209 -0.01669  0.07629    0.02545   1.261   0.2080    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
       </span>
     </div>
 
@@ -35,13 +35,19 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/numerical_example_01.html">Numerical Example - std_selected()</a>
+      <a href="../articles/numerical_example_02.html">Standardized Moderation Effect by std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by std_selected()</a>
+      <a href="../articles/numerical_example_01.html">Mean Center and Standardize Selected Variable by std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan()</a>
+      <a href="../articles/plotmod.html">Moderation Effects Plots by plotmod()</a>
+    </li>
+    <li>
+      <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
+    </li>
+    <li>
+      <a href="../articles/numerical_example_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
     </li>
   </ul></li>
 <li>
@@ -279,7 +285,6 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The variable(s) iv, mod is/are standardized.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Form nonparametric bootstrap confidence intervals</span></span>
 <span class="r-in"><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">cond_effect_boot</span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span>, nboot <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
@@ -489,12 +494,12 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The effects of iv on dv, conditional on mod:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Level    mod iv Effect CI Lower CI Upper   S.E.      t     p Sig</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    High  1.000   841.990  757.477  937.270 42.468 19.826 0.000 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Medium  0.000   806.878  754.002  877.749 29.942 26.948 0.000 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Low -1.000   771.767  694.120  854.987 39.251 19.662 0.000 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    High  1.000   841.990  733.200  945.887 42.468 19.826 0.000 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Medium  0.000   806.878  730.994  867.274 29.942 26.948 0.000 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Low -1.000   771.767  706.598  831.207 39.251 19.662 0.000 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [CI Lower, CI Upper] shows the 95% nonparametric bootstrap confidence interval(s)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  (based on  50  bootstrap samples)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  (based on 50 bootstrap samples)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The regression model:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -514,7 +519,6 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The variable(s) iv, mod is/are standardized.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Load a sample data set</span></span>
@@ -571,7 +575,6 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - % Below: The percent of cases equal to or less than a level.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   in standard deviation (+ve above, -ve below).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">cond_effect</span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span>
@@ -600,7 +603,6 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The variable(s) iv, mod is/are standardized.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Categorical moderator</span></span>
 <span class="r-in"><span class="va">lm_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">cat1</span> <span class="op">+</span> <span class="va">v1</span>, <span class="va">dat</span><span class="op">)</span></span>
@@ -640,7 +642,6 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The regression model:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	dv ~ iv * cat1 + v1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

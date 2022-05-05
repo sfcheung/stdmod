@@ -18,7 +18,7 @@ in the output of std_selected() or std_selected_boot()."><!-- mathjax --><script
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
       </span>
     </div>
 
@@ -36,13 +36,19 @@ in the output of std_selected() or std_selected_boot()."><!-- mathjax --><script
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/numerical_example_01.html">Numerical Example - std_selected()</a>
+      <a href="../articles/numerical_example_02.html">Standardized Moderation Effect by std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by std_selected()</a>
+      <a href="../articles/numerical_example_01.html">Mean Center and Standardize Selected Variable by std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan()</a>
+      <a href="../articles/plotmod.html">Moderation Effects Plots by plotmod()</a>
+    </li>
+    <li>
+      <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
+    </li>
+    <li>
+      <a href="../articles/numerical_example_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
     </li>
   </ul></li>
 <li>
@@ -243,13 +249,13 @@ the bootstrap estimates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate  CI Lower  CI Upper Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.064582 -0.019707  0.140355   0.048250   1.338   0.1814    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.737384  0.692534  0.776933   0.027363  26.948   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.259899  0.212821  0.329868   0.027369   9.496   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.034271 -0.094123  0.029050   0.027325  -1.254   0.2104    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.145006 -0.276695  0.003825   0.065647  -2.209   0.0276 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.039448 -0.146454  0.076253   0.068799  -0.573   0.5666    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.032087 -0.007437  0.079546   0.025451   1.261   0.2080    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.064582 -0.009538  0.157130   0.048250   1.338   0.1814    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.737384  0.679552  0.783390   0.027363  26.948   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.259899  0.195267  0.307234   0.027369   9.496   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.034271 -0.096726  0.029352   0.027325  -1.254   0.2104    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.145006 -0.282827 -0.018507   0.065647  -2.209   0.0276 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.039448 -0.177450  0.081749   0.068799  -0.573   0.5666    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.032087 -0.023121  0.073387   0.025451   1.261   0.2080    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -274,13 +280,13 @@ the bootstrap estimates.</p>
 <span class="r-in"><span class="co"># Bootstrap percentile intervals</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span>, type <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    2.5 %      97.5 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.019707285 0.140355272</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.692534055 0.776933436</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.212820794 0.329867742</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.094122813 0.029049661</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.276695500 0.003824742</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.146454157 0.076252569</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.007437271 0.079546476</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.009538403  0.15712983</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.679551518  0.78338973</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.195266923  0.30723389</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.096725906  0.02935185</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.282827011 -0.01850708</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.177450200  0.08174929</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.023121088  0.07338668</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

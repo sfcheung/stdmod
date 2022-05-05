@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1008</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
       </span>
     </div>
 
@@ -35,13 +35,19 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/numerical_example_01.html">Numerical Example - std_selected()</a>
+      <a href="../articles/numerical_example_02.html">Standardized Moderation Effect by std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_02.html">Compute the Standardized Moderation Effect by std_selected()</a>
+      <a href="../articles/numerical_example_01.html">Mean Center and Standardize Selected Variable by std_selected()</a>
     </li>
     <li>
-      <a href="../articles/numerical_example_lavaan.html">Compute Standardized Moderation Effect in SEM using stdmod_lavaan()</a>
+      <a href="../articles/plotmod.html">Moderation Effects Plots by plotmod()</a>
+    </li>
+    <li>
+      <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
+    </li>
+    <li>
+      <a href="../articles/numerical_example_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
     </li>
   </ul></li>
 <li>
@@ -73,7 +79,19 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for cond_effect</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, nd <span class="op">=</span> <span class="fl">3</span>, nd_stat <span class="op">=</span> <span class="fl">3</span>, nd_p <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>
+  <span class="va">x</span>,
+  nd <span class="op">=</span> <span class="fl">3</span>,
+  nd_stat <span class="op">=</span> <span class="fl">3</span>,
+  nd_p <span class="op">=</span> <span class="fl">3</span>,
+  title <span class="op">=</span> <span class="cn">TRUE</span>,
+  model <span class="op">=</span> <span class="cn">TRUE</span>,
+  level_info <span class="op">=</span> <span class="cn">TRUE</span>,
+  standardized <span class="op">=</span> <span class="cn">TRUE</span>,
+  boot_info <span class="op">=</span> <span class="cn">TRUE</span>,
+  table_only <span class="op">=</span> <span class="cn">FALSE</span>,
+  <span class="va">...</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -86,6 +104,27 @@
 <dd><p>The number of digits for test statistics (e.g., t).</p></dd>
 <dt>nd_p</dt>
 <dd><p>The number of digits for p-values.</p></dd>
+<dt>title</dt>
+<dd><p>If <code>TRUE</code>, print a title. Default is <code>TRUE</code>.</p></dd>
+<dt>model</dt>
+<dd><p>If <code>TRUE</code>, print the regression model. Default is <code>TRUE</code>.</p></dd>
+<dt>level_info</dt>
+<dd><p>If <code>TRUE</code>, print information for interpreting the
+levels of the moderator, such as the values of
+the levels and distance from the mean. Default
+is <code>TRUE</code>.</p></dd>
+<dt>standardized</dt>
+<dd><p>If <code>TRUE</code> and one or more variables are
+standardized, report it. Default is <code>TRUE</code>.`</p></dd>
+<dt>boot_info</dt>
+<dd><p>If <code>TRUE</code> and bootstrap estimates are in <code>x</code>,
+print information about the bootstrapping,
+such as the number of bootstrap samples.
+Default is <code>TRUE</code>.</p></dd>
+<dt>table_only</dt>
+<dd><p>If <code>TRUE</code>, will suppress of other elements except
+for the table of conditional effects. Override
+arguments such as <code>title</code>, <code>model</code>, and <code>level_info</code>.</p></dd>
 <dt>...</dt>
 <dd><p>Arguments to be passed to <code><a href="cond_effect.html">cond_effect()</a></code>.</p></dd>
 </dl></div>
@@ -155,7 +194,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> - % Below: The percent of cases equal to or less than a level.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   in standard deviation (+ve above, -ve below).</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="cond_effect.html">cond_effect</a></span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span>
@@ -184,7 +222,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The variable(s) iv, mod is/are standardized.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
