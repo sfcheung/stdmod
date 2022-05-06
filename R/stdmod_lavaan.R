@@ -28,7 +28,7 @@
 #' `R` times.
 #'
 #' @return
-#' A list with these elements:
+#' A list of class `stdmod_lavaan` with these elements:
 #'
 #'  - `stdmod`: The standardized moderation effect.
 #'
@@ -37,6 +37,8 @@
 #'
 #'  - `boot_out`: The raw output from [boot::boot()]. `NA` if
 #'            confidence interval not requested.
+#'
+#'  - `fit`: The original fit object.
 #'
 #' @param fit The SEM output by [lavaan::lavaan()] or its siblings.
 #' @param x The name of the independent variable in the model.
@@ -137,6 +139,9 @@ stdmod_lavaan <- function(fit,
     out <- list(stdmod = stdmod,
                 ci     = stdmod_ci,
                 boot_out = boot_out)
+    out$call <- match.call()
+    out$fit <- fit
+    class(out) <- c("stdmod_lavaan", class(out))
     return(out)
   }
 

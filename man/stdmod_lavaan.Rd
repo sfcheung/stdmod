@@ -28,13 +28,14 @@ Set this to at least 2000 in actual use.}
 \item{...}{Optional arguments to be passed to \code{\link[boot:boot]{boot::boot()}}.}
 }
 \value{
-A list with these elements:
+A list of class \code{stdmod_lavaan} with these elements:
 \itemize{
 \item \code{stdmod}: The standardized moderation effect.
 \item \code{ci}: The nonparametric bootstrap confidence interval. \code{NA} if
 confidence interval not requested.
 \item \code{boot_out}: The raw output from \code{\link[boot:boot]{boot::boot()}}. \code{NA} if
 confidence interval not requested.
+\item \code{fit}: The original fit object.
 }
 }
 \description{

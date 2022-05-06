@@ -127,11 +127,20 @@ out_boot <- stdmod_lavaan(fit = fit, x = "emotional_stability",
                           parallel = "snow", ncpus = 2)
 ```
 
+This is the printout:
+
+```{r}
+out_boot
+```
+
+The output is a list of the class `stdmod_lavaan`.
+The standardized moderation effect is in the element `stdmod`:
+
 ```{r}
 out_boot$stdmod
 ```
 
-The standardized moderation effect is in the element `stdmod()`. In this
+In this
 example, the standardized moderation effect is 
 `r formatC(out_boot$stdmod, 4, format = "f")`.
 
@@ -145,7 +154,7 @@ The 95% confidence interval of the standardized moderation effect is
 `r formatC(out_boot$ci["lower_bound"], 4, format = "f")` to
 `r formatC(out_boot$ci["upper_bound"], 4, format = "f")`.
 
-By default, the original output from `boot::boot` is stored in the
+By default, the original output from `boot::boot()` is stored in the
 element `boot_out`. Users can use functions that accept the output
 of `boot::boot()`. For example, users can use `boot::boot.ci()`
 to get the 90% percentile confidence interval as below:
