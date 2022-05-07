@@ -1,5 +1,6 @@
 #' @details
-#' This function is a wrapper of [std_selected()]. It calls [std_selected()]
+#' [std_selected_boot()] is a wrapper of [std_selected()]. It calls
+#' [std_selected()]
 #' once
 #' for each bootstrap sample, and then computes the nonparametric
 #' bootstrap

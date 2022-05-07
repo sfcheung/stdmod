@@ -1,14 +1,15 @@
 #' @title Standardize Variables in a Regression Model
 #'
-#' @description Standardize, mean-center, or scale by standard deviation
+#' @description Standardize, mean center, or scale by standard deviation
 #'              selected variables in a regression model and refit the model
 #'
 #' @details
 #' [std_selected()] was originally developed to compute the standardized
 #' moderation effect and the standardized coefficients for other predictors
 #' given an [lm()] output (Cheung, Cheung, Lau, Hui, & Vong, 2022).
-#' It has been revised such that users can be specify
-#' which variables in a regression model is mean-centered and/or rescaled by
+#' It has been extended such that users can specify
+#' which variables in a regression model are to be mean-centered and/or
+#' rescaled by
 #' their standard deviations. If the model has one or more interaction terms,
 #' they will be formed after the transformation, yielding the correct
 #' standardized solution for a moderated regression model. Moreover,
@@ -39,19 +40,22 @@
 #'
 #' @param lm_out The output from [lm()]
 #' @param to_scale The terms to be rescaled by standard deviation,
-#'       using a formula as in [lm()]. For example, if the terms to be scale
-#'       is `x1` and `x3`, use `~ x1 + x3`. No need to specify the
+#'       specified by a formula as in [lm()]. For example, if the terms to be scaled
+#'       are `x1` and `x3`, use `~ x1 + x3`. No need to specify the
 #'       interaction
-#'       term.
+#'       term. To scale the outcome variable, list it on the *right hand side*
+#'       as a predictor.
 #'       Specify only the original variables. If `NULL`, then no terms
-#'       will be rescaled by standard deviation. Variables that are not
+#'       will be rescaled by their standard deviations. Variables that are not
 #'       numeric will be ignored. Default is `NULL`.
-#' @param to_center The terms to be mean-centered, using a formula
+#' @param to_center The terms to be mean centered, specified by a formula
 #'        as in [lm()]. For example, if the terms to be centered
 #'        is `x1` and `x3`, use `~ x1 + x3`. No need to specify the
-#'        interaction term.
+#'        interaction term. To center  the outcome variable, list it on the
+#'        *right hand side*
+#'        as a predictor.
 #'        Specify only the original variables. If `NULL`, then no term
-#'        will be centered. Default is `NULL``.
+#'        will be centered. Default is `NULL`.
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
