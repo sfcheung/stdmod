@@ -41,8 +41,9 @@
 print.std_selected <- function(x, ...) {
     cat("\n- Variable(s) requested to center:", x$centered_terms)
     cat("\n- Variable(s) requested to scale:", x$scaled_terms)
+    cat("\nNote: categorical variables will not be centered nor scaled even if requested to do so.")
     if (!is.null(x$nboot)) {
-        cat("\n- Nonparametric bootstrapping 95% confidence intervals computed.")
+        cat("\n- Nonparametric bootstrap 95% percentile confidence intervals computed.")
       }
     cat("\n")
     NextMethod()
