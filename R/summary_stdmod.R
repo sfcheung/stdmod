@@ -5,11 +5,10 @@
 #'
 #' @return
 #'  An object of class `summary.std_selected`, with
-#'  bootstrap confidence intervals added if present.
+#'  bootstrap confidence intervals added if present in the object.
 #'
 #' @param object The output of [std_selected()] or [std_selected_boot()].
-#' @param ...  Arguments to be passed to [summary.lm()].
-#'
+#' @param ...  Additional arguments. Ignored by this function.
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'

@@ -54,8 +54,9 @@ print.summary.std_selected <- function(x, ...) {
     }
   dat_sc <- format_dat_sc(x)
   print(dat_sc)
+  cat("\nNote:")
+  cat("\n- Categorical variables will not be centered or scaled even if requested.")
   if (!is.null(x$nboot)) {
-      cat("\nNote:")
       cat("\n- Nonparametric bootstrapping 95% confidence intervals computed.")
       cat("\n- The number of bootstrap samples is ", x$nboot, ".", sep = "")
     }

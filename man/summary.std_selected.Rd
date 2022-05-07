@@ -9,11 +9,11 @@
 \arguments{
 \item{object}{The output of \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.}
 
-\item{...}{Arguments to be passed to \code{\link[=summary.lm]{summary.lm()}}.}
+\item{...}{Additional arguments. Ignored by this function.}
 }
 \value{
 An object of class \code{summary.std_selected}, with
-bootstrap confidence intervals added if present.
+bootstrap confidence intervals added if present in the object.
 }
 \description{
 Summarize the results of \code{\link[=std_selected]{std_selected()}} or
