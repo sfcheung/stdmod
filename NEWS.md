@@ -18,7 +18,7 @@
   `std_selected_boot()`.
 - Added more vignettes to introduce the new functions.
 - `stdmod_lavaan()` now returns an object of the class `stdmod_lavaan`,
-  with a print method.
+  with methods print, confint, and coef added.
 
 # stdmod 0.1.5
 
