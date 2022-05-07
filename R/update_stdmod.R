@@ -67,10 +67,12 @@ update.std_selected <- function(object, formula., ..., evaluate = TRUE) {
             new_call <- object$std_selected_boot_call
             new_call$lm_out <- lm_out_call
             out <- eval(new_call, parent.frame())
+            return(out)
           } else {
             new_call <- object$std_selected_call
             new_call$lm_out <- lm_out_call
             out <- eval(new_call, parent.frame())
+            return(out)
           }
       } else {
         return(call)
