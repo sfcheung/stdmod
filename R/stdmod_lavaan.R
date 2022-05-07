@@ -131,6 +131,16 @@ stdmod_lavaan <- function(fit,
       } else {
         boot_out <- boot::boot(dat_org, boot_i, R = R, ...)
         stdmod <- boot_out$t0
+        if (any(is.na(boot_out$t))) {
+            tmp <- paste0("Fit not safe in at least one bootstrap ",
+                          "samples, either with an error or with ",
+                          "a warning message. Please check the original ",
+                          "fit object, or set 'warn' to FALSE ",
+                          "in lavaan if the warning can be ignored.")
+            warning(tmp)
+            cat(paste0("\nNumber of valid bootstrap estimates: ",
+                           sum(!is.na(boot_out$t)), "\n"))
+          }
         stdmod_ci <- boot::boot.ci(boot_out,
                                    type = "perc",
                                    conf = conf)$percent[4:5]
@@ -157,16 +167,27 @@ boot_i_gen <- function(fit, x, y, w, x_w) {
         } else {
           dat_i <- dat[i, ]
         }
-      fit_i <- tryCatch(lavaan::update(fit,
+      fit_test <- tryCatch(fit_i <- lavaan::update(fit,
                                        data = dat_i,
                                        se = "none",
                                        h1 = FALSE,
                                        baseline = FALSE,
                                        test = "standard"
                                        ),
-                        error = function(e) NA,
-                        warning = function(e) NA)
+                            error = function(e) e,
+                            warning = function(e) e)
+      if (inherits(fit_test, "error")) {
+          print(fit_test)
+          return(NA)
+        }
+      if (inherits(fit_test, "warning")) {
+          # options_old <- options("warn" = -1)
+          warning(fit_test)
+          # options("warn" = options_old$warn)
+          return(NA)
+        }
       if (!inherits(fit_i, "lavaan")) {
+          warning("Something's wrong. Fit failed.")
           return(NA)
         } else {
           x_w_std_i <- stdmod_from_fit(fit = fit_i,
