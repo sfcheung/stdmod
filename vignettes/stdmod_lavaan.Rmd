@@ -134,33 +134,31 @@ out_boot
 ```
 
 The output is a list of the class `stdmod_lavaan`.
-The standardized moderation effect is in the element `stdmod`:
+The standardized moderation effect can be retrieved by `coef()`:
 
 ```{r}
-out_boot$stdmod
+coef(out_boot)
 ```
 
 In this
 example, the standardized moderation effect is 
 `r formatC(out_boot$stdmod, 4, format = "f")`.
 
-Nonparametric bootstrap confidence interval is in the element `ci`.
+Nonparametric bootstrap confidence interval can be retrieved
+by `confint()`:
 
 ```{r}
-out_boot$ci
+confint(out_boot)
 ```
 
 The 95% confidence interval of the standardized moderation effect is
 `r formatC(out_boot$ci["lower_bound"], 4, format = "f")` to
 `r formatC(out_boot$ci["upper_bound"], 4, format = "f")`.
 
-By default, the original output from `boot::boot()` is stored in the
-element `boot_out`. Users can use functions that accept the output
-of `boot::boot()`. For example, users can use `boot::boot.ci()`
-to get the 90% percentile confidence interval as below:
+The level of confidence can be changed using the argument `level`:
 
 ```{r}
-boot::boot.ci(out_boot$boot_out, conf = .90, type = "perc")
+confint(out_boot, level = .90)
 ```
 
 # Identical to the Results from Moderated Regression
