@@ -45,15 +45,6 @@ dv ~ med + cov2
 fit <- sem(mod, dat)
 coef(fit)
 
-# Compute the standardized moderation effect
-out_noboot <- stdmod_lavaan(fit = fit,
-                            x = "iv",
-                            y = "med",
-                            w = "mod",
-                            x_w = "iv:mod")
-# Return NAs
-confint(out_noboot)
-
 # Compute the standardized moderation effect and
 # its confidence interval based on nonparametric bootstrapping
 set.seed(8479075)
@@ -63,7 +54,7 @@ system.time(out_boot <- stdmod_lavaan(fit = fit,
                                       w = "mod",
                                       x_w = "iv:mod",
                                       boot_ci = TRUE,
-                                      R = 100))
+                                      R = 50))
 # In real analysis, R should be at least 2000.
 confint(out_boot)
 

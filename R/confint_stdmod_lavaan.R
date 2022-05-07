@@ -36,15 +36,6 @@
 #' fit <- sem(mod, dat)
 #' coef(fit)
 #'
-#' # Compute the standardized moderation effect
-#' out_noboot <- stdmod_lavaan(fit = fit,
-#'                             x = "iv",
-#'                             y = "med",
-#'                             w = "mod",
-#'                             x_w = "iv:mod")
-#' # Return NAs
-#' confint(out_noboot)
-#'
 #' # Compute the standardized moderation effect and
 #' # its confidence interval based on nonparametric bootstrapping
 #' set.seed(8479075)
@@ -54,7 +45,7 @@
 #'                                       w = "mod",
 #'                                       x_w = "iv:mod",
 #'                                       boot_ci = TRUE,
-#'                                       R = 100))
+#'                                       R = 50))
 #' # In real analysis, R should be at least 2000.
 #' confint(out_boot)
 #'
@@ -65,7 +56,7 @@ confint.stdmod_lavaan <- function(object, parm, level = .95, ...) {
     if (isTRUE(object$call$boot_ci)) {
         out0 <- boot::boot.ci(object$boot_out,
                             type = "perc",
-                            conf = level)$percent[4:5]                            
+                            conf = level)$percent[4:5]
       } else {
         warning("Bootstrapping output not in the object.")
         out0 <- c(NA, NA)
