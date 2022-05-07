@@ -6,11 +6,12 @@
 #' @details Two more general functions, [std_selected()] and
 #' [std_selected_boot()], have been developed and can do what these functions
 #' do and more. Users are recommended to use them instead of [stdmod()] and
-#' [stdmod_boot()].
+#' [stdmod_boot()]. These two functions will not be updated in the near
+#' future.
 #'
 #' Nevertheless, if computing the standardized moderation effect and
 #' forming its nonparametric
-#' bootstrap interval are what users need, then these functions can still
+#' bootstrap interval are all required, then these functions can still
 #' be used.
 #'
 #' [stdmod()] computes the standardized moderation effect given an
@@ -39,7 +40,8 @@
 #'              deviation will be used for rescaling. Default is NULL.
 #' @param x_rescale  If `TRUE`, will rescale x by its standard deviation.
 #'                   Default is `TRUE`.
-#' @param w_rescale  If `TRUE`, will rescale w by its SD. Default is TRUE.
+#' @param w_rescale  If `TRUE`, will rescale w by its standard deviation.
+#'                    Default is `TRUE`.
 #' @param y_rescale  If `TRUE`, will rescale y by its standard deviation.
 #'                   Default is `TRUE`.
 #'

@@ -45,7 +45,8 @@ deviation will be used for rescaling. Default is NULL.}
 \item{x_rescale}{If \code{TRUE}, will rescale x by its standard deviation.
 Default is \code{TRUE}.}
 
-\item{w_rescale}{If \code{TRUE}, will rescale w by its SD. Default is TRUE.}
+\item{w_rescale}{If \code{TRUE}, will rescale w by its standard deviation.
+Default is \code{TRUE}.}
 
 \item{y_rescale}{If \code{TRUE}, will rescale y by its standard deviation.
 Default is \code{TRUE}.}
@@ -74,11 +75,12 @@ regression model.
 Two more general functions, \code{\link[=std_selected]{std_selected()}} and
 \code{\link[=std_selected_boot]{std_selected_boot()}}, have been developed and can do what these functions
 do and more. Users are recommended to use them instead of \code{\link[=stdmod]{stdmod()}} and
-\code{\link[=stdmod_boot]{stdmod_boot()}}.
+\code{\link[=stdmod_boot]{stdmod_boot()}}. These two functions will not be updated in the near
+future.
 
 Nevertheless, if computing the standardized moderation effect and
 forming its nonparametric
-bootstrap interval are what users need, then these functions can still
+bootstrap interval are all required, then these functions can still
 be used.
 
 \code{\link[=stdmod]{stdmod()}} computes the standardized moderation effect given an
