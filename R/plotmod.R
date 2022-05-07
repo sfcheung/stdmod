@@ -3,7 +3,7 @@
 #' @description Plot the moderation effect in a regression model
 #'
 #' @details This function generate a basic [ggplot2] graph
-#'          typically found psychology manuscripts. It tries to
+#'          typically found in psychology manuscripts. It tries to
 #'          check whether one or more variables are standardized, and
 #'          report this in the plot if required.
 #'
@@ -14,28 +14,28 @@
 #'  A [ggplot2] graph. Plotted if not assigned to a name. It can
 #'  be further modified like a usual [ggplot2] graph.
 #'
-#' @param output An object of the class `lm`, such as the output
+#' @param output The output
 #'                  of [stats::lm()], [std_selected()], or
 #'                  [std_selected_boot()].
 #'
-#' @param x The name of the focal variable (x-axis) in the output. It
+#' @param x The name of the focal variable (x-axis) in `output``. It
 #'          can be the name of the variable, with or without quotes.
 #'          Currently only numeric variables are supported.
-#' @param w The name of the moderator in the output. It
+#' @param w The name of the moderator in `output`. It
 #'          can be the name of the variable, with or without quotes.
 #' @param x_label The label for the X-axis. Default is the value of `x`.
 #' @param w_label The label for the legend for the lines.
 #'                Default is the value of`w`.
 #' @param y_label The label for the Y-axis. Default is the
 #'                name of the response variable in the model.
-#' @param title The title of the graph. If not supplied, will be
+#' @param title The title of the graph. If not supplied, it will be
 #'               generated from the variable
 #'               names or labels (in `x_label`, `y_label`,
 #'               and `w_label`). If `""`, no title will be printed.
 #'               This can be used when the plot is for manuscript
 #'               submission and figures are required to have no
 #'               titles.
-#' @param digits Number of decimal digits to print. Default is 3.
+#' @param digits Number of decimal places to print. Default is 3.
 #' @param x_from_mean_in_sd How many SD from mean is used to define
 #'                          "low" and
 #'                          "high" for the focal variable.
@@ -46,9 +46,9 @@
 #'                          Ignored if `w` is categorical.
 #' @param w_method How to define "high" and "low" for the moderator levels.
 #'                  Default is in terms of the
-#'                  standard deviation of the moderator, `"sd".
+#'                  standard deviation of the moderator, `"sd"`.
 #'                  If equal to
-#'                  `"percentile"`, then percentiles of the moderator in
+#'                  `"percentile"`, then the percentiles of the moderator in
 #'                  the
 #'                  dataset are used.
 #'                  Ignored if `w` is categorical.
@@ -86,7 +86,7 @@
 #' @param w_sd_to_percentiles If `w_method` is `"percentile"` and
 #'                            this argument is
 #'                            set to a number, this number will be
-#'                            used to
+#'                            used
 #'                            to determine the percentiles to be used.
 #'                            The
 #'                            lower percentile is the percentile in a
@@ -106,7 +106,6 @@
 #' @param x_sd_to_percentiles If `x_method` is `"percentile"` and this
 #'                            argument is
 #'                            set to a number, this number will be used
-#'                            to
 #'                            to determine the percentiles to be used. The
 #'                            lower percentile is the percentile in a
 #'                            normal
@@ -146,7 +145,6 @@
 #'
 #' # Do a moderated regression by lm
 #' lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
-#' summary(lm_out)
 #' plotmod(lm_out,
 #'         x = emotional_stability,
 #'         w = conscientiousness,
@@ -158,7 +156,6 @@
 #' lm_std <- std_selected(lm_out,
 #'                        to_scale = ~ .,
 #'                        to_center = ~ .)
-#' summary(lm_std)
 #' plotmod(lm_std,
 #'         x = emotional_stability,
 #'         w = conscientiousness,

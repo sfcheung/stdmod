@@ -29,15 +29,15 @@ plotmod(
 )
 }
 \arguments{
-\item{output}{An object of the class \code{lm}, such as the output
+\item{output}{The output
 of \code{\link[stats:lm]{stats::lm()}}, \code{\link[=std_selected]{std_selected()}}, or
 \code{\link[=std_selected_boot]{std_selected_boot()}}.}
 
-\item{x}{The name of the focal variable (x-axis) in the output. It
+\item{x}{The name of the focal variable (x-axis) in `output``. It
 can be the name of the variable, with or without quotes.
 Currently only numeric variables are supported.}
 
-\item{w}{The name of the moderator in the output. It
+\item{w}{The name of the moderator in \code{output}. It
 can be the name of the variable, with or without quotes.}
 
 \item{x_label}{The label for the X-axis. Default is the value of \code{x}.}
@@ -48,7 +48,7 @@ Default is the value of\code{w}.}
 \item{y_label}{The label for the Y-axis. Default is the
 name of the response variable in the model.}
 
-\item{title}{The title of the graph. If not supplied, will be
+\item{title}{The title of the graph. If not supplied, it will be
 generated from the variable
 names or labels (in \code{x_label}, \code{y_label},
 and \code{w_label}). If \code{""}, no title will be printed.
@@ -56,7 +56,7 @@ This can be used when the plot is for manuscript
 submission and figures are required to have no
 titles.}
 
-\item{digits}{Number of decimal digits to print. Default is 3.}
+\item{digits}{Number of decimal places to print. Default is 3.}
 
 \item{x_from_mean_in_sd}{How many SD from mean is used to define
 "low" and
@@ -70,7 +70,12 @@ Ignored if \code{w} is categorical.}
 
 \item{w_method}{How to define "high" and "low" for the moderator levels.
 Default is in terms of the
-standard deviation of the moderator, \verb{"sd". If equal to }"percentile"\verb{, then percentiles of the moderator in the dataset are used. Ignored if }w` is categorical.}
+standard deviation of the moderator, \code{"sd"}.
+If equal to
+\code{"percentile"}, then the percentiles of the moderator in
+the
+dataset are used.
+Ignored if \code{w} is categorical.}
 
 \item{w_percentiles}{If \code{w_method} is \code{"percentile"}, then this
 argument
@@ -109,7 +114,7 @@ normal distribution, respectively.}
 \item{w_sd_to_percentiles}{If \code{w_method} is \code{"percentile"} and
 this argument is
 set to a number, this number will be
-used to
+used
 to determine the percentiles to be used.
 The
 lower percentile is the percentile in a
@@ -130,7 +135,6 @@ respectively. Default is \code{NA}.}
 \item{x_sd_to_percentiles}{If \code{x_method} is \code{"percentile"} and this
 argument is
 set to a number, this number will be used
-to
 to determine the percentiles to be used. The
 lower percentile is the percentile in a
 normal
@@ -171,7 +175,7 @@ Plot the moderation effect in a regression model
 }
 \details{
 This function generate a basic \link{ggplot2} graph
-typically found psychology manuscripts. It tries to
+typically found in psychology manuscripts. It tries to
 check whether one or more variables are standardized, and
 report this in the plot if required.
 
@@ -182,7 +186,6 @@ It is not intended to be a flexible tool for a fine control on the plots.
 
 # Do a moderated regression by lm
 lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
-summary(lm_out)
 plotmod(lm_out,
         x = emotional_stability,
         w = conscientiousness,
@@ -194,7 +197,6 @@ plotmod(lm_out,
 lm_std <- std_selected(lm_out,
                        to_scale = ~ .,
                        to_center = ~ .)
-summary(lm_std)
 plotmod(lm_std,
         x = emotional_stability,
         w = conscientiousness,
