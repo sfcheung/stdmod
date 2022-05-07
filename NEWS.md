@@ -1,6 +1,6 @@
-# stdmod 0.1.6
+# stdmod 0.1.7
 
- (Work-In-Progress: 0.1.6.1011)
+(All major changes after 0.1.5)
 
 - Added `plotmod()` for plotting moderation effects. This function will check
   whether a variable is standardized. If yes, will note this in the plot.
