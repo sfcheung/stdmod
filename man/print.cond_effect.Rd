@@ -59,8 +59,7 @@ Print the output of \code{\link[=cond_effect]{cond_effect()}}.
 \examples{
 
 # Load a sample data set
-# It has one predictor (iv), one moderator (mod), on covariate (v1),
-# one categorical covariate (cat1) with three groups, and one dv (dv).
+
 dat <- test_x_1_w_1_v_1_cat1_n_500
 
 # Do a moderated regression by lm

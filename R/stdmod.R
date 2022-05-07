@@ -16,7 +16,9 @@
 #' [stdmod()] computes the standardized moderation effect given an
 #' [lm()] output using the formula from Cheung, Cheung, Lau, Hui, and Vong
 #' (2022). Users specify
-#' the moderator, the predictor, the outcome variable, and the corresponding
+#' the moderator, the focal variable (the variable with its effect on
+#' the outcome variable moderated), the outcome variable (dependent variable)
+#' , and the corresponding
 #' standardized moderation
 #' effect. Users can also select which variable(s) will be standardized.
 #'
@@ -24,14 +26,16 @@
 #' The standardized moderation effect.
 #'
 #' @param lm_out The output from [lm()].
-#' @param x      The independent variable, that is, the variable with its effect
+#' @param x      The focal variable, that is, the variable with its effect
 #'              being moderated. If supplied, its standard deviation will be
 #'              used
-#'              for rescaling. Default is `NULL`.
+#'              for rescaling. Also called the independent variable in some
+#'              models. Default is `NULL`.
 #' @param w      The moderator. If supplied, its standard deviation will be
 #'              used
 #'              for rescaling. Default is `NULL`.
-#' @param y      The dependent (outcome) variable. If supplied, its standard
+#' @param y      The outcome variable (dependent variable) . If supplied,
+#'              its standard
 #'              deviation will be used for rescaling. Default is NULL.
 #' @param x_rescale  If `TRUE`, will rescale x by its standard deviation.
 #'                   Default is `TRUE`.
@@ -51,8 +55,7 @@
 #' @examples
 #'
 #' # Load a test data of 500 cases
-#' # It has one predictor (iv), one moderator (mod), two covariates (v1 and v2),
-#' # and one dv (dv). All variables continuous.
+#'
 #' dat <- test_x_1_w_1_v_2_n_500
 #'
 #' # Do regression as usual:

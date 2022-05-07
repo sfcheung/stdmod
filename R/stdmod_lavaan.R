@@ -11,8 +11,10 @@
 #' the standardized moderation effect using the formula in the appendix of
 #' Cheung, Cheung, Lau, Hui, and Vong (2022).
 #'
-#' The standard deviations of the independent variable, moderator, and outcome
-#' variable are computed from the implied covariance matrix returned by
+#' The standard deviations of the focal variable (the variable with its effect
+#' on the outcome variable being moderated), moderator, and outcome
+#' variable (dependent variable) are computed from the implied
+#' covariance matrix returned by
 #' [lavaan::lavInspect()]. Therefore, models fitted to data sets with missing
 #' data (e.g., with `missing = "fiml"`) are also supported.
 #'
@@ -41,8 +43,9 @@
 #'  - `fit`: The original fit object.
 #'
 #' @param fit The SEM output by [lavaan::lavaan()] or its siblings.
-#' @param x The name of the independent variable in the model.
-#' @param y The name of the outcome variable in the model.
+#' @param x The name of the focal variable in the model, the variable with
+#'          its effect on the outcome variable being moderated.
+#' @param y The name of the outcome variable (dependent variable) in the model.
 #' @param w The name of the moderator in the model.
 #' @param x_w The name of the product term (x * w) in the model.
 #' @param boot_ci Boolean. Whether nonparametric bootstrapping will be
@@ -65,8 +68,7 @@
 #' @examples
 #'
 #' # Load a test data of 500 cases
-#' # It has one predictor (iv), one moderator (mod), two covariates (v1 and v2),
-#' # and one dv (dv). All variables continuous.
+#'
 #' dat <- test_x_1_w_1_v_2_n_500
 #' library(lavaan)
 #' # Scale down some variables to facilitate optimization in lavaan.

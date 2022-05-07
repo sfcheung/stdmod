@@ -22,7 +22,8 @@ options(width = 132)
 
 # What `cond_effect()` Can Do
 
-It can compute the conditional effect of a predictor on an outcome variable
+It can compute the conditional effect of a predictor (the focal variable)
+on an outcome variable (dependent variable)
 for selected levels of the moderator:
 
 ```{r echo = FALSE}
@@ -70,7 +71,7 @@ as demonstrated below.
           `std_selected_boot()` will be ignored because bootstrapping will be
           done for each level again.
 
-- `x`: The predictor. The variable in the horizontal axis.
+- `x`: The predictor (focal variable). The variable in the horizontal axis.
 
 - `w`: The moderator. The variable for which the conditional effects will
        be plotted.

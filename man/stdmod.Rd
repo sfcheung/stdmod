@@ -28,16 +28,18 @@ stdmod_boot(
 \arguments{
 \item{lm_out}{The output from \code{\link[=lm]{lm()}}.}
 
-\item{x}{The independent variable, that is, the variable with its effect
+\item{x}{The focal variable, that is, the variable with its effect
 being moderated. If supplied, its standard deviation will be
 used
-for rescaling. Default is \code{NULL}.}
+for rescaling. Also called the independent variable in some
+models. Default is \code{NULL}.}
 
 \item{w}{The moderator. If supplied, its standard deviation will be
 used
 for rescaling. Default is \code{NULL}.}
 
-\item{y}{The dependent (outcome) variable. If supplied, its standard
+\item{y}{The outcome variable (dependent variable) . If supplied,
+its standard
 deviation will be used for rescaling. Default is NULL.}
 
 \item{x_rescale}{If \code{TRUE}, will rescale x by its standard deviation.
@@ -82,7 +84,9 @@ be used.
 \code{\link[=stdmod]{stdmod()}} computes the standardized moderation effect given an
 \code{\link[=lm]{lm()}} output using the formula from Cheung, Cheung, Lau, Hui, and Vong
 (2022). Users specify
-the moderator, the predictor, the outcome variable, and the corresponding
+the moderator, the focal variable (the variable with its effect on
+the outcome variable moderated), the outcome variable (dependent variable)
+, and the corresponding
 standardized moderation
 effect. Users can also select which variable(s) will be standardized.
 
@@ -110,8 +114,7 @@ moderation effect.
 \examples{
 
 # Load a test data of 500 cases
-# It has one predictor (iv), one moderator (mod), two covariates (v1 and v2),
-# and one dv (dv). All variables continuous.
+
 dat <- test_x_1_w_1_v_2_n_500
 
 # Do regression as usual:

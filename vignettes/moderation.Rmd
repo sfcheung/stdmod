@@ -106,7 +106,8 @@ plotmod(lm_stdall,
         y_label = "Sleep Duration")
 ```
 
-The function `plotmod()` also prints the conditional effects of the predictor,
+The function `plotmod()` also prints the conditional effects of the predictor
+(focal variable),
 emotional stability in this example.
 
 # The Usual (Incorrect) Standardized Solution
@@ -179,12 +180,13 @@ standardized in the same model, whether they are involved in the moderation or n
 
 # Further Information
 
-`vignette("plotmod"` illustrates how to use `plotmod()` to plot a moderation
+`vignette("plotmod")` illustrates how to use `plotmod()` to plot a moderation
 effect. If variables are standardized by `std_selected()`, `plotmod()` can
 indicate this in the plot.
 
 `vignette("cond_effect")` illustrates how to use `cond_effect()` to compute
-conditional effects, the effect of a predictor for selected levels of the moderator.
+conditional effects, the effect of a predictor (focal variable) for selected
+levels of the moderator.
 `cond_effect()` support outputs from `std_selected()`.
 
 # Reference(s)

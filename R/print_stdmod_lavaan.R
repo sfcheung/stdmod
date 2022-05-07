@@ -18,8 +18,7 @@
 #' @examples
 #'
 #' # Load a test data of 500 cases
-#' # It has one predictor (iv), one moderator (mod), two covariates (v1 and v2),
-#' # and one dv (dv). All variables continuous.
+#'
 #' dat <- test_mod1
 #' library(lavaan)
 #'
@@ -66,7 +65,7 @@ print.stdmod_lavaan <- function(x,
       }
     cat("\nCall:\n")
     print(x$call)
-    roles <- c("Predictor", "Moderator", "Outcome Variable", "Product Term")
+    roles <- c("Focal Variable", "Moderator", "Outcome Variable", "Product Term")
     c_x <- x$call$x
     c_w <- x$call$w
     c_y <- x$call$y

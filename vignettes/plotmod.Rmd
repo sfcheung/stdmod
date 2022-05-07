@@ -23,7 +23,8 @@ options(width = 132)
 # What `plotmod()` Can Do
 
 It can show a moderation effect by plotting the effect of
-the predictor on the outcome for different levels of
+the predictor (focal variable) on the outcome variable (dependent variable)
+for different levels of
 the moderator:
 
 ```{r echo = FALSE}
@@ -41,7 +42,8 @@ plotmod(lm_raw,
 ```
 
 It can also plot a tumble graph (Bodner, 2016), in which the width
-of each line depends on the distribution of the predictor in each level 
+of each line depends on the distribution of the predictor (focal variable)
+in each level 
 of the moderator:
 
 ```{r echo = FALSE}
@@ -66,7 +68,7 @@ by functions from the `ggplot2` package.
 - `output`: The output of `lm()`, `std_selected()`, or `std_selected_boot()`,
           with at least one interaction term.
 
-- `x`: The predictor. The variable in the horizontal axis.
+- `x`: The predictor (focal variable). The variable in the horizontal axis.
 
 - `w`: The moderator. The variable for which the conditional effects will
        be plotted.

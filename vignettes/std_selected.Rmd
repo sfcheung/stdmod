@@ -142,7 +142,8 @@ standardized. If yes, it will report this in the plot.
 
 # Standardize Conscientiousness, Emotional Stability, and Sleep Duration
 
-We can also mean center or standardize the dependent variable. We
+We can also mean center or standardize the outcome variable (dependent
+variable). We
 just add the variable to the right hand side of `~` in `to_center` and
 `to_scale` as appropriate.
 

@@ -26,8 +26,7 @@ Print the output of \code{\link[=stdmod_lavaan]{stdmod_lavaan()}}.
 \examples{
 
 # Load a test data of 500 cases
-# It has one predictor (iv), one moderator (mod), two covariates (v1 and v2),
-# and one dv (dv). All variables continuous.
+
 dat <- test_mod1
 library(lavaan)
 

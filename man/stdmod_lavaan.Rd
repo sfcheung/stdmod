@@ -9,9 +9,10 @@ stdmod_lavaan(fit, x, y, w, x_w, boot_ci = FALSE, R = 100, conf = 0.95, ...)
 \arguments{
 \item{fit}{The SEM output by \code{\link[lavaan:lavaan]{lavaan::lavaan()}} or its siblings.}
 
-\item{x}{The name of the independent variable in the model.}
+\item{x}{The name of the focal variable in the model, the variable with
+its effect on the outcome variable being moderated.}
 
-\item{y}{The name of the outcome variable in the model.}
+\item{y}{The name of the outcome variable (dependent variable) in the model.}
 
 \item{w}{The name of the moderator in the model.}
 
@@ -50,8 +51,10 @@ by \code{\link[lavaan:lavaan]{lavaan::lavaan()}} and its wrappers (e.g, \code{\l
 the standardized moderation effect using the formula in the appendix of
 Cheung, Cheung, Lau, Hui, and Vong (2022).
 
-The standard deviations of the independent variable, moderator, and outcome
-variable are computed from the implied covariance matrix returned by
+The standard deviations of the focal variable (the variable with its effect
+on the outcome variable being moderated), moderator, and outcome
+variable (dependent variable) are computed from the implied
+covariance matrix returned by
 \code{\link[lavaan:lavInspect]{lavaan::lavInspect()}}. Therefore, models fitted to data sets with missing
 data (e.g., with \code{missing = "fiml"}) are also supported.
 
@@ -69,8 +72,7 @@ will be called
 \examples{
 
 # Load a test data of 500 cases
-# It has one predictor (iv), one moderator (mod), two covariates (v1 and v2),
-# and one dv (dv). All variables continuous.
+
 dat <- test_x_1_w_1_v_2_n_500
 library(lavaan)
 # Scale down some variables to facilitate optimization in lavaan.

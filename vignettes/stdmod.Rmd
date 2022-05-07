@@ -55,13 +55,13 @@ head(dat, 3)
 
 Suppose this is the moderated regression model:
 
-- Dependent variable: sleep duration (`sleep`)
+- Dependent variable (Outcome Variable): sleep duration (`sleep`)
 
-- Independent variable: emotional stability (`emot`)
+- Independent variable (Predictor / Focal Variable): emotional stability (`emot`)
 
 - Moderator: conscientiousness (`cons`)
 
-- Control variable: `age` and `gender`
+- Control variables: `age` and `gender`
 
 `stats::lm()` can be used to fit this model:
 
@@ -100,7 +100,7 @@ with the variables on the right hand side being the variables to be
 centered and/or scaled.
 
 The "`.`" on the right hand side represents all variables in the model,
-including the outcome variables.
+including the outcome variable (sleep duration in this example).
 
 Categorical variables will be automatically skipped, and
 standardization will be conducted *before* forming the product terms.
@@ -163,7 +163,7 @@ The 95% bootstrap percentile confidence interval of the standardized
 moderation effect is `r formatC(tmp["emot:cons", "CI Lower"], 4, format = "f")` to
 `r formatC(tmp["emot:cons", "CI Upper"], 4, format = "f")`.
 
-# Standardize Independent Variable and Moderator
+# Standardize Independent Variable (Focal Variable) and Moderator
 
 `std_selected()` and `std_selected_boot()` can also be used to standardize only
 selected variables.
