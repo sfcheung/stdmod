@@ -1,8 +1,9 @@
 #' @title Sample Dataset: A Path Model With A Moderator
 #'
-#' @description For testing the handling of warning
+#' @description For testing the handling of warnings
 #' in [stdmod_lavaan()]. Generated from the following
-#' model. `dv` has about 88% missing.
+#' model. `dv` has about 88% missing. A warning on missing
+#' data will be raised in some bootstrap samples.
 #'
 #'```
 #'mod <-

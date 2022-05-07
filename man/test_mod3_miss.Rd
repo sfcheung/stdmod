@@ -19,9 +19,10 @@ A data frame with 500 rows and 6 variables:
 test_mod3_miss
 }
 \description{
-For testing the handling of warning
+For testing the handling of warnings
 in \code{\link[=stdmod_lavaan]{stdmod_lavaan()}}. Generated from the following
-model. \code{dv} has about 88\% missing.\preformatted{mod <-
+model. \code{dv} has about 88\% missing. A warning on missing
+data will be raised in some bootstrap samples.\preformatted{mod <-
 "
 med ~ iv + mod + iv:mod + cov1
 dv ~ med + cov2
