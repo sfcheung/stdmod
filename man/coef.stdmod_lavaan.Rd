@@ -15,12 +15,12 @@
 A one-element numeric vector
 }
 \description{
-Return the estiamte of the standardized
+Return the estimate of the standardized
 moderation effect
 in the output of \code{\link[=stdmod_lavaan]{stdmod_lavaan()}}.
 }
 \details{
-It just extract and return the element \code{stdmod}.
+It just extracts and returns the element \code{stdmod}.
 }
 \examples{
 
