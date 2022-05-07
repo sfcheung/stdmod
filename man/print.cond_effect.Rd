@@ -19,13 +19,13 @@
 )
 }
 \arguments{
-\item{x}{The output of \code{\link[=cond_effect]{cond_effect()}}.}
+\item{x}{The output of \code{\link[=cond_effect]{cond_effect()}} or \code{\link[=cond_effect_boot]{cond_effect_boot()}}.}
 
 \item{nd}{The number of digits for the variables.}
 
-\item{nd_stat}{The number of digits for test statistics (e.g., t).}
+\item{nd_stat}{The number of digits for test statistics (e.g., \emph{t}).}
 
-\item{nd_p}{The number of digits for p-values.}
+\item{nd_p}{The number of digits for \emph{p}-values.}
 
 \item{title}{If \code{TRUE}, print a title. Default is \code{TRUE}.}
 
@@ -48,13 +48,13 @@ Default is \code{TRUE}.}
 for the table of conditional effects. Override
 arguments such as \code{title}, \code{model}, and \code{level_info}.}
 
-\item{...}{Arguments to be passed to \code{\link[=cond_effect]{cond_effect()}}.}
+\item{...}{Additional arguments. Ignored by this function.}
 }
 \value{
 Nothing
 }
 \description{
-Print the output of \code{\link[=cond_effect]{cond_effect()}}.
+Print the output of \code{\link[=cond_effect]{cond_effect()}} or \code{\link[=cond_effect_boot]{cond_effect_boot()}}.
 }
 \examples{
 
@@ -64,10 +64,12 @@ dat <- test_x_1_w_1_v_1_cat1_n_500
 
 # Do a moderated regression by lm
 lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
-summary(lm_raw)
+
 cond_effect(lm_raw, x = iv, w = mod)
 
-lm_std <- std_selected(lm_raw, to_scale = ~ iv + mod, to_center = ~ iv + mod)
+lm_std <- std_selected(lm_raw, to_scale = ~ iv + mod,
+                               to_center = ~ iv + mod)
+
 cond_effect(lm_std, x = iv, w = mod)
 
 }
