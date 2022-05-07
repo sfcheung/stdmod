@@ -95,14 +95,17 @@ print.stdmod_lavaan <- function(x,
     cat("\n")
     print(mod_table, nd = nd)
     if (has_bootci) {
+        nboot_real <- sum(!is.na(x$boot_out$t))
         tmp <- paste0("Confidence interval of standardized ",
                       "moderation effect:\n",
                       "- Level of confidence: ",
                          round(conf, 2) * 100, "%\n",
                       "- Bootstrapping Method: Nonparametric\n",
                       "- Type: Percentile\n",
-                      "- Number of bootstrap samples: ",
-                      x$call$R)
+                      "- Number of bootstrap samples requests: ",
+                      x$call$R, "\n",
+                      "- Number of bootstrap samples with valid results: ",
+                      nboot_real)
         cat("\n", tmp, "\n", sep = "")
       }
   }
