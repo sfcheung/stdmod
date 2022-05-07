@@ -9,11 +9,12 @@
 \arguments{
 \item{x}{The output of \code{\link[=stdmod_lavaan]{stdmod_lavaan()}}.}
 
-\item{conf}{If nonparametric bootstrapping has been conducted,
+\item{conf}{If nonparametric bootstrapping has been conducted by
+\code{\link[=stdmod_lavaan]{stdmod_lavaan()}},
 this is the level of confidence in proportion (.95 denotes 95\%),
 of the confidence interval. Default is .95.}
 
-\item{nd}{The number of digits for the variables.}
+\item{nd}{The number of digits to be printed.}
 
 \item{...}{Optional arguments. Ignored.}
 }
@@ -47,7 +48,7 @@ out_noboot <- stdmod_lavaan(fit = fit,
 out_noboot
 
 # Compute the standardized moderation effect and
-# its confidence interval based on nonparametric bootstrapping
+# its percentile confidence interval based on nonparametric bootstrapping
 set.seed(8479075)
 system.time(out_boot <- stdmod_lavaan(fit = fit,
                                       x = "iv",
@@ -57,6 +58,7 @@ system.time(out_boot <- stdmod_lavaan(fit = fit,
                                       boot_ci = TRUE,
                                       R = 100))
 # In real analysis, R should be at least 2000.
+
 out_boot
 
 
