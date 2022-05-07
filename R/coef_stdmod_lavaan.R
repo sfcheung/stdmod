@@ -1,10 +1,10 @@
 #' @title Standardized Moderation Effect in a 'stdmod_lavaan' Class Object
 #'
-#' @description Return the estiamte of the standardized
+#' @description Return the estimate of the standardized
 #'              moderation effect
 #'              in the output of [stdmod_lavaan()].
 #'
-#' @details It just extract and return the element `stdmod`.
+#' @details It just extracts and returns the element `stdmod`.
 #'
 #' @return
 #'  A one-element numeric vector
