@@ -22,7 +22,7 @@ options(width = 132)
 
 # What `plotmod()` Can Do
 
-It can show a moderation effect by plotting the effect of
+It can visualize a moderation effect by plotting the effect of
 the predictor (focal variable) on the outcome variable (dependent variable)
 for different levels of
 the moderator:
@@ -30,7 +30,7 @@ the moderator:
 ```{r echo = FALSE}
 library(stdmod)
 data(sleep_emo_con)
-lm_raw <- lm(sleep_duration ~ age + gender + 
+lm_raw <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
              sleep_emo_con)
 plotmod(lm_raw,
@@ -91,13 +91,14 @@ plotmod(lm_raw,
 
 ### Numeric Moderators
 
-If the moderator is a numeric variable, then, by default, two lines will
-  be drawn, one for one standard deviation (SD) below the mean in the
-  moderator ("Low"), and the other for one SD above mean ("High").
+If the moderator is a numeric variable, then two lines will
+  be drawn, by default. One line for one standard deviation (SD) below the mean
+  on the
+  moderator ("Low"), and the other for one SD above the mean ("High").
 
 Users can also use percentiles to define "Low" and "High" by setting
-  `w_method` to `"percentile"`. The default use 16th percentile and
-  84th percentile, which corresponds approximately to one SD below
+  `w_method` to `"percentile"`. By default, 16th percentile and
+  84th percentile are used, which correspond approximately to one SD below
   and above mean, respectively, for a normal distribution.
 
 ```{r}
@@ -134,12 +135,13 @@ By default, each line starts from one SD below mean of the predictor to
 one SD above mean of the predictor. This assumes that variation of the
 predictor is the same for different levels of the moderator. However,
 this may not be the case when the predictor and the moderator are associated.
-Bodner (2016) proposed a type of graph called tumble Graph that can show
+Bodner (2016) proposed a type of graph called tumble graph that can show
 the association between the predictor and the moderator, if any.
 
 The idea is simple. Instead of using the SD of the predictor in the whole
 sample, the mean and SD of the predictor for the selected level of the
-moderator is used.
+moderator is used. (See the technical notes below on how it is implemented
+in `plotmod()`.)
 
 To plot a tumble graph, just set `graph_type` to `"tumble"`:
 
@@ -218,7 +220,7 @@ plotmod(lm_raw,
 ## Conditional Effects
 
 By default, `plotmod()` prints the conditional effects of the predictor
-as subtitle. This can be disabled by adding a `ggplot2::theme()` call
+as a subtitle. This can be disabled by adding a `ggplot2::theme()` call
 to the output and set `plot.subtitle` to `element_blank()`, which removes
 the subtitle:
 
@@ -237,7 +239,7 @@ p + theme(plot.subtitle = element_blank())
 
 By default, the definitions of the levels of moderator (e.g., 
 one SD below mean for "Low" and one SD above mean for "High")
-are printed as caption. This can also be disabled by adding
+are printed as a caption. This can also be disabled by adding
 a `ggplot2::theme()` call and set `plot.caption` to `element_blank()`:
 
 ```{r}
@@ -274,8 +276,8 @@ then the moderation effect is standardized moderation effect
 conditional effect printed on the graph are the standardized effects
 of the predictor for different levels of the moderator.  
 
-Tf which variables are standardized will be reported in the main text
-and so the figure do not need to mention this, set `note_standardized`
+If which variables are standardized will be reported in the main text
+and so the figure does not need to report this, set `note_standardized`
 to `FALSE`.
 
 
