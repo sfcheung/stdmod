@@ -65,7 +65,7 @@ print.summary.std_selected <- function(x, ...) {
   cat("Note:")
   if (scaled_or_centered) {
       cat("\n- Estimates and their statistics are based on the data after",
-            "  mean-centering, scaling, or standardization.", sep = "")
+            "mean-centering, scaling, or standardization.")
     }
   if (!is.null(x$nboot)) {
       cat("\n- [CI Lower, CI Upper] are bootstrap percentile confidence intervals.")
