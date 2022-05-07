@@ -15,13 +15,14 @@ If missing, the confidence intervals of all parameters will be
 returned.}
 
 \item{level}{The level of confidence. For the confidence intervals returned
-by \code{\link[=lm]{lm()}}, default is .95. For the bootstrapping
+by \code{\link[=lm]{lm()}}, default is .95, i.e., 95\%. For the bootstrap
 percentile confidence
 intervals, default is the level used in calling
 \code{\link[=std_selected_boot]{std_selected_boot()}}. If a level different from that in the
 original
 call is specified, \code{full_output} needs to be set in the call
-to \code{\link[=std_selected_boot]{std_selected_boot()}} such that the original bootstrap output
+to \code{\link[=std_selected_boot]{std_selected_boot()}} such that the original bootstrapping
+output
 is stored.}
 
 \item{type}{The type of the confidence intervals. Default is \code{"lm"},
@@ -42,7 +43,7 @@ in the output of \code{\link[=std_selected]{std_selected()}} or \code{\link[=std
 If bootstrapping is used to form the confidence interval by
 \code{\link[=std_selected_boot]{std_selected_boot()}},
 users can request the percentile confidence intervals of
-the bootstrap estimates.
+the bootstrap estimates. This method does not do the bootstrapping itself.
 }
 \examples{
 
@@ -59,6 +60,7 @@ summary(lm_raw)
 lm_std <- std_selected(lm_raw, to_scale = ~ .,
                                to_center = ~ .)
 summary(lm_std)
+
 confint(lm_std)
 
 # With bootstrapping
@@ -68,8 +70,11 @@ lm_std_boot <- std_selected_boot(lm_raw, to_scale = ~ .,
                                          to_center = ~ .,
                                          nboot = 100)
 summary(lm_std_boot)
+
 confint(lm_std_boot)
+
 # Bootstrap percentile intervals
+
 confint(lm_std_boot, type = "boot")
 
 }

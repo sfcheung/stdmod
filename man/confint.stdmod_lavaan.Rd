@@ -12,12 +12,13 @@
 \item{parm}{Ignored. Always return the bootstrap confidence interval
 of the standardized moderation effect.}
 
-\item{level}{The level of confidence, default is .95.}
+\item{level}{The level of confidence, default is .95, returning the
+95\% confidence interval.}
 
-\item{...}{Optional arguments. Ignored by the function.}
+\item{...}{Additional arguments. Ignored by the function.}
 }
 \value{
-A matrix of the confidence intervals.
+A one-row matrix of the confidence intervals.
 }
 \description{
 Return the confidence interval of the standardized
@@ -27,8 +28,8 @@ in the output of \code{\link[=stdmod_lavaan]{stdmod_lavaan()}}.
 \details{
 If bootstrapping is used to form the confidence interval by
 \code{\link[=stdmod_lavaan]{stdmod_lavaan()}},
-users can request the percentile confidence intervals of
-the bootstrap estimates.
+users can request the percentile confidence interval of
+using the stored bootstrap estimate.
 }
 \examples{
 
