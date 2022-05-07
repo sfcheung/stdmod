@@ -12,7 +12,7 @@
 #' @return
 #'  A matrix of the confidence intervals.
 #'
-#' @param object The output of [std_selected()] or [std_selected_boot()].
+#' @param object The output of [stdmod_lavaan()].
 #' @param parm Ignored. Always return the bootstrap confidence interval
 #'              of the standardized moderation effect.
 #' @param level The level of confidence, default is .95.
