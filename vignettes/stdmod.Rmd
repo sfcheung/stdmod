@@ -20,16 +20,14 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Purpose
-
-This guide demonstrates how to use `std_selected()` to:
+# This Guide Shows to use `std_selected()` to:
 
 - get the correct standardized regression coefficients of a moderated
 regression model, and
 
-- form the confidence intervals of the standardized regression coefficients
-using nonparametric bootstrapping, taking into account the sampling variation
-in standardization.
+- form the valid confidence intervals of the standardized regression
+coefficients using nonparametric bootstrapping that takes into account the
+sampling variation due to standardization.
 
 # Sample Dataset
 
@@ -39,12 +37,12 @@ dat <- sleep_emo_con
 head(dat, 3)
 ```
 
-This dataset has 500 cases, with sleep duration (`sleep_duration`)
-measured in average hours,
+This dataset has 500 cases, with sleep duration
+(measured in average hours),
 conscientiousness, emotional stability, age, and gender (a
-string variable with two values: `"female"` and `"male"`).
+`"female"` and `"male"`).
 
-For this illustration, we shorten the names of some variables for readability:
+The names of some variables are shortened for readability:
 
 ```{r}
 colnames(dat)[2:4] <- c("sleep", "cons", "emot")
@@ -63,10 +61,10 @@ Suppose this is the moderated regression model:
 
 - Control variables: `age` and `gender`
 
-`stats::lm()` can be used to fit this model:
+`lm()` can be used to fit this model:
 
 ```{r}
-lm_out <- lm(sleep ~ age + gender + emot*cons,
+lm_out <- lm(sleep ~ age + gender + emot * cons,
              dat = dat)
 summary(lm_out)
 ```
@@ -80,18 +78,33 @@ stability decreases by `r formatC(-1 * coef(lm_out)["emot:cons"], 4, format = "f
 
 Suppose we want to find the correct standardized solution for the moderated
 regression, that is, all variables
-except for categorical variables are standardized, *before* forming the product
-terms.
+except for categorical variables are standardized. In a moderated regression model,
+the product term should be formed *after* standardization.
 
-We can pass the `stats::lm()` output to `std_selected()`, and use `. ~ .` for
+Instead of doing the standardization ourselves before calling `lm()`, we can pass
+the `lm()` output to `std_selected()`, and use `~ .` for
 the arguments  `to_scale` and `to_center`.
 
-Standardization is equivalent to:
 
-- centering by mean, and then
+```{r}
+lm_stdall <- std_selected(lm_out,
+                          to_scale = ~ .,
+                          to_center = ~ .)
+summary(lm_stdall)
+```
 
-- scaling by (dividing by) standard deviation.
-    
+In this example, the coefficient of the product term, which naturally can
+be called the  
+**standardized moderation effect**, is significant, B =
+`r formatC(coef(lm_stdall)["emot:cons"], 4, format = "f")`.
+For each one *standard deviation* increase of conscientiousness score, the
+**standardized effect** of emotional stability decreases by
+`r formatC(-1 * coef(lm_stdall)["emot:cons"], 4, format = "f")`.
+
+## The Arguments
+
+Standardization is equivalent to centering by mean and then scaling by
+(dividing by) standard deviation.   
 The argument `to_center` specifies the variables to be centered
 by their means, and the argument `to_scale` specifies the variables to be scaled by
 their standard deviations. The formula interface of `lm()` is used in these two
@@ -102,33 +115,25 @@ centered and/or scaled.
 The "`.`" on the right hand side represents all variables in the model,
 including the outcome variable (sleep duration in this example).
 
-Categorical variables will be automatically skipped, and
-standardization will be conducted *before* forming the product terms.
+`std_selected()` will also skip categorical variables automatically skipped
+because standardizing them will make their coefficients not easy to interpret.
 
-```{r}
-lm_stdall <- std_selected(lm_out,
-                        to_scale = . ~ .,
-                        to_center = . ~ .)
-summary(lm_stdall)
-```
+## Advantage
 
-The coefficient of the product term, which naturally can be called the  
-**standardized moderation effect**, is significant, B =
-`r formatC(coef(lm_stdall)["emot:cons"], 4, format = "f")`.
-For each one *standard deviation* increase of conscientiousness score, the
-**standardized effect** of emotional stability decreases by
-`r formatC(-1 * coef(lm_stdall)["emot:cons"], 4, format = "f")`.
+Using `std_selected` minimizes impact on the workflow. Do regression
+as usual. Get the correct standardized coefficients only when we need to
+interpret them.
 
 ## Nonparametric Bootstrap Confidence Intervals
 
-The confidence intervals based on OLS regression fitted to the standardized
+There is one problem with standardized coefficients. The confidence intervals
+based on ordinary least squares (OLS)  fitted to the standardized
 variables do not take into account the sampling variation of
-the sample means and standard deviations. Cheung, Cheung, Lau, Hui,
+the sample means and standard deviations (Yuan & Chan, 2011). Cheung, Cheung, Lau, Hui,
 and Vong (2022) suggest using nonparametric bootstrapping, with standardization conducted
 in each bootstrap sample.
 
-This can be done by `std_selected_boot()` instead of `std_selected()`, using
-`nboot` to specify the number of bootstrap samples:
+This can be done by `std_selected_boot()`, a wrapper of `std_selected()`:
 
 ```{r echo = FALSE}
 if (file.exists("stdmod_lm_stdall_boot.rds")) {
@@ -136,8 +141,8 @@ if (file.exists("stdmod_lm_stdall_boot.rds")) {
   } else {
     set.seed(870432)
     lm_stdall_boot <- std_selected_boot(lm_out,
-                            to_scale = . ~ .,
-                            to_center = . ~ .,
+                            to_scale = ~ .,
+                            to_center = ~ .,
                             nboot = 5000)
     saveRDS(lm_stdall_boot, "stdmod_lm_stdall_boot.rds")
   }
@@ -146,14 +151,19 @@ if (file.exists("stdmod_lm_stdall_boot.rds")) {
 ```{r eval = FALSE}
 set.seed(870432)
 lm_stdall_boot <- std_selected_boot(lm_out,
-                        to_scale = . ~ .,
-                        to_center = . ~ .,
+                        to_scale = ~ .,
+                        to_center = ~ .,
                         nboot = 5000)
 ```
+
+The minimum additional argument is `nboot`, the number of bootstrap samples.
 
 ```{r}
 summary(lm_stdall_boot)
 ```
+
+The output is similar to that of `std_selected()`, with additional information
+on the bootstrapping process.
 
 ```{r echo = FALSE}
 tmp <- summary(lm_stdall_boot)$coefficients
@@ -166,21 +176,23 @@ moderation effect is `r formatC(tmp["emot:cons", "CI Lower"], 4, format = "f")` 
 # Standardize Independent Variable (Focal Variable) and Moderator
 
 `std_selected()` and `std_selected_boot()` can also be used to standardize only
-selected variables.
+selected variables. There are cases in which we do not want to standardize
+some continuous variables because they are measured on interpretable units,
+such as hours.
 
-Suppose we want to standardize only the two continuous psychological variables,
-emotional stability and conscientiousness, and do not standardize sleep
-duration because hour is a meaningful unit. We list `emot` and `cons` on
+Suppose we want to standardize only emotional stability and conscientiousness,
+and do not standardize sleep
+duration. We just list `emot` and `cons` on
 `to_center` and `to_scale`:
 
 ```{r}
 lm_std1 <- std_selected(lm_out,
-                        to_scale = . ~ emot + cons,
-                        to_center = . ~ emot + cons)
+                        to_scale = ~ emot + cons,
+                        to_center = ~ emot + cons)
 summary(lm_std1)
 ```
 
-The *partially* standardized moderation effect is significant, B =
+The *partially* standardized moderation effect is 
 `r formatC(coef(lm_std1)["emot:cons"], 4, format = "f")`.
 For each one *standard deviation* increase of conscientiousness score, the
 *partially* standardized effect of emotional stability decreases by
@@ -197,8 +209,8 @@ if (file.exists("stdmod_lm_std1_boot.rds")) {
   } else {
     set.seed(870432)
     lm_std1_boot <- std_selected_boot(lm_out,
-                            to_scale = . ~ emot + cons,
-                            to_center = . ~ emot + cons,
+                            to_scale = ~ emot + cons,
+                            to_center = ~ emot + cons,
                             nboot = 5000)
     saveRDS(lm_std1_boot, "stdmod_lm_std1_boot.rds")
   }
@@ -207,10 +219,12 @@ if (file.exists("stdmod_lm_std1_boot.rds")) {
 ```{r eval = FALSE}
 set.seed(870432)
 lm_std1_boot <- std_selected_boot(lm_out,
-                        to_scale = . ~ emot + cons,
-                        to_center = . ~ emot + cons,
+                        to_scale = ~ emot + cons,
+                        to_center = ~ emot + cons,
                         nboot = 5000)
 ```
+
+Again, the only additional argument is `nboot`.
 
 ```{r}
 summary(lm_std1_boot)
@@ -231,14 +245,19 @@ A more detailed illustration can be found at `vignette("moderation")`.
 `vignette("std_selected")` illustrates how `std_selected()` can be used
 to form nonparametric bootstrap percentile confidence interval for
 standardized regression coefficients ("betas") for regression models
-in general.
+without a product term.
 
 Further information on the functions can be found in their help pages
 (`std_selected()` and `std_selected_boot()`). For example, parallel computation
-can be used when doing bootstrapping.
+can be used when doing bootstrapping, if the number of bootstrapping samples
+request is large.
 
 # Reference(s)
 
 Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022)
 Improving an old way to measure moderation effect in standardized units.
 Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
+
+Yuan, K.-H., & Chan, W. (2011). Biases and standard errors of standardized
+regression coefficients. *Psychometrika, 76*(4), 670-690.
+https://doi.org/10.1007/s11336-011-9224-6
