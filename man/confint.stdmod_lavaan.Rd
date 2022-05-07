@@ -7,7 +7,7 @@
 \method{confint}{stdmod_lavaan}(object, parm, level = 0.95, ...)
 }
 \arguments{
-\item{object}{The output of \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.}
+\item{object}{The output of \code{\link[=stdmod_lavaan]{stdmod_lavaan()}}.}
 
 \item{parm}{Ignored. Always return the bootstrap confidence interval
 of the standardized moderation effect.}
