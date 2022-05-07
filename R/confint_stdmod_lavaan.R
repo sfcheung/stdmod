@@ -6,17 +6,18 @@
 #'
 #' @details If bootstrapping is used to form the confidence interval by
 #' [stdmod_lavaan()],
-#' users can request the percentile confidence intervals of
-#' the bootstrap estimates.
+#' users can request the percentile confidence interval of
+#' using the stored bootstrap estimate.
 #'
 #' @return
-#'  A matrix of the confidence intervals.
+#'  A one-row matrix of the confidence intervals.
 #'
 #' @param object The output of [stdmod_lavaan()].
 #' @param parm Ignored. Always return the bootstrap confidence interval
 #'              of the standardized moderation effect.
-#' @param level The level of confidence, default is .95.
-#' @param ...  Optional arguments. Ignored by the function.
+#' @param level The level of confidence, default is .95, returning the
+#'               95% confidence interval.
+#' @param ...  Additional arguments. Ignored by the function.
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
