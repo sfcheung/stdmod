@@ -26,7 +26,6 @@ dat <- test_x_1_w_1_v_1_cat1_n_500
 
 # Do a moderated regression by lm
 lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
-summary(lm_raw)
 
 # Standardize all variables except for categorical variables.
 # Interaction terms are formed after standardization.

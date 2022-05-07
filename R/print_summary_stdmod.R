@@ -20,7 +20,6 @@
 #'
 #' # Do a moderated regression by lm
 #' lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
-#' summary(lm_raw)
 #'
 #' # Standardize all variables except for categorical variables.
 #' # Interaction terms are formed after standardization.
@@ -64,7 +63,7 @@ print.summary.std_selected <- function(x, ...) {
   NextMethod()
   cat("Note:")
   if (scaled_or_centered) {
-      cat("\n- Estimates and their statistics are based on the data after\n",
+      cat("\n- Estimates and their statistics are based on the data after",
             "  mean-centering, scaling, or standardization.", sep = "")
     }
   if (!is.null(x$nboot)) {
