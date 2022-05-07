@@ -2,16 +2,24 @@
 #'
 #' @description Compute the conditional effects in a moderated regression model.
 #'
+#' @details [cond_effect()] uses the centering approach to find the conditional
+#' effect of the focal variable. For each level of the moderator, the value for
+#' this level is subtracted from the moderator scores, and the model is
+#' fitted to the modified data.
+#' The coefficient of the focal variable is then the conditional effect of the
+#' focal variable when the moderator's score is equal this value.
 #'
 #' @return
-#' A data-frame-like object of the conditional effects. The class is
+#' [cond_effect()] returns a data-frame-like object of the conditional effects.
+#' The class is
 #' `cond_effect` and the print method will print additional information of
 #' the conditional effects.
 #'
 #' @param output The output from [stats::lm()]. It can also accept the output
 #'               from
 #'               [std_selected()] or [std_selected_boot()].
-#' @param x      The independent variable, that is, the variable with its effect
+#' @param x      The focal variable (independent variable), that is, the
+#'               variable with its effect on the outcome variable (dependent)
 #'              being moderated. It must be a numeric variable.
 #' @param w      The moderator. Both numeric variables and categorical variables
 #'               (character or factor) are supported.
@@ -87,6 +95,7 @@
 #' cond_effect(lm_cat, x = iv, w = cat1)
 #'
 #' @export
+#' @order 1
 
 cond_effect <- function(output,
                       x = NULL,
