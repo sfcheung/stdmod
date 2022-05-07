@@ -105,7 +105,7 @@ system.time(out_boot <- stdmod_lavaan(fit = fit,
                                       w = "mod",
                                       x_w = "iv:mod",
                                       boot_ci = TRUE,
-                                      R = 100))
+                                      R = 50))
 # In real analysis, R should be at least 2000.
 out_boot
 
