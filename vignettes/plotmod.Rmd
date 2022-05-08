@@ -322,7 +322,7 @@ Please refer to the help page of `plotmod()` for other options available.
 Bodner, T. E. (2016). Tumble graphs: Avoiding misleading end point
 extrapolation when graphing interactions from a moderated multiple
 regression analysis. *Journal of Educational and Behavioral
-Statistics, 41*(6), 593-604. https://doi.org/10.3102/1076998616657080
+Statistics, 41*(6), 593-604. \doi{10.3102/1076998616657080}
 
 Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022)
 Improving an old way to measure moderation effect in standardized units.
