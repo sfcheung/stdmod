@@ -60,6 +60,9 @@ print.stdmod_lavaan <- function(x,
                                 conf = .95,
                                 nd = 3,
                                 ...) {
+    if (!requireNamespace("lavaan", quietly = TRUE)) {
+        stop(paste("lavaan needs to be installed to run this function."))
+      }
     if (isTRUE(x$call$boot_ci)) {
         has_bootci <- TRUE
       } else {

@@ -36,5 +36,6 @@ Depends:
     R (>= 4.0.0)
 Imports: 
     boot,
-    ggplot2
+    ggplot2,
+    stats
 VignetteBuilder: knitr

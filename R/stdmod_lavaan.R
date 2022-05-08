@@ -115,6 +115,9 @@ stdmod_lavaan <- function(fit,
                           boot_ci = FALSE,
                           R = 100,
                           conf = 0.95, ...) {
+    if (!requireNamespace("lavaan", quietly = TRUE)) {
+        stop(paste("lavaan needs to be installed to run this function."))
+      }
     boot_i <- boot_i_gen(fit = fit, x = x,
                                     y = y,
                                     w = w,
