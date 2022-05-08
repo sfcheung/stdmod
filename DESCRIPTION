@@ -12,8 +12,13 @@ Authors@R:
            role = c("ctb")))
 Description: Functions for computing a standardized moderation
              effect and forming its confidence interval by
-             nonparametric bootstrap. Supports
-             outputs from 'stats::lm()' and 'lavaan::lavaan()'.
+             nonparametric bootstrapping as proposed in Cheung,
+             Cheung, Lau, Hui, and Vong (2002)
+             <doi:10.1037/hea0001188>. It also provides simple-to-use
+             functions for computing conditional effects (unstandardized
+             or standardized) and plotting moderation effects. Supports
+             outputs from 'stats::lm()', with partial support for
+             moderation effects in a path model fitted by 'lavaan::sem()'.
 URL: https://sfcheung.github.io/stdmod/
 BugReports: https://github.com/sfcheung/stdmod/issues
 License: GPL-3
