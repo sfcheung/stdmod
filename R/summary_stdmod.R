@@ -6,6 +6,11 @@
 #' @return
 #'  An object of class `summary.std_selected`, with
 #'  bootstrap confidence intervals added if present in the object.
+#'  The object is a list. Its main element `coefficients` is similar to
+#'  the
+#'  coefficient table in the [summary()] printout of [lm()].
+#'  This object is for printing summary information of the results
+#'  from [std_selected()] or [std_selected_boot()].
 #'
 #' @param object The output of [std_selected()] or [std_selected_boot()].
 #' @param ...  Additional arguments. Ignored by this function.
