@@ -17,7 +17,6 @@ knitr::opts_chunk$set(
   fig.height = 4,
   fig.align = 'center'
 )
-options(width = 132)
 ```
 
 # What `cond_effect()` Can Do
