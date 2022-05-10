@@ -24,7 +24,7 @@
 #' effect. Users can also select which variable(s) will be standardized.
 #'
 #' @return
-#' The standardized moderation effect.
+#' [stdmod()] returns a scalar: The standardized moderation effect.
 #'
 #' @param lm_out The output from [lm()].
 #' @param x      The focal variable, that is, the variable with its effect

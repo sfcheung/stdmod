@@ -11,6 +11,12 @@
 #' [boot::boot.ci()] on the element `boot_out` in the output of this
 #' function.
 #'
+#' @return
+#' [stdmod_boot()] returns a list with two elements. The element `ci` is
+#' a numeric vector of the bootstrap confidence interval. The element `boot_out`,
+#' if not `NA`, is the output of [boot::boot()], which is used to do the
+#' bootstrapping.
+#'
 #' @param lm_out The output from [lm()].
 #' @param ...    Parameters to be passed to [stdmod()].
 #' @param nboot  The number of bootstrap samples. Default is 100.
