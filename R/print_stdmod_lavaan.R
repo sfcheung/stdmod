@@ -3,7 +3,7 @@
 #' @description Print the output of [stdmod_lavaan()].
 #'
 #' @return
-#'  Nothing
+#'  `x` is returned invisibly.
 #'
 #' @param x The output of [stdmod_lavaan()].
 #' @param conf If nonparametric bootstrapping has been conducted by
@@ -112,4 +112,5 @@ print.stdmod_lavaan <- function(x,
                       nboot_real)
         cat("\n", tmp, "\n", sep = "")
       }
+    invisible(x)
   }

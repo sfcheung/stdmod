@@ -3,7 +3,7 @@
 #' @description Print the output of [cond_effect()] or [cond_effect_boot()].
 #'
 #' @return
-#'  Nothing
+#'  `x` is returned invisibility.
 #'
 #' @param x The output of [cond_effect()] or [cond_effect_boot()].
 #' @param nd The number of digits for the variables.
@@ -158,4 +158,5 @@ print.cond_effect <- function(x,
               }
           }
       }
+    invisible(x)
   }

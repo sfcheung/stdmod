@@ -4,7 +4,7 @@
 #'  of [std_selected()] or [std_selected_boot()].
 #'
 #' @return
-#'  Nothing
+#'  `x` is returned invisibly.
 #'
 #' @param x The output of [summary()].
 #' @param ...  Arguments to be passed to [summary()].
@@ -72,6 +72,7 @@ print.summary.std_selected <- function(x, ...) {
       cat("\n- Std. Error are not bootstrap SEs.")
     }
   cat("\n")
+  invisible(x)
 }
 
 format_dat_sc <- function(x) {

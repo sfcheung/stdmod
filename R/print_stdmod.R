@@ -4,7 +4,7 @@
 #'  basic model information printed by [print.lm()].
 #'
 #' @return
-#'  Nothing
+#'  `x` is returned invisibly.
 #'
 #' @param x The output of [std_selected()] or [std_selected_boot()].
 #' @param ...  Arguments to be passed to [print.lm()].
