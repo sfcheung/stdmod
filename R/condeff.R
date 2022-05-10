@@ -13,7 +13,37 @@
 #' [cond_effect()] returns a data-frame-like object of the conditional effects.
 #' The class is
 #' `cond_effect` and the print method will print additional information of
-#' the conditional effects.
+#' the conditional effects. Additional information is stored in the
+#' following attributes:
+#'
+#' - `call`: The original call.
+#'
+#' - `output`: The `output` object, such as the output from `lm()`.
+#'
+#' - `x`, `y`, and `w`: The three variables used to compute the conditional
+#'                      effects: focal variable (`x`), outcome variable (`y`),
+#'                      and the moderator (`w`).
+#'
+#'  - `w_method`: The method used to determine the values of the moderator
+#'                at the selected levels.
+#'
+#'  - `w_percentiles` The percentiles to use if `w_method` = `"percentile"`.
+#'
+#'  - `w_sd_to_percentiles`: If not equal to `NA`, this is a scalar, the
+#'                           number of standard deviation from the mean used to
+#'                           determine the percentiles for the "low" and "high"
+#'                           levels of the moderator.
+#'  - `w_from_mean_in_sd`: The number of SD above or below the mean, for
+#'                          determining the "low" and "high" levels of the
+#'                          moderator if `w_method` is `"sd"`.
+#'  - `w_empirical_percentiles`: The actual percentile levels in the dataset
+#'                               for the selected
+#'                               levels of the moderator. A numeric vector.
+#'  - `w_empirical_z`: The actual distance from the mean, in SD, of each
+#'                     selected level of the moderator. A numeric vector.
+#'  - `y_standardized`, `x_standardized`, and `w_standardized`: Each of them
+#'                     is a logical scalar, indicating whether the outcome
+#'                     variable, focal variable, and moderator are standardized.
 #'
 #' @param output The output from [stats::lm()]. It can also accept the output
 #'               from

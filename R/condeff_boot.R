@@ -17,9 +17,28 @@
 #' [set.seed()]
 #' before calling it, to ensure reproducibility.
 #'
-#' @return [cond_effect_boot()] also returns a data-frame-like object of the
+#' @return
+#'
+#' [cond_effect_boot()] also returns a data-frame-like object of the
 #' conditional effects of the class
-#' `cond_effect`, with additional information from the bootstrapping stored.
+#' `cond_effect`, with additional information from the bootstrapping stored
+#' in these attributes:
+#'
+#' - `boot_ci`: A data frame of the bootstrap confidence intervals of the
+#'              conditional effects.
+#'
+#' - `nboot`: The number of bootstrap samples requested.
+#'
+#' - `conf`: The level of confidence, in proportion.
+#'
+#' - `boot_est`: A matrix of the bootstrap estimates of the conditional effects.
+#'               The number of rows equal to `nboot`, and the number of columns
+#'               equal to the number of levels of the moderator.
+#'
+#' - `cond_effect_boot_call`: The call to `cond_effect_boot()`.
+#'
+#' - `boot_out`: If available, the original output from `boot::boot()`.
+#'
 #'
 #' @param output The output from [stats::lm()]. It can also accept the output
 #'               from
