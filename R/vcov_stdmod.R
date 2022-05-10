@@ -11,7 +11,7 @@
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
 #'@return
-#'  A matrix of the variances and covariances.
+#'  A matrix of the variances and covariances of the parameter estimates.
 #'
 #'@param object The output of [std_selected()] or [std_selected_boot()].
 #'@param type The type of variance-covariance matrix. Default is `"lm"`,
