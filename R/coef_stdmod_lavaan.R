@@ -7,7 +7,7 @@
 #' @details It just extracts and returns the element `stdmod`.
 #'
 #' @return
-#'  A one-element numeric vector
+#'  A scalar: The estimate of the standardized moderation effect.
 #'
 #' @param object The output of [stdmod_lavaan()].
 #' @param ...  Optional arguments. Ignored by the function.

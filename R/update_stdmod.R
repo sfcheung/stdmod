@@ -13,6 +13,8 @@
 #' @param ...  Optional arguments to be changed.
 #' @param evaluate Whether the call will be evaluated.
 #'
+#' @return If `evaluate` = `TRUE`, it returns the updated fitted object,
+#'         otherwise, the updated call.
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
