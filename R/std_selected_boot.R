@@ -12,6 +12,26 @@
 #' [set.seed()]
 #' before calling it, to ensure reproducibility.
 #'
+#' @return
+#' Like [std_selected()], [std_selected_boot()] returns the updated [lm()]
+#' output, with the class `std_selected` added. The output of [std_selected_boot()]
+#' contain these additional elements in the list:
+#'
+#' - `boot_ci`: A data frame of the bootstrap confidence intervals of the
+#'              regression coefficient.
+#'
+#' - `nboot`: The number of bootstrap samples requested.
+#'
+#' - `conf`: The level of confidence, in proportion.
+#'
+#' - `boot_est`: A matrix of the bootstrap estimates of the regression coefficients.
+#'               The number of rows equal to `nboot`, and the number of columns
+#'               equal to the number of terms in the regression model.
+#'
+#' - `std_selected_boot_call`: The call to `std_selected_boot()`.
+#'
+#' - `boot_out`: If available, the original output from `boot::boot()`.
+#'
 #' @param lm_out The output from [lm()].
 #' @param ...  Arguments to be passed to [std_selected()].
 #' @param conf The level of confidence for the confidence interval.

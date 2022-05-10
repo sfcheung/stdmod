@@ -25,18 +25,22 @@
 #' @return
 #' The updated [lm()] output, with the class `std_selected` added. It will be
 #' treated as a usual [lm()] object by most functions. These are the major
-#' additional elements:
+#' additional element in the list:
 #'
-#'  - `scaled`: The terms scaled.
+#'  - `scaled_terms`: If not `NULL`, a character vector of the variables scaled.
 #'
-#'  - `centered`: The terms centered.
+#'  - `centered_terms`: If not `NULL`, a character vector of the variables mean-centered.
 #'
-#'  - `scaled_by`: The scaling factors. The value is 1 for terms
-#'                  not scaled.
+#'  - `scaled_by`: A numeric vector of the scaling factors for all the variables in
+#'                 the model. The value is 1 for terms not scaled.
 #'
-#'  - `centered_by`: The values used for centering. The value is 0 for
+#'  - `centered_by`: A numeric vector of the numbers used for centering for all
+#'                  the variables in the model. The value is 0 for
 #'                   terms not centered.
 #'
+#'  - `std_selected_call`: The original call.
+#'
+#'  - `lm_out_call`: The call in `lm_out`.
 #'
 #' @param lm_out The output from [lm()]
 #' @param to_scale The terms to be rescaled by standard deviation,
