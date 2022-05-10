@@ -12,7 +12,7 @@
 \item{...}{Optional arguments. Ignored by the function.}
 }
 \value{
-A one-element numeric vector
+A scalar: The estimate of the standardized moderation effect.
 }
 \description{
 Return the estimate of the standardized

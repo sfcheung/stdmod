@@ -19,7 +19,7 @@ of the confidence interval. Default is .95.}
 \item{...}{Optional arguments. Ignored.}
 }
 \value{
-Nothing
+\code{x} is returned invisibly.
 }
 \description{
 Print the output of \code{\link[=stdmod_lavaan]{stdmod_lavaan()}}.

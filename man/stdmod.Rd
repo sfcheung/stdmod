@@ -65,7 +65,12 @@ Default is \code{NULL}.}
 Default is \code{FALSE}.}
 }
 \value{
-The standardized moderation effect.
+\code{\link[=stdmod]{stdmod()}} returns a scalar: The standardized moderation effect.
+
+\code{\link[=stdmod_boot]{stdmod_boot()}} returns a list with two elements. The element \code{ci} is
+a numeric vector of the bootstrap confidence interval. The element \code{boot_out},
+if not \code{NA}, is the output of \code{\link[boot:boot]{boot::boot()}}, which is used to do the
+bootstrapping.
 }
 \description{
 Compute the standardized moderation effect in a moderated

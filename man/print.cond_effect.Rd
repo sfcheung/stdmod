@@ -51,7 +51,7 @@ arguments such as \code{title}, \code{model}, and \code{level_info}.}
 \item{...}{Additional arguments. Ignored by this function.}
 }
 \value{
-Nothing
+\code{x} is returned invisibility.
 }
 \description{
 Print the output of \code{\link[=cond_effect]{cond_effect()}} or \code{\link[=cond_effect_boot]{cond_effect_boot()}}.

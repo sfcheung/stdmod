@@ -61,14 +61,32 @@ of the output.}
 \value{
 The updated \code{\link[=lm]{lm()}} output, with the class \code{std_selected} added. It will be
 treated as a usual \code{\link[=lm]{lm()}} object by most functions. These are the major
-additional elements:
+additional element in the list:
 \itemize{
-\item \code{scaled}: The terms scaled.
-\item \code{centered}: The terms centered.
-\item \code{scaled_by}: The scaling factors. The value is 1 for terms
-not scaled.
-\item \code{centered_by}: The values used for centering. The value is 0 for
+\item \code{scaled_terms}: If not \code{NULL}, a character vector of the variables scaled.
+\item \code{centered_terms}: If not \code{NULL}, a character vector of the variables mean-centered.
+\item \code{scaled_by}: A numeric vector of the scaling factors for all the variables in
+the model. The value is 1 for terms not scaled.
+\item \code{centered_by}: A numeric vector of the numbers used for centering for all
+the variables in the model. The value is 0 for
 terms not centered.
+\item \code{std_selected_call}: The original call.
+\item \code{lm_out_call}: The call in \code{lm_out}.
+}
+
+Like \code{\link[=std_selected]{std_selected()}}, \code{\link[=std_selected_boot]{std_selected_boot()}} returns the updated \code{\link[=lm]{lm()}}
+output, with the class \code{std_selected} added. The output of \code{\link[=std_selected_boot]{std_selected_boot()}}
+contain these additional elements in the list:
+\itemize{
+\item \code{boot_ci}: A data frame of the bootstrap confidence intervals of the
+regression coefficient.
+\item \code{nboot}: The number of bootstrap samples requested.
+\item \code{conf}: The level of confidence, in proportion.
+\item \code{boot_est}: A matrix of the bootstrap estimates of the regression coefficients.
+The number of rows equal to \code{nboot}, and the number of columns
+equal to the number of terms in the regression model.
+\item \code{std_selected_boot_call}: The call to \code{std_selected_boot()}.
+\item \code{boot_out}: If available, the original output from \code{boot::boot()}.
 }
 }
 \description{

@@ -18,7 +18,7 @@ is returned.}
 \item{...}{Arguments to be passed to \code{\link[stats:vcov]{stats::vcov()}}.}
 }
 \value{
-A matrix of the variances and covariances.
+A matrix of the variances and covariances of the parameter estimates.
 }
 \description{
 Compute the variance-covariance matrix

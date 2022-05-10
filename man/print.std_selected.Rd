@@ -12,7 +12,7 @@
 \item{...}{Arguments to be passed to \code{\link[=print.lm]{print.lm()}}.}
 }
 \value{
-Nothing
+\code{x} is returned invisibly.
 }
 \description{
 Provide information of centering and scaling, along with

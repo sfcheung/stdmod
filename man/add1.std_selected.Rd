@@ -11,6 +11,9 @@
 
 \item{...}{Additional arguments. They will be ignored.}
 }
+\value{
+It returns nothing. It is called for its side effect.
+}
 \description{
 Intercept the \code{\link[=add1]{add1()}} method and raise an error.
 }

@@ -15,6 +15,10 @@
 
 \item{evaluate}{Whether the call will be evaluated.}
 }
+\value{
+If \code{evaluate} = \code{TRUE}, it returns the updated fitted object,
+otherwise, the updated call.
+}
 \description{
 This should be used only to update the call to \code{\link[=lm]{lm()}},
 not to the call to \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.

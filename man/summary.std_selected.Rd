@@ -14,6 +14,11 @@
 \value{
 An object of class \code{summary.std_selected}, with
 bootstrap confidence intervals added if present in the object.
+The object is a list. Its main element \code{coefficients} is similar to
+the
+coefficient table in the \code{\link[=summary]{summary()}} printout of \code{\link[=lm]{lm()}}.
+This object is for printing summary information of the results
+from \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.
 }
 \description{
 Summarize the results of \code{\link[=std_selected]{std_selected()}} or

@@ -115,11 +115,49 @@ of the output.}
 \code{\link[=cond_effect]{cond_effect()}} returns a data-frame-like object of the conditional effects.
 The class is
 \code{cond_effect} and the print method will print additional information of
-the conditional effects.
+the conditional effects. Additional information is stored in the
+following attributes:
+\itemize{
+\item \code{call}: The original call.
+\item \code{output}: The \code{output} object, such as the output from \code{lm()}.
+\item \code{x}, \code{y}, and \code{w}: The three variables used to compute the conditional
+effects: focal variable (\code{x}), outcome variable (\code{y}),
+and the moderator (\code{w}).
+\item \code{w_method}: The method used to determine the values of the moderator
+at the selected levels.
+\item \code{w_percentiles} The percentiles to use if \code{w_method} = \code{"percentile"}.
+\item \code{w_sd_to_percentiles}: If not equal to \code{NA}, this is a scalar, the
+number of standard deviation from the mean used to
+determine the percentiles for the "low" and "high"
+levels of the moderator.
+\item \code{w_from_mean_in_sd}: The number of SD above or below the mean, for
+determining the "low" and "high" levels of the
+moderator if \code{w_method} is \code{"sd"}.
+\item \code{w_empirical_percentiles}: The actual percentile levels in the dataset
+for the selected
+levels of the moderator. A numeric vector.
+\item \code{w_empirical_z}: The actual distance from the mean, in SD, of each
+selected level of the moderator. A numeric vector.
+\item \code{y_standardized}, \code{x_standardized}, and \code{w_standardized}: Each of them
+is a logical scalar, indicating whether the outcome
+variable, focal variable, and moderator are standardized.
+}
 
 \code{\link[=cond_effect_boot]{cond_effect_boot()}} also returns a data-frame-like object of the
 conditional effects of the class
-\code{cond_effect}, with additional information from the bootstrapping stored.
+\code{cond_effect}, with additional information from the bootstrapping stored
+in these attributes:
+\itemize{
+\item \code{boot_ci}: A data frame of the bootstrap confidence intervals of the
+conditional effects.
+\item \code{nboot}: The number of bootstrap samples requested.
+\item \code{conf}: The level of confidence, in proportion.
+\item \code{boot_est}: A matrix of the bootstrap estimates of the conditional effects.
+The number of rows equal to \code{nboot}, and the number of columns
+equal to the number of levels of the moderator.
+\item \code{cond_effect_boot_call}: The call to \code{cond_effect_boot()}.
+\item \code{boot_out}: If available, the original output from \code{boot::boot()}.
+}
 }
 \description{
 Compute the conditional effects in a moderated regression model.
