@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7.1</span>
       </span>
     </div>
 
@@ -47,7 +47,7 @@
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in a Path Model by stdmod_lavaan()</a>
     </li>
   </ul></li>
 <li>
@@ -87,11 +87,15 @@
     <dl><dt>object</dt>
 <dd><p>The output of <code><a href="std_selected.html">std_selected()</a></code> or <code><a href="std_selected.html">std_selected_boot()</a></code>.</p></dd>
 <dt>...</dt>
-<dd><p>Optional arguments. They will be ignored.</p></dd>
+<dd><p>Additional arguments. They will be ignored.</p></dd>
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    <p>It returns nothing. It is called for its side effect.</p>
+    </div>
     <div id="details">
     <h2>Details</h2>
-    <p><code><a href="https://rdrr.io/r/stats/add1.html" class="external-link">add1()</a></code> should be not be used after the output of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> is
+    <p><code><a href="https://rdrr.io/r/stats/add1.html" class="external-link">add1()</a></code> should not be used after the output of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> is
 processed by <code><a href="std_selected.html">std_selected()</a></code> or <code><a href="std_selected.html">std_selected_boot()</a></code>.</p>
     </div>
     <div id="author">

@@ -18,7 +18,7 @@ basic model information printed by print.lm()."><!-- mathjax --><script src="htt
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7.1</span>
       </span>
     </div>
 
@@ -48,7 +48,7 @@ basic model information printed by print.lm()."><!-- mathjax --><script src="htt
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in a Path Model by stdmod_lavaan()</a>
     </li>
   </ul></li>
 <li>
@@ -93,7 +93,7 @@ basic model information printed by <code><a href="https://rdrr.io/r/stats/lm.htm
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Nothing</p>
+    <p><code>x</code> is returned invisibly.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -104,8 +104,7 @@ basic model information printed by <code><a href="https://rdrr.io/r/stats/lm.htm
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
 <span class="r-in"><span class="co"># Load a sample data set</span></span>
-<span class="r-in"><span class="co"># It has one predictor (iv), one moderator (mod), on covariate (v1),</span></span>
-<span class="r-in"><span class="co"># one categorical covariate (cat1) with three groups, and one dv (dv).</span></span>
+<span class="r-in"></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Do a moderated regression by lm</span></span>
@@ -144,6 +143,7 @@ basic model information printed by <code><a href="https://rdrr.io/r/stats/lm.htm
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) requested to center: dv iv mod v1 cat1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) requested to scale: dv iv mod v1 cat1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note: categorical variables will not be centered nor scaled even if requested to do so.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)</span>
@@ -165,7 +165,8 @@ basic model information printed by <code><a href="https://rdrr.io/r/stats/lm.htm
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) requested to center: dv iv mod v1 cat1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) requested to scale: dv iv mod v1 cat1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Nonparametric bootstrapping 95% confidence intervals computed.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note: categorical variables will not be centered nor scaled even if requested to do so.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Nonparametric bootstrap 95% percentile confidence intervals computed.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)</span>

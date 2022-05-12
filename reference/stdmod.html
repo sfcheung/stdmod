@@ -18,7 +18,7 @@ regression model."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/aja
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7.1</span>
       </span>
     </div>
 
@@ -48,7 +48,7 @@ regression model."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/aja
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in a Path Model by stdmod_lavaan()</a>
     </li>
   </ul></li>
 <li>
@@ -105,22 +105,25 @@ regression model.</p>
     <dl><dt>lm_out</dt>
 <dd><p>The output from <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>.</p></dd>
 <dt>x</dt>
-<dd><p>The independent variable, that is, the variable with its effect
+<dd><p>The focal variable, that is, the variable with its effect
 being moderated. If supplied, its standard deviation will be
 used
-for rescaling. Default is <code>NULL</code>.</p></dd>
+for rescaling. Also called the independent variable in some
+models. Default is <code>NULL</code>.</p></dd>
 <dt>w</dt>
 <dd><p>The moderator. If supplied, its standard deviation will be
 used
 for rescaling. Default is <code>NULL</code>.</p></dd>
 <dt>y</dt>
-<dd><p>The dependent (outcome) variable. If supplied, its standard
+<dd><p>The outcome variable (dependent variable) . If supplied,
+its standard
 deviation will be used for rescaling. Default is NULL.</p></dd>
 <dt>x_rescale</dt>
 <dd><p>If <code>TRUE</code>, will rescale x by its standard deviation.
 Default is <code>TRUE</code>.</p></dd>
 <dt>w_rescale</dt>
-<dd><p>If <code>TRUE</code>, will rescale w by its SD. Default is TRUE.</p></dd>
+<dd><p>If <code>TRUE</code>, will rescale w by its standard deviation.
+Default is <code>TRUE</code>.</p></dd>
 <dt>y_rescale</dt>
 <dd><p>If <code>TRUE</code>, will rescale y by its standard deviation.
 Default is <code>TRUE</code>.</p></dd>
@@ -140,22 +143,29 @@ Default is <code>FALSE</code>.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The standardized moderation effect.</p>
+    <p><code>stdmod()</code> returns a scalar: The standardized moderation effect.
+<code>stdmod_boot()</code> returns a list with two elements. The element <code>ci</code> is
+a numeric vector of the bootstrap confidence interval. The element <code>boot_out</code>,
+if not <code>NA</code>, is the output of <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code>, which is used to do the
+bootstrapping.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p>Two more general functions, <code><a href="std_selected.html">std_selected()</a></code> and
 <code><a href="std_selected.html">std_selected_boot()</a></code>, have been developed and can do what these functions
 do and more. Users are recommended to use them instead of <code>stdmod()</code> and
-<code>stdmod_boot()</code>.</p>
+<code>stdmod_boot()</code>. These two functions will not be updated in the near
+future.</p>
 <p>Nevertheless, if computing the standardized moderation effect and
 forming its nonparametric
-bootstrap interval are what users need, then these functions can still
+bootstrap interval are all required, then these functions can still
 be used.</p>
 <p><code>stdmod()</code> computes the standardized moderation effect given an
 <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> output using the formula from Cheung, Cheung, Lau, Hui, and Vong
 (2022). Users specify
-the moderator, the predictor, the outcome variable, and the corresponding
+the moderator, the focal variable (the variable with its effect on
+the outcome variable moderated), the outcome variable (dependent variable)
+, and the corresponding
 standardized moderation
 effect. Users can also select which variable(s) will be standardized.</p>
 <p><code>stdmod_boot()</code> is a wrapper of <code>stdmod()</code>. It computes the nonparametric
@@ -193,8 +203,7 @@ units. Advance online publication. <em>Health Psychology</em>.
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
 <span class="r-in"><span class="co"># Load a test data of 500 cases</span></span>
-<span class="r-in"><span class="co"># It has one predictor (iv), one moderator (mod), two covariates (v1 and v2),</span></span>
-<span class="r-in"><span class="co"># and one dv (dv). All variables continuous.</span></span>
+<span class="r-in"></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_2_n_500</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Do regression as usual:</span></span>

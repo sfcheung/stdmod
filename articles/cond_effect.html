@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7.1</span>
       </span>
     </div>
 
@@ -65,7 +65,7 @@
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in a Path Model by stdmod_lavaan()</a>
     </li>
   </ul>
 </li>
@@ -96,7 +96,7 @@
       <h1 data-toc-skip>Conditional Effects by cond_effect()</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung</h4>
             
-            <h4 data-toc-skip class="date">2022-05-05</h4>
+            <h4 data-toc-skip class="date">2022-05-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/cond_effect.Rmd" class="external-link"><code>vignettes/cond_effect.Rmd</code></a></small>
       <div class="hidden name"><code>cond_effect.Rmd</code></div>
@@ -108,7 +108,7 @@
 <div class="section level2">
 <h2 id="what-cond_effect-can-do">What <code>cond_effect()</code> Can Do<a class="anchor" aria-label="anchor" href="#what-cond_effect-can-do"></a>
 </h2>
-<p>It can compute the conditional effect of a predictor on an outcome variable for selected levels of the moderator:</p>
+<p>It can compute the conditional effect of a predictor (the focal variable) on an outcome variable (dependent variable) for selected levels of the moderator:</p>
 <pre><code><span class="co">#&gt;   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig</span>
 <span class="co">#&gt;    High             3.950                      0.012 0.117 0.107 0.915    </span>
 <span class="co">#&gt;  Medium             3.343                      0.214 0.083 2.560 0.011 *  </span>
@@ -129,8 +129,8 @@
 </h3>
 <ul>
 <li><p><code>output</code>: The output of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>, <code><a href="../reference/std_selected.html">std_selected()</a></code>, or <code><a href="../reference/std_selected.html">std_selected_boot()</a></code>, with at least one interaction term. Bootstrap estimates in <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> will be ignored because bootstrapping will be done for each level again.</p></li>
-<li><p><code>x</code>: The predictor. The variable in the horizontal axis.</p></li>
-<li><p><code>w</code>: The moderator. The variable for which the conditional effects will be plotted.</p></li>
+<li><p><code>x</code>: The predictor (focal variable).</p></li>
+<li><p><code>w</code>: The moderator.</p></li>
 </ul>
 <p>These are the only required arguments. Just setting them can generate the graph:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -181,7 +181,7 @@
 <h3 id="numeric-moderators">Numeric Moderators<a class="anchor" aria-label="anchor" href="#numeric-moderators"></a>
 </h3>
 <p>If the moderator is a numeric variable, then, by default, the conditional effects for three levels of the moderators will be used: one standard deviation (SD) to the mean (“Low”), mean (“Medium”), and one SD above mean (“High”).</p>
-<p>Users can also use percentiles to define “Low”, “Medium”, and “High” by setting <code>w_method</code> to <code>"percentile"</code>. The default use 16th percentile and 84th percentile, which corresponds approximately to one SD below and above mean, respectively, for a normal distribution.</p>
+<p>Users can also use percentiles to define “Low”, “Medium”, and “High” by setting <code>w_method</code> to <code>"percentile"</code>. The default are 16th percentile, 50th percentile, and 84th percentile, which corresponds approximately to one SD below mean, mean, and one SD above mean, respectively, for a normal distribution.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span>
 <span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
@@ -207,7 +207,7 @@
 <span class="co">#&gt; - % Below: The percent of cases equal to or less than a level.</span>
 <span class="co">#&gt; - From Mean (in SD): Distance of a level from the mean,</span>
 <span class="co">#&gt;   in standard deviation (+ve above, -ve below).</span></code></pre></div>
-<p>Note that the empirical percentage of cases less than or below a level may not be exactly equal to that for the requested percentile if the number of cases is small and/or the number of unique values of the moderator is small.</p>
+<p>Note that the empirical percentage of cases equal to or less than a level may not be exactly equal to that for the requested percentile if the number of cases is small and/or the number of unique values of the moderator is small.</p>
 </div>
 <div class="section level3">
 <h3 id="categorical-moderators">Categorical Moderators<a class="anchor" aria-label="anchor" href="#categorical-moderators"></a>
@@ -232,7 +232,7 @@
 <div class="section level2">
 <h2 id="nonparametric-bootstrap-confidence-intervals">Nonparametric Bootstrap Confidence Intervals<a class="anchor" aria-label="anchor" href="#nonparametric-bootstrap-confidence-intervals"></a>
 </h2>
-<p>If one or more variables are standardized, the OLS confidence intervals are not appropriate (Cheung, Cheung, Lau, Hui, &amp; Vong, 2022). Users can call <code><a href="../reference/cond_effect.html">cond_effect_boot()</a></code> to use nonparametric bootstrapping to form the percentile confidence interval for each conditional effect.</p>
+<p>If one or more variables are standardized, the OLS confidence intervals are not appropriate (Cheung, Cheung, Lau, Hui, &amp; Vong, 2022; Yuan &amp; Chan, 2011). Users can call <code><a href="../reference/cond_effect.html">cond_effect_boot()</a></code> to use nonparametric bootstrapping to form the percentile confidence interval for each conditional effect.</p>
 <ul>
 <li>
 <code>conf</code>: The level of confidence, expressed as a proportion. Default is .95, requesting a 95% confidence interval.</li>
@@ -253,10 +253,14 @@
                              w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
                              nboot <span class="op">=</span> <span class="fl">500</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cond_std</span>, model <span class="op">=</span> <span class="cn">FALSE</span>, title <span class="op">=</span> <span class="cn">FALSE</span>, level_info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt;   Level conscientiousness emotional_stability Effect CI Lower CI Upper  S.E.     t     p Sig</span>
-<span class="co">#&gt;    High             1.000                      0.007   -0.113    0.130 0.063 0.107 0.915    </span>
-<span class="co">#&gt;  Medium             0.000                      0.115    0.028    0.215 0.045 2.560 0.011 *  </span>
-<span class="co">#&gt;     Low            -1.000                      0.223    0.079    0.367 0.062 3.601 0.000 ***</span>
+<span class="co">#&gt;   Level conscientiousness emotional_stability Effect CI Lower CI Upper  S.E.</span>
+<span class="co">#&gt;    High             1.000                      0.007   -0.113    0.130 0.063</span>
+<span class="co">#&gt;  Medium             0.000                      0.115    0.028    0.215 0.045</span>
+<span class="co">#&gt;     Low            -1.000                      0.223    0.079    0.367 0.062</span>
+<span class="co">#&gt;      t     p Sig</span>
+<span class="co">#&gt;  0.107 0.915    </span>
+<span class="co">#&gt;  2.560 0.011 *  </span>
+<span class="co">#&gt;  3.601 0.000 ***</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [CI Lower, CI Upper] shows the 95% nonparametric bootstrap confidence interval(s)</span>
 <span class="co">#&gt;  (based on 500 bootstrap samples)</span>
@@ -269,12 +273,13 @@
 <div class="section level2">
 <h2 id="further-information">Further Information<a class="anchor" aria-label="anchor" href="#further-information"></a>
 </h2>
-<p>Please refer to the help page of <code><a href="../reference/cond_effect.html">cond_effect()</a></code> and <code><a href="../reference/cond_effect.html">cond_effect_boot()</a></code> for other options available, such as defining the number of SDs from mean to define “Low” and “High”, or the percentiles to be used.</p>
+<p>Please refer to the help page of <code><a href="../reference/cond_effect.html">cond_effect()</a></code> and <code><a href="../reference/cond_effect.html">cond_effect_boot()</a></code> for other options available, such as defining the number of SDs from mean to define “Low” and “High”, the percentiles to be used, or using parallel processing to speed up bootstrapping.</p>
 </div>
 <div class="section level2">
 <h2 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
 </h2>
 <p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. <em>Health Psychology</em>. <a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</p>
+<p>Yuan, K.-H., &amp; Chan, W. (2011). Biases and standard errors of standardized regression coefficients. <em>Psychometrika, 76</em>(4), 670-690. <a href="https://doi.org/10.1007/s11336-011-9224-6" class="external-link uri">https://doi.org/10.1007/s11336-011-9224-6</a></p>
 </div>
   </div>
 

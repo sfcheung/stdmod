@@ -18,7 +18,7 @@ of std_selected() or std_selected_boot()."><!-- mathjax --><script src="https://
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7.1</span>
       </span>
     </div>
 
@@ -48,7 +48,7 @@ of std_selected() or std_selected_boot()."><!-- mathjax --><script src="https://
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in a Path Model by stdmod_lavaan()</a>
     </li>
   </ul></li>
 <li>
@@ -93,7 +93,7 @@ of <code><a href="std_selected.html">std_selected()</a></code> or <code><a href=
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Nothing</p>
+    <p><code>x</code> is returned invisibly.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -104,37 +104,11 @@ of <code><a href="std_selected.html">std_selected()</a></code> or <code><a href=
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
 <span class="r-in"><span class="co"># Load a sample data set</span></span>
-<span class="r-in"><span class="co"># It has one predictor (iv), one moderator (mod), on covariate (v1),</span></span>
-<span class="r-in"><span class="co"># one categorical covariate (cat1) with three groups, and one dv (dv).</span></span>
+<span class="r-in"></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Do a moderated regression by lm</span></span>
 <span class="r-in"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_raw</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Min      1Q  Median      3Q     Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -2146.0  -431.9   -25.0   411.2  2309.3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  308.767   4075.066   0.076   0.9396  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv            52.760    271.242   0.195   0.8459  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod            5.127     40.772   0.126   0.9000  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1           -12.760     10.174  -1.254   0.2104  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -158.673     71.834  -2.209   0.0276 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3      -43.166     75.283  -0.573   0.5666  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod         3.416      2.709   1.261   0.2080  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 665 on 493 degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Standardize all variables except for categorical variables.</span></span>
 <span class="r-in"><span class="co"># Interaction terms are formed after standardization.</span></span>
@@ -153,6 +127,8 @@ of <code><a href="std_selected.html">std_selected()</a></code> or <code><a href=
 <span class="r-out co"><span class="r-pr">#&gt;</span> v1      10.13884    2.938932 Standardized (mean = 0, SD = 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA Nonnumeric                     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Categorical variables will not be centered or scaled even if requested.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)</span>
@@ -178,8 +154,7 @@ of <code><a href="std_selected.html">std_selected()</a></code> or <code><a href=
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># With bootstrapping</span></span>
 <span class="r-in"><span class="co"># nboot = 100 just for illustration. nboot &gt;= 2000 should be used in read</span></span>
@@ -201,6 +176,7 @@ of <code><a href="std_selected.html">std_selected()</a></code> or <code><a href=
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA Nonnumeric                     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Categorical variables will not be centered or scaled even if requested.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Nonparametric bootstrapping 95% confidence intervals computed.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The number of bootstrap samples is 100.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -212,14 +188,14 @@ of <code><a href="std_selected.html">std_selected()</a></code> or <code><a href=
 <span class="r-out co"><span class="r-pr">#&gt;</span> -1.96117 -0.39474 -0.02285  0.37579  2.11040 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate  CI Lower  CI Upper Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.064582 -0.003637  0.139526   0.048250   1.338   0.1814    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.737384  0.687907  0.781386   0.027363  26.948   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.259899  0.210887  0.312876   0.027369   9.496   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.034271 -0.100975  0.027250   0.027325  -1.254   0.2104    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.145006 -0.267132 -0.024716   0.065647  -2.209   0.0276 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.039448 -0.183052  0.105754   0.068799  -0.573   0.5666    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.032087 -0.015186  0.075430   0.025451   1.261   0.2080    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Estimate   CI Lower   CI Upper Std. Error t value Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.0645819 -0.0005936  0.1491718  0.0482503   1.338   0.1814    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.7373838  0.6887268  0.7763855  0.0273632  26.948   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.2598987  0.2008832  0.3074666  0.0273687   9.496   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.0342709 -0.0902115  0.0272759  0.0273250  -1.254   0.2104    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.1450065 -0.2768718 -0.0106607  0.0656469  -2.209   0.0276 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.0394483 -0.1964224  0.0802801  0.0687988  -0.573   0.5666    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.0320874 -0.0048116  0.0747295  0.0254507   1.261   0.2080    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -228,8 +204,7 @@ of <code><a href="std_selected.html">std_selected()</a></code> or <code><a href=
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Std. Error are not bootstrap SEs.</span>
 <span class="r-in"></span>

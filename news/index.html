@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7.1</span>
       </span>
     </div>
 
@@ -47,7 +47,7 @@
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in a Path Model by stdmod_lavaan()</a>
     </li>
   </ul></li>
 <li>
@@ -73,8 +73,8 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.1.6" id="stdmod-016">stdmod 0.1.6<a class="anchor" aria-label="anchor" href="#stdmod-016"></a></h2>
-<p>(latest: 0.1.6.1009)</p>
+<h2 class="page-header" data-toc-text="0.1.7.1" id="stdmod-0171">stdmod 0.1.7.1<small>2022-05-11</small><a class="anchor" aria-label="anchor" href="#stdmod-0171"></a></h2>
+<p>(All major changes after 0.1.5)</p>
 <ul><li>Added <code><a href="../reference/plotmod.html">plotmod()</a></code> for plotting moderation effects. This function will check whether a variable is standardized. If yes, will note this in the plot.</li>
 <li>
 <code><a href="../reference/plotmod.html">plotmod()</a></code> can also plot a Tumble graph (Bodner, 2016) if <code>graph_type</code> is set to <code>"tumble"</code>.</li>
@@ -83,6 +83,8 @@
 <li>Added <code><a href="../reference/cond_effect.html">cond_effect_boot()</a></code>, a wrapper of <code><a href="../reference/cond_effect.html">cond_effect()</a></code> that can form nonparametric bootstrap confidence intervals for the conditional effects, which may be partially or completely standardized.</li>
 <li>Updated the print method for the summary of <code><a href="../reference/std_selected.html">std_selected()</a></code> and <code><a href="../reference/std_selected.html">std_selected_boot()</a></code>.</li>
 <li>Added more vignettes to introduce the new functions.</li>
+<li>
+<code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> now returns an object of the class <code>stdmod_lavaan</code>, with methods print, confint, and coef added.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.1.5" id="stdmod-015">stdmod 0.1.5<a class="anchor" aria-label="anchor" href="#stdmod-015"></a></h2>

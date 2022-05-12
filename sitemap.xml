@@ -40,10 +40,16 @@
     <loc>https://sfcheung.github.io/stdmod/reference/add1.std_selected.html</loc>
   </url>
   <url>
+    <loc>https://sfcheung.github.io/stdmod/reference/coef.stdmod_lavaan.html</loc>
+  </url>
+  <url>
     <loc>https://sfcheung.github.io/stdmod/reference/cond_effect.html</loc>
   </url>
   <url>
     <loc>https://sfcheung.github.io/stdmod/reference/confint.std_selected.html</loc>
+  </url>
+  <url>
+    <loc>https://sfcheung.github.io/stdmod/reference/confint.stdmod_lavaan.html</loc>
   </url>
   <url>
     <loc>https://sfcheung.github.io/stdmod/reference/index.html</loc>
@@ -56,6 +62,9 @@
   </url>
   <url>
     <loc>https://sfcheung.github.io/stdmod/reference/print.std_selected.html</loc>
+  </url>
+  <url>
+    <loc>https://sfcheung.github.io/stdmod/reference/print.stdmod_lavaan.html</loc>
   </url>
   <url>
     <loc>https://sfcheung.github.io/stdmod/reference/print.summary.std_selected.html</loc>
@@ -74,6 +83,15 @@
   </url>
   <url>
     <loc>https://sfcheung.github.io/stdmod/reference/summary.std_selected.html</loc>
+  </url>
+  <url>
+    <loc>https://sfcheung.github.io/stdmod/reference/test_mod1.html</loc>
+  </url>
+  <url>
+    <loc>https://sfcheung.github.io/stdmod/reference/test_mod2.html</loc>
+  </url>
+  <url>
+    <loc>https://sfcheung.github.io/stdmod/reference/test_mod3_miss.html</loc>
   </url>
   <url>
     <loc>https://sfcheung.github.io/stdmod/reference/test_x_1_w_1_v_1_cat1_n_500.html</loc>

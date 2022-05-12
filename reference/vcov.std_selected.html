@@ -19,7 +19,7 @@ std_selected_boot()."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7.1</span>
       </span>
     </div>
 
@@ -49,7 +49,7 @@ std_selected_boot()."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in a Path Model by stdmod_lavaan()</a>
     </li>
   </ul></li>
 <li>
@@ -101,7 +101,7 @@ is returned.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A matrix of the variances and covariances.</p>
+    <p>A matrix of the variances and covariances of the parameter estimates.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -116,8 +116,7 @@ users can request the variance-covariance matrix of the bootstrap estimates.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Load a sample data set</span></span>
-<span class="r-in"><span class="co"># It has one predictor (iv), one moderator (mod), on covariate (v1),</span></span>
-<span class="r-in"><span class="co"># one categorical covariate (cat1) with three groups, and one dv (dv).</span></span>
+<span class="r-in"></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         dv       iv       mod        v1 cat1</span>
@@ -130,76 +129,11 @@ users can request the variance-covariance matrix of the bootstrap estimates.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Do a moderated regression by lm</span></span>
 <span class="r-in"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_raw</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Min      1Q  Median      3Q     Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -2146.0  -431.9   -25.0   411.2  2309.3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  308.767   4075.066   0.076   0.9396  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv            52.760    271.242   0.195   0.8459  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod            5.127     40.772   0.126   0.9000  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1           -12.760     10.174  -1.254   0.2104  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -158.673     71.834  -2.209   0.0276 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3      -43.166     75.283  -0.573   0.5666  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod         3.416      2.709   1.261   0.2080  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 665 on 493 degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Standardize all variables except for categorical variables.</span></span>
 <span class="r-in"><span class="co"># Interaction terms are formed after standardization.</span></span>
 <span class="r-in"><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
 <span class="r-in">                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: dv iv mod v1 cat1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) scaled: dv iv mod v1 cat1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      centered_by   scaled_by                            Note</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dv    6565.02965 1094.244465 Standardized (mean = 0, SD = 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv      15.01576    2.039154 Standardized (mean = 0, SD = 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod    100.39502    5.040823 Standardized (mean = 0, SD = 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1      10.13884    2.938932 Standardized (mean = 0, SD = 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA Nonnumeric                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Min       1Q   Median       3Q      Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -1.96117 -0.39474 -0.02285  0.37579  2.11040 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.06458    0.04825   1.338   0.1814    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.73738    0.02736  26.948   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.25990    0.02737   9.496   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.03427    0.02733  -1.254   0.2104    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.14501    0.06565  -2.209   0.0276 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.03945    0.06880  -0.573   0.5666    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.03209    0.02545   1.261   0.2080    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 0.6077 on 493 degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># VCOV of lm output</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span>
@@ -228,51 +162,6 @@ users can request the variance-covariance matrix of the bootstrap estimates.</p>
 <span class="r-in">                                 conf <span class="op">=</span> <span class="fl">.95</span>,</span>
 <span class="r-in">                                 nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span class="r-in"><span class="co"># In real analysis, nboot should be at least 2000.</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: dv iv mod v1 cat1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) scaled: dv iv mod v1 cat1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      centered_by   scaled_by                            Note</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dv    6565.02965 1094.244465 Standardized (mean = 0, SD = 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv      15.01576    2.039154 Standardized (mean = 0, SD = 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod    100.39502    5.040823 Standardized (mean = 0, SD = 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1      10.13884    2.938932 Standardized (mean = 0, SD = 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA Nonnumeric                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Nonparametric bootstrapping 95% confidence intervals computed.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - The number of bootstrap samples is 100.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Min       1Q   Median       3Q      Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -1.96117 -0.39474 -0.02285  0.37579  2.11040 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate  CI Lower  CI Upper Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.064582 -0.005916  0.145185   0.048250   1.338   0.1814    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.737384  0.696026  0.780466   0.027363  26.948   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.259899  0.196367  0.307074   0.027369   9.496   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.034271 -0.110325  0.028254   0.027325  -1.254   0.2104    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.145006 -0.275510 -0.021606   0.065647  -2.209   0.0276 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.039448 -0.164437  0.086189   0.068799  -0.573   0.5666    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.032087 -0.021926  0.083538   0.025451   1.261   0.2080    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 0.6077 on 493 degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Std. Error are not bootstrap SEs.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># VCOV of lm output</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span>
@@ -296,21 +185,21 @@ users can request the variance-covariance matrix of the bootstrap estimates.</p>
 <span class="r-in"><span class="co"># VCOV of bootstrap estimates</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">lm_std_boot</span>, type <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               (Intercept)            iv           mod            v1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  1.513946e-03  9.328696e-05 -1.110254e-04  1.793982e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           9.328696e-05  4.150529e-04 -2.465809e-04  3.193195e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod         -1.110254e-04 -2.465809e-04  7.371837e-04  1.555685e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1           1.793982e-04  3.193195e-05  1.555685e-04  1.047639e-03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -2.386387e-03 -2.671209e-04  2.493261e-04 -3.057848e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -2.029332e-03  2.874025e-05  2.623017e-05 -1.930619e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       9.182070e-05  1.282016e-04 -1.150146e-04 -1.204336e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  1.536489e-03  9.568250e-05 -1.095276e-04  0.0001865437</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           9.568250e-05  4.146328e-04 -2.432351e-04  0.0000340697</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod         -1.095276e-04 -2.432351e-04  7.260336e-04  0.0001532043</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1           1.865437e-04  3.406970e-05  1.532043e-04  0.0010457165</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -2.410846e-03 -2.734371e-04  2.458697e-04 -0.0003150773</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -2.069590e-03  2.855683e-05  2.656795e-05 -0.0002051235</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       9.113406e-05  1.294361e-04 -1.132562e-04 -0.0001200609</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   cat1gp2       cat1gp3        iv:mod</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.0023863874 -2.029332e-03  9.182070e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv          -0.0002671209  2.874025e-05  1.282016e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.0002493261  2.623017e-05 -1.150146e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.0003057848 -1.930619e-04 -1.204336e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2      0.0044961043  2.360451e-03 -3.932770e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3      0.0023604507  3.841910e-03  8.030162e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.0003932770  8.030162e-05  4.997848e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.0024108465 -2.069590e-03  9.113406e-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv          -0.0002734371  2.855683e-05  1.294361e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.0002458697  2.656795e-05 -1.132562e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.0003150773 -2.051235e-04 -1.200609e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2      0.0045177085  2.407089e-03 -3.947109e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3      0.0024070895  3.914567e-03  8.545288e-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.0003947109  8.545288e-05  4.998478e-04</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

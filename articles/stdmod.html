@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7.1</span>
       </span>
     </div>
 
@@ -65,7 +65,7 @@
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in a Path Model by stdmod_lavaan()</a>
     </li>
   </ul>
 </li>
@@ -96,7 +96,7 @@
       <h1 data-toc-skip>A Quick Start Guide on Using std_selected()</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung</h4>
             
-            <h4 data-toc-skip class="date">2022-05-05</h4>
+            <h4 data-toc-skip class="date">2022-05-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/stdmod.Rmd" class="external-link"><code>vignettes/stdmod.Rmd</code></a></small>
       <div class="hidden name"><code>stdmod.Rmd</code></div>
@@ -106,12 +106,11 @@
     
     
 <div class="section level2">
-<h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>
+<h2 id="this-guide-shows-to-use-std_selected-to">This Guide Shows to use <code>std_selected()</code> to:<a class="anchor" aria-label="anchor" href="#this-guide-shows-to-use-std_selected-to"></a>
 </h2>
-<p>This guide demonstrates how to use <code><a href="../reference/std_selected.html">std_selected()</a></code> to:</p>
 <ul>
 <li><p>get the correct standardized regression coefficients of a moderated regression model, and</p></li>
-<li><p>form the confidence intervals of the standardized regression coefficients using nonparametric bootstrapping, taking into account the sampling variation in standardization.</p></li>
+<li><p>form the valid confidence intervals of the standardized regression coefficients using nonparametric bootstrapping that takes into account the sampling variation due to standardization.</p></li>
 </ul>
 </div>
 <div class="section level2">
@@ -125,8 +124,8 @@
 <span class="co">#&gt; 1       1              6               3.6                 3.6  20 female</span>
 <span class="co">#&gt; 2       2              4               3.8                 2.4  20 female</span>
 <span class="co">#&gt; 3       3              7               4.3                 2.7  20 female</span></code></pre></div>
-<p>This dataset has 500 cases, with sleep duration (<code>sleep_duration</code>) measured in average hours, conscientiousness, emotional stability, age, and gender (a string variable with two values: <code>"female"</code> and <code>"male"</code>).</p>
-<p>For this illustration, we shorten the names of some variables for readability:</p>
+<p>This dataset has 500 cases, with sleep duration (measured in average hours), conscientiousness, emotional stability, age, and gender (a <code>"female"</code> and <code>"male"</code>).</p>
+<p>The names of some variables are shortened for readability:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sleep"</span>, <span class="st">"cons"</span>, <span class="st">"emot"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">3</span><span class="op">)</span>
@@ -140,14 +139,14 @@
 </h2>
 <p>Suppose this is the moderated regression model:</p>
 <ul>
-<li><p>Dependent variable: sleep duration (<code>sleep</code>)</p></li>
-<li><p>Independent variable: emotional stability (<code>emot</code>)</p></li>
+<li><p>Dependent variable (Outcome Variable): sleep duration (<code>sleep</code>)</p></li>
+<li><p>Independent variable (Predictor / Focal Variable): emotional stability (<code>emot</code>)</p></li>
 <li><p>Moderator: conscientiousness (<code>cons</code>)</p></li>
-<li><p>Control variable: <code>age</code> and <code>gender</code></p></li>
+<li><p>Control variables: <code>age</code> and <code>gender</code></p></li>
 </ul>
-<p><code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code> can be used to fit this model:</p>
+<p><code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> can be used to fit this model:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">emot</span><span class="op">*</span><span class="va">cons</span>,
+<code class="sourceCode R"><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">emot</span> <span class="op">*</span> <span class="va">cons</span>,
              dat <span class="op">=</span> <span class="va">dat</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_out</span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -177,20 +176,12 @@
 <div class="section level2">
 <h2 id="correct-standardization-for-the-moderated-regression">Correct Standardization For the Moderated Regression<a class="anchor" aria-label="anchor" href="#correct-standardization-for-the-moderated-regression"></a>
 </h2>
-<p>Suppose we want to find the correct standardized solution for the moderated regression, that is, all variables except for categorical variables are standardized, <em>before</em> forming the product terms.</p>
-<p>We can pass the <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code> output to <code><a href="../reference/std_selected.html">std_selected()</a></code>, and use <code>. ~ .</code> for the arguments <code>to_scale</code> and <code>to_center</code>.</p>
-<p>Standardization is equivalent to:</p>
-<ul>
-<li><p>centering by mean, and then</p></li>
-<li><p>scaling by (dividing by) standard deviation.</p></li>
-</ul>
-<p>The argument <code>to_center</code> specifies the variables to be centered by their means, and the argument <code>to_scale</code> specifies the variables to be scaled by their standard deviations. The formula interface of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> is used in these two arguments, with the variables on the right hand side being the variables to be centered and/or scaled.</p>
-<p>The “<code>.</code>” on the right hand side represents all variables in the model, including the outcome variables.</p>
-<p>Categorical variables will be automatically skipped, and standardization will be conducted <em>before</em> forming the product terms.</p>
+<p>Suppose we want to find the correct standardized solution for the moderated regression, that is, all variables except for categorical variables are standardized. In a moderated regression model, the product term should be formed <em>after</em> standardization.</p>
+<p>Instead of doing the standardization ourselves before calling <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>, we can pass the <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> output to <code><a href="../reference/std_selected.html">std_selected()</a></code>, and use <code>~ .</code> for the arguments <code>to_scale</code> and <code>to_center</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_stdall</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>,
-                        to_scale <span class="op">=</span> <span class="va">.</span> <span class="op">~</span> <span class="va">.</span>,
-                        to_center <span class="op">=</span> <span class="va">.</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span>
+                          to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,
+                          to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_stdall</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
@@ -204,6 +195,8 @@
 <span class="co">#&gt; emot      2.713200 0.7629613 Standardized (mean = 0, SD = 1)</span>
 <span class="co">#&gt; cons      3.343200 0.6068198 Standardized (mean = 0, SD = 1)</span>
 <span class="co">#&gt; </span>
+<span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Categorical variables will not be centered or scaled even if requested.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep ~ age + gender + emot * cons, data = dat_mod)</span>
@@ -228,20 +221,33 @@
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
-<span class="co">#&gt;   mean-centering, scaling, or standardization.</span></code></pre></div>
-<p>The coefficient of the product term, which naturally can be called the<br><strong>standardized moderation effect</strong>, is significant, B = -0.1083. For each one <em>standard deviation</em> increase of conscientiousness score, the <strong>standardized effect</strong> of emotional stability decreases by 0.1083.</p>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span></code></pre></div>
+<p>In this example, the coefficient of the product term, which naturally can be called the<br><strong>standardized moderation effect</strong>, is significant, B = -0.1083. For each one <em>standard deviation</em> increase of conscientiousness score, the <strong>standardized effect</strong> of emotional stability decreases by 0.1083.</p>
+<div class="section level3">
+<h3 id="the-arguments">The Arguments<a class="anchor" aria-label="anchor" href="#the-arguments"></a>
+</h3>
+<p>Standardization is equivalent to centering by mean and then scaling by (dividing by) standard deviation.<br>
+The argument <code>to_center</code> specifies the variables to be centered by their means, and the argument <code>to_scale</code> specifies the variables to be scaled by their standard deviations. The formula interface of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> is used in these two arguments, with the variables on the right hand side being the variables to be centered and/or scaled.</p>
+<p>The “<code>.</code>” on the right hand side represents all variables in the model, including the outcome variable (sleep duration in this example).</p>
+<p><code><a href="../reference/std_selected.html">std_selected()</a></code> will also skip categorical variables automatically skipped because standardizing them will make their coefficients not easy to interpret.</p>
+</div>
+<div class="section level3">
+<h3 id="advantage">Advantage<a class="anchor" aria-label="anchor" href="#advantage"></a>
+</h3>
+<p>Using <code>std_selected</code> minimizes impact on the workflow. Do regression as usual. Get the correct standardized coefficients only when we need to interpret them.</p>
+</div>
 <div class="section level3">
 <h3 id="nonparametric-bootstrap-confidence-intervals">Nonparametric Bootstrap Confidence Intervals<a class="anchor" aria-label="anchor" href="#nonparametric-bootstrap-confidence-intervals"></a>
 </h3>
-<p>The confidence intervals based on OLS regression fitted to the standardized variables do not take into account the sampling variation of the sample means and standard deviations. Cheung, Cheung, Lau, Hui, and Vong (2022) suggest using nonparametric bootstrapping, with standardization conducted in each bootstrap sample.</p>
-<p>This can be done by <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> instead of <code><a href="../reference/std_selected.html">std_selected()</a></code>, using <code>nboot</code> to specify the number of bootstrap samples:</p>
+<p>There is one problem with standardized coefficients. The confidence intervals based on ordinary least squares (OLS) fitted to the standardized variables do not take into account the sampling variation of the sample means and standard deviations (Yuan &amp; Chan, 2011). Cheung, Cheung, Lau, Hui, and Vong (2022) suggest using nonparametric bootstrapping, with standardization conducted in each bootstrap sample.</p>
+<p>This can be done by <code><a href="../reference/std_selected.html">std_selected_boot()</a></code>, a wrapper of <code><a href="../reference/std_selected.html">std_selected()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">870432</span><span class="op">)</span>
 <span class="va">lm_stdall_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_out</span>,
-                        to_scale <span class="op">=</span> <span class="va">.</span> <span class="op">~</span> <span class="va">.</span>,
-                        to_center <span class="op">=</span> <span class="va">.</span> <span class="op">~</span> <span class="va">.</span>,
+                        to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,
+                        to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,
                         nboot <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></code></pre></div>
+<p>The minimum additional argument is <code>nboot</code>, the number of bootstrap samples.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_stdall_boot</span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -257,6 +263,7 @@
 <span class="co">#&gt; cons      3.343200 0.6068198 Standardized (mean = 0, SD = 1)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Categorical variables will not be centered or scaled even if requested.</span>
 <span class="co">#&gt; - Nonparametric bootstrapping 95% confidence intervals computed.</span>
 <span class="co">#&gt; - The number of bootstrap samples is 5000.</span>
 <span class="co">#&gt; </span>
@@ -283,22 +290,22 @@
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
-<span class="co">#&gt;   mean-centering, scaling, or standardization.</span>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
 <span class="co">#&gt; - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
 <span class="co">#&gt; - Std. Error are not bootstrap SEs.</span></code></pre></div>
+<p>The output is similar to that of <code><a href="../reference/std_selected.html">std_selected()</a></code>, with additional information on the bootstrapping process.</p>
 <p>The 95% bootstrap percentile confidence interval of the standardized moderation effect is -0.2043 to -0.0090.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="standardize-independent-variable-and-moderator">Standardize Independent Variable and Moderator<a class="anchor" aria-label="anchor" href="#standardize-independent-variable-and-moderator"></a>
+<h2 id="standardize-independent-variable-focal-variable-and-moderator">Standardize Independent Variable (Focal Variable) and Moderator<a class="anchor" aria-label="anchor" href="#standardize-independent-variable-focal-variable-and-moderator"></a>
 </h2>
-<p><code><a href="../reference/std_selected.html">std_selected()</a></code> and <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> can also be used to standardize only selected variables.</p>
-<p>Suppose we want to standardize only the two continuous psychological variables, emotional stability and conscientiousness, and do not standardize sleep duration because hour is a meaningful unit. We list <code>emot</code> and <code>cons</code> on <code>to_center</code> and <code>to_scale</code>:</p>
+<p><code><a href="../reference/std_selected.html">std_selected()</a></code> and <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> can also be used to standardize only selected variables. There are cases in which we do not want to standardize some continuous variables because they are measured on interpretable units, such as hours.</p>
+<p>Suppose we want to standardize only emotional stability and conscientiousness, and do not standardize sleep duration. We just list <code>emot</code> and <code>cons</code> on <code>to_center</code> and <code>to_scale</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm_std1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>,
-                        to_scale <span class="op">=</span> <span class="va">.</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span>,
-                        to_center <span class="op">=</span> <span class="va">.</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span><span class="op">)</span>
+                        to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span>,
+                        to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std1</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
@@ -312,6 +319,8 @@
 <span class="co">#&gt; emot        2.7132 0.7629613 Standardized (mean = 0, SD = 1)</span>
 <span class="co">#&gt; cons        3.3432 0.6068198 Standardized (mean = 0, SD = 1)</span>
 <span class="co">#&gt; </span>
+<span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Categorical variables will not be centered or scaled even if requested.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = sleep ~ age + gender + emot * cons, data = dat_mod)</span>
@@ -336,9 +345,8 @@
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
-<span class="co">#&gt;   mean-centering, scaling, or standardization.</span></code></pre></div>
-<p>The <em>partially</em> standardized moderation effect is significant, B = -0.1534. For each one <em>standard deviation</em> increase of conscientiousness score, the <em>partially</em> standardized effect of emotional stability decreases by 0.1534.</p>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span></code></pre></div>
+<p>The <em>partially</em> standardized moderation effect is -0.1534. For each one <em>standard deviation</em> increase of conscientiousness score, the <em>partially</em> standardized effect of emotional stability decreases by 0.1534.</p>
 <div class="section level3">
 <h3 id="nonparametric-bootstrap-confidence-intervals-1">Nonparametric Bootstrap Confidence Intervals<a class="anchor" aria-label="anchor" href="#nonparametric-bootstrap-confidence-intervals-1"></a>
 </h3>
@@ -346,9 +354,10 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">870432</span><span class="op">)</span>
 <span class="va">lm_std1_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_out</span>,
-                        to_scale <span class="op">=</span> <span class="va">.</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span>,
-                        to_center <span class="op">=</span> <span class="va">.</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span>,
+                        to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span>,
+                        to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span>,
                         nboot <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></code></pre></div>
+<p>Again, the only additional argument is <code>nboot</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std1_boot</span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -364,6 +373,7 @@
 <span class="co">#&gt; cons        3.3432 0.6068198 Standardized (mean = 0, SD = 1)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Categorical variables will not be centered or scaled even if requested.</span>
 <span class="co">#&gt; - Nonparametric bootstrapping 95% confidence intervals computed.</span>
 <span class="co">#&gt; - The number of bootstrap samples is 5000.</span>
 <span class="co">#&gt; </span>
@@ -390,8 +400,7 @@
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
-<span class="co">#&gt;   mean-centering, scaling, or standardization.</span>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
 <span class="co">#&gt; - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
 <span class="co">#&gt; - Std. Error are not bootstrap SEs.</span></code></pre></div>
 <p>The 95% bootstrap percentile confidence interval of the partially standardized moderation effect is -0.2915 to -0.0124.</p>
@@ -401,13 +410,14 @@
 <h2 id="further-information">Further Information<a class="anchor" aria-label="anchor" href="#further-information"></a>
 </h2>
 <p>A more detailed illustration can be found at <code><a href="../articles/moderation.html">vignette("moderation")</a></code>.</p>
-<p><code><a href="../articles/std_selected.html">vignette("std_selected")</a></code> illustrates how <code><a href="../reference/std_selected.html">std_selected()</a></code> can be used to form nonparametric bootstrap percentile confidence interval for standardized regression coefficients (“betas”) for regression models in general.</p>
-<p>Further information on the functions can be found in their help pages (<code><a href="../reference/std_selected.html">std_selected()</a></code> and <code><a href="../reference/std_selected.html">std_selected_boot()</a></code>). For example, parallel computation can be used when doing bootstrapping.</p>
+<p><code><a href="../articles/std_selected.html">vignette("std_selected")</a></code> illustrates how <code><a href="../reference/std_selected.html">std_selected()</a></code> can be used to form nonparametric bootstrap percentile confidence interval for standardized regression coefficients (“betas”) for regression models without a product term.</p>
+<p>Further information on the functions can be found in their help pages (<code><a href="../reference/std_selected.html">std_selected()</a></code> and <code><a href="../reference/std_selected.html">std_selected_boot()</a></code>). For example, parallel computation can be used when doing bootstrapping, if the number of bootstrapping samples request is large.</p>
 </div>
 <div class="section level2">
 <h2 id="references">Reference(s)<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. <em>Health Psychology</em>. <a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</p>
+<p>Yuan, K.-H., &amp; Chan, W. (2011). Biases and standard errors of standardized regression coefficients. <em>Psychometrika, 76</em>(4), 670-690. <a href="https://doi.org/10.1007/s11336-011-9224-6" class="external-link uri">https://doi.org/10.1007/s11336-011-9224-6</a></p>
 </div>
   </div>
 

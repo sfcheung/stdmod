@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7.1</span>
       </span>
     </div>
 
@@ -65,7 +65,7 @@
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in a Path Model by stdmod_lavaan()</a>
     </li>
   </ul>
 </li>
@@ -96,7 +96,7 @@
       <h1 data-toc-skip>Standardized Moderation Effect by std_selected()</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung and David Weng Ngai Vong</h4>
             
-            <h4 data-toc-skip class="date">2022-05-05</h4>
+            <h4 data-toc-skip class="date">2022-05-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/moderation.Rmd" class="external-link"><code>vignettes/moderation.Rmd</code></a></small>
       <div class="hidden name"><code>moderation.Rmd</code></div>
@@ -114,48 +114,52 @@
 <h2 id="setup-the-environment">Setup the Environment<a class="anchor" aria-label="anchor" href="#setup-the-environment"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/">stdmod</a></span><span class="op">)</span> <span class="co"># For computing the standardized moderation effect conveniently</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lm.beta</span><span class="op">)</span> <span class="co"># For generating the typical standardized solution</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/">stdmod</a></span><span class="op">)</span> <span class="co"># For computing the standardized moderation effect conveniently</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="load-the-dataset">Load the Dataset<a class="anchor" aria-label="anchor" href="#load-the-dataset"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sleep_emo_con</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt;   case_id sleep_duration conscientiousness emotional_stability age gender</span>
 <span class="co">#&gt; 1       1              6               3.6                 3.6  20 female</span>
 <span class="co">#&gt; 2       2              4               3.8                 2.4  20 female</span>
-<span class="co">#&gt; 3       3              7               4.3                 2.7  20 female</span>
-<span class="co">#&gt; 4       4              8               2.9                 1.3  20 female</span>
-<span class="co">#&gt; 5       5              8               3.3                 2.6  22 female</span>
-<span class="co">#&gt; 6       6              8               2.4                 2.2  25 female</span></code></pre></div>
+<span class="co">#&gt; 3       3              7               4.3                 2.7  20 female</span></code></pre></div>
 <p>This data set has 500 cases of data. The variables are sleep duration, age, gender, and the scores from two personality scales, emotional stability and conscientiousness of the IPIP Big Five markers. Please refer to (citation to be added) for the detail of the data set.</p>
+<p>The names of some variables are shortened for readability:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cons"</span>, <span class="st">"emot"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sleep_emo_con</span>, <span class="fl">3</span><span class="op">)</span>
+<span class="co">#&gt;   case_id sleep_duration cons emot age gender</span>
+<span class="co">#&gt; 1       1              6  3.6  3.6  20 female</span>
+<span class="co">#&gt; 2       2              4  3.8  2.4  20 female</span>
+<span class="co">#&gt; 3       3              7  4.3  2.7  20 female</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="moderated-regression">Moderated Regression<a class="anchor" aria-label="anchor" href="#moderated-regression"></a>
 </h2>
 <p>Suppose we are interested in predicting sleep duration by emotional stability, after controlling for gender and age. However, we suspect that the effect of emotional stability, if any, may be moderated by conscientiousness. Therefore, we conduct a moderated regression as follow:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">emotional_stability</span><span class="op">*</span><span class="va">conscientiousness</span>, <span class="va">sleep_emo_con</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">emot</span> <span class="op">*</span> <span class="va">cons</span>,
+             data <span class="op">=</span> <span class="va">sleep_emo_con</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_out</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
-<span class="co">#&gt;     conscientiousness, data = sleep_emo_con)</span>
+<span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emot * cons, data = sleep_emo_con)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residuals:</span>
 <span class="co">#&gt;     Min      1Q  Median      3Q     Max </span>
 <span class="co">#&gt; -6.0841 -0.7882  0.0089  0.9440  6.1189 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;                                       Estimate Std. Error t value Pr(&gt;|t|)   </span>
-<span class="co">#&gt; (Intercept)                            1.85154    1.35224   1.369  0.17155   </span>
-<span class="co">#&gt; age                                    0.01789    0.02133   0.838  0.40221   </span>
-<span class="co">#&gt; gendermale                            -0.26127    0.16579  -1.576  0.11570   </span>
-<span class="co">#&gt; emotional_stability                    1.32151    0.45039   2.934  0.00350 **</span>
-<span class="co">#&gt; conscientiousness                      1.20385    0.37062   3.248  0.00124 **</span>
-<span class="co">#&gt; emotional_stability:conscientiousness -0.33140    0.13273  -2.497  0.01286 * </span>
+<span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)   </span>
+<span class="co">#&gt; (Intercept)  1.85154    1.35224   1.369  0.17155   </span>
+<span class="co">#&gt; age          0.01789    0.02133   0.838  0.40221   </span>
+<span class="co">#&gt; gendermale  -0.26127    0.16579  -1.576  0.11570   </span>
+<span class="co">#&gt; emot         1.32151    0.45039   2.934  0.00350 **</span>
+<span class="co">#&gt; cons         1.20385    0.37062   3.248  0.00124 **</span>
+<span class="co">#&gt; emot:cons   -0.33140    0.13273  -2.497  0.01286 * </span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
@@ -163,8 +167,8 @@
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
 <span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_out</span>,
-        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
+        x <span class="op">=</span> <span class="st">"emot"</span>,
+        w <span class="op">=</span> <span class="st">"cons"</span>,
         x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
         w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
         y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
@@ -172,48 +176,50 @@
 <p>The results show that conscientiousness significantly moderates the effect of emotional stability on sleep duration.</p>
 </div>
 <div class="section level2">
-<h2 id="the-standardized-solution-of-the-moderated-regression">The Standardized Solution of the Moderated Regression<a class="anchor" aria-label="anchor" href="#the-standardized-solution-of-the-moderated-regression"></a>
+<h2 id="standardized-moderation-effect">Standardized Moderation Effect<a class="anchor" aria-label="anchor" href="#standardized-moderation-effect"></a>
 </h2>
 <p>To get the correct standardized solution of the moderated regression, with the product term formed <em>after</em> standardization, we can use <code><a href="../reference/std_selected.html">std_selected()</a></code>.</p>
 <ul>
 <li><p>The first argument is the regression output from <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>.</p></li>
-<li><p>The argument <code>to_center</code> tells std_selected which variables need to be mean centered.</p></li>
-<li><p>The argument <code>to_scale</code> tells std_selected which variables need to be rescaled by their standard deviations after centering.</p></li>
+<li><p>The argument <code>to_center</code> specifies variables to be mean centered.</p></li>
+<li><p>The argument <code>to_scale</code> specifies variables to be rescaled by their standard deviations after centering.</p></li>
 </ul>
-<p>If we want to standardize or mean-center all variables, we can use <code>~ .</code> as a shortcut. Note that <code><a href="../reference/std_selected.html">std_selected()</a></code> will automatically skip categorical variables (i.e., factors or string variables in the regression model of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_stdall</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,
-                                  to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span>
+<p>If we want to standardize or mean center all variables, we can use <code>~ .</code> as a shortcut. Note that <code><a href="../reference/std_selected.html">std_selected()</a></code> will automatically skip categorical variables (i.e., factors or string variables in the regression model of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>).</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lm_stdall</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>,
+                          to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,
+                          to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_stdall</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
-<span class="co">#&gt; - Variable(s) centered: sleep_duration age gender emotional_stability conscientiousness</span>
-<span class="co">#&gt; - Variable(s) scaled: sleep_duration age gender emotional_stability conscientiousness</span>
+<span class="co">#&gt; - Variable(s) centered: sleep_duration age gender emot cons</span>
+<span class="co">#&gt; - Variable(s) scaled: sleep_duration age gender emot cons</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;                     centered_by scaled_by                            Note</span>
-<span class="co">#&gt; sleep_duration         6.776333 1.4168291 Standardized (mean = 0, SD = 1)</span>
-<span class="co">#&gt; age                   22.274000 2.9407857 Standardized (mean = 0, SD = 1)</span>
-<span class="co">#&gt; gender                       NA        NA Nonnumeric                     </span>
-<span class="co">#&gt; emotional_stability    2.713200 0.7629613 Standardized (mean = 0, SD = 1)</span>
-<span class="co">#&gt; conscientiousness      3.343200 0.6068198 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt;                centered_by scaled_by                            Note</span>
+<span class="co">#&gt; sleep_duration    6.776333 1.4168291 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; age              22.274000 2.9407857 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; gender                  NA        NA Nonnumeric                     </span>
+<span class="co">#&gt; emot              2.713200 0.7629613 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; cons              3.343200 0.6068198 Standardized (mean = 0, SD = 1)</span>
 <span class="co">#&gt; </span>
+<span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Categorical variables will not be centered or scaled even if requested.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
-<span class="co">#&gt;     conscientiousness, data = dat_mod)</span>
+<span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emot * cons, data = dat_mod)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residuals:</span>
 <span class="co">#&gt;     Min      1Q  Median      3Q     Max </span>
 <span class="co">#&gt; -4.2941 -0.5563  0.0063  0.6663  4.3187 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;                                       Estimate Std. Error t value Pr(&gt;|t|)   </span>
-<span class="co">#&gt; (Intercept)                            0.05492    0.04883   1.125  0.26124   </span>
-<span class="co">#&gt; age                                    0.03712    0.04428   0.838  0.40221   </span>
-<span class="co">#&gt; gendermale                            -0.18440    0.11702  -1.576  0.11570   </span>
-<span class="co">#&gt; emotional_stability                    0.11501    0.04493   2.560  0.01076 * </span>
-<span class="co">#&gt; conscientiousness                      0.13050    0.04517   2.889  0.00403 **</span>
-<span class="co">#&gt; emotional_stability:conscientiousness -0.10829    0.04337  -2.497  0.01286 * </span>
+<span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)   </span>
+<span class="co">#&gt; (Intercept)  0.05492    0.04883   1.125  0.26124   </span>
+<span class="co">#&gt; age          0.03712    0.04428   0.838  0.40221   </span>
+<span class="co">#&gt; gendermale  -0.18440    0.11702  -1.576  0.11570   </span>
+<span class="co">#&gt; emot         0.11501    0.04493   2.560  0.01076 * </span>
+<span class="co">#&gt; cons         0.13050    0.04517   2.889  0.00403 **</span>
+<span class="co">#&gt; emot:cons   -0.10829    0.04337  -2.497  0.01286 * </span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
@@ -222,97 +228,97 @@
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
-<span class="co">#&gt;   mean-centering, scaling, or standardization.</span></code></pre></div>
-<p>The coefficient in this solution, -0.10829, can be interpreted as the increase in the standardized effect of <code>emotional_stability</code> for each one standard deviation increase of <code>conscientiousness</code>. Naturally, this can be called the <em>standardized moderation effect</em> of <code>conscientiousness</code> (Cheung, Cheung, Lau, Hui, &amp; Vong, 2022).</p>
-<p>The output of <code><a href="../reference/std_selected.html">std_selected()</a></code> can be passed to other functions that accept the output of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>. For example, we can use <code>visreg()</code> to visualize the moderation effect using the standardized solution. This package also has a simple function, <code><a href="../reference/plotmod.html">plotmod()</a></code>, for generating a typical plot of the moderation effect:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<span class="co">#&gt; - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span></code></pre></div>
+<p>The coefficient in this solution, -0.10829, can be interpreted as the change in the standardized effect of emotional stability for each one standard deviation increase of conscientiousness. Naturally, this can be called the <em>standardized moderation effect</em> of conscientiousness (Cheung, Cheung, Lau, Hui, &amp; Vong, 2022).</p>
+<p>The output of <code><a href="../reference/std_selected.html">std_selected()</a></code> can be passed to other functions that accept the output of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>. This package also has a simple function, <code><a href="../reference/plotmod.html">plotmod()</a></code>, for generating a typical plot of the moderation effect:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_stdall</span>,
-        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
+        x <span class="op">=</span> <span class="st">"emot"</span>,
+        w <span class="op">=</span> <span class="st">"cons"</span>,
         x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,
         w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,
         y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></code></pre></div>
-<p><img src="moderation_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>The function <code><a href="../reference/plotmod.html">plotmod()</a></code> also prints the conditional effects of the predictor, emotional stability in this example.</p>
+<p><img src="moderation_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
+<p>The function <code><a href="../reference/plotmod.html">plotmod()</a></code> also prints the conditional effects of the predictor (focal variable), emotional stability in this example.</p>
 </div>
 <div class="section level2">
-<h2 id="the-usual-incorrect-standardized-solution">The Usual (Incorrect) Standardized Solution<a class="anchor" aria-label="anchor" href="#the-usual-incorrect-standardized-solution"></a>
+<h2 id="the-common-incorrect-standardized-solution">The Common (Incorrect) Standardized Solution<a class="anchor" aria-label="anchor" href="#the-common-incorrect-standardized-solution"></a>
 </h2>
 <p>For comparison, this is the results of standardizing all variables, including the product term and the categorical variable.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_beta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lm.beta/man/lm.beta.html" class="external-link">lm.beta</a></span><span class="op">(</span><span class="va">lm_out</span><span class="op">)</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lm.beta</span><span class="op">)</span> <span class="co"># For generating the typical standardized solution</span>
+<span class="va">lm_beta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lm.beta/man/lm.beta.html" class="external-link">lm.beta</a></span><span class="op">(</span><span class="va">lm_out</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_beta</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
-<span class="co">#&gt;     conscientiousness, data = sleep_emo_con)</span>
+<span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emot * cons, data = sleep_emo_con)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residuals:</span>
 <span class="co">#&gt;     Min      1Q  Median      3Q     Max </span>
 <span class="co">#&gt; -6.0841 -0.7882  0.0089  0.9440  6.1189 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;                                       Estimate Standardized Std. Error t value Pr(&gt;|t|)   </span>
-<span class="co">#&gt; (Intercept)                            1.85154      0.00000    1.35224   1.369  0.17155   </span>
-<span class="co">#&gt; age                                    0.01789      0.03712    0.02133   0.838  0.40221   </span>
-<span class="co">#&gt; gendermale                            -0.26127     -0.06934    0.16579  -1.576  0.11570   </span>
-<span class="co">#&gt; emotional_stability                    1.32151      0.71163    0.45039   2.934  0.00350 **</span>
-<span class="co">#&gt; conscientiousness                      1.20385      0.51560    0.37062   3.248  0.00124 **</span>
-<span class="co">#&gt; emotional_stability:conscientiousness -0.33140     -0.78201    0.13273  -2.497  0.01286 * </span>
+<span class="co">#&gt;             Estimate Standardized Std. Error t value Pr(&gt;|t|)   </span>
+<span class="co">#&gt; (Intercept)  1.85154           NA    1.35224   1.369  0.17155   </span>
+<span class="co">#&gt; age          0.01789      0.03712    0.02133   0.838  0.40221   </span>
+<span class="co">#&gt; gendermale  -0.26127     -0.06934    0.16579  -1.576  0.11570   </span>
+<span class="co">#&gt; emot         1.32151      0.71163    0.45039   2.934  0.00350 **</span>
+<span class="co">#&gt; cons         1.20385      0.51560    0.37062   3.248  0.00124 **</span>
+<span class="co">#&gt; emot:cons   -0.33140     -0.78201    0.13273  -2.497  0.01286 * </span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residual standard error: 1.384 on 494 degrees of freedom</span>
 <span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span>
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span></code></pre></div>
-<p>The coefficient of the <em>standardized</em> product term is -0.78201, which <em>cannot</em> be interpreted as the change in the standardized effect of <code>emotional_stability</code> for each one standard deviation increase of <code>conscientiousness</code>.</p>
+<p>The coefficient of the <em>standardized</em> product term is -0.78201, which <em>cannot</em> be interpreted as the change in the standardized effect of emotional stability for each one standard deviation increase of conscientiousness because the product term is standardized and can no longer be interpreted as the product of two variables in the model.</p>
 </div>
 <div class="section level2">
-<h2 id="the-standardized-solution-with-nonparametric-bootstrap-confidence-intervals">The Standardized Solution With Nonparametric Bootstrap Confidence Intervals<a class="anchor" aria-label="anchor" href="#the-standardized-solution-with-nonparametric-bootstrap-confidence-intervals"></a>
+<h2 id="improved-confidence-intervals">Improved Confidence Intervals<a class="anchor" aria-label="anchor" href="#improved-confidence-intervals"></a>
 </h2>
-<p>It has been shown (e.g., Yuan &amp; Chan, 2011) that the standard errors of standardized regression coefficients computed just by rescaling the variables are biased, and consequently the confidence intervals are also invalid. The function <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> is a version of <code><a href="../reference/std_selected.html">std_selected()</a></code> that also report the confidence interval of the regression coefficients when rescaling is conducted, using nonparametric bootstrapping as suggested by Cheung, Cheung, Lau, Hui, &amp; Vong (2022).</p>
-<p>We use the same example above that standardizes all variables except for categorical variables to illustrate this function. The argument <code>nboot</code> specifies the number of nonparametric bootstrap samples. The level of confidence set by <code>conf</code>. The default is .95, denoting a 95% confidence. If this is the desired level, this argument can be omitted.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>It has been shown (e.g., Yuan &amp; Chan, 2011) that the standard errors of standardized regression coefficients computed just by standardizing the variables are biased, and consequently the confidence intervals are also invalid. The function <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> is a wrapper of <code><a href="../reference/std_selected.html">std_selected()</a></code> that also forms the confidence interval of the regression coefficients when standardizing is conducted, using nonparametric bootstrapping as suggested by Cheung, Cheung, Lau, Hui, and Vong (2022).</p>
+<p>We use the same example above that standardizes all variables except for categorical variables to illustrate this function. The argument <code>nboot</code> specifies the number of nonparametric bootstrap samples. The level of confidence is set by <code>conf</code>. The default is .95, denoting 95% confidence intervals. If this is the desired level, this argument can be omitted.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">649017</span><span class="op">)</span>
 <span class="va">lm_xwy_std_ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_out</span>,
                                    to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,
                                    to_scale  <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,
                                    nboot <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p>If the default options are acceptable, the only additional argument is <code>nboot</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_xwy_std_ci</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span>
-<span class="co">#&gt; - Variable(s) centered: sleep_duration age gender emotional_stability conscientiousness</span>
-<span class="co">#&gt; - Variable(s) scaled: sleep_duration age gender emotional_stability conscientiousness</span>
+<span class="co">#&gt; - Variable(s) centered: sleep_duration age gender emot cons</span>
+<span class="co">#&gt; - Variable(s) scaled: sleep_duration age gender emot cons</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;                     centered_by scaled_by                            Note</span>
-<span class="co">#&gt; sleep_duration         6.776333 1.4168291 Standardized (mean = 0, SD = 1)</span>
-<span class="co">#&gt; age                   22.274000 2.9407857 Standardized (mean = 0, SD = 1)</span>
-<span class="co">#&gt; gender                       NA        NA Nonnumeric                     </span>
-<span class="co">#&gt; emotional_stability    2.713200 0.7629613 Standardized (mean = 0, SD = 1)</span>
-<span class="co">#&gt; conscientiousness      3.343200 0.6068198 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt;                centered_by scaled_by                            Note</span>
+<span class="co">#&gt; sleep_duration    6.776333 1.4168291 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; age              22.274000 2.9407857 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; gender                  NA        NA Nonnumeric                     </span>
+<span class="co">#&gt; emot              2.713200 0.7629613 Standardized (mean = 0, SD = 1)</span>
+<span class="co">#&gt; cons              3.343200 0.6068198 Standardized (mean = 0, SD = 1)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
+<span class="co">#&gt; - Categorical variables will not be centered or scaled even if requested.</span>
 <span class="co">#&gt; - Nonparametric bootstrapping 95% confidence intervals computed.</span>
 <span class="co">#&gt; - The number of bootstrap samples is 2000.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
-<span class="co">#&gt;     conscientiousness, data = dat_mod)</span>
+<span class="co">#&gt; lm(formula = sleep_duration ~ age + gender + emot * cons, data = dat_mod)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residuals:</span>
 <span class="co">#&gt;     Min      1Q  Median      3Q     Max </span>
 <span class="co">#&gt; -4.2941 -0.5563  0.0063  0.6663  4.3187 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;                                        Estimate  CI Lower  CI Upper Std. Error t value Pr(&gt;|t|)   </span>
-<span class="co">#&gt; (Intercept)                            0.054919  0.002968  0.104340   0.048827   1.125  0.26124   </span>
-<span class="co">#&gt; age                                    0.037125 -0.036253  0.103590   0.044280   0.838  0.40221   </span>
-<span class="co">#&gt; gendermale                            -0.184402 -0.438855  0.087551   0.117016  -1.576  0.11570   </span>
-<span class="co">#&gt; emotional_stability                    0.115014  0.023642  0.202438   0.044927   2.560  0.01076 * </span>
-<span class="co">#&gt; conscientiousness                      0.130502  0.032359  0.224223   0.045167   2.889  0.00403 **</span>
-<span class="co">#&gt; emotional_stability:conscientiousness -0.108292 -0.203990 -0.009746   0.043374  -2.497  0.01286 * </span>
+<span class="co">#&gt;              Estimate  CI Lower  CI Upper Std. Error t value Pr(&gt;|t|)   </span>
+<span class="co">#&gt; (Intercept)  0.054919  0.002968  0.104340   0.048827   1.125  0.26124   </span>
+<span class="co">#&gt; age          0.037125 -0.036253  0.103590   0.044280   0.838  0.40221   </span>
+<span class="co">#&gt; gendermale  -0.184402 -0.438855  0.087551   0.117016  -1.576  0.11570   </span>
+<span class="co">#&gt; emot         0.115014  0.023642  0.202438   0.044927   2.560  0.01076 * </span>
+<span class="co">#&gt; cons         0.130502  0.032359  0.224223   0.045167   2.889  0.00403 **</span>
+<span class="co">#&gt; emot:cons   -0.108292 -0.203990 -0.009746   0.043374  -2.497  0.01286 * </span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
@@ -321,8 +327,7 @@
 <span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Note:</span>
-<span class="co">#&gt; - Estimates and their statistics are based on the data after</span>
-<span class="co">#&gt;   mean-centering, scaling, or standardization.</span>
+<span class="co">#&gt; - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
 <span class="co">#&gt; - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
 <span class="co">#&gt; - Std. Error are not bootstrap SEs.</span></code></pre></div>
 <p>The standardized moderation effect is -0.1083, and the 95% nonparametric bootstrap confidence interval is -0.2040 to -0.0097.</p>
@@ -331,14 +336,14 @@
 <div class="section level2">
 <h2 id="further-information">Further Information<a class="anchor" aria-label="anchor" href="#further-information"></a>
 </h2>
-<p><code>vignette("plotmod"</code> illustrates how to use <code><a href="../reference/plotmod.html">plotmod()</a></code> to plot a moderation effect. If variables are standardized by <code><a href="../reference/std_selected.html">std_selected()</a></code>, <code><a href="../reference/plotmod.html">plotmod()</a></code> can indicate this in the plot.</p>
-<p><code><a href="../articles/cond_effect.html">vignette("cond_effect")</a></code> illustrates how to use <code><a href="../reference/cond_effect.html">cond_effect()</a></code> to compute conditional effects, the effect of a predictor for selected levels of the moderator. <code><a href="../reference/cond_effect.html">cond_effect()</a></code> support outputs from <code><a href="../reference/std_selected.html">std_selected()</a></code>.</p>
+<p><code><a href="../articles/plotmod.html">vignette("plotmod")</a></code> illustrates how to use <code><a href="../reference/plotmod.html">plotmod()</a></code> to plot a moderation effect. If variables are standardized by <code><a href="../reference/std_selected.html">std_selected()</a></code>, <code><a href="../reference/plotmod.html">plotmod()</a></code> can indicate this in the plot.</p>
+<p><code><a href="../articles/cond_effect.html">vignette("cond_effect")</a></code> illustrates how to use <code><a href="../reference/cond_effect.html">cond_effect()</a></code> to compute conditional effects, the effect of a predictor (focal variable) for selected levels of the moderator. <code><a href="../reference/cond_effect.html">cond_effect()</a></code> support outputs from <code><a href="../reference/std_selected.html">std_selected()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="references">Reference(s)<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. <em>Health Psychology</em>. <a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</p>
-<p>Yuan, K.-H., &amp; Chan, W. (2011). Biases and standard errors of standardized regression coefficients. <em>Psychometrika, 76</em>(4), 670–690. <a href="https://doi.org/10.1007/s11336-011-9224-6" class="external-link uri">https://doi.org/10.1007/s11336-011-9224-6</a></p>
+<p>Yuan, K.-H., &amp; Chan, W. (2011). Biases and standard errors of standardized regression coefficients. <em>Psychometrika, 76</em>(4), 670-690. <a href="https://doi.org/10.1007/s11336-011-9224-6" class="external-link uri">https://doi.org/10.1007/s11336-011-9224-6</a></p>
 </div>
   </div>
 

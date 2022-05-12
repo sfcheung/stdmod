@@ -18,7 +18,7 @@ not to the call to std_selected() or std_selected_boot()."><!-- mathjax --><scri
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7.1</span>
       </span>
     </div>
 
@@ -48,7 +48,7 @@ not to the call to std_selected() or std_selected_boot()."><!-- mathjax --><scri
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in a Path Model by stdmod_lavaan()</a>
     </li>
   </ul></li>
 <li>
@@ -95,6 +95,11 @@ not to the call to <code><a href="std_selected.html">std_selected()</a></code> o
 <dt>evaluate</dt>
 <dd><p>Whether the call will be evaluated.</p></dd>
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    <p>If <code>evaluate</code> = <code>TRUE</code>, it returns the updated fitted object,
+otherwise, the updated call.</p>
+    </div>
     <div id="details">
     <h2>Details</h2>
     <p>Although supported, it is not recommended to update an analysis
@@ -111,8 +116,7 @@ recommended to call <code><a href="https://rdrr.io/r/stats/lm.html" class="exter
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
 <span class="r-in"><span class="co"># Load a sample data set</span></span>
-<span class="r-in"><span class="co"># It has one predictor (iv), one moderator (mod), on covariate (v1),</span></span>
-<span class="r-in"><span class="co"># one categorical covariate (cat1) with three groups, and one dv (dv).</span></span>
+<span class="r-in"></span>
 <span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         dv       iv       mod        v1 cat1</span>
@@ -168,6 +172,8 @@ recommended to call <code><a href="https://rdrr.io/r/stats/lm.html" class="exter
 <span class="r-out co"><span class="r-pr">#&gt;</span> v1      10.13884    2.938932 Standardized (mean = 0, SD = 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA Nonnumeric                     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Categorical variables will not be centered or scaled even if requested.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)</span>
@@ -193,8 +199,7 @@ recommended to call <code><a href="https://rdrr.io/r/stats/lm.html" class="exter
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Update the model</span></span>
 <span class="r-in"><span class="va">lm_std2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">lm_std</span>, <span class="va">.</span> <span class="op">~</span> <span class="va">.</span> <span class="op">-</span> <span class="va">v1</span><span class="op">)</span></span>
@@ -210,6 +215,8 @@ recommended to call <code><a href="https://rdrr.io/r/stats/lm.html" class="exter
 <span class="r-out co"><span class="r-pr">#&gt;</span> mod    100.39502    5.040823 Standardized (mean = 0, SD = 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA Nonnumeric                     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Categorical variables will not be centered or scaled even if requested.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv + mod + cat1 + iv:mod, data = dat_mod)</span>
@@ -234,8 +241,7 @@ recommended to call <code><a href="https://rdrr.io/r/stats/lm.html" class="exter
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 171.1 on 5 and 494 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

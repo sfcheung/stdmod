@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.6.1009</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7.1</span>
       </span>
     </div>
 
@@ -47,7 +47,7 @@
       <a href="../articles/cond_effect.html">Conditional Effects by cond_effect()</a>
     </li>
     <li>
-      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in SEM by stdmod_lavaan()</a>
+      <a href="../articles/stdmod_lavaan.html">Standardized Moderation Effect in a Path Model by stdmod_lavaan()</a>
     </li>
   </ul></li>
 <li>
@@ -106,15 +106,15 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>output</dt>
-<dd><p>An object of the class <code>lm</code>, such as the output
+<dd><p>The output
 of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code>, <code><a href="std_selected.html">std_selected()</a></code>, or
 <code><a href="std_selected.html">std_selected_boot()</a></code>.</p></dd>
 <dt>x</dt>
-<dd><p>The name of the focal variable (x-axis) in the output. It
+<dd><p>The name of the focal variable (x-axis) in `output``. It
 can be the name of the variable, with or without quotes.
 Currently only numeric variables are supported.</p></dd>
 <dt>w</dt>
-<dd><p>The name of the moderator in the output. It
+<dd><p>The name of the moderator in <code>output</code>. It
 can be the name of the variable, with or without quotes.</p></dd>
 <dt>x_label</dt>
 <dd><p>The label for the X-axis. Default is the value of <code>x</code>.</p></dd>
@@ -125,7 +125,7 @@ Default is the value of<code>w</code>.</p></dd>
 <dd><p>The label for the Y-axis. Default is the
 name of the response variable in the model.</p></dd>
 <dt>title</dt>
-<dd><p>The title of the graph. If not supplied, will be
+<dd><p>The title of the graph. If not supplied, it will be
 generated from the variable
 names or labels (in <code>x_label</code>, <code>y_label</code>,
 and <code>w_label</code>). If <code>""</code>, no title will be printed.
@@ -133,7 +133,7 @@ This can be used when the plot is for manuscript
 submission and figures are required to have no
 titles.</p></dd>
 <dt>digits</dt>
-<dd><p>Number of decimal digits to print. Default is 3.</p></dd>
+<dd><p>Number of decimal places to print. Default is 3.</p></dd>
 <dt>x_from_mean_in_sd</dt>
 <dd><p>How many SD from mean is used to define
 "low" and
@@ -147,7 +147,12 @@ Ignored if <code>w</code> is categorical.</p></dd>
 <dt>w_method</dt>
 <dd><p>How to define "high" and "low" for the moderator levels.
 Default is in terms of the
-standard deviation of the moderator, <code>"sd". If equal to </code>"percentile"<code>, then percentiles of the moderator in the dataset are used. Ignored if </code>w` is categorical.</p></dd>
+standard deviation of the moderator, <code>"sd"</code>.
+If equal to
+<code>"percentile"</code>, then the percentiles of the moderator in
+the
+dataset are used.
+Ignored if <code>w</code> is categorical.</p></dd>
 <dt>w_percentiles</dt>
 <dd><p>If <code>w_method</code> is <code>"percentile"</code>, then this
 argument
@@ -186,7 +191,7 @@ normal distribution, respectively.</p></dd>
 <dd><p>If <code>w_method</code> is <code>"percentile"</code> and
 this argument is
 set to a number, this number will be
-used to
+used
 to determine the percentiles to be used.
 The
 lower percentile is the percentile in a
@@ -207,7 +212,6 @@ respectively. Default is <code>NA</code>.</p></dd>
 <dd><p>If <code>x_method</code> is <code>"percentile"</code> and this
 argument is
 set to a number, this number will be used
-to
 to determine the percentiles to be used. The
 lower percentile is the percentile in a
 normal
@@ -247,7 +251,7 @@ be further modified like a usual ggplot2 graph.</p>
     <div id="details">
     <h2>Details</h2>
     <p>This function generate a basic ggplot2 graph
-typically found psychology manuscripts. It tries to
+typically found in psychology manuscripts. It tries to
 check whether one or more variables are standardized, and
 report this in the plot if required.</p>
 <p>This function only has features for typical plots of moderation effects.
@@ -270,31 +274,6 @@ Statistics, 41</em>(6), 593-604. <a href="https://doi.org/10.3102/10769986166570
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
 <span class="r-in"><span class="co"># Do a moderated regression by lm</span></span>
 <span class="r-in"><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">emotional_stability</span><span class="op">*</span><span class="va">conscientiousness</span>, <span class="va">sleep_emo_con</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_out</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     conscientiousness, data = sleep_emo_con)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Min      1Q  Median      3Q     Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -6.0841 -0.7882  0.0089  0.9440  6.1189 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                       Estimate Std. Error t value Pr(&gt;|t|)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                            1.85154    1.35224   1.369  0.17155   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age                                    0.01789    0.02133   0.838  0.40221   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gendermale                            -0.26127    0.16579  -1.576  0.11570   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> emotional_stability                    1.32151    0.45039   2.934  0.00350 **</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> conscientiousness                      1.20385    0.37062   3.248  0.00124 **</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> emotional_stability:conscientiousness -0.33140    0.13273  -2.497  0.01286 * </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 1.384 on 494 degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.0548,	Adjusted R-squared:  0.04523 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="fu">plotmod</span><span class="op">(</span><span class="va">lm_out</span>,</span>
 <span class="r-in">        x <span class="op">=</span> <span class="va">emotional_stability</span>,</span>
 <span class="r-in">        w <span class="op">=</span> <span class="va">conscientiousness</span>,</span>
@@ -307,46 +286,6 @@ Statistics, 41</em>(6), 593-604. <a href="https://doi.org/10.3102/10769986166570
 <span class="r-in"><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>,</span>
 <span class="r-in">                       to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
 <span class="r-in">                       to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: sleep_duration age gender emotional_stability conscientiousness</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) scaled: sleep_duration age gender emotional_stability conscientiousness</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     centered_by scaled_by                            Note</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sleep_duration         6.776333 1.4168291 Standardized (mean = 0, SD = 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age                   22.274000 2.9407857 Standardized (mean = 0, SD = 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gender                       NA        NA Nonnumeric                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> emotional_stability    2.713200 0.7629613 Standardized (mean = 0, SD = 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> conscientiousness      3.343200 0.6068198 Standardized (mean = 0, SD = 1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = sleep_duration ~ age + gender + emotional_stability * </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     conscientiousness, data = dat_mod)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Min      1Q  Median      3Q     Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -4.2941 -0.5563  0.0063  0.6663  4.3187 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                       Estimate Std. Error t value Pr(&gt;|t|)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                            0.05492    0.04883   1.125  0.26124   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age                                    0.03712    0.04428   0.838  0.40221   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gendermale                            -0.18440    0.11702  -1.576  0.11570   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> emotional_stability                    0.11501    0.04493   2.560  0.01076 * </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> conscientiousness                      0.13050    0.04517   2.889  0.00403 **</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> emotional_stability:conscientiousness -0.10829    0.04337  -2.497  0.01286 * </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 0.9771 on 494 degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.0548,	Adjusted R-squared:  0.04523 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
 <span class="r-in"><span class="fu">plotmod</span><span class="op">(</span><span class="va">lm_std</span>,</span>
 <span class="r-in">        x <span class="op">=</span> <span class="va">emotional_stability</span>,</span>
 <span class="r-in">        w <span class="op">=</span> <span class="va">conscientiousness</span>,</span>
