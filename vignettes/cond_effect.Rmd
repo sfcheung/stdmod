@@ -17,12 +17,12 @@ knitr::opts_chunk$set(
   fig.height = 4,
   fig.align = 'center'
 )
-options(width = 132)
 ```
 
 # What `cond_effect()` Can Do
 
-It can compute the conditional effect of a predictor on an outcome variable
+It can compute the conditional effect of a predictor (the focal variable)
+on an outcome variable (dependent variable)
 for selected levels of the moderator:
 
 ```{r echo = FALSE}
@@ -70,10 +70,9 @@ as demonstrated below.
           `std_selected_boot()` will be ignored because bootstrapping will be
           done for each level again.
 
-- `x`: The predictor. The variable in the horizontal axis.
+- `x`: The predictor (focal variable).
 
-- `w`: The moderator. The variable for which the conditional effects will
-       be plotted.
+- `w`: The moderator.
 
 These are the only required arguments. Just setting them can generate the
 graph:
@@ -115,9 +114,9 @@ for three levels of the moderators will be used: one standard deviation (SD)
 to the mean ("Low"), mean ("Medium"), and one SD above mean ("High").
 
 Users can also use percentiles to define "Low", "Medium", and "High" by setting
-`w_method` to `"percentile"`. The default use 16th percentile and
-84th percentile, which corresponds approximately to one SD below
-and above mean, respectively, for a normal distribution.
+`w_method` to `"percentile"`. The default are 16th percentile, 50th percentile,
+and 84th percentile, which corresponds approximately to one SD below mean,
+mean, and one SD above mean, respectively, for a normal distribution.
 
 ```{r}
 data(sleep_emo_con)
@@ -131,7 +130,7 @@ cond_out <- cond_effect(output = lm_out,
 print(cond_out, title = FALSE, model = FALSE)
 ```
 
-Note that the empirical percentage of cases less than or below a level may
+Note that the empirical percentage of cases equal to or less than a level may
 not be exactly equal to that for the requested percentile if the number of
 cases is small and/or the number of unique values of the moderator is small.
 
@@ -156,7 +155,8 @@ print(cond_out, title = FALSE, model = FALSE)
 # Nonparametric Bootstrap Confidence Intervals
 
 If one or more variables are standardized, the OLS confidence intervals are not
-appropriate (Cheung, Cheung, Lau, Hui, & Vong, 2022). Users can
+appropriate (Cheung, Cheung, Lau, Hui, & Vong, 2022; Yuan & Chan, 2011).
+Users can
 call `cond_effect_boot()` to use nonparametric bootstrapping to form the
 percentile confidence interval for each conditional effect.
 
@@ -185,10 +185,15 @@ print(cond_std, model = FALSE, title = FALSE, level_info = FALSE)
 
 Please refer to the help page of `cond_effect()` and `cond_effect_boot()`
 for other options available, such as defining the number of SDs from
-mean to define "Low" and "High", or the percentiles to be used.
+mean to define "Low" and "High", the percentiles to be used, or
+using parallel processing to speed up bootstrapping.
 
 # Reference
 
 Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022)
 Improving an old way to measure moderation effect in standardized units.
 Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
+
+Yuan, K.-H., & Chan, W. (2011). Biases and standard errors of standardized
+regression coefficients. *Psychometrika, 76*(4), 670-690.
+https://doi.org/10.1007/s11336-011-9224-6

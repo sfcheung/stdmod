@@ -4,7 +4,7 @@
 #'  of [std_selected()] or [std_selected_boot()].
 #'
 #' @return
-#'  Nothing
+#'  `x` is returned invisibly.
 #'
 #' @param x The output of [summary()].
 #' @param ...  Arguments to be passed to [summary()].
@@ -15,13 +15,11 @@
 #' @examples
 #'
 #' # Load a sample data set
-#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
-#' # one categorical covariate (cat1) with three groups, and one dv (dv).
+#'
 #' dat <- test_x_1_w_1_v_1_cat1_n_500
 #'
 #' # Do a moderated regression by lm
 #' lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
-#' summary(lm_raw)
 #'
 #' # Standardize all variables except for categorical variables.
 #' # Interaction terms are formed after standardization.
@@ -56,8 +54,9 @@ print.summary.std_selected <- function(x, ...) {
     }
   dat_sc <- format_dat_sc(x)
   print(dat_sc)
+  cat("\nNote:")
+  cat("\n- Categorical variables will not be centered or scaled even if requested.")
   if (!is.null(x$nboot)) {
-      cat("\nNote:")
       cat("\n- Nonparametric bootstrapping 95% confidence intervals computed.")
       cat("\n- The number of bootstrap samples is ", x$nboot, ".", sep = "")
     }
@@ -65,14 +64,15 @@ print.summary.std_selected <- function(x, ...) {
   NextMethod()
   cat("Note:")
   if (scaled_or_centered) {
-      cat("\n- Estimates and their statistics are based on the data after\n",
-            "  mean-centering, scaling, or standardization.", sep = "")
+      cat("\n- Estimates and their statistics are based on the data after",
+            "mean-centering, scaling, or standardization.")
     }
   if (!is.null(x$nboot)) {
       cat("\n- [CI Lower, CI Upper] are bootstrap percentile confidence intervals.")
       cat("\n- Std. Error are not bootstrap SEs.")
     }
   cat("\n")
+  invisible(x)
 }
 
 format_dat_sc <- function(x) {

@@ -1,14 +1,14 @@
 #' @title Print a 'cond_effect' Class Object
 #'
-#' @description Print the output of [cond_effect()].
+#' @description Print the output of [cond_effect()] or [cond_effect_boot()].
 #'
 #' @return
-#'  Nothing
+#'  `x` is returned invisibility.
 #'
-#' @param x The output of [cond_effect()].
+#' @param x The output of [cond_effect()] or [cond_effect_boot()].
 #' @param nd The number of digits for the variables.
-#' @param nd_stat The number of digits for test statistics (e.g., t).
-#' @param nd_p The number of digits for p-values.
+#' @param nd_stat The number of digits for test statistics (e.g., *t*).
+#' @param nd_p The number of digits for *p*-values.
 #' @param title If `TRUE`, print a title. Default is `TRUE`.
 #' @param model If `TRUE`, print the regression model. Default is `TRUE`.
 #' @param level_info If `TRUE`, print information for interpreting the
@@ -24,7 +24,7 @@
 #' @param table_only If `TRUE`, will suppress of other elements except
 #'                    for the table of conditional effects. Override
 #'                    arguments such as `title`, `model`, and `level_info`.
-#' @param ...  Arguments to be passed to [cond_effect()].
+#' @param ...  Additional arguments. Ignored by this function.
 #'
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
@@ -32,16 +32,17 @@
 #' @examples
 #'
 #' # Load a sample data set
-#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
-#' # one categorical covariate (cat1) with three groups, and one dv (dv).
+#'
 #' dat <- test_x_1_w_1_v_1_cat1_n_500
 #'
 #' # Do a moderated regression by lm
 #' lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
-#' summary(lm_raw)
+#'
 #' cond_effect(lm_raw, x = iv, w = mod)
 #'
-#' lm_std <- std_selected(lm_raw, to_scale = ~ iv + mod, to_center = ~ iv + mod)
+#' lm_std <- std_selected(lm_raw, to_scale = ~ iv + mod,
+#'                                to_center = ~ iv + mod)
+#'
 #' cond_effect(lm_std, x = iv, w = mod)
 #'
 #' @export
@@ -157,4 +158,5 @@ print.cond_effect <- function(x,
               }
           }
       }
+    invisible(x)
   }

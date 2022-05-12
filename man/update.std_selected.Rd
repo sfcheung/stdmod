@@ -15,6 +15,10 @@
 
 \item{evaluate}{Whether the call will be evaluated.}
 }
+\value{
+If \code{evaluate} = \code{TRUE}, it returns the updated fitted object,
+otherwise, the updated call.
+}
 \description{
 This should be used only to update the call to \code{\link[=lm]{lm()}},
 not to the call to \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.
@@ -28,8 +32,7 @@ recommended to call \code{\link[=lm]{lm()}} again and pass the output to
 \examples{
 
 # Load a sample data set
-# It has one predictor (iv), one moderator (mod), on covariate (v1),
-# one categorical covariate (cat1) with three groups, and one dv (dv).
+
 dat <- test_x_1_w_1_v_1_cat1_n_500
 head(dat)
 

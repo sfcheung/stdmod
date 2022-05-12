@@ -2,16 +2,54 @@
 #'
 #' @description Compute the conditional effects in a moderated regression model.
 #'
+#' @details [cond_effect()] uses the centering approach to find the conditional
+#' effect of the focal variable. For each level of the moderator, the value for
+#' this level is subtracted from the moderator scores, and the model is
+#' fitted to the modified data.
+#' The coefficient of the focal variable is then the conditional effect of the
+#' focal variable when the moderator's score is equal this value.
 #'
 #' @return
-#' A data-frame-like object of the conditional effects. The class is
+#' [cond_effect()] returns a data-frame-like object of the conditional effects.
+#' The class is
 #' `cond_effect` and the print method will print additional information of
-#' the conditional effects.
+#' the conditional effects. Additional information is stored in the
+#' following attributes:
+#'
+#' - `call`: The original call.
+#'
+#' - `output`: The `output` object, such as the output from `lm()`.
+#'
+#' - `x`, `y`, and `w`: The three variables used to compute the conditional
+#'                      effects: focal variable (`x`), outcome variable (`y`),
+#'                      and the moderator (`w`).
+#'
+#'  - `w_method`: The method used to determine the values of the moderator
+#'                at the selected levels.
+#'
+#'  - `w_percentiles` The percentiles to use if `w_method` = `"percentile"`.
+#'
+#'  - `w_sd_to_percentiles`: If not equal to `NA`, this is a scalar, the
+#'                           number of standard deviation from the mean used to
+#'                           determine the percentiles for the "low" and "high"
+#'                           levels of the moderator.
+#'  - `w_from_mean_in_sd`: The number of SD above or below the mean, for
+#'                          determining the "low" and "high" levels of the
+#'                          moderator if `w_method` is `"sd"`.
+#'  - `w_empirical_percentiles`: The actual percentile levels in the dataset
+#'                               for the selected
+#'                               levels of the moderator. A numeric vector.
+#'  - `w_empirical_z`: The actual distance from the mean, in SD, of each
+#'                     selected level of the moderator. A numeric vector.
+#'  - `y_standardized`, `x_standardized`, and `w_standardized`: Each of them
+#'                     is a logical scalar, indicating whether the outcome
+#'                     variable, focal variable, and moderator are standardized.
 #'
 #' @param output The output from [stats::lm()]. It can also accept the output
 #'               from
 #'               [std_selected()] or [std_selected_boot()].
-#' @param x      The independent variable, that is, the variable with its effect
+#' @param x      The focal variable (independent variable), that is, the
+#'               variable with its effect on the outcome variable (dependent)
 #'              being moderated. It must be a numeric variable.
 #' @param w      The moderator. Both numeric variables and categorical variables
 #'               (character or factor) are supported.
@@ -70,8 +108,7 @@
 #' @examples
 #'
 #' # Load a sample data set
-#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
-#' # one categorical covariate (cat1) with three groups, and one dv (dv).
+#'
 #' dat <- test_x_1_w_1_v_1_cat1_n_500
 #'
 #' # Do a moderated regression by lm
@@ -88,6 +125,7 @@
 #' cond_effect(lm_cat, x = iv, w = cat1)
 #'
 #' @export
+#' @order 1
 
 cond_effect <- function(output,
                       x = NULL,

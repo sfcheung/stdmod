@@ -40,6 +40,9 @@ reference:
   - print.std_selected
   - print.cond_effect
   - print.summary.std_selected
+  - confint.stdmod_lavaan
+  - print.stdmod_lavaan
+  - coef.stdmod_lavaan
 - title: Datasets
   desc: Datasets used in examples.
 - contents:

@@ -4,7 +4,7 @@
 #'  basic model information printed by [print.lm()].
 #'
 #' @return
-#'  Nothing
+#'  `x` is returned invisibly.
 #'
 #' @param x The output of [std_selected()] or [std_selected_boot()].
 #' @param ...  Arguments to be passed to [print.lm()].
@@ -15,8 +15,7 @@
 #' @examples
 #'
 #' # Load a sample data set
-#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
-#' # one categorical covariate (cat1) with three groups, and one dv (dv).
+#'
 #' dat <- test_x_1_w_1_v_1_cat1_n_500
 #'
 #' # Do a moderated regression by lm
@@ -42,8 +41,9 @@
 print.std_selected <- function(x, ...) {
     cat("\n- Variable(s) requested to center:", x$centered_terms)
     cat("\n- Variable(s) requested to scale:", x$scaled_terms)
+    cat("\nNote: categorical variables will not be centered nor scaled even if requested to do so.")
     if (!is.null(x$nboot)) {
-        cat("\n- Nonparametric bootstrapping 95% confidence intervals computed.")
+        cat("\n- Nonparametric bootstrap 95% percentile confidence intervals computed.")
       }
     cat("\n")
     NextMethod()

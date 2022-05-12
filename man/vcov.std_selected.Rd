@@ -18,7 +18,7 @@ is returned.}
 \item{...}{Arguments to be passed to \code{\link[stats:vcov]{stats::vcov()}}.}
 }
 \value{
-A matrix of the variances and covariances.
+A matrix of the variances and covariances of the parameter estimates.
 }
 \description{
 Compute the variance-covariance matrix
@@ -31,20 +31,17 @@ users can request the variance-covariance matrix of the bootstrap estimates.
 }
 \examples{
 # Load a sample data set
-# It has one predictor (iv), one moderator (mod), on covariate (v1),
-# one categorical covariate (cat1) with three groups, and one dv (dv).
+
 dat <- test_x_1_w_1_v_1_cat1_n_500
 head(dat)
 
 # Do a moderated regression by lm
 lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
-summary(lm_raw)
 
 # Standardize all variables except for categorical variables.
 # Interaction terms are formed after standardization.
 lm_std <- std_selected(lm_raw, to_scale = ~ .,
                                to_center = ~ .)
-summary(lm_std)
 
 # VCOV of lm output
 vcov(lm_std)
@@ -57,7 +54,6 @@ lm_std_boot <- std_selected_boot(lm_raw,
                                  conf = .95,
                                  nboot = 100)
 # In real analysis, nboot should be at least 2000.
-summary(lm_std_boot)
 
 # VCOV of lm output
 vcov(lm_std_boot)

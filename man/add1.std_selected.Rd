@@ -9,13 +9,16 @@
 \arguments{
 \item{object}{The output of \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.}
 
-\item{...}{Optional arguments. They will be ignored.}
+\item{...}{Additional arguments. They will be ignored.}
+}
+\value{
+It returns nothing. It is called for its side effect.
 }
 \description{
 Intercept the \code{\link[=add1]{add1()}} method and raise an error.
 }
 \details{
-\code{\link[=add1]{add1()}} should be not be used after the output of \code{\link[=lm]{lm()}} is
+\code{\link[=add1]{add1()}} should not be used after the output of \code{\link[=lm]{lm()}} is
 processed by \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.
 }
 \author{

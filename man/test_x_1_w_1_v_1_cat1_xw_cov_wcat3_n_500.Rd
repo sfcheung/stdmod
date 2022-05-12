@@ -9,9 +9,11 @@ A data frame with 500 rows and 5 variables:
 \describe{
 \item{dv}{Dependent variable, continuous}
 \item{iv}{Independent variable, continuous}
-\item{mod}{Moderator variable, categorical with three categories}
+\item{mod}{Moderator variable, categorical (string) with three categories,
+"City Alpha", "City Gamma", and "City Beta"}
 \item{v1}{Covariate, continuous}
-\item{cat1}{Covariate, categorical with two categories}
+\item{cat1}{Covariate, categorical (string) with three values, "gp1",
+"gp2", and "gp3"}
 }
 }
 \usage{

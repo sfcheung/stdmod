@@ -13,14 +13,15 @@
 #' @param ...  Optional arguments to be changed.
 #' @param evaluate Whether the call will be evaluated.
 #'
+#' @return If `evaluate` = `TRUE`, it returns the updated fitted object,
+#'         otherwise, the updated call.
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
 #' @examples
 #'
 #' # Load a sample data set
-#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
-#' # one categorical covariate (cat1) with three groups, and one dv (dv).
+#'
 #' dat <- test_x_1_w_1_v_1_cat1_n_500
 #' head(dat)
 #'
@@ -68,10 +69,12 @@ update.std_selected <- function(object, formula., ..., evaluate = TRUE) {
             new_call <- object$std_selected_boot_call
             new_call$lm_out <- lm_out_call
             out <- eval(new_call, parent.frame())
+            return(out)
           } else {
             new_call <- object$std_selected_call
             new_call$lm_out <- lm_out_call
             out <- eval(new_call, parent.frame())
+            return(out)
           }
       } else {
         return(call)

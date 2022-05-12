@@ -1,6 +1,6 @@
-# stdmod 0.1.6
+# stdmod 0.1.7.1
 
- (latest: 0.1.6.1009)
+(All major changes after 0.1.5)
 
 - Added `plotmod()` for plotting moderation effects. This function will check
   whether a variable is standardized. If yes, will note this in the plot.
@@ -17,7 +17,8 @@
 - Updated the print method for the summary of `std_selected()` and
   `std_selected_boot()`.
 - Added more vignettes to introduce the new functions.
-
+- `stdmod_lavaan()` now returns an object of the class `stdmod_lavaan`,
+  with methods print, confint, and coef added.
 
 # stdmod 0.1.5
 

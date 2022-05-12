@@ -9,11 +9,16 @@
 \arguments{
 \item{object}{The output of \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.}
 
-\item{...}{Arguments to be passed to \code{\link[=summary.lm]{summary.lm()}}.}
+\item{...}{Additional arguments. Ignored by this function.}
 }
 \value{
 An object of class \code{summary.std_selected}, with
-bootstrap confidence intervals added if present.
+bootstrap confidence intervals added if present in the object.
+The object is a list. Its main element \code{coefficients} is similar to
+the
+coefficient table in the \code{\link[=summary]{summary()}} printout of \code{\link[=lm]{lm()}}.
+This object is for printing summary information of the results
+from \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.
 }
 \description{
 Summarize the results of \code{\link[=std_selected]{std_selected()}} or
@@ -22,8 +27,7 @@ Summarize the results of \code{\link[=std_selected]{std_selected()}} or
 \examples{
 
 # Load a sample data set
-# It has one predictor (iv), one moderator (mod), on covariate (v1),
-# one categorical covariate (cat1) with three groups, and one dv (dv).
+
 dat <- test_x_1_w_1_v_1_cat1_n_500
 
 # Do a moderated regression by lm

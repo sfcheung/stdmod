@@ -5,19 +5,22 @@
 #'
 #' @return
 #'  An object of class `summary.std_selected`, with
-#'  bootstrap confidence intervals added if present.
+#'  bootstrap confidence intervals added if present in the object.
+#'  The object is a list. Its main element `coefficients` is similar to
+#'  the
+#'  coefficient table in the [summary()] printout of [lm()].
+#'  This object is for printing summary information of the results
+#'  from [std_selected()] or [std_selected_boot()].
 #'
 #' @param object The output of [std_selected()] or [std_selected_boot()].
-#' @param ...  Arguments to be passed to [summary.lm()].
-#'
+#' @param ...  Additional arguments. Ignored by this function.
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
 #' @examples
 #'
 #' # Load a sample data set
-#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
-#' # one categorical covariate (cat1) with three groups, and one dv (dv).
+#'
 #' dat <- test_x_1_w_1_v_1_cat1_n_500
 #'
 #' # Do a moderated regression by lm

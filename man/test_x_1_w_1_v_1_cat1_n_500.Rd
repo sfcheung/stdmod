@@ -11,14 +11,16 @@ A data frame with 500 rows and five variables:
 \item{iv}{Independent variable, continuous}
 \item{mod}{Moderator variable, continuous}
 \item{v1}{Covariate, continuous}
-\item{cat1}{Covariate, categorical}
+\item{cat1}{Covariate, categorical (string) with three values: "gp1",
+"gp2", and "gp3"}
 }
 }
 \usage{
 test_x_1_w_1_v_1_cat1_n_500
 }
 \description{
-The IV (iv1) continuous; The moderator (cat2) is
+A covariate
+(cat1) is
 categorical. For testing.
 }
 \keyword{datasets}

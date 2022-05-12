@@ -17,31 +17,37 @@ knitr::opts_chunk$set(
   fig.height = 4,
   fig.align = 'center'
 )
-options(width = 132)
 ```
 
 # Purpose
 
-This document demonstrates how to use `std_selected()` to compute the correct standardized solution of moderated regression.
+This document demonstrates how to use `std_selected()` to compute the correct
+standardized solution of moderated regression.
 
 # Setup the Environment
 
 ```{r setup}
 library(stdmod) # For computing the standardized moderation effect conveniently
-library(lm.beta) # For generating the typical standardized solution
 ```
 
 # Load the Dataset
 
 ```{r load_dataset}
 data(sleep_emo_con)
-head(sleep_emo_con)
+head(sleep_emo_con, 3)
 ```
 
 This data set has 500 cases of data. The variables are sleep duration, age, gender,
 and the scores from two personality scales, emotional stability and
 conscientiousness of the IPIP Big Five markers. Please refer to
 (citation to be added) for the detail of the data set.
+
+The names of some variables are shortened for readability:
+
+```{r}
+colnames(sleep_emo_con)[3:4] <- c("cons", "emot")
+head(sleep_emo_con, 3)
+```
 
 
 # Moderated Regression
@@ -52,11 +58,12 @@ emotional stability, if any, may be moderated by conscientiousness. Therefore,
 we conduct a moderated regression as follow:
 
 ```{r mod_reg}
-lm_out <- lm(sleep_duration ~ age + gender + emotional_stability*conscientiousness, sleep_emo_con)
+lm_out <- lm(sleep_duration ~ age + gender + emot * cons,
+             data = sleep_emo_con)
 summary(lm_out)
 plotmod(lm_out,
-        x = "emotional_stability",
-        w = "conscientiousness",
+        x = "emot",
+        w = "cons",
         x_label = "Emotional Stability",
         w_label = "Conscientiousness",
         y_label = "Sleep Duration")
@@ -65,79 +72,88 @@ plotmod(lm_out,
 The results show that conscientiousness significantly moderates the effect of
 emotional stability on sleep duration.
 
-# The Standardized Solution of the Moderated Regression
+# Standardized Moderation Effect
 
 To get the correct standardized solution of the moderated regression, with the
 product term formed *after* standardization, we can use `std_selected()`.
 
 - The first argument is the regression output from `lm()`. 
 
-- The argument `to_center` tells std_selected which variables need to be mean
+- The argument `to_center` specifies variables to be mean
   centered. 
 
-- The argument `to_scale` tells std_selected which variables need to be rescaled
+- The argument `to_scale` specifies variables to be rescaled
   by their standard deviations after centering.
 
-If we want to standardize or mean-center all variables, we can use `~ .` as a
+If we want to standardize or mean center all variables, we can use `~ .` as a
 shortcut. Note that `std_selected()` will  automatically skip categorical
 variables (i.e., factors or string variables in the regression model of `lm()`).
 
 ```{r}
-lm_stdall <- std_selected(lm_out, to_center = ~ .,
-                                  to_scale  = ~ .)
+lm_stdall <- std_selected(lm_out,
+                          to_center = ~ .,
+                          to_scale  = ~ .)
 summary(lm_stdall)
 ```
 
-The coefficient in this solution,  `r round(coef(lm_stdall)["emotional_stability:conscientiousness"], 5)`, can be interpreted as the increase in the standardized effect of `emotional_stability` for each one standard
-deviation increase of `conscientiousness`. Naturally, this can be called the
-*standardized moderation effect* of `conscientiousness` (Cheung, Cheung, Lau, Hui, & Vong, 2022).
+The coefficient in this solution, 
+`r round(coef(lm_stdall)["emot:cons"], 5)`,
+can be interpreted as the change in the standardized effect of
+emotional stability for each one standard deviation increase of
+conscientiousness. Naturally, this can be called the
+*standardized moderation effect* of conscientiousness
+(Cheung, Cheung, Lau, Hui, & Vong, 2022).
 
 The output of `std_selected()` can be passed to other functions that accept the
-output of `lm()`. For example, we can use `visreg()` to visualize the moderation
-effect using the standardized solution. This package also has a simple function, `plotmod()`, for generating a typical plot
-of the moderation effect:
+output of `lm()`. This package also has a simple function,
+`plotmod()`, for generating a typical plot of the moderation effect:
 
 ```{r}
 plotmod(lm_stdall,
-        x = "emotional_stability",
-        w = "conscientiousness",
+        x = "emot",
+        w = "cons",
         x_label = "Emotional Stability",
         w_label = "Conscientiousness",
         y_label = "Sleep Duration")
 ```
 
-The function `plotmod()` also prints the conditional effects of the predictor,
-emotional stability in this example.
+The function `plotmod()` also prints the conditional effects of the predictor
+(focal variable), emotional stability in this example.
 
-# The Usual (Incorrect) Standardized Solution
+# The Common (Incorrect) Standardized Solution
 
 For comparison, this is the results of standardizing all variables, including
 the product term and the categorical variable.
 
 ```{r}
+library(lm.beta) # For generating the typical standardized solution
 lm_beta <- lm.beta(lm_out)
 summary(lm_beta)
 ```
 
 The coefficient of the *standardized* product term is
-`r round(coef(lm_beta)["emotional_stability:conscientiousness"], 5)`, which
+`r round(coef(lm_beta)["emot:cons"], 5)`, which
 *cannot* be interpreted as the change in the standardized effect of
-`emotional_stability` for each one standard deviation increase of `conscientiousness`.
+emotional stability for each one standard deviation increase of
+conscientiousness because the product term is standardized and can no longer
+be interpreted as the product of two variables in the model.
 
-# The Standardized Solution With Nonparametric Bootstrap Confidence Intervals
+# Improved Confidence Intervals
 
 It has been shown (e.g., Yuan & Chan, 2011) that the standard errors of
-standardized regression coefficients computed just by rescaling the variables
+standardized regression coefficients computed just by standardizing the variables
 are biased, and consequently the confidence intervals are also invalid. The
-function `std_selected_boot()` is a version of `std_selected()` that also
-report the confidence interval of the regression coefficients when rescaling is conducted,
-using nonparametric bootstrapping as suggested by Cheung, Cheung, Lau, Hui, & Vong (2022).
+function `std_selected_boot()` is a wrapper of `std_selected()` that also
+forms the confidence interval of the regression coefficients when standardizing
+is conducted, using nonparametric bootstrapping as suggested by
+Cheung, Cheung, Lau, Hui, and Vong (2022).
 
 We use the same example above that standardizes all variables except for
 categorical variables to illustrate this function. The argument `nboot`
 specifies the number of nonparametric bootstrap samples.
-The level of confidence set by `conf`. The default is .95, denoting a 95%
-confidence. If this is the desired level, this argument can be omitted.
+The level of confidence is set by `conf`. The default is .95, denoting 95%
+confidence intervals. If this is the desired level, this argument can be
+omitted.
 
 ```{r echo = FALSE}
 if (file.exists("eg2_lm_xwy_std_ci.rds")) {
@@ -159,6 +175,8 @@ lm_xwy_std_ci <- std_selected_boot(lm_out,
                                    nboot = 2000)
 ```
 
+If the default options are acceptable, the only additional argument is `nboot`.
+
 ```{r}
 summary(lm_xwy_std_ci)
 ```
@@ -168,10 +186,10 @@ tmp <- summary(lm_xwy_std_ci)$coefficients
 ```
 
 The standardized moderation effect is 
-`r formatC(tmp["emotional_stability:conscientiousness", "Estimate"], 4, format = "f")`,
+`r formatC(tmp["emot:cons", "Estimate"], 4, format = "f")`,
 and the 95% nonparametric bootstrap confidence interval is
-`r formatC(tmp["emotional_stability:conscientiousness", "CI Lower"], 4, format = "f")` to
-`r formatC(tmp["emotional_stability:conscientiousness", "CI Upper"], 4, format = "f")`.
+`r formatC(tmp["emot:cons", "CI Lower"], 4, format = "f")` to
+`r formatC(tmp["emot:cons", "CI Upper"], 4, format = "f")`.
 
 Note: As a side product, the nonparametric bootstrap percentile confidence of the other
 coefficients are also reported. They can be used for other variables that are
@@ -179,12 +197,13 @@ standardized in the same model, whether they are involved in the moderation or n
 
 # Further Information
 
-`vignette("plotmod"` illustrates how to use `plotmod()` to plot a moderation
+`vignette("plotmod")` illustrates how to use `plotmod()` to plot a moderation
 effect. If variables are standardized by `std_selected()`, `plotmod()` can
 indicate this in the plot.
 
 `vignette("cond_effect")` illustrates how to use `cond_effect()` to compute
-conditional effects, the effect of a predictor for selected levels of the moderator.
+conditional effects, the effect of a predictor (focal variable) for selected
+levels of the moderator.
 `cond_effect()` support outputs from `std_selected()`.
 
 # Reference(s)
@@ -194,5 +213,5 @@ Improving an old way to measure moderation effect in standardized units.
 Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
 
 Yuan, K.-H., & Chan, W. (2011). Biases and standard errors of standardized
-regression coefficients. *Psychometrika, 76*(4), 670–690.
+regression coefficients. *Psychometrika, 76*(4), 670-690.
 https://doi.org/10.1007/s11336-011-9224-6

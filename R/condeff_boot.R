@@ -1,5 +1,6 @@
 #' @details
-#' This function is a wrapper of [cond_effect()]. It calls [cond_effect()]
+#' [cond_effect_boot()] function is a wrapper of [cond_effect()].
+#' It calls [cond_effect()]
 #' once for each bootstrap sample, and then computes the nonparametric
 #' bootstrap percentile confidence intervals (Cheung, Cheung, Lau, Hui,
 #' & Vong, 2022). If the output object is the output of [std_selected()]
@@ -17,35 +18,55 @@
 #' before calling it, to ensure reproducibility.
 #'
 #' @return
-#' A data-frame-like object of the conditional effects. The class is
-#' `cond_effect` and the print method will print additional information of
-#' the conditional effects.
+#'
+#' [cond_effect_boot()] also returns a data-frame-like object of the
+#' conditional effects of the class
+#' `cond_effect`, with additional information from the bootstrapping stored
+#' in these attributes:
+#'
+#' - `boot_ci`: A data frame of the bootstrap confidence intervals of the
+#'              conditional effects.
+#'
+#' - `nboot`: The number of bootstrap samples requested.
+#'
+#' - `conf`: The level of confidence, in proportion.
+#'
+#' - `boot_est`: A matrix of the bootstrap estimates of the conditional effects.
+#'               The number of rows equal to `nboot`, and the number of columns
+#'               equal to the number of levels of the moderator.
+#'
+#' - `cond_effect_boot_call`: The call to `cond_effect_boot()`.
+#'
+#' - `boot_out`: If available, the original output from `boot::boot()`.
+#'
 #'
 #' @param output The output from [stats::lm()]. It can also accept the output
 #'               from
 #'               [std_selected()] or [std_selected_boot()].
+#' @param x      The focal variable (independent variable), that is, the
+#'               variable with its effect on the outcome variable (dependent)
+#'              being moderated. It must be a numeric variable.
+#' @param w      The moderator. Both numeric variables and categorical variables
+#'               (character or factor) are supported.
 #' @param ...  Arguments to be passed to [cond_effect()].
 #' @param conf The level of confidence for the confidence interval.
-#'              Default is .95.
+#'              Default is .95, to get 95% confidence intervals.
 #' @param nboot The number of bootstrap samples. Default is 100.
 #' @param boot_args A named list of arguments to be passed to [boot::boot()].
 #'                 Default is `NULL`.
 #' @param save_boot_est If `TRUE`, the default, the bootstrap estimates will
 #'                      be saved in the element
 #'                      `boot_est` of the output.
-#' @param full_output Whether the full output from [boot::boot()] is returned.
+#' @param full_output Whether the full output from [boot::boot()] will be
+#'                    returned.
 #'                    Default is `FALSE`. If `TRUE`, the full output from
 #'                    [boot::boot()] will be saved in the element `boot_out`
 #'                    of the output.
 #'
-#' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
-#'
-#'
 #' @examples
 #'
 #' # Load a sample data set
-#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
-#' # one categorical covariate (cat1) with three groups, and one dv (dv).
+#'
 #' dat <- test_x_1_w_1_v_1_cat1_n_500
 #'
 #' # Do a moderated regression by lm
@@ -64,14 +85,31 @@
 #'             nonparametric bootstrap confidence intervals.
 #' @order 2
 
-cond_effect_boot <- function(output, ...,
+cond_effect_boot <- function(output,
+                              x = NULL,
+                              w = NULL,
+                              ...,
                               conf = .95,
                               nboot = 100,
                               boot_args = NULL,
                               save_boot_est = TRUE,
                               full_output = FALSE) {
+    x0 <- deparse(substitute(x))
+    if (inherits(tryCatch(x00 <- as.character(x), error = function(e) e),
+                 "simpleError")) {
+        x <- x0
+      } else {
+        x <- x00
+      }
+    w0 <- deparse(substitute(w))
+    if (inherits(tryCatch(w00 <- as.character(w), error = function(e) e),
+                 "simpleError")) {
+        w <- w0
+      } else {
+        w <- w00
+      }
     dat <- stats::model.frame(output)
-    bootfct <- create_boot_cond_effect(output, ...)
+    bootfct <- create_boot_cond_effect(output, x, w, ...)
     boot_out <- do.call(boot::boot,
               c(list(data = dat,
                      statistic = bootfct,
@@ -83,7 +121,10 @@ cond_effect_boot <- function(output, ...,
                               type = "perc", index = x)$percent[4:5]
               }))
     colnames(cis) <- c("CI Lower", "CI Upper")
-    cond_effect_out <- cond_effect(output, ...)
+    cond_effect_out <- cond_effect(output = output,
+                                   x = x, 
+                                   w = w,
+                                   ...)
     rownames(cis) <- cond_effect_out$Level
     attr(cond_effect_out, "boot_ci") <- cis
     cse <- which(colnames(cond_effect_out) == "Std. Error")
@@ -102,12 +143,15 @@ cond_effect_boot <- function(output, ...,
     cond_effect_out
   }
 
-create_boot_cond_effect <- function(output, ...) {
+create_boot_cond_effect <- function(output, x, w, ...) {
   function(d, ind) {
         force(output)
         dat_i <- d[ind, ]
         out_i <- stats::update(output, data = dat_i)
-        cond_effect(out_i, ...)[, 3]
+        cond_effect(output = out_i,
+                    x = x,
+                    w = w,
+                    ...)[, 3]
       }
   }
 

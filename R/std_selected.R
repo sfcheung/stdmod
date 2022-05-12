@@ -1,14 +1,15 @@
 #' @title Standardize Variables in a Regression Model
 #'
-#' @description Standardize, mean-center, or scale by standard deviation
+#' @description Standardize, mean center, or scale by standard deviation
 #'              selected variables in a regression model and refit the model
 #'
 #' @details
 #' [std_selected()] was originally developed to compute the standardized
 #' moderation effect and the standardized coefficients for other predictors
 #' given an [lm()] output (Cheung, Cheung, Lau, Hui, & Vong, 2022).
-#' It has been revised such that users can be specify
-#' which variables in a regression model is mean-centered and/or rescaled by
+#' It has been extended such that users can specify
+#' which variables in a regression model are to be mean-centered and/or
+#' rescaled by
 #' their standard deviations. If the model has one or more interaction terms,
 #' they will be formed after the transformation, yielding the correct
 #' standardized solution for a moderated regression model. Moreover,
@@ -24,34 +25,41 @@
 #' @return
 #' The updated [lm()] output, with the class `std_selected` added. It will be
 #' treated as a usual [lm()] object by most functions. These are the major
-#' additional elements:
+#' additional element in the list:
 #'
-#'  - `scaled`: The terms scaled.
+#'  - `scaled_terms`: If not `NULL`, a character vector of the variables scaled.
 #'
-#'  - `centered`: The terms centered.
+#'  - `centered_terms`: If not `NULL`, a character vector of the variables mean-centered.
 #'
-#'  - `scaled_by`: The scaling factors. The value is 1 for terms
-#'                  not scaled.
+#'  - `scaled_by`: A numeric vector of the scaling factors for all the variables in
+#'                 the model. The value is 1 for terms not scaled.
 #'
-#'  - `centered_by`: The values used for centering. The value is 0 for
+#'  - `centered_by`: A numeric vector of the numbers used for centering for all
+#'                  the variables in the model. The value is 0 for
 #'                   terms not centered.
 #'
+#'  - `std_selected_call`: The original call.
+#'
+#'  - `lm_out_call`: The call in `lm_out`.
 #'
 #' @param lm_out The output from [lm()]
 #' @param to_scale The terms to be rescaled by standard deviation,
-#'       using a formula as in [lm()]. For example, if the terms to be scale
-#'       is `x1` and `x3`, use `~ x1 + x3`. No need to specify the
+#'       specified by a formula as in [lm()]. For example, if the terms to be scaled
+#'       are `x1` and `x3`, use `~ x1 + x3`. No need to specify the
 #'       interaction
-#'       term.
+#'       term. To scale the outcome variable, list it on the *right hand side*
+#'       as a predictor.
 #'       Specify only the original variables. If `NULL`, then no terms
-#'       will be rescaled by standard deviation. Variables that are not
+#'       will be rescaled by their standard deviations. Variables that are not
 #'       numeric will be ignored. Default is `NULL`.
-#' @param to_center The terms to be mean-centered, using a formula
+#' @param to_center The terms to be mean centered, specified by a formula
 #'        as in [lm()]. For example, if the terms to be centered
 #'        is `x1` and `x3`, use `~ x1 + x3`. No need to specify the
-#'        interaction term.
+#'        interaction term. To center  the outcome variable, list it on the
+#'        *right hand side*
+#'        as a predictor.
 #'        Specify only the original variables. If `NULL`, then no term
-#'        will be centered. Default is `NULL``.
+#'        will be centered. Default is `NULL`.
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
@@ -64,8 +72,7 @@
 #' @examples
 #'
 #' # Load a sample data set
-#' # It has one predictor (iv), one moderator (mod), on covariate (v1),
-#' # one categorical covariate (cat1) with three groups, and one dv (dv).
+#'
 #' dat <- test_x_1_w_1_v_1_cat1_n_500
 #' head(dat)
 #'

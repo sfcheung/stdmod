@@ -28,22 +28,25 @@ stdmod_boot(
 \arguments{
 \item{lm_out}{The output from \code{\link[=lm]{lm()}}.}
 
-\item{x}{The independent variable, that is, the variable with its effect
+\item{x}{The focal variable, that is, the variable with its effect
 being moderated. If supplied, its standard deviation will be
 used
-for rescaling. Default is \code{NULL}.}
+for rescaling. Also called the independent variable in some
+models. Default is \code{NULL}.}
 
 \item{w}{The moderator. If supplied, its standard deviation will be
 used
 for rescaling. Default is \code{NULL}.}
 
-\item{y}{The dependent (outcome) variable. If supplied, its standard
+\item{y}{The outcome variable (dependent variable) . If supplied,
+its standard
 deviation will be used for rescaling. Default is NULL.}
 
 \item{x_rescale}{If \code{TRUE}, will rescale x by its standard deviation.
 Default is \code{TRUE}.}
 
-\item{w_rescale}{If \code{TRUE}, will rescale w by its SD. Default is TRUE.}
+\item{w_rescale}{If \code{TRUE}, will rescale w by its standard deviation.
+Default is \code{TRUE}.}
 
 \item{y_rescale}{If \code{TRUE}, will rescale y by its standard deviation.
 Default is \code{TRUE}.}
@@ -62,7 +65,12 @@ Default is \code{NULL}.}
 Default is \code{FALSE}.}
 }
 \value{
-The standardized moderation effect.
+\code{\link[=stdmod]{stdmod()}} returns a scalar: The standardized moderation effect.
+
+\code{\link[=stdmod_boot]{stdmod_boot()}} returns a list with two elements. The element \code{ci} is
+a numeric vector of the bootstrap confidence interval. The element \code{boot_out},
+if not \code{NA}, is the output of \code{\link[boot:boot]{boot::boot()}}, which is used to do the
+bootstrapping.
 }
 \description{
 Compute the standardized moderation effect in a moderated
@@ -72,17 +80,20 @@ regression model.
 Two more general functions, \code{\link[=std_selected]{std_selected()}} and
 \code{\link[=std_selected_boot]{std_selected_boot()}}, have been developed and can do what these functions
 do and more. Users are recommended to use them instead of \code{\link[=stdmod]{stdmod()}} and
-\code{\link[=stdmod_boot]{stdmod_boot()}}.
+\code{\link[=stdmod_boot]{stdmod_boot()}}. These two functions will not be updated in the near
+future.
 
 Nevertheless, if computing the standardized moderation effect and
 forming its nonparametric
-bootstrap interval are what users need, then these functions can still
+bootstrap interval are all required, then these functions can still
 be used.
 
 \code{\link[=stdmod]{stdmod()}} computes the standardized moderation effect given an
 \code{\link[=lm]{lm()}} output using the formula from Cheung, Cheung, Lau, Hui, and Vong
 (2022). Users specify
-the moderator, the predictor, the outcome variable, and the corresponding
+the moderator, the focal variable (the variable with its effect on
+the outcome variable moderated), the outcome variable (dependent variable)
+, and the corresponding
 standardized moderation
 effect. Users can also select which variable(s) will be standardized.
 
@@ -110,8 +121,7 @@ moderation effect.
 \examples{
 
 # Load a test data of 500 cases
-# It has one predictor (iv), one moderator (mod), two covariates (v1 and v2),
-# and one dv (dv). All variables continuous.
+
 dat <- test_x_1_w_1_v_2_n_500
 
 # Do regression as usual:

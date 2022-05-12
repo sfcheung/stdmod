@@ -21,20 +21,23 @@ std_selected_boot(
 \item{lm_out}{The output from \code{\link[=lm]{lm()}}.}
 
 \item{to_scale}{The terms to be rescaled by standard deviation,
-using a formula as in \code{\link[=lm]{lm()}}. For example, if the terms to be scale
-is \code{x1} and \code{x3}, use \code{~ x1 + x3}. No need to specify the
+specified by a formula as in \code{\link[=lm]{lm()}}. For example, if the terms to be scaled
+are \code{x1} and \code{x3}, use \code{~ x1 + x3}. No need to specify the
 interaction
-term.
+term. To scale the outcome variable, list it on the \emph{right hand side}
+as a predictor.
 Specify only the original variables. If \code{NULL}, then no terms
-will be rescaled by standard deviation. Variables that are not
+will be rescaled by their standard deviations. Variables that are not
 numeric will be ignored. Default is \code{NULL}.}
 
-\item{to_center}{The terms to be mean-centered, using a formula
+\item{to_center}{The terms to be mean centered, specified by a formula
 as in \code{\link[=lm]{lm()}}. For example, if the terms to be centered
 is \code{x1} and \code{x3}, use \code{~ x1 + x3}. No need to specify the
-interaction term.
+interaction term. To center  the outcome variable, list it on the
+\emph{right hand side}
+as a predictor.
 Specify only the original variables. If \code{NULL}, then no term
-will be centered. Default is `NULL``.}
+will be centered. Default is \code{NULL}.}
 
 \item{...}{Arguments to be passed to \code{\link[=std_selected]{std_selected()}}.}
 
@@ -58,26 +61,45 @@ of the output.}
 \value{
 The updated \code{\link[=lm]{lm()}} output, with the class \code{std_selected} added. It will be
 treated as a usual \code{\link[=lm]{lm()}} object by most functions. These are the major
-additional elements:
+additional element in the list:
 \itemize{
-\item \code{scaled}: The terms scaled.
-\item \code{centered}: The terms centered.
-\item \code{scaled_by}: The scaling factors. The value is 1 for terms
-not scaled.
-\item \code{centered_by}: The values used for centering. The value is 0 for
+\item \code{scaled_terms}: If not \code{NULL}, a character vector of the variables scaled.
+\item \code{centered_terms}: If not \code{NULL}, a character vector of the variables mean-centered.
+\item \code{scaled_by}: A numeric vector of the scaling factors for all the variables in
+the model. The value is 1 for terms not scaled.
+\item \code{centered_by}: A numeric vector of the numbers used for centering for all
+the variables in the model. The value is 0 for
 terms not centered.
+\item \code{std_selected_call}: The original call.
+\item \code{lm_out_call}: The call in \code{lm_out}.
+}
+
+Like \code{\link[=std_selected]{std_selected()}}, \code{\link[=std_selected_boot]{std_selected_boot()}} returns the updated \code{\link[=lm]{lm()}}
+output, with the class \code{std_selected} added. The output of \code{\link[=std_selected_boot]{std_selected_boot()}}
+contain these additional elements in the list:
+\itemize{
+\item \code{boot_ci}: A data frame of the bootstrap confidence intervals of the
+regression coefficient.
+\item \code{nboot}: The number of bootstrap samples requested.
+\item \code{conf}: The level of confidence, in proportion.
+\item \code{boot_est}: A matrix of the bootstrap estimates of the regression coefficients.
+The number of rows equal to \code{nboot}, and the number of columns
+equal to the number of terms in the regression model.
+\item \code{std_selected_boot_call}: The call to \code{std_selected_boot()}.
+\item \code{boot_out}: If available, the original output from \code{boot::boot()}.
 }
 }
 \description{
-Standardize, mean-center, or scale by standard deviation
+Standardize, mean center, or scale by standard deviation
 selected variables in a regression model and refit the model
 }
 \details{
 \code{\link[=std_selected]{std_selected()}} was originally developed to compute the standardized
 moderation effect and the standardized coefficients for other predictors
 given an \code{\link[=lm]{lm()}} output (Cheung, Cheung, Lau, Hui, & Vong, 2022).
-It has been revised such that users can be specify
-which variables in a regression model is mean-centered and/or rescaled by
+It has been extended such that users can specify
+which variables in a regression model are to be mean-centered and/or
+rescaled by
 their standard deviations. If the model has one or more interaction terms,
 they will be formed after the transformation, yielding the correct
 standardized solution for a moderated regression model. Moreover,
@@ -90,7 +112,8 @@ standardized solution of a moderated regression, users
 just instruct the function to standardize all non-categorical variables
 in the regression model.
 
-This function is a wrapper of \code{\link[=std_selected]{std_selected()}}. It calls \code{\link[=std_selected]{std_selected()}}
+\code{\link[=std_selected_boot]{std_selected_boot()}} is a wrapper of \code{\link[=std_selected]{std_selected()}}. It calls
+\code{\link[=std_selected]{std_selected()}}
 once
 for each bootstrap sample, and then computes the nonparametric
 bootstrap
@@ -114,8 +137,7 @@ nonparametric bootstrap confidence intervals.
 \examples{
 
 # Load a sample data set
-# It has one predictor (iv), one moderator (mod), on covariate (v1),
-# one categorical covariate (cat1) with three groups, and one dv (dv).
+
 dat <- test_x_1_w_1_v_1_cat1_n_500
 head(dat)
 
