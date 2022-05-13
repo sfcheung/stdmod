@@ -237,7 +237,7 @@ plotmod <- function(output, x, w,
         }
         if (tmp > 3) {
           if (w_method == "percentile") {
-              w_levels_labels <- paste0(formatC(w_levels * 100,
+              w_levels_labels <- paste0(formatC(w_percentiles * 100,
                                                 digits = 0,
                                                 format = "f"),
                                         "%")
@@ -374,12 +374,10 @@ plotmod <- function(output, x, w,
     b_format <- paste0("%.", digits, "f")
 
     if (w_numeric) {
-        subtxt <- paste0(w_label, " low: ", x_label, " effect = ",
-                         sprintf(b_format, b_all[1]),
-                         "\n",
-                         w_label, " high: ", x_label, " effect = ",
-                         sprintf(b_format, b_all[2])
-                        )
+        tmp <- paste0(w_label, " ", w_levels_labels, ": ",
+                      x_label, " effect = ",
+                      sprintf(b_format, b_all))
+        subtxt <- paste(tmp, collapse = "\n")
       } else {
         subtxt <- paste0(w_levels,
                          ": ",
@@ -390,10 +388,11 @@ plotmod <- function(output, x, w,
       }
     if (w_numeric) {
         if (w_method == "percentile") {
+            tmp <- paste0(w_levels_labels, ": ",
+                          round(w_percentiles * 100, 0),
+                          "th percentile")
             cap_txt <- paste0(w_label, " levels: ",
-                              "Low: ", 100 * w_percentiles[1],
-                              "th percentile; Hi: ",
-                              100 * w_percentiles[2], "th percentile")
+                              paste0(tmp, collapse = "; "))
           }
         if (w_method == "sd") {
             cap_txt <- paste0(w_label, " levels: ",
