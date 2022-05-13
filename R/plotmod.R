@@ -374,12 +374,16 @@ plotmod <- function(output, x, w,
     b_format <- paste0("%.", digits, "f")
 
     if (w_numeric) {
-        subtxt <- paste0(w_label, " low: ", x_label, " effect = ",
-                         sprintf(b_format, b_all[1]),
-                         "\n",
-                         w_label, " high: ", x_label, " effect = ",
-                         sprintf(b_format, b_all[2])
-                        )
+        tmp <- paste0(w_label, " ", w_levels_labels, ": ",
+                      x_label, " effect = ",
+                      sprintf(b_format, b_all))
+        subtxt <- paste(tmp, collapse = "\n")
+        # subtxt <- paste0(w_label, " low: ", x_label, " effect = ",
+        #                  sprintf(b_format, b_all[1]),
+        #                  "\n",
+        #                  w_label, " high: ", x_label, " effect = ",
+        #                  sprintf(b_format, b_all[2])
+        #                 )
       } else {
         subtxt <- paste0(w_levels,
                          ": ",
