@@ -237,7 +237,7 @@ plotmod <- function(output, x, w,
         }
         if (tmp > 3) {
           if (w_method == "percentile") {
-              w_levels_labels <- paste0(formatC(w_levels * 100,
+              w_levels_labels <- paste0(formatC(w_percentiles * 100,
                                                 digits = 0,
                                                 format = "f"),
                                         "%")
