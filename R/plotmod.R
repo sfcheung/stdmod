@@ -228,6 +228,25 @@ plotmod <- function(output, x, w,
                               sd_levels = c(-1, 1),
                               sd_to_percentiles = w_sd_to_percentiles,
                               percentiles = w_percentiles)
+        tmp <- length(w_levels)
+        if (tmp == 2) {
+          w_levels_labels <- c("Low", "High")
+        }
+        if (tmp == 3) {
+          w_levels_labels <- c("Low", "Medium", "High")
+        }
+        if (tmp > 3) {
+          if (w_method == "percentile") {
+              w_levels_labels <- paste0(formatC(w_levels * 100,
+                                                digits = 0,
+                                                format = "f"),
+                                        "%")
+            } else {
+              w_levels_labels <- formatC(w_levels,
+                                         digits = 2,
+                                         format = "f")
+            }
+        }
       } else {
         w_lo <- NA
         w_hi <- NA
@@ -262,7 +281,7 @@ plotmod <- function(output, x, w,
                                             x_levels,
                                             w_levels,
                                             x_levels_labels = c("Low", "High"),
-                                            w_levels_labels = c("Low", "High"),
+                                            w_levels_labels = w_levels_labels,
                                             other_numeric_on = "mean",
                                             other_categorical_on = "reference")
           }
@@ -270,7 +289,7 @@ plotmod <- function(output, x, w,
             mf_list <- mapply(plot_df_meansd_w_numeric,
                               x_levels = x_levels_list,
                               w_levels = w_levels,
-                              w_levels_labels = c("Low", "High"),
+                              w_levels_labels = w_levels_labels,
                               MoreArgs = list(output = output,
                                               x = x,
                                               w = w,
