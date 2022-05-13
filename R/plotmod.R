@@ -378,12 +378,6 @@ plotmod <- function(output, x, w,
                       x_label, " effect = ",
                       sprintf(b_format, b_all))
         subtxt <- paste(tmp, collapse = "\n")
-        # subtxt <- paste0(w_label, " low: ", x_label, " effect = ",
-        #                  sprintf(b_format, b_all[1]),
-        #                  "\n",
-        #                  w_label, " high: ", x_label, " effect = ",
-        #                  sprintf(b_format, b_all[2])
-        #                 )
       } else {
         subtxt <- paste0(w_levels,
                          ": ",
@@ -394,10 +388,11 @@ plotmod <- function(output, x, w,
       }
     if (w_numeric) {
         if (w_method == "percentile") {
+            tmp <- paste0(w_levels_labels, ": ",
+                          round(w_percentiles * 100, 0),
+                          "th percentile")
             cap_txt <- paste0(w_label, " levels: ",
-                              "Low: ", 100 * w_percentiles[1],
-                              "th percentile; Hi: ",
-                              100 * w_percentiles[2], "th percentile")
+                              paste0(tmp, collapse = "; "))
           }
         if (w_method == "sd") {
             cap_txt <- paste0(w_label, " levels: ",
