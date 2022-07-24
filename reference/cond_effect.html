@@ -78,27 +78,27 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cond_effect</span><span class="op">(</span>
-  <span class="va">output</span>,
-  x <span class="op">=</span> <span class="cn">NULL</span>,
-  w <span class="op">=</span> <span class="cn">NULL</span>,
-  w_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sd"</span>, <span class="st">"percentile"</span><span class="op">)</span>,
-  w_percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.16</span>, <span class="fl">0.5</span>, <span class="fl">0.84</span><span class="op">)</span>,
-  w_sd_to_percentiles <span class="op">=</span> <span class="cn">NA</span>,
-  w_from_mean_in_sd <span class="op">=</span> <span class="fl">1</span>
-<span class="op">)</span>
-
-<span class="fu">cond_effect_boot</span><span class="op">(</span>
-  <span class="va">output</span>,
-  x <span class="op">=</span> <span class="cn">NULL</span>,
-  w <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>,
-  conf <span class="op">=</span> <span class="fl">0.95</span>,
-  nboot <span class="op">=</span> <span class="fl">100</span>,
-  boot_args <span class="op">=</span> <span class="cn">NULL</span>,
-  save_boot_est <span class="op">=</span> <span class="cn">TRUE</span>,
-  full_output <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cond_effect</span><span class="op">(</span></span>
+<span>  <span class="va">output</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  w <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  w_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sd"</span>, <span class="st">"percentile"</span><span class="op">)</span>,</span>
+<span>  w_percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.16</span>, <span class="fl">0.5</span>, <span class="fl">0.84</span><span class="op">)</span>,</span>
+<span>  w_sd_to_percentiles <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  w_from_mean_in_sd <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">cond_effect_boot</span><span class="op">(</span></span>
+<span>  <span class="va">output</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  w <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  conf <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  nboot <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  boot_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  save_boot_est <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  full_output <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -107,13 +107,19 @@
 <dd><p>The output from <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code>. It can also accept the output
 from
 <code><a href="std_selected.html">std_selected()</a></code> or <code><a href="std_selected.html">std_selected_boot()</a></code>.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>The focal variable (independent variable), that is, the
 variable with its effect on the outcome variable (dependent)
 being moderated. It must be a numeric variable.</p></dd>
+
+
 <dt>w</dt>
 <dd><p>The moderator. Both numeric variables and categorical variables
 (character or factor) are supported.</p></dd>
+
+
 <dt>w_method</dt>
 <dd><p>How to define "low", "medium", and "high" for the moderator
 levels.
@@ -127,6 +133,8 @@ the
 dataset are used: "low", "medium", and "high" are
 16th, 50th (median), and 84th percentiles, respectively.
 Ignored if <code>w</code> is categorical.</p></dd>
+
+
 <dt>w_percentiles</dt>
 <dd><p>If <code>w_method</code> is <code>"percentile"</code>, then this
 argument
@@ -140,6 +148,8 @@ which corresponds approximately
 to one SD below and above mean in a
 normal distribution, respectively.
 Ignored if <code>w</code> is categorical.</p></dd>
+
+
 <dt>w_sd_to_percentiles</dt>
 <dd><p>If <code>w_method</code> is <code>"percentile"</code> and
 this argument is
@@ -161,35 +171,52 @@ above the mean. Therefore, if
 lower
 and upper percentiles are 16th and 84th,
 respectively. Default is <code>NA</code>.</p></dd>
+
+
 <dt>w_from_mean_in_sd</dt>
 <dd><p>How many SD from mean is used to define
 "low" and
 "high" for the moderator. Default is 1.
 Ignored if <code>w</code> is categorical.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Arguments to be passed to <code>cond_effect()</code>.</p></dd>
+
+
 <dt>conf</dt>
 <dd><p>The level of confidence for the confidence interval.
 Default is .95, to get 95% confidence intervals.</p></dd>
+
+
 <dt>nboot</dt>
 <dd><p>The number of bootstrap samples. Default is 100.</p></dd>
+
+
 <dt>boot_args</dt>
 <dd><p>A named list of arguments to be passed to <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code>.
 Default is <code>NULL</code>.</p></dd>
+
+
 <dt>save_boot_est</dt>
 <dd><p>If <code>TRUE</code>, the default, the bootstrap estimates will
 be saved in the element
 <code>boot_est</code> of the output.</p></dd>
+
+
 <dt>full_output</dt>
 <dd><p>Whether the full output from <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> will be
 returned.
 Default is <code>FALSE</code>. If <code>TRUE</code>, the full output from
 <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> will be saved in the element <code>boot_out</code>
 of the output.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>cond_effect()</code> returns a data-frame-like object of the conditional effects.
+    
+
+<p><code>cond_effect()</code> returns a data-frame-like object of the conditional effects.
 The class is
 <code>cond_effect</code> and the print method will print additional information of
 the conditional effects. Additional information is stored in the
@@ -267,14 +294,14 @@ nonparametric bootstrap confidence intervals.</p></li>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co"># Load a sample data set</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Do a moderated regression by lm</span></span>
-<span class="r-in"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_raw</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Load a sample data set</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Do a moderated regression by lm</span></span></span>
+<span class="r-in"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_raw</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat)</span>
@@ -299,7 +326,7 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">cond_effect</span><span class="op">(</span><span class="va">lm_raw</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cond_effect</span><span class="op">(</span><span class="va">lm_raw</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The effects of iv on dv, conditional on mod:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Level     mod iv Effect   S.E.      t     p Sig</span>
@@ -321,9 +348,9 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - % Below: The percent of cases equal to or less than a level.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   in standard deviation (+ve above, -ve below).</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">cond_effect</span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">cond_effect</span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The effects of iv on dv, conditional on mod:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Level    mod iv Effect   S.E.      t     p Sig</span>
@@ -349,10 +376,10 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The variable(s) iv, mod is/are standardized.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Categorical moderator</span></span>
-<span class="r-in"><span class="va">lm_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">cat1</span> <span class="op">+</span> <span class="va">v1</span>, <span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_cat</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Categorical moderator</span></span></span>
+<span class="r-in"><span><span class="va">lm_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">cat1</span> <span class="op">+</span> <span class="va">v1</span>, <span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_cat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * cat1 + v1, data = dat)</span>
@@ -377,7 +404,7 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.5707,	Adjusted R-squared:  0.5655 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 109.2 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">cond_effect</span><span class="op">(</span><span class="va">lm_cat</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">cat1</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cond_effect</span><span class="op">(</span><span class="va">lm_cat</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">cat1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The effects of iv on dv, conditional on cat1:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Level cat1 iv Effect   S.E.      t     p Sig</span>
@@ -388,15 +415,15 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The regression model:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 	dv ~ iv * cat1 + v1</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Load a sample data set</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Do a moderated regression by lm</span></span>
-<span class="r-in"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_raw</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Load a sample data set</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Do a moderated regression by lm</span></span></span>
+<span class="r-in"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_raw</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat)</span>
@@ -421,9 +448,9 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">cond_effect</span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">cond_effect</span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The effects of iv on dv, conditional on mod:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Level    mod iv Effect   S.E.      t     p Sig</span>
@@ -449,10 +476,10 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The variable(s) iv, mod is/are standardized.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Form nonparametric bootstrap confidence intervals</span></span>
-<span class="r-in"><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">cond_effect_boot</span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span>, nboot <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">out</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Form nonparametric bootstrap confidence intervals</span></span></span>
+<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">cond_effect_boot</span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span>, nboot <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">out</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The effects of iv on dv, conditional on mod:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Level    mod iv Effect CI Lower CI Upper   S.E.      t     p Sig</span>
@@ -481,7 +508,7 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The variable(s) iv, mod is/are standardized.</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -496,7 +523,7 @@ nonparametric bootstrap confidence intervals.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

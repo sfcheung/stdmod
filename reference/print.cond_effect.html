@@ -78,59 +78,82 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for cond_effect</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>
-  <span class="va">x</span>,
-  nd <span class="op">=</span> <span class="fl">3</span>,
-  nd_stat <span class="op">=</span> <span class="fl">3</span>,
-  nd_p <span class="op">=</span> <span class="fl">3</span>,
-  title <span class="op">=</span> <span class="cn">TRUE</span>,
-  model <span class="op">=</span> <span class="cn">TRUE</span>,
-  level_info <span class="op">=</span> <span class="cn">TRUE</span>,
-  standardized <span class="op">=</span> <span class="cn">TRUE</span>,
-  boot_info <span class="op">=</span> <span class="cn">TRUE</span>,
-  table_only <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for cond_effect</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  nd <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  nd_stat <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  nd_p <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  title <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  model <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  level_info <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  standardized <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  boot_info <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  table_only <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>The output of <code><a href="cond_effect.html">cond_effect()</a></code> or <code><a href="cond_effect.html">cond_effect_boot()</a></code>.</p></dd>
+
+
 <dt>nd</dt>
 <dd><p>The number of digits for the variables.</p></dd>
+
+
 <dt>nd_stat</dt>
 <dd><p>The number of digits for test statistics (e.g., <em>t</em>).</p></dd>
+
+
 <dt>nd_p</dt>
 <dd><p>The number of digits for <em>p</em>-values.</p></dd>
+
+
 <dt>title</dt>
 <dd><p>If <code>TRUE</code>, print a title. Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>model</dt>
 <dd><p>If <code>TRUE</code>, print the regression model. Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>level_info</dt>
 <dd><p>If <code>TRUE</code>, print information for interpreting the
 levels of the moderator, such as the values of
 the levels and distance from the mean. Default
 is <code>TRUE</code>.</p></dd>
+
+
 <dt>standardized</dt>
 <dd><p>If <code>TRUE</code> and one or more variables are
 standardized, report it. Default is <code>TRUE</code>.`</p></dd>
+
+
 <dt>boot_info</dt>
 <dd><p>If <code>TRUE</code> and bootstrap estimates are in <code>x</code>,
 print information about the bootstrapping,
 such as the number of bootstrap samples.
 Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>table_only</dt>
 <dd><p>If <code>TRUE</code>, will suppress of other elements except
 for the table of conditional effects. Override
 arguments such as <code>title</code>, <code>model</code>, and <code>level_info</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments. Ignored by this function.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>x</code> is returned invisibility.</p>
+    
+
+<p><code>x</code> is returned invisibility.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -139,15 +162,15 @@ arguments such as <code>title</code>, <code>model</code>, and <code>level_info</
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co"># Load a sample data set</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Do a moderated regression by lm</span></span>
-<span class="r-in"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="cond_effect.html">cond_effect</a></span><span class="op">(</span><span class="va">lm_raw</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Load a sample data set</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Do a moderated regression by lm</span></span></span>
+<span class="r-in"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="cond_effect.html">cond_effect</a></span><span class="op">(</span><span class="va">lm_raw</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The effects of iv on dv, conditional on mod:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Level     mod iv Effect   S.E.      t     p Sig</span>
@@ -169,11 +192,11 @@ arguments such as <code>title</code>, <code>model</code>, and <code>level_info</
 <span class="r-out co"><span class="r-pr">#&gt;</span> - % Below: The percent of cases equal to or less than a level.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   in standard deviation (+ve above, -ve below).</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span>,</span>
-<span class="r-in">                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="cond_effect.html">cond_effect</a></span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span>,</span></span>
+<span class="r-in"><span>                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="cond_effect.html">cond_effect</a></span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The effects of iv on dv, conditional on mod:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Level    mod iv Effect   S.E.      t     p Sig</span>
@@ -199,7 +222,7 @@ arguments such as <code>title</code>, <code>model</code>, and <code>level_info</
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The variable(s) iv, mod is/are standardized.</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -214,7 +237,7 @@ arguments such as <code>title</code>, <code>model</code>, and <code>level_info</
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

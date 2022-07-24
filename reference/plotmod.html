@@ -78,29 +78,29 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotmod</span><span class="op">(</span>
-  <span class="va">output</span>,
-  <span class="va">x</span>,
-  <span class="va">w</span>,
-  <span class="va">x_label</span>,
-  <span class="va">w_label</span>,
-  <span class="va">y_label</span>,
-  <span class="va">title</span>,
-  digits <span class="op">=</span> <span class="fl">3</span>,
-  x_from_mean_in_sd <span class="op">=</span> <span class="fl">1</span>,
-  w_from_mean_in_sd <span class="op">=</span> <span class="fl">1</span>,
-  w_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sd"</span>, <span class="st">"percentile"</span><span class="op">)</span>,
-  w_percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.16</span>, <span class="fl">0.84</span><span class="op">)</span>,
-  x_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sd"</span>, <span class="st">"percentile"</span><span class="op">)</span>,
-  x_percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.16</span>, <span class="fl">0.84</span><span class="op">)</span>,
-  w_sd_to_percentiles <span class="op">=</span> <span class="cn">NA</span>,
-  x_sd_to_percentiles <span class="op">=</span> <span class="cn">NA</span>,
-  note_standardized <span class="op">=</span> <span class="cn">TRUE</span>,
-  no_title <span class="op">=</span> <span class="cn">FALSE</span>,
-  line_width <span class="op">=</span> <span class="fl">1</span>,
-  point_size <span class="op">=</span> <span class="fl">5</span>,
-  graph_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"default"</span>, <span class="st">"tumble"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotmod</span><span class="op">(</span></span>
+<span>  <span class="va">output</span>,</span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">w</span>,</span>
+<span>  <span class="va">x_label</span>,</span>
+<span>  <span class="va">w_label</span>,</span>
+<span>  <span class="va">y_label</span>,</span>
+<span>  <span class="va">title</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  x_from_mean_in_sd <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  w_from_mean_in_sd <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  w_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sd"</span>, <span class="st">"percentile"</span><span class="op">)</span>,</span>
+<span>  w_percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.16</span>, <span class="fl">0.84</span><span class="op">)</span>,</span>
+<span>  x_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sd"</span>, <span class="st">"percentile"</span><span class="op">)</span>,</span>
+<span>  x_percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.16</span>, <span class="fl">0.84</span><span class="op">)</span>,</span>
+<span>  w_sd_to_percentiles <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  x_sd_to_percentiles <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  note_standardized <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  no_title <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  line_width <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  point_size <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  graph_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"default"</span>, <span class="st">"tumble"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -109,21 +109,33 @@
 <dd><p>The output
 of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code>, <code><a href="std_selected.html">std_selected()</a></code>, or
 <code><a href="std_selected.html">std_selected_boot()</a></code>.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>The name of the focal variable (x-axis) in `output``. It
 can be the name of the variable, with or without quotes.
 Currently only numeric variables are supported.</p></dd>
+
+
 <dt>w</dt>
 <dd><p>The name of the moderator in <code>output</code>. It
 can be the name of the variable, with or without quotes.</p></dd>
+
+
 <dt>x_label</dt>
 <dd><p>The label for the X-axis. Default is the value of <code>x</code>.</p></dd>
+
+
 <dt>w_label</dt>
 <dd><p>The label for the legend for the lines.
 Default is the value of<code>w</code>.</p></dd>
+
+
 <dt>y_label</dt>
 <dd><p>The label for the Y-axis. Default is the
 name of the response variable in the model.</p></dd>
+
+
 <dt>title</dt>
 <dd><p>The title of the graph. If not supplied, it will be
 generated from the variable
@@ -132,18 +144,26 @@ and <code>w_label</code>). If <code>""</code>, no title will be printed.
 This can be used when the plot is for manuscript
 submission and figures are required to have no
 titles.</p></dd>
+
+
 <dt>digits</dt>
 <dd><p>Number of decimal places to print. Default is 3.</p></dd>
+
+
 <dt>x_from_mean_in_sd</dt>
 <dd><p>How many SD from mean is used to define
 "low" and
 "high" for the focal variable.
 Default is 1.</p></dd>
+
+
 <dt>w_from_mean_in_sd</dt>
 <dd><p>How many SD from mean is used to define
 "low" and
 "high" for the moderator. Default is 1.
 Ignored if <code>w</code> is categorical.</p></dd>
+
+
 <dt>w_method</dt>
 <dd><p>How to define "high" and "low" for the moderator levels.
 Default is in terms of the
@@ -153,6 +173,8 @@ If equal to
 the
 dataset are used.
 Ignored if <code>w</code> is categorical.</p></dd>
+
+
 <dt>w_percentiles</dt>
 <dd><p>If <code>w_method</code> is <code>"percentile"</code>, then this
 argument
@@ -166,6 +188,8 @@ which corresponds approximately
 to one SD below and above mean for a
 normal distribution, respectively.
 Ignored if <code>w</code> is categorical.</p></dd>
+
+
 <dt>x_method</dt>
 <dd><p>How to define "high" and "low" for the focal
 variable levels.
@@ -175,6 +199,8 @@ If equal to
 <code>"percentile"</code>, then the percentiles of the
 focal variable in the
 dataset is used.</p></dd>
+
+
 <dt>x_percentiles</dt>
 <dd><p>If <code>x_method</code> is <code>"percentile"</code>, then this
 argument
@@ -187,6 +213,8 @@ the 16th and 84th percentiles,
 which corresponds approximately
 to one SD below and above mean for a
 normal distribution, respectively.</p></dd>
+
+
 <dt>w_sd_to_percentiles</dt>
 <dd><p>If <code>w_method</code> is <code>"percentile"</code> and
 this argument is
@@ -208,6 +236,8 @@ above the mean. Therefore, if
 lower
 and upper percentiles are 16th and 84th,
 respectively. Default is <code>NA</code>.</p></dd>
+
+
 <dt>x_sd_to_percentiles</dt>
 <dd><p>If <code>x_method</code> is <code>"percentile"</code> and this
 argument is
@@ -223,29 +253,42 @@ above the mean. Therefore, if
 <code>x_sd_to_percentiles</code> is set to 1, then the lower
 and upper percentiles are 16th and 84th,
 respectively. Default is <code>NA</code>.</p></dd>
+
+
 <dt>note_standardized</dt>
 <dd><p>If <code>TRUE</code>, will check whether a variable has SD
 nearly equal to one. If yes, will report this in the
 plot.
 Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>no_title</dt>
 <dd><p>If <code>TRUE</code>, title will be suppressed. Default is <code>FALSE</code>.</p></dd>
+
+
 <dt>line_width</dt>
 <dd><p>The width of the lines as used in
 <code><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">ggplot2::geom_segment()</a></code>.
 Default is 1.</p></dd>
+
+
 <dt>point_size</dt>
 <dd><p>The size of the points as used in <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">ggplot2::geom_point()</a></code>.
 Default is 5.</p></dd>
+
+
 <dt>graph_type</dt>
 <dd><p>If <code>"default"</code>, the typical line-graph with equal end-points
 will be plotted. If <code>"tubmle"</code>, then the tumble graph
 proposed by Bodner (2016) will be plotted. Default is
 <code>"default"</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A ggplot2 graph. Plotted if not assigned to a name. It can
+    
+
+<p>A ggplot2 graph. Plotted if not assigned to a name. It can
 be further modified like a usual ggplot2 graph.</p>
     </div>
     <div id="details">
@@ -271,39 +314,39 @@ Statistics, 41</em>(6), 593-604. <a href="https://doi.org/10.3102/10769986166570
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co"># Do a moderated regression by lm</span></span>
-<span class="r-in"><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">emotional_stability</span><span class="op">*</span><span class="va">conscientiousness</span>, <span class="va">sleep_emo_con</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">plotmod</span><span class="op">(</span><span class="va">lm_out</span>,</span>
-<span class="r-in">        x <span class="op">=</span> <span class="va">emotional_stability</span>,</span>
-<span class="r-in">        w <span class="op">=</span> <span class="va">conscientiousness</span>,</span>
-<span class="r-in">        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,</span>
-<span class="r-in">        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,</span>
-<span class="r-in">        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Do a moderated regression by lm</span></span></span>
+<span class="r-in"><span><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">emotional_stability</span><span class="op">*</span><span class="va">conscientiousness</span>, <span class="va">sleep_emo_con</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plotmod</span><span class="op">(</span><span class="va">lm_out</span>,</span></span>
+<span class="r-in"><span>        x <span class="op">=</span> <span class="va">emotional_stability</span>,</span></span>
+<span class="r-in"><span>        w <span class="op">=</span> <span class="va">conscientiousness</span>,</span></span>
+<span class="r-in"><span>        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,</span></span>
+<span class="r-in"><span>        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,</span></span>
+<span class="r-in"><span>        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotmod-1.png" alt="" width="576" height="384"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Standardize all variables except for categorical variables</span></span>
-<span class="r-in"><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>,</span>
-<span class="r-in">                       to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
-<span class="r-in">                       to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">plotmod</span><span class="op">(</span><span class="va">lm_std</span>,</span>
-<span class="r-in">        x <span class="op">=</span> <span class="va">emotional_stability</span>,</span>
-<span class="r-in">        w <span class="op">=</span> <span class="va">conscientiousness</span>,</span>
-<span class="r-in">        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,</span>
-<span class="r-in">        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,</span>
-<span class="r-in">        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Standardize all variables except for categorical variables</span></span></span>
+<span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>,</span></span>
+<span class="r-in"><span>                       to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>                       to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">plotmod</span><span class="op">(</span><span class="va">lm_std</span>,</span></span>
+<span class="r-in"><span>        x <span class="op">=</span> <span class="va">emotional_stability</span>,</span></span>
+<span class="r-in"><span>        w <span class="op">=</span> <span class="va">conscientiousness</span>,</span></span>
+<span class="r-in"><span>        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,</span></span>
+<span class="r-in"><span>        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,</span></span>
+<span class="r-in"><span>        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotmod-2.png" alt="" width="576" height="384"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Tumble Graph</span></span>
-<span class="r-in"><span class="fu">plotmod</span><span class="op">(</span><span class="va">lm_std</span>,</span>
-<span class="r-in">        x <span class="op">=</span> <span class="va">emotional_stability</span>,</span>
-<span class="r-in">        w <span class="op">=</span> <span class="va">conscientiousness</span>,</span>
-<span class="r-in">        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,</span>
-<span class="r-in">        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,</span>
-<span class="r-in">        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span>,</span>
-<span class="r-in">        graph_type <span class="op">=</span> <span class="st">"tumble"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Tumble Graph</span></span></span>
+<span class="r-in"><span><span class="fu">plotmod</span><span class="op">(</span><span class="va">lm_std</span>,</span></span>
+<span class="r-in"><span>        x <span class="op">=</span> <span class="va">emotional_stability</span>,</span></span>
+<span class="r-in"><span>        w <span class="op">=</span> <span class="va">conscientiousness</span>,</span></span>
+<span class="r-in"><span>        x_label <span class="op">=</span> <span class="st">"Emotional Stability"</span>,</span></span>
+<span class="r-in"><span>        w_label <span class="op">=</span> <span class="st">"Conscientiousness"</span>,</span></span>
+<span class="r-in"><span>        y_label <span class="op">=</span> <span class="st">"Sleep Duration"</span>,</span></span>
+<span class="r-in"><span>        graph_type <span class="op">=</span> <span class="st">"tumble"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotmod-3.png" alt="" width="576" height="384"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -318,7 +361,7 @@ Statistics, 41</em>(6), 593-604. <a href="https://doi.org/10.3102/10769986166570
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

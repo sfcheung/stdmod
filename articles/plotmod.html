@@ -96,7 +96,7 @@
       <h1 data-toc-skip>Moderation Effects Plots by plotmod()</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung</h4>
             
-            <h4 data-toc-skip class="date">2022-05-13</h4>
+            <h4 data-toc-skip class="date">2022-07-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/plotmod.Rmd" class="external-link"><code>vignettes/plotmod.Rmd</code></a></small>
       <div class="hidden name"><code>plotmod.Rmd</code></div>
@@ -127,14 +127,14 @@
 </ul>
 <p>These are the only required arguments. Just setting them can generate the graph:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/">stdmod</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,
-             <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,
-        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-        w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/">stdmod</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
+<span>             <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,</span>
+<span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -146,13 +146,13 @@
 <p>If the moderator is a numeric variable, then two lines will be drawn, by default. One line for one standard deviation (SD) below the mean on the moderator (“Low”), and the other for one SD above the mean (“High”).</p>
 <p>Users can also use percentiles to define “Low” and “High” by setting <code>w_method</code> to <code>"percentile"</code>. By default, 16th percentile and 84th percentile are used, which correspond approximately to one SD below and above mean, respectively, for a normal distribution.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,
-             <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,
-        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
-        w_method <span class="op">=</span> <span class="st">"percentile"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
+<span>             <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,</span>
+<span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
+<span>        w_method <span class="op">=</span> <span class="st">"percentile"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level4">
@@ -160,16 +160,16 @@
 </h4>
 <p>If the moderator is a categorical variable (a string variable or a factor), then one line will be drawn for each category.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">61452</span><span class="op">)</span>
-<span class="va">sleep_emo_con</span><span class="op">$</span><span class="va">city</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alpha"</span>, <span class="st">"Beta"</span>, <span class="st">"Gamma"</span><span class="op">)</span>,
-                             <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span>,
-                             replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">lm_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">city</span>,
-             <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_cat</span>,
-        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-        w <span class="op">=</span> <span class="st">"city"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">61452</span><span class="op">)</span></span>
+<span><span class="va">sleep_emo_con</span><span class="op">$</span><span class="va">city</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alpha"</span>, <span class="st">"Beta"</span>, <span class="st">"Gamma"</span><span class="op">)</span>,</span>
+<span>                             <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span>,</span>
+<span>                             replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">lm_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">city</span>,</span>
+<span>             <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_cat</span>,</span>
+<span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>        w <span class="op">=</span> <span class="st">"city"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -180,13 +180,13 @@
 <p>The idea is simple. Instead of using the SD of the predictor in the whole sample, the mean and SD of the predictor for the selected level of the moderator is used. (See the technical notes below on how it is implemented in <code><a href="../reference/plotmod.html">plotmod()</a></code>.)</p>
 <p>To plot a tumble graph, just set <code>graph_type</code> to <code>"tumble"</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,
-             <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,
-        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
-        graph_type <span class="op">=</span> <span class="st">"tumble"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
+<span>             <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,</span>
+<span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
+<span>        graph_type <span class="op">=</span> <span class="st">"tumble"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The graph above shows that, the distribution of the predictor shifts to the left when the moderator is low.</p>
 </div>
@@ -199,15 +199,15 @@
 </h3>
 <p>By default, the variable names are used in the graph. Users can supply labels that will be used instead of variable names by setting <code>x_label</code>, <code>w_label</code>, and <code>y_label</code> to strings for the predictor, moderator, and outcome variable, respectively.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,
-             <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,
-        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
-        x_label <span class="op">=</span> <span class="st">"EMO"</span>,
-        w_label <span class="op">=</span> <span class="st">"CON"</span>,
-        y_label <span class="op">=</span> <span class="st">"SLEEP"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
+<span>             <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,</span>
+<span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
+<span>        x_label <span class="op">=</span> <span class="st">"EMO"</span>,</span>
+<span>        w_label <span class="op">=</span> <span class="st">"CON"</span>,</span>
+<span>        y_label <span class="op">=</span> <span class="st">"SLEEP"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -215,13 +215,13 @@
 </h3>
 <p>The default title is “Moderation Effect”. This can be changed via the argument <code>title</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,
-             <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,
-        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
-        title <span class="op">=</span> <span class="st">"EMO Effects For Low/High CON"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
+<span>             <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,</span>
+<span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
+<span>        title <span class="op">=</span> <span class="st">"EMO Effects For Low/High CON"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Some journals require submitted figures to have no title because they will be described by figure captions, supplied separately. The title can be disabled by setting <code>no_title</code> to <code>TRUE</code>.</p>
 </div>
@@ -230,14 +230,14 @@
 </h3>
 <p><code><a href="../reference/plotmod.html">plotmod()</a></code> supports basic control of the lines. The width of the lines can be set by <code>line_width</code> and the size on the end-points can be set by <code>point_size</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,
-             <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,
-        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
-        point_size <span class="op">=</span> <span class="fl">8</span>,
-        line_width <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
+<span>             <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,</span>
+<span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
+<span>        point_size <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>        line_width <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -249,14 +249,14 @@
 </h3>
 <p>By default, <code><a href="../reference/plotmod.html">plotmod()</a></code> prints the conditional effects of the predictor as a subtitle. This can be disabled by adding a <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> call to the output and set <code>plot.subtitle</code> to <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank()</a></code>, which removes the subtitle:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,
-             <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,
-              x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-              w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
-<span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
+<span>             <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,</span>
+<span>              x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>              w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -264,13 +264,13 @@
 </h3>
 <p>By default, the definitions of the levels of moderator (e.g., one SD below mean for “Low” and one SD above mean for “High”) are printed as a caption. This can also be disabled by adding a <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> call and set <code>plot.caption</code> to <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank()</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,
-             <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,
-             x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-             w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span>
-<span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
+<span>             <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,</span>
+<span>             x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>             w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
@@ -278,15 +278,15 @@
 </h3>
 <p>If the output is generated by <code><a href="../reference/std_selected.html">std_selected()</a></code> or <code><a href="../reference/std_selected.html">std_selected_boot()</a></code>, <code><a href="../reference/plotmod.html">plotmod()</a></code> will try to detect if a variable is standardized or not, and report this in the graph:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,
-             <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>,
-                       to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span>,
-                       to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span><span class="op">)</span>
-<span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_std</span>,
-        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-        w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
+<span>             <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>,</span>
+<span>                       to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span>,</span>
+<span>                       to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_std</span>,</span>
+<span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>If the predictor, moderator, and outcome variable are all standardized, then the moderation effect is standardized moderation effect (Cheung, Cheung, Lau, Hui, &amp; Vong, 2022), and the conditional effect printed on the graph are the standardized effects of the predictor for different levels of the moderator.</p>
 <p>If which variables are standardized will be reported in the main text and so the figure does not need to report this, set <code>note_standardized</code> to <code>FALSE</code>.</p>
@@ -297,14 +297,14 @@
 </h2>
 <p>The output of <code><a href="../reference/plotmod.html">plotmod()</a></code> is a <code>ggplot</code> object. Therefore, it can be manipulated by functions that modify a <code>ggplot</code> object. For example, users can change the colors of the lines and the theme:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,
-             <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_std</span>,
-              x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-              w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span>
-<span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
+<span>             <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_std</span>,</span>
+<span>              x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>              w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
@@ -344,7 +344,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

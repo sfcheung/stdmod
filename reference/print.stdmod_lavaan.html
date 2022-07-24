@@ -78,27 +78,36 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for stdmod_lavaan</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, conf <span class="op">=</span> <span class="fl">0.95</span>, nd <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for stdmod_lavaan</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, conf <span class="op">=</span> <span class="fl">0.95</span>, nd <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>The output of <code><a href="stdmod_lavaan.html">stdmod_lavaan()</a></code>.</p></dd>
+
+
 <dt>conf</dt>
 <dd><p>If nonparametric bootstrapping has been conducted by
 <code><a href="stdmod_lavaan.html">stdmod_lavaan()</a></code>,
 this is the level of confidence in proportion (.95 denotes 95%),
 of the confidence interval. Default is .95.</p></dd>
+
+
 <dt>nd</dt>
 <dd><p>The number of digits to be printed.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Optional arguments. Ignored.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>x</code> is returned invisibly.</p>
+    
+
+<p><code>x</code> is returned invisibly.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -107,31 +116,31 @@ of the confidence interval. Default is .95.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co"># Load a test data of 500 cases</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_mod1</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mod</span> <span class="op">&lt;-</span></span>
-<span class="r-in"><span class="st">"</span>
-<span class="r-in">med ~ iv + mod + iv:mod + cov1</span>
-<span class="r-in">dv ~ med + cov2</span>
-<span class="r-in">"</span></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">sem</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Load a test data of 500 cases</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_mod1</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mod</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span><span class="st">"</span></span></span>
+<span class="r-in"><span><span class="st">med ~ iv + mod + iv:mod + cov1</span></span></span>
+<span class="r-in"><span><span class="st">dv ~ med + cov2</span></span></span>
+<span class="r-in"><span><span class="st">"</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">sem</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     med~iv    med~mod med~iv:mod   med~cov1     dv~med    dv~cov2   med~~med </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      0.221      0.104      0.257      0.104      0.246      0.191      0.201 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     dv~~dv </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      0.169 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Compute the standardized moderation effect</span></span>
-<span class="r-in"><span class="va">out_noboot</span> <span class="op">&lt;-</span> <span class="fu"><a href="stdmod_lavaan.html">stdmod_lavaan</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">fit</span>,</span>
-<span class="r-in">                            x <span class="op">=</span> <span class="st">"iv"</span>,</span>
-<span class="r-in">                            y <span class="op">=</span> <span class="st">"med"</span>,</span>
-<span class="r-in">                            w <span class="op">=</span> <span class="st">"mod"</span>,</span>
-<span class="r-in">                            x_w <span class="op">=</span> <span class="st">"iv:mod"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">out_noboot</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Compute the standardized moderation effect</span></span></span>
+<span class="r-in"><span><span class="va">out_noboot</span> <span class="op">&lt;-</span> <span class="fu"><a href="stdmod_lavaan.html">stdmod_lavaan</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">fit</span>,</span></span>
+<span class="r-in"><span>                            x <span class="op">=</span> <span class="st">"iv"</span>,</span></span>
+<span class="r-in"><span>                            y <span class="op">=</span> <span class="st">"med"</span>,</span></span>
+<span class="r-in"><span>                            w <span class="op">=</span> <span class="st">"mod"</span>,</span></span>
+<span class="r-in"><span>                            x_w <span class="op">=</span> <span class="st">"iv:mod"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">out_noboot</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stdmod_lavaan(fit = fit, x = "iv", y = "med", w = "mod", x_w = "iv:mod")</span>
@@ -145,22 +154,22 @@ of the confidence interval. Default is .95.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              lhs op    rhs   est    se      z pvalue ci.lower ci.upper</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Original     med  ~ iv:mod 0.257 0.025 10.169      0    0.208    0.307</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Standardized med  ~ iv:mod 0.440    NA     NA     NA       NA       NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Compute the standardized moderation effect and</span></span>
-<span class="r-in"><span class="co"># its percentile confidence interval based on nonparametric bootstrapping</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">8479075</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">out_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="stdmod_lavaan.html">stdmod_lavaan</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">fit</span>,</span>
-<span class="r-in">                                      x <span class="op">=</span> <span class="st">"iv"</span>,</span>
-<span class="r-in">                                      y <span class="op">=</span> <span class="st">"med"</span>,</span>
-<span class="r-in">                                      w <span class="op">=</span> <span class="st">"mod"</span>,</span>
-<span class="r-in">                                      x_w <span class="op">=</span> <span class="st">"iv:mod"</span>,</span>
-<span class="r-in">                                      boot_ci <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">                                      R <span class="op">=</span> <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Compute the standardized moderation effect and</span></span></span>
+<span class="r-in"><span><span class="co"># its percentile confidence interval based on nonparametric bootstrapping</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">8479075</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="va">out_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="stdmod_lavaan.html">stdmod_lavaan</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">fit</span>,</span></span>
+<span class="r-in"><span>                                      x <span class="op">=</span> <span class="st">"iv"</span>,</span></span>
+<span class="r-in"><span>                                      y <span class="op">=</span> <span class="st">"med"</span>,</span></span>
+<span class="r-in"><span>                                      w <span class="op">=</span> <span class="st">"mod"</span>,</span></span>
+<span class="r-in"><span>                                      x_w <span class="op">=</span> <span class="st">"iv:mod"</span>,</span></span>
+<span class="r-in"><span>                                      boot_ci <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                                      R <span class="op">=</span> <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    user  system elapsed </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1.093   0.011   1.104 </span>
-<span class="r-in"><span class="co"># In real analysis, R should be at least 2000.</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">out_boot</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1.269   0.061   1.337 </span>
+<span class="r-in"><span><span class="co"># In real analysis, R should be at least 2000.</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">out_boot</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stdmod_lavaan(fit = fit, x = "iv", y = "med", w = "mod", x_w = "iv:mod", </span>
@@ -182,8 +191,8 @@ of the confidence interval. Default is .95.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Type: Percentile</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Number of bootstrap samples requests: 50</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Number of bootstrap samples with valid results: 50</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -198,7 +207,7 @@ of the confidence interval. Default is .95.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

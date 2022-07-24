@@ -82,26 +82,33 @@ of estimates in the output of <code><a href="std_selected.html">std_selected()</
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for std_selected</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">object</span>, type <span class="op">=</span> <span class="st">"lm"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for std_selected</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">object</span>, type <span class="op">=</span> <span class="st">"lm"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>The output of <code><a href="std_selected.html">std_selected()</a></code> or <code><a href="std_selected.html">std_selected_boot()</a></code>.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>The type of variance-covariance matrix. Default is <code>"lm"</code>,
 returned by the <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">stats::vcov()</a></code> method for the output of
 <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>. If set to <code>"boot"</code>,
 the variance-covariance matrix of the bootstrap estimates
 is returned.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Arguments to be passed to <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">stats::vcov()</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A matrix of the variances and covariances of the parameter estimates.</p>
+    
+
+<p>A matrix of the variances and covariances of the parameter estimates.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -115,10 +122,10 @@ users can request the variance-covariance matrix of the bootstrap estimates.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Load a sample data set</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load a sample data set</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         dv       iv       mod        v1 cat1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 4946.751 12.76737  96.85621 11.756899  gp1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 6635.081 14.89097 106.25696 11.371237  gp2</span>
@@ -126,17 +133,17 @@ users can request the variance-covariance matrix of the bootstrap estimates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 7240.781 16.65782 104.80266 10.508913  gp1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 5775.759 11.84448  95.85912 15.093480  gp3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 7725.783 16.31270 100.20561  3.442902  gp2</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Do a moderated regression by lm</span></span>
-<span class="r-in"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Standardize all variables except for categorical variables.</span></span>
-<span class="r-in"><span class="co"># Interaction terms are formed after standardization.</span></span>
-<span class="r-in"><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
-<span class="r-in">                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># VCOV of lm output</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Do a moderated regression by lm</span></span></span>
+<span class="r-in"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Standardize all variables except for categorical variables.</span></span></span>
+<span class="r-in"><span><span class="co"># Interaction terms are formed after standardization.</span></span></span>
+<span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># VCOV of lm output</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               (Intercept)            iv           mod            v1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  2.328093e-03 -2.424492e-05 -4.453643e-05  5.904665e-07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv          -2.424492e-05  7.487428e-04 -3.910411e-05 -1.570052e-06</span>
@@ -153,18 +160,18 @@ users can request the variance-covariance matrix of the bootstrap estimates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2      4.309522e-03  2.323477e-03 -1.319904e-06</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3      2.323477e-03  4.733274e-03  1.279117e-05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -1.319904e-06  1.279117e-05  6.477400e-04</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Standardize all variables as in std_selected above, and compute the</span></span>
-<span class="r-in"><span class="co"># nonparametric bootstrapping percentile confidence intervals.</span></span>
-<span class="r-in"><span class="va">lm_std_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_raw</span>,</span>
-<span class="r-in">                                 to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
-<span class="r-in">                                 to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
-<span class="r-in">                                 conf <span class="op">=</span> <span class="fl">.95</span>,</span>
-<span class="r-in">                                 nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># In real analysis, nboot should be at least 2000.</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># VCOV of lm output</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Standardize all variables as in std_selected above, and compute the</span></span></span>
+<span class="r-in"><span><span class="co"># nonparametric bootstrapping percentile confidence intervals.</span></span></span>
+<span class="r-in"><span><span class="va">lm_std_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_raw</span>,</span></span>
+<span class="r-in"><span>                                 to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>                                 to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>                                 conf <span class="op">=</span> <span class="fl">.95</span>,</span></span>
+<span class="r-in"><span>                                 nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># In real analysis, nboot should be at least 2000.</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># VCOV of lm output</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               (Intercept)            iv           mod            v1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  2.328093e-03 -2.424492e-05 -4.453643e-05  5.904665e-07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv          -2.424492e-05  7.487428e-04 -3.910411e-05 -1.570052e-06</span>
@@ -181,9 +188,9 @@ users can request the variance-covariance matrix of the bootstrap estimates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2      4.309522e-03  2.323477e-03 -1.319904e-06</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3      2.323477e-03  4.733274e-03  1.279117e-05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -1.319904e-06  1.279117e-05  6.477400e-04</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># VCOV of bootstrap estimates</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">lm_std_boot</span>, type <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># VCOV of bootstrap estimates</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">lm_std_boot</span>, type <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               (Intercept)            iv           mod            v1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  1.536489e-03  9.568250e-05 -1.095276e-04  0.0001865437</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv           9.568250e-05  4.146328e-04 -2.432351e-04  0.0000340697</span>
@@ -200,7 +207,7 @@ users can request the variance-covariance matrix of the bootstrap estimates.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2      0.0045177085  2.407089e-03 -3.947109e-04</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3      0.0024070895  3.914567e-03  8.545288e-05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.0003947109  8.545288e-05  4.998478e-04</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -215,7 +222,7 @@ users can request the variance-covariance matrix of the bootstrap estimates.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

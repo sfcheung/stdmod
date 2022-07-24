@@ -80,19 +80,23 @@ in the output of <code><a href="std_selected.html">std_selected()</a></code> or 
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for std_selected</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, level <span class="op">=</span> <span class="fl">0.95</span>, type <span class="op">=</span> <span class="st">"lm"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for std_selected</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, level <span class="op">=</span> <span class="fl">0.95</span>, type <span class="op">=</span> <span class="st">"lm"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>The output of <code><a href="std_selected.html">std_selected()</a></code> or <code><a href="std_selected.html">std_selected_boot()</a></code>.</p></dd>
+
+
 <dt>parm</dt>
 <dd><p>The parameters (coefficients) for which confidence intervals
 should be returned.
 If missing, the confidence intervals of all parameters will be
 returned.</p></dd>
+
+
 <dt>level</dt>
 <dd><p>The level of confidence. For the confidence intervals returned
 by <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>, default is .95, i.e., 95%. For the bootstrap
@@ -104,17 +108,24 @@ call is specified, <code>full_output</code> needs to be set in the call
 to <code><a href="std_selected.html">std_selected_boot()</a></code> such that the original bootstrapping
 output
 is stored.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>The type of the confidence intervals. Default is <code>"lm"</code>,
 returned by the <code><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint()</a></code> method of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>. If set to <code>"boot"</code>,
 the bootstrap percentile confidence intervals are
 returned.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Arguments to be passed to <code><a href="https://rdrr.io/r/stats/summary.lm.html" class="external-link">summary.lm()</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A matrix of the confidence intervals.</p>
+    
+
+<p>A matrix of the confidence intervals.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -130,14 +141,14 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co"># Load a sample data set</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Do a moderated regression by lm</span></span>
-<span class="r-in"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_raw</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Load a sample data set</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Do a moderated regression by lm</span></span></span>
+<span class="r-in"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_raw</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat)</span>
@@ -162,12 +173,12 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Standardize all variables except for categorical variables.</span></span>
-<span class="r-in"><span class="co"># Interaction terms are formed after standardization.</span></span>
-<span class="r-in"><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
-<span class="r-in">                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Standardize all variables except for categorical variables.</span></span></span>
+<span class="r-in"><span><span class="co"># Interaction terms are formed after standardization.</span></span></span>
+<span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: dv iv mod v1 cat1</span>
@@ -208,8 +219,8 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   2.5 %      97.5 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.03021975  0.15938347</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.68362100  0.79114661</span>
@@ -218,14 +229,14 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.27398880 -0.01602419</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.17462329  0.09572673</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.01791790  0.08209267</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># With bootstrapping</span></span>
-<span class="r-in"><span class="co"># nboot = 100 just for illustration. nboot &gt;= 2000 should be used in read</span></span>
-<span class="r-in"><span class="co"># research.</span></span>
-<span class="r-in"><span class="va">lm_std_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
-<span class="r-in">                                         to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
-<span class="r-in">                                         nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># With bootstrapping</span></span></span>
+<span class="r-in"><span><span class="co"># nboot = 100 just for illustration. nboot &gt;= 2000 should be used in read</span></span></span>
+<span class="r-in"><span><span class="co"># research.</span></span></span>
+<span class="r-in"><span><span class="va">lm_std_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>                                         to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>                                         nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: dv iv mod v1 cat1</span>
@@ -270,8 +281,8 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Std. Error are not bootstrap SEs.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   2.5 %      97.5 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.03021975  0.15938347</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.68362100  0.79114661</span>
@@ -280,10 +291,10 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.27398880 -0.01602419</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.17462329  0.09572673</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.01791790  0.08209267</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Bootstrap percentile intervals</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span>, type <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Bootstrap percentile intervals</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span>, type <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    2.5 %       97.5 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.014442564  0.156470267</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.693527006  0.782722755</span>
@@ -292,7 +303,7 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.288097554 -0.009450087</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.156946125  0.088749196</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.009540501  0.080095211</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -307,7 +318,7 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

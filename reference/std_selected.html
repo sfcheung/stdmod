@@ -80,23 +80,25 @@ selected variables in a regression model and refit the model</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">std_selected</span><span class="op">(</span><span class="va">lm_out</span>, to_scale <span class="op">=</span> <span class="cn">NULL</span>, to_center <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">std_selected_boot</span><span class="op">(</span>
-  <span class="va">lm_out</span>,
-  <span class="va">...</span>,
-  conf <span class="op">=</span> <span class="fl">0.95</span>,
-  nboot <span class="op">=</span> <span class="fl">100</span>,
-  boot_args <span class="op">=</span> <span class="cn">NULL</span>,
-  save_boot_est <span class="op">=</span> <span class="cn">TRUE</span>,
-  full_output <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">std_selected</span><span class="op">(</span><span class="va">lm_out</span>, to_scale <span class="op">=</span> <span class="cn">NULL</span>, to_center <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">std_selected_boot</span><span class="op">(</span></span>
+<span>  <span class="va">lm_out</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  conf <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  nboot <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  boot_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  save_boot_est <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  full_output <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>lm_out</dt>
 <dd><p>The output from <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>.</p></dd>
+
+
 <dt>to_scale</dt>
 <dd><p>The terms to be rescaled by standard deviation,
 specified by a formula as in <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>. For example, if the terms to be scaled
@@ -107,6 +109,8 @@ as a predictor.
 Specify only the original variables. If <code>NULL</code>, then no terms
 will be rescaled by their standard deviations. Variables that are not
 numeric will be ignored. Default is <code>NULL</code>.</p></dd>
+
+
 <dt>to_center</dt>
 <dd><p>The terms to be mean centered, specified by a formula
 as in <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>. For example, if the terms to be centered
@@ -116,29 +120,44 @@ interaction term. To center  the outcome variable, list it on the
 as a predictor.
 Specify only the original variables. If <code>NULL</code>, then no term
 will be centered. Default is <code>NULL</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Arguments to be passed to <code>std_selected()</code>.</p></dd>
+
+
 <dt>conf</dt>
 <dd><p>The level of confidence for the confidence interval.
 Default is .95.</p></dd>
+
+
 <dt>nboot</dt>
 <dd><p>The number of bootstrap samples. Default is 100.</p></dd>
+
+
 <dt>boot_args</dt>
 <dd><p>A named list of arguments to be passed to <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code>.
 Default is <code>NULL</code>.</p></dd>
+
+
 <dt>save_boot_est</dt>
 <dd><p>If <code>TRUE</code>, the default, the bootstrap estimates will
 be saved in the element
 <code>boot_est</code> of the output.</p></dd>
+
+
 <dt>full_output</dt>
 <dd><p>Whether the full output from <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> is returned.
 Default is <code>FALSE</code>. If <code>TRUE</code>, the full output from
 <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> will be saved in the element <code>boot_out</code>
 of the output.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The updated <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> output, with the class <code>std_selected</code> added. It will be
+    
+
+<p>The updated <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> output, with the class <code>std_selected</code> added. It will be
 treated as a usual <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> object by most functions. These are the major
 additional element in the list:</p><ul><li><p><code>scaled_terms</code>: If not <code>NULL</code>, a character vector of the variables scaled.</p></li>
 <li><p><code>centered_terms</code>: If not <code>NULL</code>, a character vector of the variables mean-centered.</p></li>
@@ -149,7 +168,13 @@ the variables in the model. The value is 0 for
 terms not centered.</p></li>
 <li><p><code>std_selected_call</code>: The original call.</p></li>
 <li><p><code>lm_out_call</code>: The call in <code>lm_out</code>.</p></li>
-</ul><p>Like <code>std_selected()</code>, <code>std_selected_boot()</code> returns the updated <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>output, with the class <code>std_selected</code> added. The output of <code>std_selected_boot()</code>contain these additional elements in the list:</p><ul><li><p><code>boot_ci</code>: A data frame of the bootstrap confidence intervals of the
+</ul><p>Like <code>std_selected()</code>, <code>std_selected_boot()</code> returns the updated <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code></p>
+
+
+<p>output, with the class <code>std_selected</code> added. The output of <code>std_selected_boot()</code></p>
+
+
+<p>contain these additional elements in the list:</p><ul><li><p><code>boot_ci</code>: A data frame of the bootstrap confidence intervals of the
 regression coefficient.</p></li>
 <li><p><code>nboot</code>: The number of bootstrap samples requested.</p></li>
 <li><p><code>conf</code>: The level of confidence, in proportion.</p></li>
@@ -211,11 +236,11 @@ units. Advance online publication. <em>Health Psychology</em>.
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co"># Load a sample data set</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Load a sample data set</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         dv       iv       mod        v1 cat1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 4946.751 12.76737  96.85621 11.756899  gp1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 6635.081 14.89097 106.25696 11.371237  gp2</span>
@@ -223,10 +248,10 @@ units. Advance online publication. <em>Health Psychology</em>.
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 7240.781 16.65782 104.80266 10.508913  gp1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 5775.759 11.84448  95.85912 15.093480  gp3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 7725.783 16.31270 100.20561  3.442902  gp2</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Do a moderated regression by lm</span></span>
-<span class="r-in"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_raw</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Do a moderated regression by lm</span></span></span>
+<span class="r-in"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_raw</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat)</span>
@@ -251,10 +276,10 @@ units. Advance online publication. <em>Health Psychology</em>.
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Mean center mod only</span></span>
-<span class="r-in"><span class="va">lm_cw</span> <span class="op">&lt;-</span> <span class="fu">std_selected</span><span class="op">(</span><span class="va">lm_raw</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">mod</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_cw</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Mean center mod only</span></span></span>
+<span class="r-in"><span><span class="va">lm_cw</span> <span class="op">&lt;-</span> <span class="fu">std_selected</span><span class="op">(</span><span class="va">lm_raw</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_cw</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: mod</span>
@@ -294,10 +319,10 @@ units. Advance online publication. <em>Health Psychology</em>.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Mean center mod and iv</span></span>
-<span class="r-in"><span class="va">lm_cwx</span> <span class="op">&lt;-</span> <span class="fu">std_selected</span><span class="op">(</span><span class="va">lm_raw</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">mod</span> <span class="op">+</span> <span class="va">iv</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_cwx</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Mean center mod and iv</span></span></span>
+<span class="r-in"><span><span class="va">lm_cwx</span> <span class="op">&lt;-</span> <span class="fu">std_selected</span><span class="op">(</span><span class="va">lm_raw</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">mod</span> <span class="op">+</span> <span class="va">iv</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_cwx</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: mod iv</span>
@@ -337,11 +362,11 @@ units. Advance online publication. <em>Health Psychology</em>.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Standardize both mod and iv</span></span>
-<span class="r-in"><span class="va">lm_stdwx</span> <span class="op">&lt;-</span> <span class="fu">std_selected</span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">mod</span> <span class="op">+</span> <span class="va">iv</span>,</span>
-<span class="r-in">                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">mod</span> <span class="op">+</span> <span class="va">iv</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_stdwx</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Standardize both mod and iv</span></span></span>
+<span class="r-in"><span><span class="va">lm_stdwx</span> <span class="op">&lt;-</span> <span class="fu">std_selected</span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">mod</span> <span class="op">+</span> <span class="va">iv</span>,</span></span>
+<span class="r-in"><span>                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">mod</span> <span class="op">+</span> <span class="va">iv</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_stdwx</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: mod iv</span>
@@ -382,12 +407,12 @@ units. Advance online publication. <em>Health Psychology</em>.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Standardize all variables except for categorical variables.</span></span>
-<span class="r-in"><span class="co"># Interaction terms are formed after standardization.</span></span>
-<span class="r-in"><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu">std_selected</span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
-<span class="r-in">                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Standardize all variables except for categorical variables.</span></span></span>
+<span class="r-in"><span><span class="co"># Interaction terms are formed after standardization.</span></span></span>
+<span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu">std_selected</span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: dv iv mod v1 cat1</span>
@@ -428,10 +453,10 @@ units. Advance online publication. <em>Health Psychology</em>.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         dv       iv       mod        v1 cat1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 4946.751 12.76737  96.85621 11.756899  gp1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 6635.081 14.89097 106.25696 11.371237  gp2</span>
@@ -439,10 +464,10 @@ units. Advance online publication. <em>Health Psychology</em>.
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 7240.781 16.65782 104.80266 10.508913  gp1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 5775.759 11.84448  95.85912 15.093480  gp3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 7725.783 16.31270 100.20561  3.442902  gp2</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Do a moderated regression by lm</span></span>
-<span class="r-in"><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_raw</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Do a moderated regression by lm</span></span></span>
+<span class="r-in"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">mod</span> <span class="op">+</span> <span class="va">v1</span> <span class="op">+</span> <span class="va">cat1</span>, <span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_raw</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat)</span>
@@ -467,15 +492,15 @@ units. Advance online publication. <em>Health Psychology</em>.
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.6352,	Adjusted R-squared:  0.6307 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="co"># Standardize all variables as in std_selected above, and compute the</span></span>
-<span class="r-in"><span class="co"># nonparametric bootstrapping percentile confidence intervals.</span></span>
-<span class="r-in"><span class="va">lm_std_boot</span> <span class="op">&lt;-</span> <span class="fu">std_selected_boot</span><span class="op">(</span><span class="va">lm_raw</span>,</span>
-<span class="r-in">                                 to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
-<span class="r-in">                                 to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
-<span class="r-in">                                 conf <span class="op">=</span> <span class="fl">.95</span>,</span>
-<span class="r-in">                                 nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># In real analysis, nboot should be at least 2000.</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Standardize all variables as in std_selected above, and compute the</span></span></span>
+<span class="r-in"><span><span class="co"># nonparametric bootstrapping percentile confidence intervals.</span></span></span>
+<span class="r-in"><span><span class="va">lm_std_boot</span> <span class="op">&lt;-</span> <span class="fu">std_selected_boot</span><span class="op">(</span><span class="va">lm_raw</span>,</span></span>
+<span class="r-in"><span>                                 to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>                                 to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>                                 conf <span class="op">=</span> <span class="fl">.95</span>,</span></span>
+<span class="r-in"><span>                                 nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># In real analysis, nboot should be at least 2000.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: dv iv mod v1 cat1</span>
@@ -520,7 +545,7 @@ units. Advance online publication. <em>Health Psychology</em>.
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Std. Error are not bootstrap SEs.</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -535,7 +560,7 @@ units. Advance online publication. <em>Health Psychology</em>.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -96,7 +96,7 @@
       <h1 data-toc-skip>Standardized Moderation Effect in a Path Model by stdmod_lavaan()</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung and David Weng Ngai Vong</h4>
             
-            <h4 data-toc-skip class="date">2022-05-13</h4>
+            <h4 data-toc-skip class="date">2022-07-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/stdmod_lavaan.Rmd" class="external-link"><code>vignettes/stdmod_lavaan.Rmd</code></a></small>
       <div class="hidden name"><code>stdmod_lavaan.Rmd</code></div>
@@ -114,21 +114,21 @@
 <h2 id="setup-the-environment">Setup the Environment<a class="anchor" aria-label="anchor" href="#setup-the-environment"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/">stdmod</a></span><span class="op">)</span> <span class="co"># For computing the standardized moderation effect conveniently</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span> <span class="co"># For doing path analysis in lavaan.</span>
-<span class="co">#&gt; This is lavaan 0.6-11</span>
-<span class="co">#&gt; lavaan is FREE software! Please report any bugs.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/">stdmod</a></span><span class="op">)</span> <span class="co"># For computing the standardized moderation effect conveniently</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span> <span class="co"># For doing path analysis in lavaan.</span></span>
+<span><span class="co">#&gt; This is lavaan 0.6-12</span></span>
+<span><span class="co">#&gt; lavaan is FREE software! Please report any bugs.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="load-the-dataset">Load the Dataset<a class="anchor" aria-label="anchor" href="#load-the-dataset"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">test_mod1</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test_mod1</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;       dv     iv    mod    med   cov1   cov2</span>
-<span class="co">#&gt; 1 23.879 -0.133 -0.544 10.310 -0.511 -0.574</span>
-<span class="co">#&gt; 2 23.096  1.456  1.539 11.384  0.094 -0.264</span>
-<span class="co">#&gt; 3 23.201  0.319  1.774  9.615 -0.172  0.488</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">test_mod1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test_mod1</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       dv     iv    mod    med   cov1   cov2</span></span>
+<span><span class="co">#&gt; 1 23.879 -0.133 -0.544 10.310 -0.511 -0.574</span></span>
+<span><span class="co">#&gt; 2 23.096  1.456  1.539 11.384  0.094 -0.264</span></span>
+<span><span class="co">#&gt; 3 23.201  0.319  1.774  9.615 -0.172  0.488</span></span></code></pre></div>
 <p>This test data set has 300 cases, six variables, all continuous.</p>
 </div>
 <div class="section level2">
@@ -137,70 +137,70 @@
 <p>The product term can be formed manually or by the colon operator, <code>:</code>. <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> will work in both cases.</p>
 <p>This is the model to be tested:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod</span> <span class="op">&lt;-</span>
-<span class="st">"
-med ~ iv + mod + iv:mod + cov1
-dv ~ med + cov2
-"</span>
-<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">sem</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">test_mod1</span>, fixed.x <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>
-<span class="co">#&gt; lavaan 0.6-11 ended normally after 1 iterations</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Estimator                                         ML</span>
-<span class="co">#&gt;   Optimization method                           NLMINB</span>
-<span class="co">#&gt;   Number of model parameters                        23</span>
-<span class="co">#&gt;                                                       </span>
-<span class="co">#&gt;   Number of observations                           300</span>
-<span class="co">#&gt;                                                       </span>
-<span class="co">#&gt; Model Test User Model:</span>
-<span class="co">#&gt;                                                       </span>
-<span class="co">#&gt;   Test statistic                                 1.058</span>
-<span class="co">#&gt;   Degrees of freedom                                 5</span>
-<span class="co">#&gt;   P-value (Chi-square)                           0.958</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter Estimates:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Standard errors                             Standard</span>
-<span class="co">#&gt;   Information                                 Expected</span>
-<span class="co">#&gt;   Information saturated (h1) model          Structured</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Regressions:</span>
-<span class="co">#&gt;                    Estimate  Std.Err  z-value  P(&gt;|z|)</span>
-<span class="co">#&gt;   med ~                                               </span>
-<span class="co">#&gt;     iv                0.221    0.030    7.264    0.000</span>
-<span class="co">#&gt;     mod               0.104    0.030    3.489    0.000</span>
-<span class="co">#&gt;     iv:mod            0.257    0.025   10.169    0.000</span>
-<span class="co">#&gt;     cov1              0.104    0.025    4.099    0.000</span>
-<span class="co">#&gt;   dv ~                                                </span>
-<span class="co">#&gt;     med               0.246    0.041    5.962    0.000</span>
-<span class="co">#&gt;     cov2              0.191    0.023    8.324    0.000</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Covariances:</span>
-<span class="co">#&gt;                    Estimate  Std.Err  z-value  P(&gt;|z|)</span>
-<span class="co">#&gt;   iv ~~                                               </span>
-<span class="co">#&gt;     mod               0.481    0.063    7.606    0.000</span>
-<span class="co">#&gt;     iv:mod           -0.149    0.059   -2.501    0.012</span>
-<span class="co">#&gt;     cov1             -0.033    0.058   -0.575    0.565</span>
-<span class="co">#&gt;     cov2             -0.071    0.059   -1.216    0.224</span>
-<span class="co">#&gt;   mod ~~                                              </span>
-<span class="co">#&gt;     iv:mod           -0.180    0.062   -2.923    0.003</span>
-<span class="co">#&gt;     cov1             -0.060    0.059   -1.010    0.313</span>
-<span class="co">#&gt;     cov2             -0.107    0.061   -1.763    0.078</span>
-<span class="co">#&gt;   iv:mod ~~                                           </span>
-<span class="co">#&gt;     cov1             -0.051    0.061   -0.837    0.403</span>
-<span class="co">#&gt;     cov2              0.063    0.063    1.001    0.317</span>
-<span class="co">#&gt;   cov1 ~~                                             </span>
-<span class="co">#&gt;     cov2              0.071    0.061    1.158    0.247</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Variances:</span>
-<span class="co">#&gt;                    Estimate  Std.Err  z-value  P(&gt;|z|)</span>
-<span class="co">#&gt;    .med               0.201    0.016   12.247    0.000</span>
-<span class="co">#&gt;    .dv                0.169    0.014   12.247    0.000</span>
-<span class="co">#&gt;     iv                0.954    0.078   12.247    0.000</span>
-<span class="co">#&gt;     mod               1.017    0.083   12.247    0.000</span>
-<span class="co">#&gt;     iv:mod            1.088    0.089   12.247    0.000</span>
-<span class="co">#&gt;     cov1              1.039    0.085   12.247    0.000</span>
-<span class="co">#&gt;     cov2              1.076    0.088   12.247    0.000</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span></span>
+<span><span class="st">"</span></span>
+<span><span class="st">med ~ iv + mod + iv:mod + cov1</span></span>
+<span><span class="st">dv ~ med + cov2</span></span>
+<span><span class="st">"</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">sem</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">test_mod1</span>, fixed.x <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
+<span><span class="co">#&gt; lavaan 0.6-12 ended normally after 1 iterations</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Estimator                                         ML</span></span>
+<span><span class="co">#&gt;   Optimization method                           NLMINB</span></span>
+<span><span class="co">#&gt;   Number of model parameters                        23</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Number of observations                           300</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Model Test User Model:</span></span>
+<span><span class="co">#&gt;                                                       </span></span>
+<span><span class="co">#&gt;   Test statistic                                 1.058</span></span>
+<span><span class="co">#&gt;   Degrees of freedom                                 5</span></span>
+<span><span class="co">#&gt;   P-value (Chi-square)                           0.958</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parameter Estimates:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Standard errors                             Standard</span></span>
+<span><span class="co">#&gt;   Information                                 Expected</span></span>
+<span><span class="co">#&gt;   Information saturated (h1) model          Structured</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Regressions:</span></span>
+<span><span class="co">#&gt;                    Estimate  Std.Err  z-value  P(&gt;|z|)</span></span>
+<span><span class="co">#&gt;   med ~                                               </span></span>
+<span><span class="co">#&gt;     iv                0.221    0.030    7.264    0.000</span></span>
+<span><span class="co">#&gt;     mod               0.104    0.030    3.489    0.000</span></span>
+<span><span class="co">#&gt;     iv:mod            0.257    0.025   10.169    0.000</span></span>
+<span><span class="co">#&gt;     cov1              0.104    0.025    4.099    0.000</span></span>
+<span><span class="co">#&gt;   dv ~                                                </span></span>
+<span><span class="co">#&gt;     med               0.246    0.041    5.962    0.000</span></span>
+<span><span class="co">#&gt;     cov2              0.191    0.023    8.324    0.000</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Covariances:</span></span>
+<span><span class="co">#&gt;                    Estimate  Std.Err  z-value  P(&gt;|z|)</span></span>
+<span><span class="co">#&gt;   iv ~~                                               </span></span>
+<span><span class="co">#&gt;     mod               0.481    0.063    7.606    0.000</span></span>
+<span><span class="co">#&gt;     iv:mod           -0.149    0.059   -2.501    0.012</span></span>
+<span><span class="co">#&gt;     cov1             -0.033    0.058   -0.575    0.565</span></span>
+<span><span class="co">#&gt;     cov2             -0.071    0.059   -1.216    0.224</span></span>
+<span><span class="co">#&gt;   mod ~~                                              </span></span>
+<span><span class="co">#&gt;     iv:mod           -0.180    0.062   -2.923    0.003</span></span>
+<span><span class="co">#&gt;     cov1             -0.060    0.059   -1.010    0.313</span></span>
+<span><span class="co">#&gt;     cov2             -0.107    0.061   -1.763    0.078</span></span>
+<span><span class="co">#&gt;   iv:mod ~~                                           </span></span>
+<span><span class="co">#&gt;     cov1             -0.051    0.061   -0.837    0.403</span></span>
+<span><span class="co">#&gt;     cov2              0.063    0.063    1.001    0.317</span></span>
+<span><span class="co">#&gt;   cov1 ~~                                             </span></span>
+<span><span class="co">#&gt;     cov2              0.071    0.061    1.158    0.247</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Variances:</span></span>
+<span><span class="co">#&gt;                    Estimate  Std.Err  z-value  P(&gt;|z|)</span></span>
+<span><span class="co">#&gt;    .med               0.201    0.016   12.247    0.000</span></span>
+<span><span class="co">#&gt;    .dv                0.169    0.014   12.247    0.000</span></span>
+<span><span class="co">#&gt;     iv                0.954    0.078   12.247    0.000</span></span>
+<span><span class="co">#&gt;     mod               1.017    0.083   12.247    0.000</span></span>
+<span><span class="co">#&gt;     iv:mod            1.088    0.089   12.247    0.000</span></span>
+<span><span class="co">#&gt;     cov1              1.039    0.085   12.247    0.000</span></span>
+<span><span class="co">#&gt;     cov2              1.076    0.088   12.247    0.000</span></span></code></pre></div>
 <p>The results show that <code>mod</code> significantly moderates the effect of <code>iv</code> on <code>med</code>.</p>
 </div>
 <div class="section level2">
@@ -208,9 +208,9 @@ dv ~ med + cov2
 </h2>
 <p>As in the case of regression, the coefficient of <code>iv:mod</code> in the standardized solution is not the desired standardized coefficient because it standardizes the product term.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/standardizedSolution.html" class="external-link">standardizedSolution</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span>, <span class="op">]</span>
-<span class="co">#&gt;   lhs op    rhs est.std    se      z pvalue ci.lower ci.upper</span>
-<span class="co">#&gt; 3 med  ~ iv:mod   0.466 0.043 10.842      0    0.382     0.55</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/standardizedSolution.html" class="external-link">standardizedSolution</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span>, <span class="op">]</span></span>
+<span><span class="co">#&gt;   lhs op    rhs est.std    se      z pvalue ci.lower ci.upper</span></span>
+<span><span class="co">#&gt; 3 med  ~ iv:mod   0.466 0.043 10.842      0    0.382     0.55</span></span></code></pre></div>
 <p>After fitting the path model by <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan::lavaan()</a></code>, we can use <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> to compute the standardized moderation effect using the standard deviations of the focal variable, the moderator, and the outcome variable (Cheung, Cheung, Lau, Hui, &amp; Vong, 2022).</p>
 <p>The minimal arguments are:</p>
 <ul>
@@ -226,25 +226,25 @@ dv ~ med + cov2
 <code>x_w</code>: The product term.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit_iv_mod_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stdmod_lavaan.html">stdmod_lavaan</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">fit</span>,
-                                x <span class="op">=</span> <span class="st">"iv"</span>,
-                                y <span class="op">=</span> <span class="st">"med"</span>,
-                                w <span class="op">=</span> <span class="st">"mod"</span>,
-                                x_w <span class="op">=</span> <span class="st">"iv:mod"</span><span class="op">)</span>
-<span class="va">fit_iv_mod_std</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; stdmod_lavaan(fit = fit, x = "iv", y = "med", w = "mod", x_w = "iv:mod")</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;                  Variable</span>
-<span class="co">#&gt; Focal Variable         iv</span>
-<span class="co">#&gt; Moderator             mod</span>
-<span class="co">#&gt; Outcome Variable      med</span>
-<span class="co">#&gt; Product Term       iv:mod</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;              lhs op    rhs   est    se      z pvalue ci.lower ci.upper</span>
-<span class="co">#&gt; Original     med  ~ iv:mod 0.257 0.025 10.169      0    0.208    0.307</span>
-<span class="co">#&gt; Standardized med  ~ iv:mod 0.440    NA     NA     NA       NA       NA</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fit_iv_mod_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stdmod_lavaan.html">stdmod_lavaan</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">fit</span>,</span>
+<span>                                x <span class="op">=</span> <span class="st">"iv"</span>,</span>
+<span>                                y <span class="op">=</span> <span class="st">"med"</span>,</span>
+<span>                                w <span class="op">=</span> <span class="st">"mod"</span>,</span>
+<span>                                x_w <span class="op">=</span> <span class="st">"iv:mod"</span><span class="op">)</span></span>
+<span><span class="va">fit_iv_mod_std</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; stdmod_lavaan(fit = fit, x = "iv", y = "med", w = "mod", x_w = "iv:mod")</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;                  Variable</span></span>
+<span><span class="co">#&gt; Focal Variable         iv</span></span>
+<span><span class="co">#&gt; Moderator             mod</span></span>
+<span><span class="co">#&gt; Outcome Variable      med</span></span>
+<span><span class="co">#&gt; Product Term       iv:mod</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;              lhs op    rhs   est    se      z pvalue ci.lower ci.upper</span></span>
+<span><span class="co">#&gt; Original     med  ~ iv:mod 0.257 0.025 10.169      0    0.208    0.307</span></span>
+<span><span class="co">#&gt; Standardized med  ~ iv:mod 0.440    NA     NA     NA       NA       NA</span></span></code></pre></div>
 <p>The standardized moderation effect of <code>mod</code> on the <code>iv</code>-<code>med</code> path is 0.440.</p>
 </div>
 <div class="section level2">
@@ -266,38 +266,38 @@ dv ~ med + cov2
 <code>ncpus</code>: The number of processors to use. Let <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> decides or set it based on the configuration of the computer.</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">860947</span><span class="op">)</span>
-<span class="va">fit_iv_mod_std_ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stdmod_lavaan.html">stdmod_lavaan</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">fit</span>,
-                                    x <span class="op">=</span> <span class="st">"iv"</span>,
-                                    y <span class="op">=</span> <span class="st">"med"</span>,
-                                    w <span class="op">=</span> <span class="st">"mod"</span>,
-                                    x_w <span class="op">=</span> <span class="st">"iv:mod"</span>,
-                                    boot_ci <span class="op">=</span> <span class="cn">TRUE</span>,
-                                    R <span class="op">=</span> <span class="fl">2000</span>,
-                                    parallel <span class="op">=</span> <span class="st">"snow"</span>,
-                                    ncpus <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>
-<span class="va">fit_iv_mod_std_ci</span></code></pre></div>
-<pre><code><span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; stdmod_lavaan(fit = fit, x = "iv", y = "med", w = "mod", x_w = "iv:mod", </span>
-<span class="co">#&gt;     boot_ci = TRUE, R = 100)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;                  Variable</span>
-<span class="co">#&gt; Focal Variable         iv</span>
-<span class="co">#&gt; Moderator             mod</span>
-<span class="co">#&gt; Outcome Variable      med</span>
-<span class="co">#&gt; Product Term       iv:mod</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;              lhs op    rhs   est    se      z pvalue ci.lower ci.upper</span>
-<span class="co">#&gt; Original     med  ~ iv:mod 0.257 0.025 10.169      0    0.208    0.307</span>
-<span class="co">#&gt; Standardized med  ~ iv:mod 0.440    NA     NA     NA    0.296    0.515</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Confidence interval of standardized moderation effect:</span>
-<span class="co">#&gt; - Level of confidence: 95%</span>
-<span class="co">#&gt; - Bootstrapping Method: Nonparametric</span>
-<span class="co">#&gt; - Type: Percentile</span>
-<span class="co">#&gt; - Number of bootstrap samples requests: 100</span>
-<span class="co">#&gt; - Number of bootstrap samples with valid results: 100</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">860947</span><span class="op">)</span></span>
+<span><span class="va">fit_iv_mod_std_ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stdmod_lavaan.html">stdmod_lavaan</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">fit</span>,</span>
+<span>                                    x <span class="op">=</span> <span class="st">"iv"</span>,</span>
+<span>                                    y <span class="op">=</span> <span class="st">"med"</span>,</span>
+<span>                                    w <span class="op">=</span> <span class="st">"mod"</span>,</span>
+<span>                                    x_w <span class="op">=</span> <span class="st">"iv:mod"</span>,</span>
+<span>                                    boot_ci <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                                    R <span class="op">=</span> <span class="fl">2000</span>,</span>
+<span>                                    parallel <span class="op">=</span> <span class="st">"snow"</span>,</span>
+<span>                                    ncpus <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
+<span><span class="va">fit_iv_mod_std_ci</span></span></code></pre></div>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; stdmod_lavaan(fit = fit, x = "iv", y = "med", w = "mod", x_w = "iv:mod", </span></span>
+<span><span class="co">#&gt;     boot_ci = TRUE, R = 100)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;                  Variable</span></span>
+<span><span class="co">#&gt; Focal Variable         iv</span></span>
+<span><span class="co">#&gt; Moderator             mod</span></span>
+<span><span class="co">#&gt; Outcome Variable      med</span></span>
+<span><span class="co">#&gt; Product Term       iv:mod</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;              lhs op    rhs   est    se      z pvalue ci.lower ci.upper</span></span>
+<span><span class="co">#&gt; Original     med  ~ iv:mod 0.257 0.025 10.169      0    0.208    0.307</span></span>
+<span><span class="co">#&gt; Standardized med  ~ iv:mod 0.440    NA     NA     NA    0.296    0.515</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Confidence interval of standardized moderation effect:</span></span>
+<span><span class="co">#&gt; - Level of confidence: 95%</span></span>
+<span><span class="co">#&gt; - Bootstrapping Method: Nonparametric</span></span>
+<span><span class="co">#&gt; - Type: Percentile</span></span>
+<span><span class="co">#&gt; - Number of bootstrap samples requests: 100</span></span>
+<span><span class="co">#&gt; - Number of bootstrap samples with valid results: 100</span></span></code></pre>
 <p>The 95% confidence interval of the standardized moderation effect is 0.296 to 0.515.</p>
 </div>
 <div class="section level2">
@@ -330,7 +330,7 @@ dv ~ med + cov2
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

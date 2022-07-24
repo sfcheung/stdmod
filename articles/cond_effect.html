@@ -96,7 +96,7 @@
       <h1 data-toc-skip>Conditional Effects by cond_effect()</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung</h4>
             
-            <h4 data-toc-skip class="date">2022-05-13</h4>
+            <h4 data-toc-skip class="date">2022-07-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/cond_effect.Rmd" class="external-link"><code>vignettes/cond_effect.Rmd</code></a></small>
       <div class="hidden name"><code>cond_effect.Rmd</code></div>
@@ -109,15 +109,15 @@
 <h2 id="what-cond_effect-can-do">What <code>cond_effect()</code> Can Do<a class="anchor" aria-label="anchor" href="#what-cond_effect-can-do"></a>
 </h2>
 <p>It can compute the conditional effect of a predictor (the focal variable) on an outcome variable (dependent variable) for selected levels of the moderator:</p>
-<pre><code><span class="co">#&gt;   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig</span>
-<span class="co">#&gt;    High             3.950                      0.012 0.117 0.107 0.915    </span>
-<span class="co">#&gt;  Medium             3.343                      0.214 0.083 2.560 0.011 *  </span>
-<span class="co">#&gt;     Low             2.736                      0.415 0.115 3.601 0.000 ***</span></code></pre>
+<pre><code><span><span class="co">#&gt;   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig</span></span>
+<span><span class="co">#&gt;    High             3.950                      0.012 0.117 0.107 0.915    </span></span>
+<span><span class="co">#&gt;  Medium             3.343                      0.214 0.083 2.560 0.011 *  </span></span>
+<span><span class="co">#&gt;     Low             2.736                      0.415 0.115 3.601 0.000 ***</span></span></code></pre>
 <p>It can also compute standardized conditional moderation effect of this predictor:</p>
-<pre><code><span class="co">#&gt;   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig</span>
-<span class="co">#&gt;    High             1.000                      0.007 0.063 0.107 0.915    </span>
-<span class="co">#&gt;  Medium             0.000                      0.115 0.045 2.560 0.011 *  </span>
-<span class="co">#&gt;     Low            -1.000                      0.223 0.062 3.601 0.000 ***</span></code></pre>
+<pre><code><span><span class="co">#&gt;   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig</span></span>
+<span><span class="co">#&gt;    High             1.000                      0.007 0.063 0.107 0.915    </span></span>
+<span><span class="co">#&gt;  Medium             0.000                      0.115 0.045 2.560 0.011 *  </span></span>
+<span><span class="co">#&gt;     Low            -1.000                      0.223 0.062 3.601 0.000 ***</span></span></code></pre>
 <p>Nonparametric bootstrap percentile confidence interval can also be formed for standardized conditional effect using <code><a href="../reference/cond_effect.html">cond_effect_boot()</a></code>.</p>
 <p><code><a href="../reference/cond_effect.html">cond_effect()</a></code> is not designed to be a versatile tool. It is designed to be a function “good-enough” for common scenarios. Nevertheless, it can report some useful information along with the conditional effects, as demonstrated below.</p>
 </div>
@@ -134,43 +134,43 @@
 </ul>
 <p>These are the only required arguments. Just setting them can generate the graph:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/">stdmod</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,
-                              <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="va">cond_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cond_effect.html">cond_effect</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">lm_out</span>,
-                        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-                        w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span>
-<span class="va">cond_out</span>
-<span class="co">#&gt; The effects of emotional_stability on sleep_duration, conditional on conscientiousness:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig</span>
-<span class="co">#&gt;    High             3.950                      0.012 0.117 0.107 0.915    </span>
-<span class="co">#&gt;  Medium             3.343                      0.214 0.083 2.560 0.011 *  </span>
-<span class="co">#&gt;     Low             2.736                      0.415 0.115 3.601 0.000 ***</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; The regression model:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  sleep_duration ~ age + gender + emotional_stability * conscientiousness</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Interpreting the levels of conscientiousness:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Level conscientiousness % Below From Mean (in SD)</span>
-<span class="co">#&gt;    High             3.950   83.60              1.00</span>
-<span class="co">#&gt;  Medium             3.343   49.60              0.00</span>
-<span class="co">#&gt;     Low             2.736   16.60             -1.00</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; - % Below: The percent of cases equal to or less than a level.</span>
-<span class="co">#&gt; - From Mean (in SD): Distance of a level from the mean,</span>
-<span class="co">#&gt;   in standard deviation (+ve above, -ve below).</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/">stdmod</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
+<span>                              <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="va">cond_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cond_effect.html">cond_effect</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">lm_out</span>,</span>
+<span>                        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>                        w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></span>
+<span><span class="va">cond_out</span></span>
+<span><span class="co">#&gt; The effects of emotional_stability on sleep_duration, conditional on conscientiousness:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig</span></span>
+<span><span class="co">#&gt;    High             3.950                      0.012 0.117 0.107 0.915    </span></span>
+<span><span class="co">#&gt;  Medium             3.343                      0.214 0.083 2.560 0.011 *  </span></span>
+<span><span class="co">#&gt;     Low             2.736                      0.415 0.115 3.601 0.000 ***</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; The regression model:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  sleep_duration ~ age + gender + emotional_stability * conscientiousness</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Interpreting the levels of conscientiousness:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Level conscientiousness % Below From Mean (in SD)</span></span>
+<span><span class="co">#&gt;    High             3.950   83.60              1.00</span></span>
+<span><span class="co">#&gt;  Medium             3.343   49.60              0.00</span></span>
+<span><span class="co">#&gt;     Low             2.736   16.60             -1.00</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; - % Below: The percent of cases equal to or less than a level.</span></span>
+<span><span class="co">#&gt; - From Mean (in SD): Distance of a level from the mean,</span></span>
+<span><span class="co">#&gt;   in standard deviation (+ve above, -ve below).</span></span></code></pre></div>
 <p>By default, the print method of <code><a href="../reference/cond_effect.html">cond_effect()</a></code> output prints the conditional effects, OLS standard errors, <em>t</em> statistics, <em>p</em>-values, and significant test results, along with other information such as the value of each level of the moderator, its distance from the mean, the percentage of cases equal to or less than this level. The regression model is also printed. If only the table of effects is needed, call <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> and set <code>table_only</code> to <code>TRUE</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cond_out</span>, table_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt;   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig</span>
-<span class="co">#&gt;    High             3.950                      0.012 0.117 0.107 0.915    </span>
-<span class="co">#&gt;  Medium             3.343                      0.214 0.083 2.560 0.011 *  </span>
-<span class="co">#&gt;     Low             2.736                      0.415 0.115 3.601 0.000 ***</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cond_out</span>, table_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig</span></span>
+<span><span class="co">#&gt;    High             3.950                      0.012 0.117 0.107 0.915    </span></span>
+<span><span class="co">#&gt;  Medium             3.343                      0.214 0.083 2.560 0.011 *  </span></span>
+<span><span class="co">#&gt;     Low             2.736                      0.415 0.115 3.601 0.000 ***</span></span></code></pre></div>
 <p>More options in printing the output can be found in the help page of <code><a href="../reference/print.cond_effect.html">print.cond_effect()</a></code>.</p>
 </div>
 </div>
@@ -183,30 +183,30 @@
 <p>If the moderator is a numeric variable, then, by default, the conditional effects for three levels of the moderators will be used: one standard deviation (SD) to the mean (“Low”), mean (“Medium”), and one SD above mean (“High”).</p>
 <p>Users can also use percentiles to define “Low”, “Medium”, and “High” by setting <code>w_method</code> to <code>"percentile"</code>. The default are 16th percentile, 50th percentile, and 84th percentile, which corresponds approximately to one SD below mean, mean, and one SD above mean, respectively, for a normal distribution.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,
-                              <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="va">cond_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cond_effect.html">cond_effect</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">lm_out</span>,
-                        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-                        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
-                        w_method <span class="op">=</span> <span class="st">"percentile"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cond_out</span>, title <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt;   Level conscientiousness emotional_stability Effect  S.E.      t     p Sig</span>
-<span class="co">#&gt;    High             4.000                     -0.004 0.122 -0.034 0.973    </span>
-<span class="co">#&gt;  Medium             3.400                      0.195 0.084  2.322 0.021 *  </span>
-<span class="co">#&gt;     Low             2.700                      0.427 0.119  3.600 0.000 ***</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Interpreting the levels of conscientiousness:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Level conscientiousness % Below From Mean (in SD)</span>
-<span class="co">#&gt;    High             4.000   87.20              1.08</span>
-<span class="co">#&gt;  Medium             3.400   57.00              0.09</span>
-<span class="co">#&gt;     Low             2.700   16.60             -1.06</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; - % Below: The percent of cases equal to or less than a level.</span>
-<span class="co">#&gt; - From Mean (in SD): Distance of a level from the mean,</span>
-<span class="co">#&gt;   in standard deviation (+ve above, -ve below).</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
+<span>                              <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="va">cond_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cond_effect.html">cond_effect</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">lm_out</span>,</span>
+<span>                        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>                        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
+<span>                        w_method <span class="op">=</span> <span class="st">"percentile"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cond_out</span>, title <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   Level conscientiousness emotional_stability Effect  S.E.      t     p Sig</span></span>
+<span><span class="co">#&gt;    High             4.000                     -0.004 0.122 -0.034 0.973    </span></span>
+<span><span class="co">#&gt;  Medium             3.400                      0.195 0.084  2.322 0.021 *  </span></span>
+<span><span class="co">#&gt;     Low             2.700                      0.427 0.119  3.600 0.000 ***</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Interpreting the levels of conscientiousness:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Level conscientiousness % Below From Mean (in SD)</span></span>
+<span><span class="co">#&gt;    High             4.000   87.20              1.08</span></span>
+<span><span class="co">#&gt;  Medium             3.400   57.00              0.09</span></span>
+<span><span class="co">#&gt;     Low             2.700   16.60             -1.06</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; - % Below: The percent of cases equal to or less than a level.</span></span>
+<span><span class="co">#&gt; - From Mean (in SD): Distance of a level from the mean,</span></span>
+<span><span class="co">#&gt;   in standard deviation (+ve above, -ve below).</span></span></code></pre></div>
 <p>Note that the empirical percentage of cases equal to or less than a level may not be exactly equal to that for the requested percentile if the number of cases is small and/or the number of unique values of the moderator is small.</p>
 </div>
 <div class="section level3">
@@ -214,19 +214,19 @@
 </h3>
 <p>If the moderator is a categorical variable (a string variable or a factor), then the conditional effect of the moderator for each value of this categorical moderator will be printed:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">61452</span><span class="op">)</span>
-<span class="va">sleep_emo_con</span><span class="op">$</span><span class="va">city</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alpha"</span>, <span class="st">"Beta"</span>, <span class="st">"Gamma"</span><span class="op">)</span>,
-                               <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">lm_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">emotional_stability</span><span class="op">*</span><span class="va">city</span>,
-                              <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="va">cond_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cond_effect.html">cond_effect</a></span><span class="op">(</span><span class="va">lm_cat</span>,
-                        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-                        w <span class="op">=</span> <span class="st">"city"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cond_out</span>, title <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt;  Level  city emotional_stability Effect  S.E.     t     p Sig</span>
-<span class="co">#&gt;  Alpha Alpha                      0.408 0.135 3.027 0.003  **</span>
-<span class="co">#&gt;   Beta  Beta                      0.351 0.147 2.388 0.017  * </span>
-<span class="co">#&gt;  Gamma Gamma                      0.020 0.149 0.131 0.896</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">61452</span><span class="op">)</span></span>
+<span><span class="va">sleep_emo_con</span><span class="op">$</span><span class="va">city</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alpha"</span>, <span class="st">"Beta"</span>, <span class="st">"Gamma"</span><span class="op">)</span>,</span>
+<span>                               <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">lm_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">emotional_stability</span><span class="op">*</span><span class="va">city</span>,</span>
+<span>                              <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="va">cond_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cond_effect.html">cond_effect</a></span><span class="op">(</span><span class="va">lm_cat</span>,</span>
+<span>                        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>                        w <span class="op">=</span> <span class="st">"city"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cond_out</span>, title <span class="op">=</span> <span class="cn">FALSE</span>, model <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  Level  city emotional_stability Effect  S.E.     t     p Sig</span></span>
+<span><span class="co">#&gt;  Alpha Alpha                      0.408 0.135 3.027 0.003  **</span></span>
+<span><span class="co">#&gt;   Beta  Beta                      0.351 0.147 2.388 0.017  * </span></span>
+<span><span class="co">#&gt;  Gamma Gamma                      0.020 0.149 0.131 0.896</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -240,35 +240,35 @@
 <code>nboot</code> The number of bootstrap samples to drawn. Should be at least 2000 but 5000 is preferable.</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span>
-                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,
-                              <span class="va">sleep_emo_con</span><span class="op">)</span>
-<span class="co"># Standardize all variables and do the moderated regression again</span>
-<span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>,
-                       to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,
-                       to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span>
-<span class="co"># `nboot` is the sufficient. Set it to at least 2000 in real analysis</span>
-<span class="va">cond_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cond_effect.html">cond_effect_boot</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">lm_std</span>,
-                             x <span class="op">=</span> <span class="st">"emotional_stability"</span>,
-                             w <span class="op">=</span> <span class="st">"conscientiousness"</span>,
-                             nboot <span class="op">=</span> <span class="fl">500</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cond_std</span>, model <span class="op">=</span> <span class="cn">FALSE</span>, title <span class="op">=</span> <span class="cn">FALSE</span>, level_info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt;   Level conscientiousness emotional_stability Effect CI Lower CI Upper  S.E.</span>
-<span class="co">#&gt;    High             1.000                      0.007   -0.113    0.130 0.063</span>
-<span class="co">#&gt;  Medium             0.000                      0.115    0.028    0.215 0.045</span>
-<span class="co">#&gt;     Low            -1.000                      0.223    0.079    0.367 0.062</span>
-<span class="co">#&gt;      t     p Sig</span>
-<span class="co">#&gt;  0.107 0.915    </span>
-<span class="co">#&gt;  2.560 0.011 *  </span>
-<span class="co">#&gt;  3.601 0.000 ***</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [CI Lower, CI Upper] shows the 95% nonparametric bootstrap confidence interval(s)</span>
-<span class="co">#&gt;  (based on 500 bootstrap samples)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Note:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; - The variable(s) sleep_duration, emotional_stability, conscientiousness is/are standardized.</span>
-<span class="co">#&gt; - The conditional effects are the standardized effects of emotional_stability on sleep_duration.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
+<span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
+<span>                              <span class="va">sleep_emo_con</span><span class="op">)</span></span>
+<span><span class="co"># Standardize all variables and do the moderated regression again</span></span>
+<span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>,</span>
+<span>                       to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
+<span>                       to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
+<span><span class="co"># `nboot` is the sufficient. Set it to at least 2000 in real analysis</span></span>
+<span><span class="va">cond_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cond_effect.html">cond_effect_boot</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">lm_std</span>,</span>
+<span>                             x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
+<span>                             w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
+<span>                             nboot <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cond_std</span>, model <span class="op">=</span> <span class="cn">FALSE</span>, title <span class="op">=</span> <span class="cn">FALSE</span>, level_info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   Level conscientiousness emotional_stability Effect CI Lower CI Upper  S.E.</span></span>
+<span><span class="co">#&gt;    High             1.000                      0.007   -0.113    0.130 0.063</span></span>
+<span><span class="co">#&gt;  Medium             0.000                      0.115    0.028    0.215 0.045</span></span>
+<span><span class="co">#&gt;     Low            -1.000                      0.223    0.079    0.367 0.062</span></span>
+<span><span class="co">#&gt;      t     p Sig</span></span>
+<span><span class="co">#&gt;  0.107 0.915    </span></span>
+<span><span class="co">#&gt;  2.560 0.011 *  </span></span>
+<span><span class="co">#&gt;  3.601 0.000 ***</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [CI Lower, CI Upper] shows the 95% nonparametric bootstrap confidence interval(s)</span></span>
+<span><span class="co">#&gt;  (based on 500 bootstrap samples)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Note:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; - The variable(s) sleep_duration, emotional_stability, conscientiousness is/are standardized.</span></span>
+<span><span class="co">#&gt; - The conditional effects are the standardized effects of emotional_stability on sleep_duration.</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="further-information">Further Information<a class="anchor" aria-label="anchor" href="#further-information"></a>
@@ -300,7 +300,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
