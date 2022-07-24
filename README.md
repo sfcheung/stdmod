@@ -42,11 +42,13 @@ https://sfcheung.github.io/stdmod/
 
 # Installation
 
-Stable release versions of this package can be downloaded below:
+The stable CRAN version can be installed by `install.packages()`:
 
-https://github.com/sfcheung/stdmod/releases
+```
+install.packages("stdmod")
+```
 
-The latest developmental version of this package at GitHub can be
+The latest version of this package at GitHub can be
 installed by `remotes::install_github()`:
 
 ```
