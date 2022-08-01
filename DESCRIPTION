@@ -1,7 +1,7 @@
 Package: stdmod
 Title: Standardized Moderation Effect and Its Confidence Interval
-Version: 0.1.7.3
-Authors@R: 
+Version: 0.1.7.4
+Authors@R:
     c(person(given = "Shu Fai",
            family = "Cheung",
            role = c("aut", "cre"),
@@ -13,7 +13,7 @@ Authors@R:
 Description: Functions for computing a standardized moderation effect
              in moderated regression and forming its confidence interval
              by nonparametric bootstrapping as proposed in
-             Cheung, Cheung, Lau, Hui, and Vong (2002)
+             Cheung, Cheung, Lau, Hui, and Vong (2022)
              <doi:10.1037/hea0001188>. Also includes simple-to-use
              functions for computing conditional effects (unstandardized
              or standardized) and plotting moderation effects.
@@ -24,7 +24,7 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-Suggests: 
+Suggests:
     testthat,
     dplyr,
     knitr,
@@ -32,9 +32,9 @@ Suggests:
     lavaan,
     visreg,
     lm.beta
-Depends: 
+Depends:
     R (>= 4.0.0)
-Imports: 
+Imports:
     boot,
     ggplot2,
     stats

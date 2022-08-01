@@ -1,9 +1,10 @@
-# stdmod 0.1.7.3
+# stdmod 0.1.7.4
 
 (All major changes after 0.1.7.1)
 
-- Fix a bug in `plotmod()`. It now correctly handles more than two levels
+- Fixed a bug in `plotmod()`. It now correctly handles more than two levels
   when `w_method` is set to`"percentile"`. (0.1.7.2, 0.1.7.3)
+- Fixed a typo in DESCRIPTION. (0.1.7.4)
 
 # stdmod 0.1.7.1
 
