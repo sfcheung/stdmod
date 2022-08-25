@@ -9,11 +9,13 @@ citEntry(entry = "Article",
                    as.person("W. N. Vong")),
   journal      = "Health Psychology",
   year         = "2022",
+  volume       = 41,
+  number       = 7,
+  pages        = 502-505,
   doi          = "10.1037/hea0001188",
-  note         = "Advance online publication",
   textVersion  =
   paste("Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022).",
         "Improving an old way to measure moderation effect in standardized units.",
-        "Health Psychology. Advance online publication.",
+        "Health Psychology, 41(7), 502-505.",
         "doi:10.1037/hea0001188")
 )

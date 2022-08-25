@@ -134,7 +134,7 @@ printCoefmat(summary(lm_xw_std)$coefficients, digits = 3)
 
 In this example, when conscientiousness
 is at mean level, for each one standard deviation increase of
-emotional stability, the predicted sleep duration increases by 
+emotional stability, the predicted sleep duration increases by
 `r formatC(coef(lm_xw_std)["emot"], 4, format = "f")` hour.
 
 ```{r}
@@ -172,7 +172,7 @@ printCoefmat(summary(lm_xwy_std)$coefficients, digits = 3)
 
 In this example, when conscientiousness
 is at mean level, the standardized moderation effect of
-emotional stability on sleep duration is 
+emotional stability on sleep duration is
 `r formatC(coef(lm_xwy_std)["emot"], 4, format = "f")`.
 
 ```{r}
@@ -269,7 +269,7 @@ tmp <- summary(lm_xwy_std_ci)$coefficients
 ```
 
 The standardized moderation effect is `r formatC(tmp["emot:cons", "Estimate"], 4, format = "f")`
-, and the 95% nonparametric bootstrap percentile confidence interval is 
+, and the 95% nonparametric bootstrap percentile confidence interval is
 `r formatC(tmp["emot:cons", "CI Lower"], 4, format = "f")` to
 `r formatC(tmp["emot:cons", "CI Upper"], 4, format = "f")`.
 
@@ -288,7 +288,7 @@ request is large.
 
 Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022)
 Improving an old way to measure moderation effect in standardized units.
-Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
+*Health Psychology*, *41*(7), 502-505. https://doi.org/10.1037/hea0001188.
 
 Yuan, K.-H., & Chan, W. (2011). Biases and standard errors of standardized
 regression coefficients. *Psychometrika, 76*(4), 670-690. https://doi.org/10.1007/s11336-011-9224-6

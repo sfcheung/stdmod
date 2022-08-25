@@ -22,11 +22,13 @@ test_mod3_miss
 For testing the handling of warnings
 in \code{\link[=stdmod_lavaan]{stdmod_lavaan()}}. Generated from the following
 model. \code{dv} has about 88\% missing. A warning on missing
-data will be raised in some bootstrap samples.\preformatted{mod <-
+data will be raised in some bootstrap samples.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{mod <-
 "
 med ~ iv + mod + iv:mod + cov1
 dv ~ med + cov2
 "
-}
+}\if{html}{\out{</div>}}
 }
 \keyword{datasets}

@@ -185,7 +185,7 @@ summary(lm_std_boot)
 \references{
 Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
 (2022) Improving an old way to measure moderation effect in standardized
-units. Advance online publication. \emph{Health Psychology}.
+units. \emph{Health Psychology}, \emph{41}(7), 502-505.
 \doi{10.1037/hea0001188}
 }
 \author{

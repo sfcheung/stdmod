@@ -20,11 +20,13 @@ test_mod1
 }
 \description{
 For testing. Generated from the following
-model.\preformatted{mod <-
+model.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{mod <-
 "
 med ~ iv + mod + iv:mod + cov1
 dv ~ med + cov2
 "
-}
+}\if{html}{\out{</div>}}
 }
 \keyword{datasets}

@@ -93,7 +93,7 @@ summary(lm_stdall)
 ```
 
 In this example, the coefficient of the product term, which naturally can
-be called the  
+be called the
 **standardized moderation effect**, is significant, B =
 `r formatC(coef(lm_stdall)["emot:cons"], 4, format = "f")`.
 For each one *standard deviation* increase of conscientiousness score, the
@@ -103,7 +103,7 @@ For each one *standard deviation* increase of conscientiousness score, the
 ## The Arguments
 
 Standardization is equivalent to centering by mean and then scaling by
-(dividing by) standard deviation.   
+(dividing by) standard deviation.
 The argument `to_center` specifies the variables to be centered
 by their means, and the argument `to_scale` specifies the variables to be scaled by
 their standard deviations. The formula interface of `lm()` is used in these two
@@ -191,7 +191,7 @@ lm_std1 <- std_selected(lm_out,
 summary(lm_std1)
 ```
 
-The *partially* standardized moderation effect is 
+The *partially* standardized moderation effect is
 `r formatC(coef(lm_std1)["emot:cons"], 4, format = "f")`.
 For each one *standard deviation* increase of conscientiousness score, the
 *partially* standardized effect of emotional stability decreases by
@@ -255,7 +255,7 @@ request is large.
 
 Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022)
 Improving an old way to measure moderation effect in standardized units.
-Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
+*Health Psychology*, *41*(7), 502-505. https://doi.org/10.1037/hea0001188.
 
 Yuan, K.-H., & Chan, W. (2011). Biases and standard errors of standardized
 regression coefficients. *Psychometrika, 76*(4), 670-690.

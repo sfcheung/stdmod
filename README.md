@@ -1,6 +1,6 @@
-[![CRAN Version](https://www.r-pkg.org/badges/version/stdmod?color=orange)](https://cran.r-project.org/package=stdmod)
-[![CRAN: Release Date](https://www.r-pkg.org/badges/last-release/stdmod?color=orange)](https://cran.r-project.org/package=stdmod)
-[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/stdmod?color=orange)](https://r-pkg.org/pkg/stdmod)
+[![CRAN Version](https://www.r-pkg.org/badges/version/stdmod?color=gray)](https://cran.r-project.org/package=stdmod)
+[![CRAN: Release Date](https://www.r-pkg.org/badges/last-release/stdmod?color=gray)](https://cran.r-project.org/package=stdmod)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/stdmod?color=gray)](https://r-pkg.org/pkg/stdmod)
 
 # stdmod: Standardized Moderation
 
@@ -11,7 +11,7 @@ in the following publication ([OSF project page](https://osf.io/ac8de/)).
 It supports moderated regression conducted by `stats::lm()` and path
 analysis with product term conducted by `lavaan::lavaan()`.
 
-- Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
+- Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. *Health Psychology, 41*(7), 502-505. https://doi.org/10.1037/hea0001188..
 
 More information on this package:
 

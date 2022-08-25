@@ -77,10 +77,10 @@ emotional stability on sleep duration.
 To get the correct standardized solution of the moderated regression, with the
 product term formed *after* standardization, we can use `std_selected()`.
 
-- The first argument is the regression output from `lm()`. 
+- The first argument is the regression output from `lm()`.
 
 - The argument `to_center` specifies variables to be mean
-  centered. 
+  centered.
 
 - The argument `to_scale` specifies variables to be rescaled
   by their standard deviations after centering.
@@ -96,7 +96,7 @@ lm_stdall <- std_selected(lm_out,
 summary(lm_stdall)
 ```
 
-The coefficient in this solution, 
+The coefficient in this solution,
 `r round(coef(lm_stdall)["emot:cons"], 5)`,
 can be interpreted as the change in the standardized effect of
 emotional stability for each one standard deviation increase of
@@ -185,7 +185,7 @@ summary(lm_xwy_std_ci)
 tmp <- summary(lm_xwy_std_ci)$coefficients
 ```
 
-The standardized moderation effect is 
+The standardized moderation effect is
 `r formatC(tmp["emot:cons", "Estimate"], 4, format = "f")`,
 and the 95% nonparametric bootstrap confidence interval is
 `r formatC(tmp["emot:cons", "CI Lower"], 4, format = "f")` to
@@ -210,7 +210,7 @@ levels of the moderator.
 
 Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022)
 Improving an old way to measure moderation effect in standardized units.
-Advance online publication. *Health Psychology*. https://doi.org/10.1037/hea0001188.
+*Health Psychology*, *41*(7), 502-505. https://doi.org/10.1037/hea0001188.
 
 Yuan, K.-H., & Chan, W. (2011). Biases and standard errors of standardized
 regression coefficients. *Psychometrika, 76*(4), 670-690.

@@ -1,3 +1,8 @@
+# stdmod 0.1.7.5
+
+- Update references.
+- Minor changes due to Roxygen updates.
+
 # stdmod 0.1.7.4
 
 (All major changes after 0.1.7.1)
