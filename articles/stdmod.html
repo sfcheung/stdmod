@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.7.5</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
       <h1 data-toc-skip>A Quick Start Guide on Using std_selected()</h1>
                         <h4 data-toc-skip class="author">Shu Fai Cheung</h4>
             
-            <h4 data-toc-skip class="date">2022-08-07</h4>
+            <h4 data-toc-skip class="date">2022-08-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/stdmod.Rmd" class="external-link"><code>vignettes/stdmod.Rmd</code></a></small>
       <div class="hidden name"><code>stdmod.Rmd</code></div>
@@ -222,12 +222,11 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Note:</span></span>
 <span><span class="co">#&gt; - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span></span></code></pre></div>
-<p>In this example, the coefficient of the product term, which naturally can be called the<br><strong>standardized moderation effect</strong>, is significant, B = -0.1083. For each one <em>standard deviation</em> increase of conscientiousness score, the <strong>standardized effect</strong> of emotional stability decreases by 0.1083.</p>
+<p>In this example, the coefficient of the product term, which naturally can be called the <strong>standardized moderation effect</strong>, is significant, B = -0.1083. For each one <em>standard deviation</em> increase of conscientiousness score, the <strong>standardized effect</strong> of emotional stability decreases by 0.1083.</p>
 <div class="section level3">
 <h3 id="the-arguments">The Arguments<a class="anchor" aria-label="anchor" href="#the-arguments"></a>
 </h3>
-<p>Standardization is equivalent to centering by mean and then scaling by (dividing by) standard deviation.<br>
-The argument <code>to_center</code> specifies the variables to be centered by their means, and the argument <code>to_scale</code> specifies the variables to be scaled by their standard deviations. The formula interface of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> is used in these two arguments, with the variables on the right hand side being the variables to be centered and/or scaled.</p>
+<p>Standardization is equivalent to centering by mean and then scaling by (dividing by) standard deviation. The argument <code>to_center</code> specifies the variables to be centered by their means, and the argument <code>to_scale</code> specifies the variables to be scaled by their standard deviations. The formula interface of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> is used in these two arguments, with the variables on the right hand side being the variables to be centered and/or scaled.</p>
 <p>The “<code>.</code>” on the right hand side represents all variables in the model, including the outcome variable (sleep duration in this example).</p>
 <p><code><a href="../reference/std_selected.html">std_selected()</a></code> will also skip categorical variables automatically skipped because standardizing them will make their coefficients not easy to interpret.</p>
 </div>
@@ -416,7 +415,7 @@ The argument <code>to_center</code> specifies the variables to be centered by th
 <div class="section level2">
 <h2 id="references">Reference(s)<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. Advance online publication. <em>Health Psychology</em>. <a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</p>
+<p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. <em>Health Psychology</em>, <em>41</em>(7), 502-505. <a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</p>
 <p>Yuan, K.-H., &amp; Chan, W. (2011). Biases and standard errors of standardized regression coefficients. <em>Psychometrika, 76</em>(4), 670-690. <a href="https://doi.org/10.1007/s11336-011-9224-6" class="external-link uri">https://doi.org/10.1007/s11336-011-9224-6</a></p>
 </div>
   </div>
