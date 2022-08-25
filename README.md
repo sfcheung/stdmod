@@ -1,3 +1,7 @@
+[![CRAN Version](https://www.r-pkg.org/badges/version/stdmod?color=orange)](https://cran.r-project.org/package=stdmod)
+[![CRAN: Release Date](https://www.r-pkg.org/badges/last-release/stdmod?color=orange)](https://cran.r-project.org/package=stdmod)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/stdmod?color=orange)](https://r-pkg.org/pkg/stdmod)
+
 # stdmod: Standardized Moderation
 
 This package includes functions for computing a standardized
