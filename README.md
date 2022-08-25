@@ -6,6 +6,7 @@
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/stdmod?color=blue)](https://r-pkg.org/pkg/stdmod)
 [![Code size](https://img.shields.io/github/languages/code-size/sfcheung/stdmod.svg)](https://github.com/sfcheung/stdmod)
 [![Last Commit at Master](https://img.shields.io/github/last-commit/sfcheung/stdmod.svg)](https://github.com/sfcheung/stdmod/commits/master)
+[![R-CMD-check](https://github.com/sfcheung/stdmod/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sfcheung/stdmod/actions/workflows/R-CMD-check.yaml)
 [![DOI](https://img.shields.io/badge/doi-10.1037/hea0001188-blue.svg)](https://doi.org/10.1037/hea0001188)
 <!-- badges: end -->
 
