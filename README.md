@@ -4,6 +4,8 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/stdmod?color=grey)](https://CRAN.R-project.org/package=stdmod)
 [![CRAN: Release Date](https://www.r-pkg.org/badges/last-release/stdmod?color=gray)](https://cran.r-project.org/package=stdmod)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/stdmod?color=gray)](https://r-pkg.org/pkg/stdmod)
+[![Code size](https://img.shields.io/github/languages/code-size/sfcheung/stdmod.svg)](https://github.com/sfcheung/stdmod)
+[![Last Commit at Master](https://img.shields.io/github/last-commit/sfcheung/stdmod.svg)](https://github.com/sfcheung/stdmod/commits/master)
 [![DOI](https://img.shields.io/badge/doi-10.1037/hea0001188-grey.svg)](https://doi.org/10.1037/hea0001188)
 <!-- badges: end -->
 
