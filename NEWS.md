@@ -1,8 +1,10 @@
-# stdmod 0.1.7.6
+# stdmod 0.1.7.7
 
-- Update references. (0.1.7.5)
+- Updateed references. (0.1.7.5)
 - Minor changes due to Roxygen updates. (0.1.7.5)
-- Add R CMD Check action (0.1.7.6)
+- Added R CMD Check action (0.1.7.6)
+- Minor changes due to Roxygen updates. (0.1.7.7)
+- Fixed a typo in CITATION
 
 # stdmod 0.1.7.4
 
