@@ -190,10 +190,10 @@ before calling it, to ensure reproducibility.
 }
 \section{Functions}{
 \itemize{
-\item \code{cond_effect_boot}: A wrapper of \code{\link[=cond_effect]{cond_effect()}} that forms
+\item \code{cond_effect_boot()}: A wrapper of \code{\link[=cond_effect]{cond_effect()}} that forms
 nonparametric bootstrap confidence intervals.
-}}
 
+}}
 \examples{
 
 # Load a sample data set

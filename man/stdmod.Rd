@@ -110,14 +110,14 @@ function.
 }
 \section{Functions}{
 \itemize{
-\item \code{stdmod}: The base function for computing standardized
+\item \code{stdmod()}: The base function for computing standardized
 moderation effect
 
-\item \code{stdmod_boot}: A wrapper of \code{\link[=stdmod]{stdmod()}} that computes the nonparametric
+\item \code{stdmod_boot()}: A wrapper of \code{\link[=stdmod]{stdmod()}} that computes the nonparametric
 bootstrap confidence interval of the standardized
 moderation effect.
-}}
 
+}}
 \examples{
 
 # Load a test data of 500 cases

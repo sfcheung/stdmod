@@ -127,13 +127,13 @@ before calling it, to ensure reproducibility.
 }
 \section{Functions}{
 \itemize{
-\item \code{std_selected}: The base function to center or
+\item \code{std_selected()}: The base function to center or
 scale selected variables in a regression model
 
-\item \code{std_selected_boot}: A wrapper of \code{\link[=std_selected]{std_selected()}} that forms
+\item \code{std_selected_boot()}: A wrapper of \code{\link[=std_selected]{std_selected()}} that forms
 nonparametric bootstrap confidence intervals.
-}}
 
+}}
 \examples{
 
 # Load a sample data set
