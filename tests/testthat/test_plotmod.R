@@ -1,3 +1,6 @@
+skip_on_cran()
+# False alarm in R-devel
+
 library(testthat)
 library(stdmod)
 library(ggplot2)
@@ -21,7 +24,7 @@ p0 <- plotmod(output = lm_out,
 p0
 p0 + coord_fixed(ratio = (1/.3)*sd(dat$emotional_stability)/sd(dat$sleep_duration))
 
-p0_check <- structure(list(x = c(1.95023867728441, 1.95023867728441), xend = c(3.47616132271559, 
+p0_check <- structure(list(x = c(1.95023867728441, 1.95023867728441), xend = c(3.47616132271559,
 3.47616132271559), y = c(6.35285945290502, 7.02951847531317),
     yend = c(6.98563044473979, 7.04856589701016)), class = "data.frame", row.names = c(NA,
 -2L))
@@ -58,7 +61,7 @@ p0p <- plotmod(output = lm_out,
         w_method = "percentile",
         w_percentiles = c(.10, .90))
 
-p0p_check <- structure(list(x = c(1.95023867728441, 1.95023867728441), xend = c(3.47616132271559, 
+p0p_check <- structure(list(x = c(1.95023867728441, 1.95023867728441), xend = c(3.47616132271559,
 3.47616132271559), y = c(6.22106675827842, 7.11313925511082),
     yend = c(6.97337252373737, 7.05634339117116)), class = "data.frame", row.names = c(NA,
 -2L))
@@ -114,7 +117,7 @@ p1 <- plotmod(output = lm_std,
 p1
 p1 + coord_fixed(ratio = (1/.3))
 
-p1_check <- structure(list(x = c(-1, -1), xend = c(1, 1), y = c(-0.298888468949575, 
+p1_check <- structure(list(x = c(-1, -1), xend = c(1, 1), y = c(-0.298888468949575,
 0.178698434412524), yend = c(0.147722199821573, 0.192142131820008
 )), class = "data.frame", row.names = c(NA, -2L))
 
@@ -151,7 +154,7 @@ p1p <- plotmod(output = lm_std,
         w_percentiles = c(.10, .90))
 p1p
 
-p1p_check <- structure(list(x = c(-1, -1), xend = c(1, 1), y = c(-0.391907940837296, 
+p1p_check <- structure(list(x = c(-1, -1), xend = c(1, 1), y = c(-0.391907940837296,
 0.237718100090162), yend = c(0.139070541690466, 0.197631498294497
 )), class = "data.frame", row.names = c(NA, -2L))
 
@@ -222,7 +225,7 @@ p0_wcat <- plotmod(output = lm_out_wcat,
         y_label = "Sleep Duration")
 p0_wcat
 
-p0_wcat_check <- structure(list(x = c(1.95023867728441, 1.95023867728441), xend = c(3.47616132271559, 
+p0_wcat_check <- structure(list(x = c(1.95023867728441, 1.95023867728441), xend = c(3.47616132271559,
 3.47616132271559), y = c(6.62226556199772, 6.59876556910144),
     yend = c(7.02520488312402, 6.54759945860682)), class = "data.frame", row.names = c(NA,
 -2L))
@@ -367,9 +370,9 @@ p1_wcat3 <- plotmod(output = lm_std_wcat3,
         y_label = "Sleep Duration")
 p1_wcat3
 
-p1_wcat3_check <- structure(list(x = c(-1, -1, -1), xend = c(1, 1, 1), y = c(0.119201161237405, 
+p1_wcat3_check <- structure(list(x = c(-1, -1, -1), xend = c(1, 1, 1), y = c(0.119201161237405,
 -0.183161383057221, -0.269680823885312), yend = c(0.221040289428956,
-0.0387914714870233, 0.0794793148698632)), class = "data.frame", row.names = c(NA, 
+0.0387914714870233, 0.0794793148698632)), class = "data.frame", row.names = c(NA,
 -3L))
 
 test_that("Check plotmod lm, std, percentiles", {

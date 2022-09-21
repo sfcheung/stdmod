@@ -1,3 +1,6 @@
+skip_on_cran()
+# False alarm in R-devel
+
 library(testthat)
 library(stdmod)
 library(ggplot2)
@@ -22,7 +25,7 @@ p0 <- plotmod(output = lm_out,
 p0
 p0 + coord_fixed(ratio = (1/.3)*sd(dat$emotional_stability)/sd(dat$sleep_duration))
 
-p0_check <- structure(list(x = c(1.7704117227118, 2.195380906087), xend = c(3.27637190301919, 
+p0_check <- structure(list(x = c(1.7704117227118, 2.195380906087), xend = c(3.27637190301919,
 3.69434882364273), y = c(6.27828864766516, 7.0325784780084),
     yend = c(6.90278158628822, 7.05128943568469)), class = "data.frame", row.names = c(NA,
 -2L))
@@ -43,8 +46,8 @@ p0p <- plotmod(output = lm_out,
         graph_type = "tumble")
 p0p
 
-p0p_check <- structure(list(x = c(1.76424143533983, 2.22284685095342), xend = c(3.28509189799351, 
-3.7306415211396), y = c(6.12936696085203, 7.1029925961128), yend = c(6.87917205410562, 
+p0p_check <- structure(list(x = c(1.76424143533983, 2.22284685095342), xend = c(3.28509189799351,
+3.7306415211396), y = c(6.12936696085203, 7.1029925961128), yend = c(6.87917205410562,
 7.04687146756592)), class = "data.frame", row.names = c(NA, -2L
 ))
 
@@ -63,7 +66,7 @@ p1 <- plotmod(output = lm_std,
 p1
 p1 + coord_fixed(ratio = (1/.3))
 
-p1_check <- structure(list(x = c(-1.23569602969199, -0.678696388002916), 
+p1_check <- structure(list(x = c(-1.23569602969199, -0.678696388002916),
     xend = c(0.738139518022633, 1.2859745237813), y = c(-0.351520649673297,
     0.180858188680334), yend = c(0.0892473573312492, 0.19406440930199
     )), class = "data.frame", row.names = c(NA, -2L))
@@ -85,7 +88,7 @@ p1p <- plotmod(output = lm_std,
         graph_type = "tumble")
 p1p
 
-p1p_check <- structure(list(x = c(-1.24378331693482, -0.642697256659458), 
+p1p_check <- structure(list(x = c(-1.24378331693482, -0.642697256659458),
     xend = c(0.749568662219976, 1.33354272470621), y = c(-0.456629788683114,
     0.230556573693766), yend = c(0.0725837158345487, 0.190946201100927
     )), class = "data.frame", row.names = c(NA, -2L))
@@ -119,8 +122,8 @@ p0_wcat <- plotmod(output = lm_out_wcat,
         graph_type = "tumble")
 p0_wcat
 
-p0_wcat_check <- structure(list(x = c(1.92857619767485, 2.05891627554369), xend = c(3.45889368184323, 
-3.5575543126916), y = c(6.61654530818674, 6.59512147218901), 
+p0_wcat_check <- structure(list(x = c(1.92857619767485, 2.05891627554369), xend = c(3.45889368184323,
+3.5575543126916), y = c(6.61654530818674, 6.59512147218901),
     yend = c(7.02064514249012, 6.54487024901611)), class = "data.frame", row.names = c(NA,
 -2L))
 
@@ -140,7 +143,7 @@ p1_wcat <- plotmod(output = lm_std_wcat,
 
 p1_wcat
 
-p1_wcat_check <- structure(list(x = c(-1.02839263140163, -0.857558181491475), 
+p1_wcat_check <- structure(list(x = c(-1.02839263140163, -0.857558181491475),
     xend = c(0.977367606511294, 1.10668036183842), y = c(-0.112778616107886,
     -0.12789959011911), yend = c(0.172435623446994, -0.163366975124769
     )), class = "data.frame", row.names = c(NA, -2L))
