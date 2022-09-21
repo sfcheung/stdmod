@@ -14,8 +14,9 @@
 # stdmod: Standardized Moderation
 
 (Version 0.2.0.0, updated on 2022-09-21, [release history](https://sfcheung.github.io/stdmod/news/index.html))
+
 (Important changes since 0.2.0.0: Bootstrap confidence intervals and
-variance-covariance matrix of estimates are the default output of `confint()`
+variance-covariance matrix of estimates are the defaults of `confint()`
 and `vcov()` for the output of `std_selected_boot()`.)
 
 This package includes functions for computing a standardized
