@@ -14,11 +14,13 @@
 #'  A matrix of the variances and covariances of the parameter estimates.
 #'
 #'@param object The output of [std_selected()] or [std_selected_boot()].
-#'@param type The type of variance-covariance matrix. Default is `"lm"`,
-#'            returned by the [stats::vcov()] method for the output of
+#'@param type The type of variance-covariance matrix. If set to `"lm"`,
+#'            returns the results of the [stats::vcov()] method for the output of
 #'            [lm()]. If set to `"boot"`,
 #'            the variance-covariance matrix of the bootstrap estimates
 #'            is returned.
+#'            Default depends on `object`. If bootstrap estimates were stored,
+#'            then the default is `"boot"`. Otherwise, the default is `"lm"`.
 #'@param ...  Arguments to be passed to [stats::vcov()].
 #'
 #'@examples
@@ -47,18 +49,26 @@
 #'                                  nboot = 100)
 #' # In real analysis, nboot should be at least 2000.
 #'
-#' # VCOV of lm output
+#' # VCOV of bootstrap estimates, default when bootstrap was conducted
 #' vcov(lm_std_boot)
 #'
-#' # VCOV of bootstrap estimates
-#' vcov(lm_std_boot, type = "boot")
+#' # For OLS VCOV
+#' vcov(lm_std_boot, type = "lm")
 #'
 #' @export
 
 
-vcov.std_selected <- function(object, type = "lm", ...) {
-    if (!(type %in% c("lm", "boot"))) {
-        stop("type must be either lm or boot.")
+vcov.std_selected <- function(object, type, ...) {
+    if (!missing(type)) {
+        if (!(type %in% c("lm", "boot"))) {
+            stop("type must be either lm or boot.")
+          }
+      } else {
+        if (is.null(object$boot_est)) {
+            type <- "lm"
+          } else {
+            type <- "boot"
+          }
       }
     if (type == "boot") {
         if (is.null(object$boot_est)) {

@@ -1,3 +1,11 @@
+# stdmod 0.2.0.0
+
+- Change the default of `confint()` and
+  `vcov()` for `std_selected`-class object.
+  If bootstrap CIs are requested, then bootstrap CIs
+  and VCOV based on bootstrapping should be returned. (0.2.0.0)
+
+
 # stdmod 0.1.7.7
 
 - Updateed references. (0.1.7.5)

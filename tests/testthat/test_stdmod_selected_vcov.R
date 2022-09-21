@@ -36,9 +36,9 @@ test_that("vcov by method with type lm == vcov from lm", {
       )
   })
 
-test_that("vcov by method default == vcov from lm", {
+test_that("vcov by method default == vcov from boot since 0.2.0.0", {
     expect_equivalent(
-        vcov_method_def, vcov_lm
+        vcov_method_def, vcov_check
       )
   })
 

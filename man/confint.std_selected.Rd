@@ -4,7 +4,7 @@
 \alias{confint.std_selected}
 \title{Confidence Intervals for a 'std_selected' Class Object}
 \usage{
-\method{confint}{std_selected}(object, parm, level = 0.95, type = "lm", ...)
+\method{confint}{std_selected}(object, parm, level = 0.95, type, ...)
 }
 \arguments{
 \item{object}{The output of \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.}
@@ -25,10 +25,13 @@ to \code{\link[=std_selected_boot]{std_selected_boot()}} such that the original 
 output
 is stored.}
 
-\item{type}{The type of the confidence intervals. Default is \code{"lm"},
-returned by the \code{\link[=confint]{confint()}} method of \code{\link[=lm]{lm()}}. If set to \code{"boot"},
-the bootstrap percentile confidence intervals are
-returned.}
+\item{type}{The type of the confidence intervals. If est to \code{"lm"},
+returns the confidence interval given by the \code{\link[=confint]{confint()}} method
+of \code{\link[=lm]{lm()}}.
+If set to \code{"boot"}, the bootstrap percentile confidence intervals
+are returned.
+Default is \code{"boot"} if bootstrap estimates are stored in
+\code{object}, and \code{"lm"} if bootstrap estimates are not stored.}
 
 \item{...}{Arguments to be passed to \code{\link[=summary.lm]{summary.lm()}}.}
 }
@@ -71,11 +74,13 @@ lm_std_boot <- std_selected_boot(lm_raw, to_scale = ~ .,
                                          nboot = 100)
 summary(lm_std_boot)
 
+# Bootstrap percentile intervals, default when bootstrap was conduced
+
 confint(lm_std_boot)
 
-# Bootstrap percentile intervals
+# Force OLS confidence intervals
 
-confint(lm_std_boot, type = "boot")
+confint(lm_std_boot, type = "lm")
 
 }
 \author{

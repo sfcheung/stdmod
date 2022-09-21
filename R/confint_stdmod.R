@@ -26,10 +26,13 @@
 #'             to [std_selected_boot()] such that the original bootstrapping
 #'             output
 #'             is stored.
-#' @param type The type of the confidence intervals. Default is `"lm"`,
-#'            returned by the [confint()] method of [lm()]. If set to `"boot"`,
-#'            the bootstrap percentile confidence intervals are
-#'            returned.
+#' @param type The type of the confidence intervals. If est to `"lm"`,
+#'            returns the confidence interval given by the [confint()] method
+#'            of [lm()].
+#'            If set to `"boot"`, the bootstrap percentile confidence intervals
+#'            are returned.
+#'             Default is `"boot"` if bootstrap estimates are stored in
+#'             `object`, and `"lm"` if bootstrap estimates are not stored.
 #' @param ...  Arguments to be passed to [summary.lm()].
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
@@ -38,7 +41,7 @@
 #' @examples
 #'
 #' # Load a sample data set
-#' 
+#'
 #' dat <- test_x_1_w_1_v_1_cat1_n_500
 #'
 #' # Do a moderated regression by lm
@@ -61,18 +64,28 @@
 #'                                          nboot = 100)
 #' summary(lm_std_boot)
 #'
+#' # Bootstrap percentile intervals, default when bootstrap was conduced
+#'
 #' confint(lm_std_boot)
 #'
-#' # Bootstrap percentile intervals
+#' # Force OLS confidence intervals
 #'
-#' confint(lm_std_boot, type = "boot")
+#' confint(lm_std_boot, type = "lm")
 #'
 #' @export
 
 
-confint.std_selected <- function(object, parm, level = .95, type = "lm", ...) {
-    if (!(type %in% c("lm", "boot"))) {
-        stop("type must be either lm or boot.")
+confint.std_selected <- function(object, parm, level = .95, type, ...) {
+    if (!missing(type)) {
+        if (!(type %in% c("lm", "boot"))) {
+            stop("type must be either lm or boot.")
+          }
+      } else {
+        if (is.null(object$boot_est)) {
+            type <- "lm"
+          } else {
+            type <- "boot"
+          }
       }
     if (type == "boot") {
         if (is.null(object$boot_est)) {

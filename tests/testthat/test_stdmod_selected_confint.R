@@ -24,9 +24,9 @@ confint_boot_check <- summary(stdmod_wy)$coefficients[, c("CI Lower", "CI Upper"
 confint_boot_conf90_check <- boot::boot.ci(stdmod_wy$boot_out, conf = .90,
                                            type = "perc", index = 7)$percent[4:5]
 
-test_that("confint_def == confint by lm", {
+test_that("confint_def == confint by boot since 0.2.0.0", {
     expect_equivalent(
-        confint_def, confint_lm_no_boot
+        confint_def, confint_boot
       )
   })
 
