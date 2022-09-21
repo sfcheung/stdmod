@@ -1,4 +1,5 @@
-skip("WIP")
+skip_on_cran()
+
 library(testthat)
 library(stdmod)
 library(ggplot2)
