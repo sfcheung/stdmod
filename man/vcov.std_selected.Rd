@@ -4,16 +4,18 @@
 \alias{vcov.std_selected}
 \title{The 'vcov' Method for a 'std_selected' Class Object}
 \usage{
-\method{vcov}{std_selected}(object, type = "lm", ...)
+\method{vcov}{std_selected}(object, type, ...)
 }
 \arguments{
 \item{object}{The output of \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.}
 
-\item{type}{The type of variance-covariance matrix. Default is \code{"lm"},
-returned by the \code{\link[stats:vcov]{stats::vcov()}} method for the output of
+\item{type}{The type of variance-covariance matrix. If set to \code{"lm"},
+returns the results of the \code{\link[stats:vcov]{stats::vcov()}} method for the output of
 \code{\link[=lm]{lm()}}. If set to \code{"boot"},
 the variance-covariance matrix of the bootstrap estimates
-is returned.}
+is returned.
+Default depends on \code{object}. If bootstrap estimates were stored,
+then the default is \code{"boot"}. Otherwise, the default is \code{"lm"}.}
 
 \item{...}{Arguments to be passed to \code{\link[stats:vcov]{stats::vcov()}}.}
 }
