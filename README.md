@@ -13,7 +13,7 @@
 
 # stdmod: Standardized Moderation
 
-(Version 0.1.7.7, updated on 2022-08-28, [release history](https://sfcheung.github.io/stdmod/news/index.html))
+(Version 0.2.0.0, updated on 2022-09-21, [release history](https://sfcheung.github.io/stdmod/news/index.html))
 
 This package includes functions for computing a standardized
 moderation effect and forming its confidence interval by
