@@ -57,11 +57,11 @@ lm_std_boot <- std_selected_boot(lm_raw,
                                  nboot = 100)
 # In real analysis, nboot should be at least 2000.
 
-# VCOV of lm output
+# VCOV of bootstrap estimates, default when bootstrap was conducted
 vcov(lm_std_boot)
 
-# VCOV of bootstrap estimates
-vcov(lm_std_boot, type = "boot")
+# For OLS VCOV
+vcov(lm_std_boot, type = "lm")
 
 }
 \author{

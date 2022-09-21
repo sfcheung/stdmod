@@ -64,11 +64,13 @@
 #'                                          nboot = 100)
 #' summary(lm_std_boot)
 #'
+#' # Bootstrap percentile intervals, default when bootstrap was conduced
+#'
 #' confint(lm_std_boot)
 #'
-#' # Bootstrap percentile intervals
+#' # Force OLS confidence intervals
 #'
-#' confint(lm_std_boot, type = "boot")
+#' confint(lm_std_boot, type = "lm")
 #'
 #' @export
 
