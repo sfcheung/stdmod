@@ -165,7 +165,7 @@ std_selected <- function(lm_out,
     # Prepare for Scaling
 
 #    var_sds <- apply(dat, 2, sd)
-    var_sds <- suppressWarnings(sapply(dat, stats::sd))
+    var_sds <- suppressWarnings(sapply(dat, sd2))
 
     var_b <- rep(1, k)
     names(var_b) <- colnames(dat)

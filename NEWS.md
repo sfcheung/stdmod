@@ -1,6 +1,11 @@
+# stdmod 0.2.0.1
+
+- Fixed a bug in `std_selected()`: It now works correctly when
+  a variable in the data frame is a factor.
+
 # stdmod 0.2.0.0
 
-- Change the default of `confint()` and
+- Changed the default of `confint()` and
   `vcov()` for `std_selected`-class object.
   If bootstrap CIs are requested, then bootstrap CIs
   and VCOV based on bootstrapping should be returned. (0.2.0.0)
@@ -8,7 +13,7 @@
 
 # stdmod 0.1.7.7
 
-- Updateed references. (0.1.7.5)
+- Updated references. (0.1.7.5)
 - Minor changes due to Roxygen updates. (0.1.7.5)
 - Added R CMD Check action (0.1.7.6)
 - Minor changes due to Roxygen updates. (0.1.7.7)
