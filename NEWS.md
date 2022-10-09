@@ -1,7 +1,7 @@
-# stdmod 0.2.0.1
+# stdmod 0.2.1
 
 - Fixed a bug in `std_selected()`: It now works correctly when
-  a variable in the data frame is a factor.
+  a variable in the data frame is a factor. (0.2.0.1)
 
 # stdmod 0.2.0.0
 
