@@ -15,6 +15,8 @@
   standardized = TRUE,
   boot_info = TRUE,
   table_only = FALSE,
+  t_ci = FALSE,
+  t_ci_level = 0.95,
   ...
 )
 }
@@ -47,6 +49,13 @@ Default is \code{TRUE}.}
 \item{table_only}{If \code{TRUE}, will suppress of other elements except
 for the table of conditional effects. Override
 arguments such as \code{title}, \code{model}, and \code{level_info}.}
+
+\item{t_ci}{If \code{TRUE}, will print the confidence intervals based on
+t statistics. These confidence intervals should not be
+used if some variables are standardized.}
+
+\item{t_ci_level}{The level of confidence of the confidence intervals
+based on t statistics. Default is .95.}
 
 \item{...}{Additional arguments. Ignored by this function.}
 }

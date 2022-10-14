@@ -24,6 +24,11 @@
 #' @param table_only If `TRUE`, will suppress of other elements except
 #'                    for the table of conditional effects. Override
 #'                    arguments such as `title`, `model`, and `level_info`.
+#' @param t_ci If `TRUE`, will print the confidence intervals based on
+#'             t statistics. These confidence intervals should not be
+#'             used if some variables are standardized.
+#' @param t_ci_level The level of confidence of the confidence intervals
+#'                   based on t statistics. Default is .95.
 #' @param ...  Additional arguments. Ignored by this function.
 #'
 #'
@@ -57,6 +62,8 @@ print.cond_effect <- function(x,
                               standardized = TRUE,
                               boot_info = TRUE,
                               table_only = FALSE,
+                              t_ci = FALSE,
+                              t_ci_level = .95,
                               ...) {
     xdf <- as.data.frame(x)
     orgcall <- attr(x, "call")
@@ -105,7 +112,20 @@ print.cond_effect <- function(x,
                          cutpoints = c(0, 0.001, 0.01, 0.05, 1),
                          symbols = c("***", "**", "*", " "))
     xdf$Sig <- format(sig)
+
+    if (t_ci) {
+        out_all <- attr(x, "out_all")
+        ci_all <- lapply(out_all, stats::confint, level = t_ci_level)
+        ci_x <- t(sapply(ci_all, function(y) y[iv, ]))
+        xdf$`CI.Lo(t)` <- formatC(ci_x[, 1], nd, format = "f")
+        xdf$`CI.Hi(t)` <- formatC(ci_x[, 2], nd, format = "f")
+      }
+
     print(xdf, row.names = FALSE)
+
+    y_std <- attr(x, "y_standardized")
+    x_std <- attr(x, "x_standardized")
+    w_std <- attr(x, "w_standardized")
 
     if (has_bootci) {
         nboot <- attr(x, "nboot")
@@ -120,8 +140,21 @@ print.cond_effect <- function(x,
           }
       }
 
+    if (t_ci) {
+        t_ci_level_txt <- paste0(as.character(t_ci_level * 100), "%")
+        cat("\n[CI.Lo(t), CI.Hi(t)] shows the ",
+            t_ci_level_txt, " confidence interval(s)",
+            " based on t statistics.",
+            sep = "")
+        if (any(y_std, x_std, w_std)) {
+            cat("\nThey should not be used when one or more",
+                " variables are standardized.",
+                sep = "")
+          }
+      }
+
     if (model & !table_only) {
-        cat("\nThe regression model:\n")
+        cat("\n\nThe regression model:\n")
         cat("\n\t", deparse(stats::formula(orgoutput)), "\n", sep = "")
       }
 
@@ -138,9 +171,6 @@ print.cond_effect <- function(x,
                 "  in standard deviation (+ve above, -ve below).\n", sep = "")
           }
       }
-    y_std <- attr(x, "y_standardized")
-    x_std <- attr(x, "x_standardized")
-    w_std <- attr(x, "w_standardized")
     if (any(y_std, x_std, w_std)) {
         tmp <- ifelse(c(y_std, x_std, w_std),
                       c(y, iv, w),
