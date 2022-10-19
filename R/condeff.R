@@ -209,7 +209,7 @@ cond_effect <- function(output,
         w_pq <- wecdf(w_levels)
         w_mean <- mean(mf0[, w], na.rm = TRUE)
         w_sd  <- stats::sd(mf0[, w], na.rm = TRUE)
-        w_z <- (w_levels - w_mean) / w_sd 
+        w_z <- (w_levels - w_mean) / w_sd
       } else {
         w_pq <- rep(NA, length(w_levels))
         w_z <- rep(NA, length(w_levels))
@@ -219,6 +219,7 @@ cond_effect <- function(output,
     attr(out0, "y_standardized") <- is_standardized(mf0[, y])
     attr(out0, "x_standardized") <- is_standardized(mf0[, x])
     attr(out0, "w_standardized") <- is_standardized(mf0[, w])
+    attr(out0, "out_all") <- out_all
     class(out0) <- c("cond_effect", class(out0))
     out0
   }
