@@ -20,7 +20,28 @@
 #'
 #' @examples
 #'
-#' # To Do
+#' # Load a sample data set
+#'
+#' dat <- test_x_1_w_1_v_1_cat1_n_500
+#'
+#' # Do a moderated regression by lm
+#' lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+#' summary(lm_raw)
+#' out <- cond_effect(lm_raw, x = iv, w = mod)
+#' out
+#' coef(out)
+#'
+#' lm_std <- std_selected(lm_raw, to_scale = ~ iv + mod, to_center = ~ iv + mod)
+#' out <- cond_effect(lm_std, x = iv, w = mod)
+#' out
+#' coef(out)
+#'
+#' # Categorical moderator
+#' lm_cat <- lm(dv ~ iv*cat1 + v1, dat)
+#' summary(lm_cat)
+#' out <- cond_effect(lm_cat, x = iv, w = cat1)
+#' out
+#' coef(out)
 #'
 #' @export
 
