@@ -114,9 +114,7 @@ print.cond_effect <- function(x,
     xdf$Sig <- format(sig)
 
     if (t_ci) {
-        out_all <- attr(x, "out_all")
-        ci_all <- lapply(out_all, stats::confint, level = t_ci_level)
-        ci_x <- t(sapply(ci_all, function(y) y[iv, ]))
+        ci_x <- stats::confint(x, level = t_ci_level, type = "lm")
         xdf$`CI.Lo(t)` <- formatC(ci_x[, 1], nd, format = "f")
         xdf$`CI.Hi(t)` <- formatC(ci_x[, 2], nd, format = "f")
       }
