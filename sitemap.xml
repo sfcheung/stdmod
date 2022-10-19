@@ -40,10 +40,16 @@
     <loc>https://sfcheung.github.io/stdmod/reference/add1.std_selected.html</loc>
   </url>
   <url>
+    <loc>https://sfcheung.github.io/stdmod/reference/coef.cond_effect.html</loc>
+  </url>
+  <url>
     <loc>https://sfcheung.github.io/stdmod/reference/coef.stdmod_lavaan.html</loc>
   </url>
   <url>
     <loc>https://sfcheung.github.io/stdmod/reference/cond_effect.html</loc>
+  </url>
+  <url>
+    <loc>https://sfcheung.github.io/stdmod/reference/confint.cond_effect.html</loc>
   </url>
   <url>
     <loc>https://sfcheung.github.io/stdmod/reference/confint.std_selected.html</loc>
