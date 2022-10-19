@@ -1,7 +1,13 @@
-# stdmod 0.2.1
+# stdmod 0.2.2
 
 - Fixed a bug in `std_selected()`: It now works correctly when
   a variable in the data frame is a factor. (0.2.0.1)
+- Add `confint()` and `coef()` methods for `cond_effect`-class
+  objects. `confint()` can return confidence intervals based on
+  *t* statistics, which are appropriate in some situations. (0.2.2)
+- `print()` method for `cond_effect`-class
+  objects can print confidence intervals based on
+  *t* statistics. (0.2.2)
 
 # stdmod 0.2.0.0
 
