@@ -39,6 +39,8 @@ reference:
   - confint.std_selected
   - print.std_selected
   - print.cond_effect
+  - coef.cond_effect
+  - confint.cond_effect
   - print.summary.std_selected
   - confint.stdmod_lavaan
   - print.stdmod_lavaan
