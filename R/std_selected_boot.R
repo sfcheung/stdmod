@@ -33,7 +33,6 @@
 #' - `boot_out`: If available, the original output from `boot::boot()`.
 #'
 #' @param lm_out The output from [lm()].
-#' @param ...  Arguments to be passed to [std_selected()].
 #' @param conf The level of confidence for the confidence interval.
 #'              Default is .95.
 #' @param nboot The number of bootstrap samples. Default is 100.
@@ -46,6 +45,9 @@
 #'                    Default is `FALSE`. If `TRUE`, the full output from
 #'                    [boot::boot()] will be saved in the element `boot_out`
 #'                    of the output.
+#' @param do_boot Whether bootstrapping confidence intervals will be formed.
+#'                Default is `TRUE`. If `FALSE`, all arguments related to
+#'                bootstrapping will be ignored.
 #'
 #' @examples
 #'
@@ -71,12 +73,14 @@
 #' @order 2
 
 std_selected_boot <- function(lm_out,
-                            ...,
-                            conf = .95,
-                            nboot = 100,
-                            boot_args = NULL,
-                            save_boot_est = TRUE,
-                            full_output = FALSE) {
+                              to_scale = NULL,
+                              to_center = NULL,
+                              conf = .95,
+                              nboot = 100,
+                              boot_args = NULL,
+                              save_boot_est = TRUE,
+                              full_output = FALSE,
+                              do_boot = TRUE) {
     if (missing(lm_out)) {
         stop("The arguments lm_out cannot be empty.")
       }
@@ -87,60 +91,70 @@ std_selected_boot <- function(lm_out,
     # Collect the results.
     # Return the results.
 
-
-    # Get the data frame
-
-    dat <- lm_out$model
-    k <- ncol(dat)
-    n <- nrow(dat)
-
-    # Create the boot function
-
-    bootfct <- create_boot_selected(lm_out, ...)
-
-    # Do bootstrapping
-
-    boot_out <- do.call(boot::boot,
-                  c(list(data = dat, statistic = bootfct, R = nboot),
-                  boot_args))
-
-    # Collect output
-
-    p <- length(boot_out$t0)
-
-    cis <- t(sapply(seq_len(p), function(x) {
-                boot::boot.ci(boot_out, conf = conf,
-                              type = "perc", index = x)$percent[4:5]
-              }))
-    rownames(cis) <- names(boot_out$t0)
-    colnames(cis) <- c("CI Lower", "CI Upper")
-
     # Do std_selected
 
-    std_selected_out <- std_selected(lm_out, ...)
+    std_selected_out <- std_selected(lm_out = lm_out,
+                                     to_scale = to_scale,
+                                     to_center = to_center)
 
-    # Append bootstrapping output
+    if (do_boot) {
+        # Get the data frame
 
-    std_selected_out$boot_ci <- cis
-    std_selected_out$nboot <- nboot
-    std_selected_out$conf <- conf
-    tmp <- boot_out$t
-    colnames(tmp) <- names(boot_out$t0)
-    std_selected_out$boot_est <- tmp
-    std_selected_out$std_selected_boot_call <- match.call()
-    if (full_output) {
-        std_selected_out$boot_out <- boot_out
+        dat <- lm_out$model
+        k <- ncol(dat)
+        n <- nrow(dat)
+
+        # Create the boot function
+
+        bootfct <- create_boot_selected(lm_out,
+                                        to_scale,
+                                        to_center)
+
+        # Do bootstrapping
+
+        boot_out <- do.call(boot::boot,
+                      c(list(data = dat, statistic = bootfct, R = nboot),
+                      boot_args))
+
+        # Collect output
+
+        p <- length(boot_out$t0)
+
+        cis <- t(sapply(seq_len(p), function(x) {
+                    boot::boot.ci(boot_out, conf = conf,
+                                  type = "perc", index = x)$percent[4:5]
+                  }))
+        rownames(cis) <- names(boot_out$t0)
+        colnames(cis) <- c("CI Lower", "CI Upper")
+
+
+        # Append bootstrapping output
+
+        std_selected_out$boot_ci <- cis
+        std_selected_out$nboot <- nboot
+        std_selected_out$conf <- conf
+        tmp <- boot_out$t
+        colnames(tmp) <- names(boot_out$t0)
+        std_selected_out$boot_est <- tmp
+        std_selected_out$std_selected_boot_call <- match.call()
+        if (full_output) {
+            std_selected_out$boot_out <- boot_out
+          }
       }
 
     std_selected_out
   }
-  
-create_boot_selected <- function(lm_out, ...) {
+
+create_boot_selected <- function(lm_out,
+                                 to_scale,
+                                 to_center) {
   function(d, ind) {
         force(lm_out)
         lm_out_i <- lm_out
         lm_out_i$model <- d[ind, ]
-        out <- std_selected(lm_out_i, ...)
+        out <- std_selected(lm_out = lm_out_i,
+                            to_scale = to_scale,
+                            to_center = to_center)
         stats::coef(out)
       }
   }
