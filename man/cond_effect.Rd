@@ -24,7 +24,8 @@ cond_effect_boot(
   nboot = 100,
   boot_args = NULL,
   save_boot_est = TRUE,
-  full_output = FALSE
+  full_output = FALSE,
+  do_boot = TRUE
 )
 }
 \arguments{
@@ -110,6 +111,10 @@ returned.
 Default is \code{FALSE}. If \code{TRUE}, the full output from
 \code{\link[boot:boot]{boot::boot()}} will be saved in the element \code{boot_out}
 of the output.}
+
+\item{do_boot}{Whether bootstrapping confidence intervals will be formed.
+Default is \code{TRUE}. If \code{FALSE}, all arguments related to
+bootstrapping will be ignored.}
 }
 \value{
 \code{\link[=cond_effect]{cond_effect()}} returns a data-frame-like object of the conditional effects.
@@ -181,6 +186,12 @@ Therefore, like \code{\link[=std_selected_boot]{std_selected_boot()}}, it can be
 nonparametric bootstrap confidence intervals for standardized
 effects, though \code{\link[=cond_effect_boot]{cond_effect_boot()}} does this for the standardized
 conditional effects.
+
+This function ignores bootstrapping done by \code{\link[=std_selected_boot]{std_selected_boot()}}. It will
+do its own bootstrapping.
+
+If \code{do_boot} is \code{FALSE}, then the object it returns is identical to that
+by \code{\link[=cond_effect]{cond_effect()}}.
 
 This function intentionally does not have an argument for setting the seed
 for

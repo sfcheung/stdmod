@@ -123,6 +123,9 @@ for each bootstrap sample, and then computes the nonparametric
 bootstrap
 percentile confidence intervals (Cheung, Cheung, Lau, Hui, & Vong, 2022).
 
+If \code{do_boot} is \code{FALSE}, then the object it returns is identical to that
+by \code{\link[=std_selected]{std_selected()}}.
+
 This function intentionally does not have an argument for setting the seed
 for
 random number. Users are recommended to set the seed, e.g., using
