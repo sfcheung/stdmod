@@ -11,6 +11,9 @@
 #' effects, though [cond_effect_boot()] does this for the standardized
 #' conditional effects.
 #'
+#' This function ignores bootstrapping done by [std_selected_boot()]. It will
+#' do its own bootstrapping.
+#'
 #' This function intentionally does not have an argument for setting the seed
 #' for
 #' random number. Users are recommended to set the seed, e.g., using
@@ -122,7 +125,7 @@ cond_effect_boot <- function(output,
               }))
     colnames(cis) <- c("CI Lower", "CI Upper")
     cond_effect_out <- cond_effect(output = output,
-                                   x = x, 
+                                   x = x,
                                    w = w,
                                    ...)
     rownames(cis) <- cond_effect_out$Level
@@ -144,15 +147,29 @@ cond_effect_boot <- function(output,
   }
 
 create_boot_cond_effect <- function(output, x, w, ...) {
-  function(d, ind) {
-        force(output)
-        dat_i <- d[ind, ]
-        out_i <- stats::update(output, data = dat_i)
-        cond_effect(output = out_i,
-                    x = x,
-                    w = w,
-                    ...)[, 3]
-      }
+  if (is.null(output$std_selected_boot_call)) {
+      out <- function(d, ind) {
+                force(output)
+                dat_i <- d[ind, ]
+                out_i <- stats::update(output, data = dat_i)
+                cond_effect(output = out_i,
+                            x = x,
+                            w = w,
+                            ...)[, "x's Effect"]
+              }
+      return(out)
+    } else {
+      output$std_selected_boot_call$do_boot <- FALSE
+      out <- function(d, ind) {
+                force(output)
+                dat_i <- d[ind, ]
+                out_i <- stats::update(output, data = dat_i)
+                cond_effect(output = out_i,
+                            x = x,
+                            w = w,
+                            ...)[, "x's Effect"]
+              }
+    }
   }
 
 insert_columns <- function(dat, x, after = 1) {
