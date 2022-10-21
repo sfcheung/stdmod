@@ -6,6 +6,9 @@
 #' bootstrap
 #' percentile confidence intervals (Cheung, Cheung, Lau, Hui, & Vong, 2022).
 #'
+#' If `do_boot` is `FALSE`, then the object it returns is identical to that
+#' by [std_selected()].
+#'
 #' This function intentionally does not have an argument for setting the seed
 #' for
 #' random number. Users are recommended to set the seed, e.g., using
