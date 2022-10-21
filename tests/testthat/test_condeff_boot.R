@@ -65,3 +65,26 @@ test_that("Check std boot est", {
         boot_out_std_check$t
       )
   })
+
+# Work on std_selected_boot
+
+lm_std_b <- std_selected_boot(lm_out,
+                            to_center = ~ .,
+                            to_scale = ~ .,
+                            nboot = 50)
+set.seed(875415)
+boot_out_std_b <- cond_effect_boot(lm_std_b, x = "emotional_stability", w = "conscientiousness",
+                              nboot = 50)
+boot_out_std_b
+boot_out_std
+
+test_that("Check cond_effect_boot on std_selected_boot", {
+    expect_equivalent(
+        attr(boot_out_std_b, "boot_est"),
+        attr(boot_out_std, "boot_est"),
+      )
+    expect_equivalent(
+        as.data.frame(boot_out_std_b),
+        as.data.frame(boot_out_std),
+      )
+  })
