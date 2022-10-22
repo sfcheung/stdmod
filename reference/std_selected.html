@@ -18,7 +18,7 @@ selected variables in a regression model and refit the model"><!-- mathjax --><s
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.4</span>
       </span>
     </div>
 
@@ -84,12 +84,14 @@ selected variables in a regression model and refit the model</p>
 <span></span>
 <span><span class="fu">std_selected_boot</span><span class="op">(</span></span>
 <span>  <span class="va">lm_out</span>,</span>
-<span>  <span class="va">...</span>,</span>
+<span>  to_scale <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  to_center <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  conf <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  nboot <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  boot_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  save_boot_est <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  full_output <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  full_output <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  do_boot <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -122,10 +124,6 @@ Specify only the original variables. If <code>NULL</code>, then no term
 will be centered. Default is <code>NULL</code>.</p></dd>
 
 
-<dt>...</dt>
-<dd><p>Arguments to be passed to <code>std_selected()</code>.</p></dd>
-
-
 <dt>conf</dt>
 <dd><p>The level of confidence for the confidence interval.
 Default is .95.</p></dd>
@@ -151,6 +149,12 @@ be saved in the element
 Default is <code>FALSE</code>. If <code>TRUE</code>, the full output from
 <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> will be saved in the element <code>boot_out</code>
 of the output.</p></dd>
+
+
+<dt>do_boot</dt>
+<dd><p>Whether bootstrapping confidence intervals will be formed.
+Default is <code>TRUE</code>. If <code>FALSE</code>, all arguments related to
+bootstrapping will be ignored.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -208,6 +212,8 @@ once
 for each bootstrap sample, and then computes the nonparametric
 bootstrap
 percentile confidence intervals (Cheung, Cheung, Lau, Hui, &amp; Vong, 2022).</p>
+<p>If <code>do_boot</code> is <code>FALSE</code>, then the object it returns is identical to that
+by <code>std_selected()</code>.</p>
 <p>This function intentionally does not have an argument for setting the seed
 for
 random number. Users are recommended to set the seed, e.g., using

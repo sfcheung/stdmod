@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.4</span>
       </span>
     </div>
 
@@ -97,7 +97,8 @@
 <span>  nboot <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  boot_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  save_boot_est <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  full_output <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  full_output <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  do_boot <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -211,6 +212,12 @@ Default is <code>FALSE</code>. If <code>TRUE</code>, the full output from
 <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> will be saved in the element <code>boot_out</code>
 of the output.</p></dd>
 
+
+<dt>do_boot</dt>
+<dd><p>Whether bootstrapping confidence intervals will be formed.
+Default is <code>TRUE</code>. If <code>FALSE</code>, all arguments related to
+bootstrapping will be ignored.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -275,6 +282,10 @@ Therefore, like <code><a href="std_selected.html">std_selected_boot()</a></code>
 nonparametric bootstrap confidence intervals for standardized
 effects, though <code>cond_effect_boot()</code> does this for the standardized
 conditional effects.</p>
+<p>This function ignores bootstrapping done by <code><a href="std_selected.html">std_selected_boot()</a></code>. It will
+do its own bootstrapping.</p>
+<p>If <code>do_boot</code> is <code>FALSE</code>, then the object it returns is identical to that
+by <code>cond_effect()</code>.</p>
 <p>This function intentionally does not have an argument for setting the seed
 for
 random number. Users are recommended to set the seed, e.g., using
