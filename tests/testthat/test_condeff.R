@@ -145,3 +145,36 @@ test_that("Check std, 3 categories", {
       )
   })
 
+# Test cond_effect_boot with do_boot = FALSE
+
+out_nb_ustd <- cond_effect_boot(lm_out, x = "emotional_stability", w = "conscientiousness",
+                        w_from_mean_in_sd = 1.25, do_boot = FALSE)
+out_nb_std <- cond_effect_boot(lm_std, x = "emotional_stability", w = "conscientiousness", do_boot = FALSE)
+out_nb_ustd_p <- cond_effect_boot(lm_out, x = "emotional_stability", w = "conscientiousness",
+                          w_method = "percentile", w_percentiles = c(.20, .40, .90), do_boot = FALSE)
+out_nb_std_p <- cond_effect_boot(lm_std, x = "emotional_stability", w = "conscientiousness",
+                          w_method = "percentile", w_sd_to_percentiles = 1.25, do_boot = FALSE)
+out_nb_ustd_wcat3 <- cond_effect_boot(lm_out_wcat3, x = "emotional_stability", w = "city", do_boot = FALSE)
+out_nb_std_wcat3 <- cond_effect_boot(lm_std_wcat3, x = "emotional_stability", w = "city", do_boot = FALSE)
+
+
+test_that("cond_effect_boot with do_boot = FALSE", {
+    expect_equivalent(
+        out_nb_ustd, out_ustd
+      )
+    expect_equivalent(
+        out_nb_std, out_std
+      )
+    expect_equivalent(
+        out_nb_ustd_p, out_ustd_p
+      )
+    expect_equivalent(
+        out_nb_std_p, out_std_p
+      )
+    expect_equivalent(
+        out_nb_ustd_wcat3, out_ustd_wcat3
+      )
+    expect_equivalent(
+        out_nb_std_wcat3, out_std_wcat3
+      )
+  })

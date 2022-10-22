@@ -9,12 +9,14 @@ std_selected(lm_out, to_scale = NULL, to_center = NULL)
 
 std_selected_boot(
   lm_out,
-  ...,
+  to_scale = NULL,
+  to_center = NULL,
   conf = 0.95,
   nboot = 100,
   boot_args = NULL,
   save_boot_est = TRUE,
-  full_output = FALSE
+  full_output = FALSE,
+  do_boot = TRUE
 )
 }
 \arguments{
@@ -39,8 +41,6 @@ as a predictor.
 Specify only the original variables. If \code{NULL}, then no term
 will be centered. Default is \code{NULL}.}
 
-\item{...}{Arguments to be passed to \code{\link[=std_selected]{std_selected()}}.}
-
 \item{conf}{The level of confidence for the confidence interval.
 Default is .95.}
 
@@ -57,6 +57,10 @@ be saved in the element
 Default is \code{FALSE}. If \code{TRUE}, the full output from
 \code{\link[boot:boot]{boot::boot()}} will be saved in the element \code{boot_out}
 of the output.}
+
+\item{do_boot}{Whether bootstrapping confidence intervals will be formed.
+Default is \code{TRUE}. If \code{FALSE}, all arguments related to
+bootstrapping will be ignored.}
 }
 \value{
 The updated \code{\link[=lm]{lm()}} output, with the class \code{std_selected} added. It will be
@@ -118,6 +122,9 @@ once
 for each bootstrap sample, and then computes the nonparametric
 bootstrap
 percentile confidence intervals (Cheung, Cheung, Lau, Hui, & Vong, 2022).
+
+If \code{do_boot} is \code{FALSE}, then the object it returns is identical to that
+by \code{\link[=std_selected]{std_selected()}}.
 
 This function intentionally does not have an argument for setting the seed
 for

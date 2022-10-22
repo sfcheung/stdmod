@@ -11,6 +11,12 @@
 #' effects, though [cond_effect_boot()] does this for the standardized
 #' conditional effects.
 #'
+#' This function ignores bootstrapping done by [std_selected_boot()]. It will
+#' do its own bootstrapping.
+#'
+#' If `do_boot` is `FALSE`, then the object it returns is identical to that
+#' by [cond_effect()].
+#'
 #' This function intentionally does not have an argument for setting the seed
 #' for
 #' random number. Users are recommended to set the seed, e.g., using
@@ -62,6 +68,9 @@
 #'                    Default is `FALSE`. If `TRUE`, the full output from
 #'                    [boot::boot()] will be saved in the element `boot_out`
 #'                    of the output.
+#' @param do_boot Whether bootstrapping confidence intervals will be formed.
+#'                Default is `TRUE`. If `FALSE`, all arguments related to
+#'                bootstrapping will be ignored.
 #'
 #' @examples
 #'
@@ -93,7 +102,8 @@ cond_effect_boot <- function(output,
                               nboot = 100,
                               boot_args = NULL,
                               save_boot_est = TRUE,
-                              full_output = FALSE) {
+                              full_output = FALSE,
+                              do_boot = TRUE) {
     x0 <- deparse(substitute(x))
     if (inherits(tryCatch(x00 <- as.character(x), error = function(e) e),
                  "simpleError")) {
@@ -108,51 +118,67 @@ cond_effect_boot <- function(output,
       } else {
         w <- w00
       }
-    dat <- stats::model.frame(output)
-    bootfct <- create_boot_cond_effect(output, x, w, ...)
-    boot_out <- do.call(boot::boot,
-              c(list(data = dat,
-                     statistic = bootfct,
-                     R = nboot),
-                     boot_args))
-    p <- length(boot_out$t0)
-    cis <- t(sapply(seq_len(p), function(x) {
-                boot::boot.ci(boot_out, conf = conf,
-                              type = "perc", index = x)$percent[4:5]
-              }))
-    colnames(cis) <- c("CI Lower", "CI Upper")
     cond_effect_out <- cond_effect(output = output,
-                                   x = x, 
+                                   x = x,
                                    w = w,
                                    ...)
-    rownames(cis) <- cond_effect_out$Level
-    attr(cond_effect_out, "boot_ci") <- cis
-    cse <- which(colnames(cond_effect_out) == "Std. Error")
-    cond_effect_out <- insert_columns(dat = cond_effect_out,
-                                      x = cis,
-                                      after = cse - 1)
-    attr(cond_effect_out, "nboot") <- nboot
-    attr(cond_effect_out, "conf") <- conf
-    tmp <- boot_out$t
-    colnames(tmp) <- cond_effect_out$Level
-    attr(cond_effect_out, "boot_est") <- tmp
-    attr(cond_effect_out, "cond_effect_boot_call") <- match.call()
-    if (full_output) {
-        attr(cond_effect_out, "boot_out") <- boot_out
+    if (do_boot) {
+        dat <- stats::model.frame(output)
+        bootfct <- create_boot_cond_effect(output, x, w, ...)
+        boot_out <- do.call(boot::boot,
+                  c(list(data = dat,
+                        statistic = bootfct,
+                        R = nboot),
+                        boot_args))
+        p <- length(boot_out$t0)
+        cis <- t(sapply(seq_len(p), function(x) {
+                    boot::boot.ci(boot_out, conf = conf,
+                                  type = "perc", index = x)$percent[4:5]
+                  }))
+        colnames(cis) <- c("CI Lower", "CI Upper")
+        rownames(cis) <- cond_effect_out$Level
+        attr(cond_effect_out, "boot_ci") <- cis
+        cse <- which(colnames(cond_effect_out) == "Std. Error")
+        cond_effect_out <- insert_columns(dat = cond_effect_out,
+                                          x = cis,
+                                          after = cse - 1)
+        attr(cond_effect_out, "nboot") <- nboot
+        attr(cond_effect_out, "conf") <- conf
+        tmp <- boot_out$t
+        colnames(tmp) <- cond_effect_out$Level
+        attr(cond_effect_out, "boot_est") <- tmp
+        attr(cond_effect_out, "cond_effect_boot_call") <- match.call()
+        if (full_output) {
+            attr(cond_effect_out, "boot_out") <- boot_out
+          }
       }
     cond_effect_out
   }
 
 create_boot_cond_effect <- function(output, x, w, ...) {
-  function(d, ind) {
-        force(output)
-        dat_i <- d[ind, ]
-        out_i <- stats::update(output, data = dat_i)
-        cond_effect(output = out_i,
-                    x = x,
-                    w = w,
-                    ...)[, 3]
-      }
+  if (is.null(output$std_selected_boot_call)) {
+      out <- function(d, ind) {
+                force(output)
+                dat_i <- d[ind, ]
+                out_i <- stats::update(output, data = dat_i)
+                cond_effect(output = out_i,
+                            x = x,
+                            w = w,
+                            ...)[, "x's Effect"]
+              }
+      return(out)
+    } else {
+      output$std_selected_boot_call$do_boot <- FALSE
+      out <- function(d, ind) {
+                force(output)
+                dat_i <- d[ind, ]
+                out_i <- stats::update(output, data = dat_i)
+                cond_effect(output = out_i,
+                            x = x,
+                            w = w,
+                            ...)[, "x's Effect"]
+              }
+    }
   }
 
 insert_columns <- function(dat, x, after = 1) {
