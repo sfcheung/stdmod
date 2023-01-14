@@ -31,7 +31,7 @@ p0_check <- structure(list(x = c(1.7704117227118, 2.195380906087), xend = c(3.27
 -2L))
 
 test_that("Check plotmod_tumble lm", {
-  expect_equal(layer_data(p0, 2)[, 2:5],
+  expect_equal(layer_data(p0, 2)[, colnames(p0_check)],
                p0_check)
   })
 
@@ -52,7 +52,7 @@ p0p_check <- structure(list(x = c(1.76424143533983, 2.22284685095342), xend = c(
 ))
 
 test_that("Check plotmod_tumble lm, percentiles", {
-  expect_equal(layer_data(p0p, 2)[, 2:5],
+  expect_equal(layer_data(p0p, 2)[, colnames(p0p_check)],
                p0p_check)
   })
 
@@ -72,7 +72,7 @@ p1_check <- structure(list(x = c(-1.23569602969199, -0.678696388002916),
     )), class = "data.frame", row.names = c(NA, -2L))
 
 test_that("Check plotmod_tumble lm, std", {
-  expect_equal(layer_data(p1, 2)[, 2:5],
+  expect_equal(layer_data(p1, 2)[, colnames(p1_check)],
                p1_check)
   })
 
@@ -94,7 +94,7 @@ p1p_check <- structure(list(x = c(-1.24378331693482, -0.642697256659458),
     )), class = "data.frame", row.names = c(NA, -2L))
 
 test_that("Check plotmod_tumble lm, std, percentiles", {
-  expect_equal(layer_data(p1p, 2)[, 2:5],
+  expect_equal(layer_data(p1p, 2)[, colnames(p1p_check)],
                p1p_check)
   })
 
@@ -128,7 +128,7 @@ p0_wcat_check <- structure(list(x = c(1.92857619767485, 2.05891627554369), xend 
 -2L))
 
 test_that("Check plotmod_tumble lm, std, percentiles", {
-  expect_equal(layer_data(p0_wcat, 2)[, 2:5],
+  expect_equal(layer_data(p0_wcat, 2)[, colnames(p0_wcat_check)],
                p0_wcat_check)
   })
 
@@ -149,7 +149,7 @@ p1_wcat_check <- structure(list(x = c(-1.02839263140163, -0.857558181491475),
     )), class = "data.frame", row.names = c(NA, -2L))
 
 test_that("Check plotmod_tumble lm, std, percentiles", {
-  expect_equal(layer_data(p1_wcat, 2)[, 2:5],
+  expect_equal(layer_data(p1_wcat, 2)[, colnames(p1_wcat_check)],
                p1_wcat_check)
   })
 
@@ -187,7 +187,7 @@ p0_wcat_check <- structure(list(x = c(1.96606187963417, 1.89124587472203, 1.9982
 )), class = "data.frame", row.names = c(NA, -3L))
 
 test_that("Check plotmod_tumble lm, std, percentiles", {
-  expect_equal(layer_data(p0_wcat3, 2)[, 2:5],
+  expect_equal(layer_data(p0_wcat3, 2)[, colnames(p0_wcat_check)],
                p0_wcat_check)
   })
 
@@ -208,6 +208,6 @@ p1_wcat3_check <- structure(list(x = c(-0.979260806703231, -1.07732082977996, -0
 )), class = "data.frame", row.names = c(NA, -3L))
 
 test_that("Check plotmod_tumble lm, std, percentiles", {
-  expect_equal(layer_data(p1_wcat3, 2)[, 2:5],
+  expect_equal(layer_data(p1_wcat3, 2)[, colnames(p1_wcat3_check)],
                p1_wcat3_check)
   })
