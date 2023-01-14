@@ -50,6 +50,8 @@ summary.std_selected <- function(object, ...) {
     out$scaled_by <- object$scaled_by
     out$centered_by <- object$centered_by
     out$nboot <- object$nboot
+    out$std_selected_call <- object$std_selected_call
+    out$std_selected_boot_call <- object$std_selected_boot_call
     if (!is.null(object$boot_ci)) {
       out$coefficients <- cbind(out$coefficients[, 1, drop = FALSE],
                                 object$boot_ci,
