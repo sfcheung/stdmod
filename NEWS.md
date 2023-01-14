@@ -1,3 +1,8 @@
+# stdmod 0.2.4.9001
+
+- Improved the printout of the `summary()` of `std_selected()`
+  and `std_selected_boot()` outputs. (0.2.4.9001).
+
 # stdmod 0.2.4
 
 - Fixed a bug in `std_selected()`: It now works correctly when
