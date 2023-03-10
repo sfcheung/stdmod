@@ -1,6 +1,6 @@
 Package: stdmod
 Title: Standardized Moderation Effect and Its Confidence Interval
-Version: 0.2.4.9003
+Version: 0.2.5
 Authors@R:
     c(person(given = "Shu Fai",
            family = "Cheung",
