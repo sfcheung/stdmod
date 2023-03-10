@@ -1,4 +1,4 @@
-# stdmod 0.2.5
+# stdmod 0.2.6
 
 - Improved the printout of the `summary()` of `std_selected()`
   and `std_selected_boot()` outputs. (0.2.4.9001).
@@ -6,6 +6,8 @@
 - Fixed a problem  with wrapping long lines in the
   printout of the `summary()` of `std_selected()`. (0.2.4.9003)
 - Update GitHub actions.
+- Fixed a missing link in an Rd file in old macOS machines. (0.2.6)
+- Use `bibentry()` in CITATION. (0.2.6)
 
 # stdmod 0.2.4
 
