@@ -9,14 +9,14 @@
 \arguments{
 \item{x}{The output of \code{\link[=std_selected]{std_selected()}} or \code{\link[=std_selected_boot]{std_selected_boot()}}.}
 
-\item{...}{Arguments to be passed to \code{\link[=print.lm]{print.lm()}}.}
+\item{...}{Arguments to be passed to \code{\link[=print]{print()}} method of \code{\link[=lm]{lm()}}.}
 }
 \value{
 \code{x} is returned invisibly.
 }
 \description{
 Provide information of centering and scaling, along with
-basic model information printed by \code{\link[=print.lm]{print.lm()}}.
+basic model information printed by the \code{\link[=print]{print()}} method of \code{\link[=lm]{lm()}}.
 }
 \examples{
 

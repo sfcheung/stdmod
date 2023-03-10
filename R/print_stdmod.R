@@ -1,13 +1,13 @@
 #' @title Print Basic Information of a 'std_selected' Class Object
 #'
 #' @description Provide information of centering and scaling, along with
-#'  basic model information printed by [print.lm()].
+#'  basic model information printed by the [print()] method of [lm()].
 #'
 #' @return
 #'  `x` is returned invisibly.
 #'
 #' @param x The output of [std_selected()] or [std_selected_boot()].
-#' @param ...  Arguments to be passed to [print.lm()].
+#' @param ...  Arguments to be passed to [print()] method of [lm()].
 #'
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
