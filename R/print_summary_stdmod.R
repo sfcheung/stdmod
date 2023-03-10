@@ -38,40 +38,75 @@
 #' @export
 
 print.summary.std_selected <- function(x, ...) {
+  if (!is.null(x$std_selected_boot_call)) {
+      cat("\nCall to std_selected_boot():\n")
+      print(x$std_selected_boot_call)
+    } else {
+      cat("\nCall to std_selected():\n")
+      print(x$std_selected_call)
+    }
   scaled_or_centered <- any(c(!is.null(x$centered_terms), !is.null(x$scaled_terms)))
+  opt_width <- 0.9 * getOption("width")
+  cat("\n")
+  tmp <- character(0)
   if (scaled_or_centered) {
-      cat("\nSelected variable(s) are centered by mean and/or scaled by SD")
+      tmp <- c(tmp,
+               strwrap("Selected variable(s) are centered by mean and/or scaled by SD"))
       if (!is.null(x$centered_terms)) {
-          cat("\n- Variable(s) centered:", x$centered_terms)
+          tmp <- c(tmp,
+                   strwrap(paste(c("- Variable(s) centered:", x$centered_terms),
+                                   collapse = " "),
+                           exdent = 2))
         }
       if (!is.null(x$scaled_terms)) {
-          cat("\n- Variable(s) scaled:", x$scaled_terms)
+          tmp <- c(tmp,
+                   strwrap(paste(c("- Variable(s) scaled:", x$scaled_terms),
+                                   collapse = " "),
+                           exdent = 2))
         }
-      cat("\n\n")
     } else {
-      cat("\nNo variables are centered by mean or scaled by SD by std_selected().")
-      cat("\n\n")
+      tmp <- c(tmp,
+               strwrap("No variables are centered by mean or scaled by SD by std_selected()."))
     }
+  cat(tmp, sep = "\n")
+  cat("\n")
   dat_sc <- format_dat_sc(x)
   print(dat_sc)
-  cat("\nNote:")
-  cat("\n- Categorical variables will not be centered or scaled even if requested.")
+  tmp <- character(0)
+  tmp <- c(tmp, "Note:")
+  tmp <- c(tmp,
+           strwrap("- Categorical variables will not be centered or scaled even if requested.",
+                    exdent = 2))
   if (!is.null(x$nboot)) {
-      cat("\n- Nonparametric bootstrapping 95% confidence intervals computed.")
-      cat("\n- The number of bootstrap samples is ", x$nboot, ".", sep = "")
+      tmp <- c(tmp,
+               strwrap("- Nonparametric bootstrapping 95% confidence intervals computed.",
+                       exdent = 2))
+      tmp <- c(tmp,
+               strwrap(paste0("- The number of bootstrap samples is ", x$nboot, "."),
+                       exdent = 2))
     }
   cat("\n")
+  cat(tmp, sep = "\n")
   NextMethod()
-  cat("Note:")
+  tmp <- character(0)
   if (scaled_or_centered) {
-      cat("\n- Estimates and their statistics are based on the data after",
-            "mean-centering, scaling, or standardization.")
+      tmp1 <- paste0("- Estimates and their statistics are based on the data after",
+                     "mean-centering, scaling, or standardization.", collapse = " ")
+      tmp <- c(tmp,
+               strwrap(tmp1, exdent = 2))
     }
   if (!is.null(x$nboot)) {
-      cat("\n- [CI Lower, CI Upper] are bootstrap percentile confidence intervals.")
-      cat("\n- Std. Error are not bootstrap SEs.")
+      tmp <- c(tmp,
+               strwrap("- [CI Lower, CI Upper] are bootstrap percentile confidence intervals.",
+                       exdent = 2))
+      tmp <- c(tmp,
+               strwrap("- Std. Error are not bootstrap SEs.", exdent = 2))
     }
-  cat("\n")
+  if (length(tmp) > 0) {
+      cat("Note:\n")
+      cat(tmp, sep = "\n")
+      cat("\n")
+    }
   invisible(x)
 }
 

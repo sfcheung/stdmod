@@ -1,3 +1,12 @@
+# stdmod 0.2.5
+
+- Improved the printout of the `summary()` of `std_selected()`
+  and `std_selected_boot()` outputs. (0.2.4.9001).
+- Fixed deprecated functions and arguments in `ggplot2`. (0.2.4.9002)
+- Fixed a problem  with wrapping long lines in the
+  printout of the `summary()` of `std_selected()`. (0.2.4.9003)
+- Update GitHub actions.
+
 # stdmod 0.2.4
 
 - Fixed a bug in `std_selected()`: It now works correctly when

@@ -172,6 +172,7 @@
 #'         y_label = "Sleep Duration",
 #'         graph_type = "tumble")
 #'
+#' @importFrom rlang .data
 #' @export
 
 plotmod <- function(output, x, w,
@@ -356,19 +357,42 @@ plotmod <- function(output, x, w,
     if (missing(title)) {
         title <- "Moderation Effect"
       }
-    p <- ggplot2::ggplot() +
-          ggplot2::geom_point(ggplot2::aes_string(x = x,
-                                                  y = "predicted",
-                                                  colour = "w_level"),
-                              data = mf2,
-                              size = point_size) +
-          ggplot2::geom_segment(ggplot2::aes(
-                x = mf2[mf2$x_level == "Low", x],
-                xend = mf2[mf2$x_level == "High", x],
-                y = mf2[mf2$x_level == "Low", "predicted"],
-                yend = mf2[mf2$x_level == "High", "predicted"],
-                colour = mf2[mf2$x_level == "Low", "w_level"]
-              ), size = line_width)
+    if (utils::packageVersion("ggplot2") >= "3.0.0") {
+        ggtmp1 <- "predicted"
+        ggtmp2 <- "w_level"
+        p <- ggplot2::ggplot() +
+              ggplot2::geom_point(ggplot2::aes(x = .data[[x]],
+                                               y = .data[[ggtmp1]],
+                                               color = .data[[ggtmp2]]),
+                                  data = mf2,
+                                  size = point_size)
+      } else {
+        p <- ggplot2::ggplot() +
+              ggplot2::geom_point(ggplot2::aes_string(x = x,
+                                                      y = "predicted",
+                                                      colour = "w_level"),
+                                  data = mf2,
+                                  size = point_size)
+      }
+    if (utils::packageVersion("ggplot2") >= "3.4.0") {
+        p <- p +
+              ggplot2::geom_segment(ggplot2::aes(
+                  x = mf2[mf2$x_level == "Low", x],
+                  xend = mf2[mf2$x_level == "High", x],
+                  y = mf2[mf2$x_level == "Low", "predicted"],
+                  yend = mf2[mf2$x_level == "High", "predicted"],
+                  colour = mf2[mf2$x_level == "Low", "w_level"]
+                ), linewidth = line_width)
+      } else {
+        p <- p +
+              ggplot2::geom_segment(ggplot2::aes(
+                  x = mf2[mf2$x_level == "Low", x],
+                  xend = mf2[mf2$x_level == "High", x],
+                  y = mf2[mf2$x_level == "Low", "predicted"],
+                  yend = mf2[mf2$x_level == "High", "predicted"],
+                  colour = mf2[mf2$x_level == "Low", "w_level"]
+                ), size = line_width)
+      }
 
     b_all <- find_bs(mf = mf2, x = x, w = w, w_levels = w_levels)
     b_format <- paste0("%.", digits, "f")
