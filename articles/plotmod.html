@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.5</span>
       </span>
     </div>
 
@@ -90,13 +90,14 @@
 
       
 
-      </header><script src="plotmod_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Moderation Effects Plots by plotmod()</h1>
-                        <h4 data-toc-skip class="author">Shu Fai Cheung</h4>
+                        <h4 data-toc-skip class="author">Shu Fai
+Cheung</h4>
             
-            <h4 data-toc-skip class="date">2022-10-22</h4>
+            <h4 data-toc-skip class="date">2023-03-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/plotmod.Rmd" class="external-link"><code>vignettes/plotmod.Rmd</code></a></small>
       <div class="hidden name"><code>plotmod.Rmd</code></div>
@@ -108,24 +109,38 @@
 <div class="section level2">
 <h2 id="what-plotmod-can-do">What <code>plotmod()</code> Can Do<a class="anchor" aria-label="anchor" href="#what-plotmod-can-do"></a>
 </h2>
-<p>It can visualize a moderation effect by plotting the effect of the predictor (focal variable) on the outcome variable (dependent variable) for different levels of the moderator:</p>
+<p>It can visualize a moderation effect by plotting the effect of the
+predictor (focal variable) on the outcome variable (dependent variable)
+for different levels of the moderator:</p>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>It can also plot a tumble graph (Bodner, 2016), in which the width of each line depends on the distribution of the predictor (focal variable) in each level of the moderator:</p>
+<p>It can also plot a tumble graph (Bodner, 2016), in which the width of
+each line depends on the distribution of the predictor (focal variable)
+in each level of the moderator:</p>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;"></p>
-<p><code><a href="../reference/plotmod.html">plotmod()</a></code> is not designed to be a versatile tool. It is designed to be a function “good-enough” for common scenarios. The output of <code><a href="../reference/plotmod.html">plotmod()</a></code> is a <code>ggplot</code> object and so can be further manipulated by functions from the <code>ggplot2</code> package.</p>
+<p><code><a href="../reference/plotmod.html">plotmod()</a></code> is not designed to be a versatile tool. It is
+designed to be a function “good-enough” for common scenarios. The output
+of <code><a href="../reference/plotmod.html">plotmod()</a></code> is a <code>ggplot</code> object and so can be
+further manipulated by functions from the <code>ggplot2</code>
+package.</p>
 </div>
 <div class="section level2">
 <h2 id="major-arguments">Major Arguments<a class="anchor" aria-label="anchor" href="#major-arguments"></a>
 </h2>
 <div class="section level3">
-<h3 id="model-predictor-x-and-moderator-w">Model, Predictor (<code>x</code>), and Moderator (<code>w</code>)<a class="anchor" aria-label="anchor" href="#model-predictor-x-and-moderator-w"></a>
+<h3 id="model-predictor-x-and-moderator-w">Model, Predictor (<code>x</code>), and Moderator
+(<code>w</code>)<a class="anchor" aria-label="anchor" href="#model-predictor-x-and-moderator-w"></a>
 </h3>
 <ul>
-<li><p><code>output</code>: The output of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>, <code><a href="../reference/std_selected.html">std_selected()</a></code>, or <code><a href="../reference/std_selected.html">std_selected_boot()</a></code>, with at least one interaction term.</p></li>
-<li><p><code>x</code>: The predictor (focal variable). The variable in the horizontal axis.</p></li>
-<li><p><code>w</code>: The moderator. The variable for which the conditional effects will be plotted.</p></li>
+<li><p><code>output</code>: The output of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>,
+<code><a href="../reference/std_selected.html">std_selected()</a></code>, or <code><a href="../reference/std_selected.html">std_selected_boot()</a></code>, with
+at least one interaction term.</p></li>
+<li><p><code>x</code>: The predictor (focal variable). The variable in
+the horizontal axis.</p></li>
+<li><p><code>w</code>: The moderator. The variable for which the
+conditional effects will be plotted.</p></li>
 </ul>
-<p>These are the only required arguments. Just setting them can generate the graph:</p>
+<p>These are the only required arguments. Just setting them can generate
+the graph:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/">stdmod</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleep_emo_con</span><span class="op">)</span></span>
@@ -143,8 +158,15 @@
 <div class="section level4">
 <h4 id="numeric-moderators">Numeric Moderators<a class="anchor" aria-label="anchor" href="#numeric-moderators"></a>
 </h4>
-<p>If the moderator is a numeric variable, then two lines will be drawn, by default. One line for one standard deviation (SD) below the mean on the moderator (“Low”), and the other for one SD above the mean (“High”).</p>
-<p>Users can also use percentiles to define “Low” and “High” by setting <code>w_method</code> to <code>"percentile"</code>. By default, 16th percentile and 84th percentile are used, which correspond approximately to one SD below and above mean, respectively, for a normal distribution.</p>
+<p>If the moderator is a numeric variable, then two lines will be drawn,
+by default. One line for one standard deviation (SD) below the mean on
+the moderator (“Low”), and the other for one SD above the mean
+(“High”).</p>
+<p>Users can also use percentiles to define “Low” and “High” by setting
+<code>w_method</code> to <code>"percentile"</code>. By default, 16th
+percentile and 84th percentile are used, which correspond approximately
+to one SD below and above mean, respectively, for a normal
+distribution.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
 <span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
@@ -158,7 +180,8 @@
 <div class="section level4">
 <h4 id="categorical-moderators">Categorical Moderators<a class="anchor" aria-label="anchor" href="#categorical-moderators"></a>
 </h4>
-<p>If the moderator is a categorical variable (a string variable or a factor), then one line will be drawn for each category.</p>
+<p>If the moderator is a categorical variable (a string variable or a
+factor), then one line will be drawn for each category.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">61452</span><span class="op">)</span></span>
 <span><span class="va">sleep_emo_con</span><span class="op">$</span><span class="va">city</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alpha"</span>, <span class="st">"Beta"</span>, <span class="st">"Gamma"</span><span class="op">)</span>,</span>
@@ -176,9 +199,19 @@
 <div class="section level3">
 <h3 id="tumble-graph">Tumble Graph<a class="anchor" aria-label="anchor" href="#tumble-graph"></a>
 </h3>
-<p>By default, each line starts from one SD below mean of the predictor to one SD above mean of the predictor. This assumes that variation of the predictor is the same for different levels of the moderator. However, this may not be the case when the predictor and the moderator are associated. Bodner (2016) proposed a type of graph called tumble graph that can show the association between the predictor and the moderator, if any.</p>
-<p>The idea is simple. Instead of using the SD of the predictor in the whole sample, the mean and SD of the predictor for the selected level of the moderator is used. (See the technical notes below on how it is implemented in <code><a href="../reference/plotmod.html">plotmod()</a></code>.)</p>
-<p>To plot a tumble graph, just set <code>graph_type</code> to <code>"tumble"</code>:</p>
+<p>By default, each line starts from one SD below mean of the predictor
+to one SD above mean of the predictor. This assumes that variation of
+the predictor is the same for different levels of the moderator.
+However, this may not be the case when the predictor and the moderator
+are associated. Bodner (2016) proposed a type of graph called tumble
+graph that can show the association between the predictor and the
+moderator, if any.</p>
+<p>The idea is simple. Instead of using the SD of the predictor in the
+whole sample, the mean and SD of the predictor for the selected level of
+the moderator is used. (See the technical notes below on how it is
+implemented in <code><a href="../reference/plotmod.html">plotmod()</a></code>.)</p>
+<p>To plot a tumble graph, just set <code>graph_type</code> to
+<code>"tumble"</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
 <span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
@@ -188,7 +221,8 @@
 <span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
 <span>        graph_type <span class="op">=</span> <span class="st">"tumble"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>The graph above shows that, the distribution of the predictor shifts to the left when the moderator is low.</p>
+<p>The graph above shows that, the distribution of the predictor shifts
+to the left when the moderator is low.</p>
 </div>
 </div>
 <div class="section level2">
@@ -197,7 +231,11 @@
 <div class="section level3">
 <h3 id="variable-labels">Variable Labels<a class="anchor" aria-label="anchor" href="#variable-labels"></a>
 </h3>
-<p>By default, the variable names are used in the graph. Users can supply labels that will be used instead of variable names by setting <code>x_label</code>, <code>w_label</code>, and <code>y_label</code> to strings for the predictor, moderator, and outcome variable, respectively.</p>
+<p>By default, the variable names are used in the graph. Users can
+supply labels that will be used instead of variable names by setting
+<code>x_label</code>, <code>w_label</code>, and <code>y_label</code> to
+strings for the predictor, moderator, and outcome variable,
+respectively.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
 <span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
@@ -213,7 +251,8 @@
 <div class="section level3">
 <h3 id="title">Title<a class="anchor" aria-label="anchor" href="#title"></a>
 </h3>
-<p>The default title is “Moderation Effect”. This can be changed via the argument <code>title</code>:</p>
+<p>The default title is “Moderation Effect”. This can be changed via the
+argument <code>title</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
 <span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
@@ -223,12 +262,16 @@
 <span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
 <span>        title <span class="op">=</span> <span class="st">"EMO Effects For Low/High CON"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>Some journals require submitted figures to have no title because they will be described by figure captions, supplied separately. The title can be disabled by setting <code>no_title</code> to <code>TRUE</code>.</p>
+<p>Some journals require submitted figures to have no title because they
+will be described by figure captions, supplied separately. The title can
+be disabled by setting <code>no_title</code> to <code>TRUE</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="line-width-and-point-size">Line Width and Point Size<a class="anchor" aria-label="anchor" href="#line-width-and-point-size"></a>
 </h3>
-<p><code><a href="../reference/plotmod.html">plotmod()</a></code> supports basic control of the lines. The width of the lines can be set by <code>line_width</code> and the size on the end-points can be set by <code>point_size</code>:</p>
+<p><code><a href="../reference/plotmod.html">plotmod()</a></code> supports basic control of the lines. The width
+of the lines can be set by <code>line_width</code> and the size on the
+end-points can be set by <code>point_size</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
 <span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
@@ -247,7 +290,11 @@
 <div class="section level3">
 <h3 id="conditional-effects">Conditional Effects<a class="anchor" aria-label="anchor" href="#conditional-effects"></a>
 </h3>
-<p>By default, <code><a href="../reference/plotmod.html">plotmod()</a></code> prints the conditional effects of the predictor as a subtitle. This can be disabled by adding a <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> call to the output and set <code>plot.subtitle</code> to <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank()</a></code>, which removes the subtitle:</p>
+<p>By default, <code><a href="../reference/plotmod.html">plotmod()</a></code> prints the conditional effects of
+the predictor as a subtitle. This can be disabled by adding a
+<code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> call to the output and set
+<code>plot.subtitle</code> to <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank()</a></code>, which
+removes the subtitle:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
 <span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
@@ -262,7 +309,11 @@
 <div class="section level3">
 <h3 id="definitions-of-the-levels-of-the-moderator">Definitions of the Levels of the Moderator<a class="anchor" aria-label="anchor" href="#definitions-of-the-levels-of-the-moderator"></a>
 </h3>
-<p>By default, the definitions of the levels of moderator (e.g., one SD below mean for “Low” and one SD above mean for “High”) are printed as a caption. This can also be disabled by adding a <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> call and set <code>plot.caption</code> to <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank()</a></code>:</p>
+<p>By default, the definitions of the levels of moderator (e.g., one SD
+below mean for “Low” and one SD above mean for “High”) are printed as a
+caption. This can also be disabled by adding a
+<code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> call and set <code>plot.caption</code> to
+<code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank()</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
 <span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
@@ -276,7 +327,10 @@
 <div class="section level3">
 <h3 id="any-variables-standardized">Any Variables Standardized?<a class="anchor" aria-label="anchor" href="#any-variables-standardized"></a>
 </h3>
-<p>If the output is generated by <code><a href="../reference/std_selected.html">std_selected()</a></code> or <code><a href="../reference/std_selected.html">std_selected_boot()</a></code>, <code><a href="../reference/plotmod.html">plotmod()</a></code> will try to detect if a variable is standardized or not, and report this in the graph:</p>
+<p>If the output is generated by <code><a href="../reference/std_selected.html">std_selected()</a></code> or
+<code><a href="../reference/std_selected.html">std_selected_boot()</a></code>, <code><a href="../reference/plotmod.html">plotmod()</a></code> will try to
+detect if a variable is standardized or not, and report this in the
+graph:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
 <span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
@@ -288,14 +342,23 @@
 <span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
 <span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotmod_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;"></p>
-<p>If the predictor, moderator, and outcome variable are all standardized, then the moderation effect is standardized moderation effect (Cheung, Cheung, Lau, Hui, &amp; Vong, 2022), and the conditional effect printed on the graph are the standardized effects of the predictor for different levels of the moderator.</p>
-<p>If which variables are standardized will be reported in the main text and so the figure does not need to report this, set <code>note_standardized</code> to <code>FALSE</code>.</p>
+<p>If the predictor, moderator, and outcome variable are all
+standardized, then the moderation effect is standardized moderation
+effect (Cheung, Cheung, Lau, Hui, &amp; Vong, 2022), and the conditional
+effect printed on the graph are the standardized effects of the
+predictor for different levels of the moderator.</p>
+<p>If which variables are standardized will be reported in the main text
+and so the figure does not need to report this, set
+<code>note_standardized</code> to <code>FALSE</code>.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="tweak-the-graph">Tweak the Graph<a class="anchor" aria-label="anchor" href="#tweak-the-graph"></a>
 </h2>
-<p>The output of <code><a href="../reference/plotmod.html">plotmod()</a></code> is a <code>ggplot</code> object. Therefore, it can be manipulated by functions that modify a <code>ggplot</code> object. For example, users can change the colors of the lines and the theme:</p>
+<p>The output of <code><a href="../reference/plotmod.html">plotmod()</a></code> is a <code>ggplot</code> object.
+Therefore, it can be manipulated by functions that modify a
+<code>ggplot</code> object. For example, users can change the colors of
+the lines and the theme:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
 <span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
@@ -310,20 +373,34 @@
 <div class="section level2">
 <h2 id="technical-notes-for-tumble-graph">Technical Notes for Tumble Graph<a class="anchor" aria-label="anchor" href="#technical-notes-for-tumble-graph"></a>
 </h2>
-<p>Bodner (2016) proposed regressing the predictor on the moderator. <code><a href="../reference/plotmod.html">plotmod()</a></code> uses a nonparametric approach.</p>
-<p>If the moderator is numerical, for a level of moderator, say, one SD below mean, a certain percentage of cases (about 16% of cases above and below this value of the moderator) is used to compute the mean and SD of the predictor, which will be used to determine the end-points of the line segment for this level.</p>
-<p>If the moderator is categorical, then the mean and SD of all cases in each group will be used to the determine the end-points of a line segment.</p>
+<p>Bodner (2016) proposed regressing the predictor on the moderator.
+<code><a href="../reference/plotmod.html">plotmod()</a></code> uses a nonparametric approach.</p>
+<p>If the moderator is numerical, for a level of moderator, say, one SD
+below mean, a certain percentage of cases (about 16% of cases above and
+below this value of the moderator) is used to compute the mean and SD of
+the predictor, which will be used to determine the end-points of the
+line segment for this level.</p>
+<p>If the moderator is categorical, then the mean and SD of all cases in
+each group will be used to the determine the end-points of a line
+segment.</p>
 </div>
 <div class="section level2">
 <h2 id="further-information">Further Information<a class="anchor" aria-label="anchor" href="#further-information"></a>
 </h2>
-<p>Please refer to the help page of <code><a href="../reference/plotmod.html">plotmod()</a></code> for other options available.</p>
+<p>Please refer to the help page of <code><a href="../reference/plotmod.html">plotmod()</a></code> for other
+options available.</p>
 </div>
 <div class="section level2">
 <h2 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
 </h2>
-<p>Bodner, T. E. (2016). Tumble graphs: Avoiding misleading end point extrapolation when graphing interactions from a moderated multiple regression analysis. <em>Journal of Educational and Behavioral Statistics, 41</em>(6), 593-604. </p>
-<p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. <em>Health Psychology</em>, <em>41</em>(7), 502-505. <a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</p>
+<p>Bodner, T. E. (2016). Tumble graphs: Avoiding misleading end point
+extrapolation when graphing interactions from a moderated multiple
+regression analysis. <em>Journal of Educational and Behavioral
+Statistics, 41</em>(6), 593-604. </p>
+<p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong,
+W. N. (2022) Improving an old way to measure moderation effect in
+standardized units. <em>Health Psychology</em>, <em>41</em>(7), 502-505.
+<a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</p>
 </div>
   </div>
 
@@ -344,7 +421,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

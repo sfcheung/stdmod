@@ -18,7 +18,7 @@ in the output of std_selected() or std_selected_boot()."><!-- mathjax --><script
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.5</span>
       </span>
     </div>
 
@@ -183,6 +183,9 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-in"><span>                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call to std_selected():</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> std_selected(lm_out = lm_raw, to_scale = ~., to_center = ~.)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: dv iv mod v1 cat1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) scaled: dv iv mod v1 cat1</span>
@@ -195,7 +198,8 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA Nonnumeric                     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Categorical variables will not be centered or scaled even if requested.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Categorical variables will not be centered or scaled even if</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   requested.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = dv ~ iv * mod + v1 + cat1, data = dat_mod)</span>
@@ -221,7 +225,9 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   aftermean-centering, scaling, or standardization.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   2.5 %      97.5 %</span>
@@ -241,6 +247,10 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-in"><span>                                         nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call to std_selected_boot():</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> std_selected_boot(lm_out = lm_raw, to_scale = ~., to_center = ~., </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     nboot = 100)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Selected variable(s) are centered by mean and/or scaled by SD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) centered: dv iv mod v1 cat1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Variable(s) scaled: dv iv mod v1 cat1</span>
@@ -253,7 +263,8 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1          NA          NA Nonnumeric                     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Categorical variables will not be centered or scaled even if requested.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Categorical variables will not be centered or scaled even if</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   requested.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Nonparametric bootstrapping 95% confidence intervals computed.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The number of bootstrap samples is 100.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -281,9 +292,11 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic:   143 on 6 and 493 DF,  p-value: &lt; 2.2e-16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after mean-centering, scaling, or standardization.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   aftermean-centering, scaling, or standardization.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Std. Error are not bootstrap SEs.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Bootstrap percentile intervals, default when bootstrap was conduced</span></span></span>
 <span class="r-in"><span></span></span>
@@ -323,7 +336,7 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

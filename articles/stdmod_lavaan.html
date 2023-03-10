@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">stdmod</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.5</span>
       </span>
     </div>
 
@@ -90,13 +90,15 @@
 
       
 
-      </header><script src="stdmod_lavaan_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Standardized Moderation Effect in a Path Model by stdmod_lavaan()</h1>
-                        <h4 data-toc-skip class="author">Shu Fai Cheung and David Weng Ngai Vong</h4>
+      <h1 data-toc-skip>Standardized Moderation Effect in a Path Model
+by stdmod_lavaan()</h1>
+                        <h4 data-toc-skip class="author">Shu Fai Cheung
+and David Weng Ngai Vong</h4>
             
-            <h4 data-toc-skip class="date">2022-10-22</h4>
+            <h4 data-toc-skip class="date">2023-03-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/stdmod_lavaan.Rmd" class="external-link"><code>vignettes/stdmod_lavaan.Rmd</code></a></small>
       <div class="hidden name"><code>stdmod_lavaan.Rmd</code></div>
@@ -108,7 +110,9 @@
 <div class="section level2">
 <h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>
 </h2>
-<p>This document demonstrates how to use <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> to compute the standardized moderation effect in a path model fitted by <code><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">lavaan::sem()</a></code>.</p>
+<p>This document demonstrates how to use <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> to
+compute the standardized moderation effect in a path model fitted by
+<code><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">lavaan::sem()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="setup-the-environment">Setup the Environment<a class="anchor" aria-label="anchor" href="#setup-the-environment"></a>
@@ -116,7 +120,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sfcheung.github.io/stdmod/">stdmod</a></span><span class="op">)</span> <span class="co"># For computing the standardized moderation effect conveniently</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span> <span class="co"># For doing path analysis in lavaan.</span></span>
-<span><span class="co">#&gt; This is lavaan 0.6-12</span></span>
+<span><span class="co">#&gt; This is lavaan 0.6-14</span></span>
 <span><span class="co">#&gt; lavaan is FREE software! Please report any bugs.</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -134,7 +138,9 @@
 <div class="section level2">
 <h2 id="fit-the-model-by-lavaansem">Fit the Model by <code>lavaan::sem()</code><a class="anchor" aria-label="anchor" href="#fit-the-model-by-lavaansem"></a>
 </h2>
-<p>The product term can be formed manually or by the colon operator, <code>:</code>. <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> will work in both cases.</p>
+<p>The product term can be formed manually or by the colon operator,
+<code>:</code>. <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> will work in both
+cases.</p>
 <p>This is the model to be tested:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span></span>
@@ -144,7 +150,7 @@
 <span><span class="st">"</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">sem</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">test_mod1</span>, fixed.x <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
-<span><span class="co">#&gt; lavaan 0.6-12 ended normally after 1 iterations</span></span>
+<span><span class="co">#&gt; lavaan 0.6.14 ended normally after 1 iteration</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Estimator                                         ML</span></span>
 <span><span class="co">#&gt;   Optimization method                           NLMINB</span></span>
@@ -201,23 +207,32 @@
 <span><span class="co">#&gt;     iv:mod            1.088    0.089   12.247    0.000</span></span>
 <span><span class="co">#&gt;     cov1              1.039    0.085   12.247    0.000</span></span>
 <span><span class="co">#&gt;     cov2              1.076    0.088   12.247    0.000</span></span></code></pre></div>
-<p>The results show that <code>mod</code> significantly moderates the effect of <code>iv</code> on <code>med</code>.</p>
+<p>The results show that <code>mod</code> significantly moderates the
+effect of <code>iv</code> on <code>med</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="compute-the-standardized-moderation-effect">Compute the Standardized Moderation Effect<a class="anchor" aria-label="anchor" href="#compute-the-standardized-moderation-effect"></a>
 </h2>
-<p>As in the case of regression, the coefficient of <code>iv:mod</code> in the standardized solution is not the desired standardized coefficient because it standardizes the product term.</p>
+<p>As in the case of regression, the coefficient of <code>iv:mod</code>
+in the standardized solution is not the desired standardized coefficient
+because it standardizes the product term.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/standardizedSolution.html" class="external-link">standardizedSolution</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span>, <span class="op">]</span></span>
 <span><span class="co">#&gt;   lhs op    rhs est.std    se      z pvalue ci.lower ci.upper</span></span>
 <span><span class="co">#&gt; 3 med  ~ iv:mod   0.466 0.043 10.842      0    0.382     0.55</span></span></code></pre></div>
-<p>After fitting the path model by <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan::lavaan()</a></code>, we can use <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> to compute the standardized moderation effect using the standard deviations of the focal variable, the moderator, and the outcome variable (Cheung, Cheung, Lau, Hui, &amp; Vong, 2022).</p>
+<p>After fitting the path model by <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan::lavaan()</a></code>, we can
+use <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> to compute the standardized moderation
+effect using the standard deviations of the focal variable, the
+moderator, and the outcome variable (Cheung, Cheung, Lau, Hui, &amp;
+Vong, 2022).</p>
 <p>The minimal arguments are:</p>
 <ul>
 <li>
-<code>fit</code>: The output from <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan::lavaan()</a></code> and its wrappers, such as <code><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">lavaan::sem()</a></code>.</li>
+<code>fit</code>: The output from <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan::lavaan()</a></code> and
+its wrappers, such as <code><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">lavaan::sem()</a></code>.</li>
 <li>
-<code>x</code>: The focal variable, the variable with its effect on the outcome variable being moderated.</li>
+<code>x</code>: The focal variable, the variable with its effect on
+the outcome variable being moderated.</li>
 <li>
 <code>y</code>: The outcome variable.</li>
 <li>
@@ -245,25 +260,41 @@
 <span><span class="co">#&gt;              lhs op    rhs   est    se      z pvalue ci.lower ci.upper</span></span>
 <span><span class="co">#&gt; Original     med  ~ iv:mod 0.257 0.025 10.169      0    0.208    0.307</span></span>
 <span><span class="co">#&gt; Standardized med  ~ iv:mod 0.440    NA     NA     NA       NA       NA</span></span></code></pre></div>
-<p>The standardized moderation effect of <code>mod</code> on the <code>iv</code>-<code>med</code> path is 0.440.</p>
+<p>The standardized moderation effect of <code>mod</code> on the
+<code>iv</code>-<code>med</code> path is 0.440.</p>
 </div>
 <div class="section level2">
 <h2 id="form-bootstrap-confidence-interval">Form Bootstrap Confidence Interval<a class="anchor" aria-label="anchor" href="#form-bootstrap-confidence-interval"></a>
 </h2>
-<p><code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> can also be used to form nonparametric bootstrap confidence interval for the standardized moderation effect.</p>
+<p><code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> can also be used to form nonparametric
+bootstrap confidence interval for the standardized moderation
+effect.</p>
 <p>Only two additional arguments are required:</p>
 <ul>
 <li>
-<code>boot_ci</code>: Set it to <code>TRUE</code> to request nonparametric bootstrap confidence interval.</li>
+<code>boot_ci</code>: Set it to <code>TRUE</code> to request
+nonparametric bootstrap confidence interval.</li>
 <li>
-<code>R</code>: Set the number of bootstrap samples. Should be at least 2000.</li>
+<code>R</code>: Set the number of bootstrap samples. Should be at
+least 2000.</li>
 </ul>
-<p>However, the function can be slow if the model takes some time to fit because the model will be fitted <code>R</code> times. If the model cannot be fitted quickly, we highly suggest using parallel processing. This can be requested using arguments in <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> because <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> internally calls <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> to do the bootstrapping. These are the two possible arguments to use for parallel processing:</p>
+<p>However, the function can be slow if the model takes some time to fit
+because the model will be fitted <code>R</code> times. If the model
+cannot be fitted quickly, we highly suggest using parallel processing.
+This can be requested using arguments in <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code>
+because <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> internally calls
+<code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> to do the bootstrapping. These are the two
+possible arguments to use for parallel processing:</p>
 <ul>
 <li>
-<code>parallel</code>: Can be <code>"no"</code>, <code>"multicore"</code>, or <code>"snow"</code>. See <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> on which one to use. The following example uses <code>"snow"</code>.</li>
+<code>parallel</code>: Can be <code>"no"</code>,
+<code>"multicore"</code>, or <code>"snow"</code>. See
+<code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> on which one to use. The following example
+uses <code>"snow"</code>.</li>
 <li>
-<code>ncpus</code>: The number of processors to use. Let <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> decides or set it based on the configuration of the computer.</li>
+<code>ncpus</code>: The number of processors to use. Let
+<code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> decides or set it based on the configuration
+of the computer.</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">860947</span><span class="op">)</span></span>
@@ -298,18 +329,29 @@
 <span><span class="co">#&gt; - Type: Percentile</span></span>
 <span><span class="co">#&gt; - Number of bootstrap samples requests: 100</span></span>
 <span><span class="co">#&gt; - Number of bootstrap samples with valid results: 100</span></span></code></pre>
-<p>The 95% confidence interval of the standardized moderation effect is 0.296 to 0.515.</p>
+<p>The 95% confidence interval of the standardized moderation effect is
+0.296 to 0.515.</p>
 </div>
 <div class="section level2">
 <h2 id="remarks">Remarks<a class="anchor" aria-label="anchor" href="#remarks"></a>
 </h2>
-<p>The function <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> can be used for more complicated path models. The computation of the standardized moderation effect in a path model depends only on the standard deviations of the three variables involved (<code>x</code>, <code>w</code>, and <code>y</code>).</p>
+<p>The function <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> can be used for more
+complicated path models. The computation of the standardized moderation
+effect in a path model depends only on the standard deviations of the
+three variables involved (<code>x</code>, <code>w</code>, and
+<code>y</code>).</p>
 </div>
 <div class="section level2">
 <h2 id="references">Reference(s)<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>The computation of the standardized moderation effect is based on the simple formula presented in the following manuscript, using the standard deviations of the outcome variable, focal variable, and the moderator:</p>
-<p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong, W. N. (2022) Improving an old way to measure moderation effect in standardized units. <em>Health Psychology</em>, <em>41</em>(7), 502-505. <a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</p>
+<p>The computation of the standardized moderation effect is based on the
+simple formula presented in the following manuscript, using the standard
+deviations of the outcome variable, focal variable, and the
+moderator:</p>
+<p>Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &amp; Vong,
+W. N. (2022) Improving an old way to measure moderation effect in
+standardized units. <em>Health Psychology</em>, <em>41</em>(7), 502-505.
+<a href="https://doi.org/10.1037/hea0001188" class="external-link uri">https://doi.org/10.1037/hea0001188</a>.</p>
 </div>
   </div>
 
@@ -330,7 +372,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
