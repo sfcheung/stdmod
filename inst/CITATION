@@ -1,21 +1,22 @@
 citHeader("To cite the 'stdmod' package in publications use:")
 
-citEntry(entry = "Article",
-  title        = "Improving an old way to measure moderation effect in standardized units.",
-  author       = c(as.person("S. F. Cheung"),
-                   as.person("S.-H. Cheung"),
-                   as.person("E. Y. Y. Lau"),
-                   as.person("C. H. Hui"),
-                   as.person("W. N. Vong")),
-  journal      = "Health Psychology",
-  year         = "2022",
-  volume       = 41,
-  number       = 7,
-  pages        = "502-505",
-  doi          = "10.1037/hea0001188",
-  textVersion  =
-  paste("Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022).",
-        "Improving an old way to measure moderation effect in standardized units.",
-        "Health Psychology, 41(7), 502-505.",
-        "doi:10.1037/hea0001188")
+bibentry(
+  bibtype = "Article",
+	title = "Improving an old way to measure moderation effect in standardized units",
+	volume = "41",
+	issn = "1930-7810, 0278-6133",
+	url = "https://doi.org/10.1037/hea0001188",
+	doi = "10.1037/hea0001188",
+	language = "en",
+	number = "7",
+	urldate = "2022-08-02",
+	journal = "Health Psychology",
+	author = c(as.person("S. F. Cheung"),
+             as.person("S.-H. Cheung"),
+             as.person("E. Y. Y. Lau"),
+             as.person("C. H. Hui"),
+             as.person("W. N. Vong")),
+	month = "jul",
+	year = "2022",
+	pages = "502--505"
 )
