@@ -93,7 +93,7 @@ print.summary.std_selected <- function(x, ...) {
       tmp1 <- paste0("- Estimates and their statistics are based on the data after",
                      "mean-centering, scaling, or standardization.", collapse = " ")
       tmp <- c(tmp,
-               strwrap(tmp, exdent = 2))
+               strwrap(tmp1, exdent = 2))
     }
   if (!is.null(x$nboot)) {
       tmp <- c(tmp,
