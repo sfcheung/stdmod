@@ -2,6 +2,18 @@ destination: docs
 
 url: https://sfcheung.github.io/stdmod/
 
+template:
+  bootstrap: 5
+  bootswatch: cosmo
+  theme: a11y-light
+  bslib:
+    # pkgdown-nav-height: 80px
+    bg: "#EFEFEF"
+    fg: "#000000"
+    # primary: "#000055"
+    base_font: {google: "Arimo"}
+    heading_font: {google: "Arimo"}
+    code_font: {google: "Noto Sans Mono"}
 
 figures:
   fig.width: 6
