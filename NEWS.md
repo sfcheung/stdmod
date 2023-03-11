@@ -1,3 +1,7 @@
+# stdmod 0.2.6.1
+
+- Update pkgdown site to bootstrap 5. (0.2.6.1)
+
 # stdmod 0.2.6
 
 - Improved the printout of the `summary()` of `std_selected()`
