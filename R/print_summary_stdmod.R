@@ -90,7 +90,7 @@ print.summary.std_selected <- function(x, ...) {
   NextMethod()
   tmp <- character(0)
   if (scaled_or_centered) {
-      tmp1 <- paste0("- Estimates and their statistics are based on the data after",
+      tmp1 <- paste("- Estimates and their statistics are based on the data after",
                      "mean-centering, scaling, or standardization.", collapse = " ")
       tmp <- c(tmp,
                strwrap(tmp1, exdent = 2))
