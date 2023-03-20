@@ -1,9 +1,11 @@
-# stdmod 0.2.6.2
+# stdmod 0.2.6.3
 
 - Updated pkgdown site to bootstrap 5. (0.2.6.1)
 - Fixed a missing whitepace in the note of
   the `print()` method of the `summary()` output of
   `std_selected()`. (0.2.6.2)
+- Added `to_standardize` to `std_selected()` and
+  `std_selected_boot()`. (0.2.6.3)
 
 # stdmod 0.2.6
 
