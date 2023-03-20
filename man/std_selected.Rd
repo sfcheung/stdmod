@@ -5,12 +5,13 @@
 \alias{std_selected_boot}
 \title{Standardize Variables in a Regression Model}
 \usage{
-std_selected(lm_out, to_scale = NULL, to_center = NULL)
+std_selected(lm_out, to_scale = NULL, to_center = NULL, to_standardize = NULL)
 
 std_selected_boot(
   lm_out,
   to_scale = NULL,
   to_center = NULL,
+  to_standardize = NULL,
   conf = 0.95,
   nboot = 100,
   boot_args = NULL,
@@ -40,6 +41,18 @@ interaction term. To center  the outcome variable, list it on the
 as a predictor.
 Specify only the original variables. If \code{NULL}, then no term
 will be centered. Default is \code{NULL}.}
+
+\item{to_standardize}{The terms to be standardized, specified by a formula
+as in \code{\link[=lm]{lm()}}. For example, if the terms to be standardized
+is \code{x1} and \code{x3}, use \code{~ x1 + x3}. No need to specify the
+interaction term. To standardize the outcome variable, list it on the
+\emph{right hand side}
+as a predictor.
+Specify only the original variables.
+This is a shortcut to \code{to_center} and \code{to_scale}. Listing a variable
+in \code{to_standardize} is equivalent to listing this variable in
+both \code{to_center} and \code{to_scale}.
+Default is \code{NULL}.}
 
 \item{conf}{The level of confidence for the confidence interval.
 Default is .95.}
