@@ -1,4 +1,4 @@
-# stdmod 0.2.6.6
+# stdmod 0.2.6.7
 
 - Updated pkgdown site to bootstrap 5. (0.2.6.1)
 - Fixed a missing whitepace in the note of
@@ -14,6 +14,7 @@
 - Updated examples to use `to_standardize` or
   mention it as a shortcut. (0.2.6.5)
 - Updated vignettes to introduce `to_standardize`. (0.2.6.6)
+- Fixed a link in a vignette. (0.2.6.7)
 
 # stdmod 0.2.6
 
