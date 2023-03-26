@@ -49,6 +49,17 @@ test_that("Standardize w and y: boot est", {
       )
   })
 
+set.seed(868945)
+stdmod_wy_std <- std_selected_boot(lm_raw, to_scale = ~ mod, to_center = ~ mod,
+                                   to_standardize = ~ dv, nboot = nboot)
+test_that("Standardize w and y: boot est, to_standardize", {
+    expect_equivalent(
+        confint(stdmod_wy_std),
+        confint(stdmod_wy)
+      )
+  })
+
+
 set.seed(80985715)
 stdmod_xwy <- std_selected_boot(lm_raw, to_scale = ~ mod + iv + dv, to_center = ~ iv + mod + dv, nboot = nboot)
 tmpfct <- function(d, i) {

@@ -62,6 +62,7 @@
 #' summary(lm_raw)
 #' # Standardize all variables as in std_selected above, and compute the
 #' # nonparametric bootstrapping percentile confidence intervals.
+#' set.seed(87053)
 #' lm_std_boot <- std_selected_boot(lm_raw,
 #'                                  to_scale = ~ .,
 #'                                  to_center = ~ .,
@@ -69,6 +70,18 @@
 #'                                  nboot = 100)
 #' # In real analysis, nboot should be at least 2000.
 #' summary(lm_std_boot)
+#'
+#' # Use to_standardize as a shortcut
+#' set.seed(87053)
+#' lm_std_boot2 <- std_selected_boot(lm_raw,
+#'                                   to_standardize = ~ .,
+#'                                   conf = .95,
+#'                                   nboot = 100)
+#' # The results are the same
+#' confint(lm_std_boot)
+#' confint(lm_std_boot2)
+#' all.equal(confint(lm_std_boot), confint(lm_std_boot2))
+#'
 #'
 #' @export
 #' @describeIn std_selected A wrapper of [std_selected()] that forms
@@ -78,6 +91,7 @@
 std_selected_boot <- function(lm_out,
                               to_scale = NULL,
                               to_center = NULL,
+                              to_standardize = NULL,
                               conf = .95,
                               nboot = 100,
                               boot_args = NULL,
@@ -98,7 +112,8 @@ std_selected_boot <- function(lm_out,
 
     std_selected_out <- std_selected(lm_out = lm_out,
                                      to_scale = to_scale,
-                                     to_center = to_center)
+                                     to_center = to_center,
+                                     to_standardize = to_standardize)
 
     if (do_boot) {
         # Get the data frame
@@ -111,7 +126,8 @@ std_selected_boot <- function(lm_out,
 
         bootfct <- create_boot_selected(lm_out,
                                         to_scale,
-                                        to_center)
+                                        to_center,
+                                        to_standardize)
 
         # Do bootstrapping
 
@@ -150,14 +166,16 @@ std_selected_boot <- function(lm_out,
 
 create_boot_selected <- function(lm_out,
                                  to_scale,
-                                 to_center) {
+                                 to_center,
+                                 to_standardize) {
   function(d, ind) {
         force(lm_out)
         lm_out_i <- lm_out
         lm_out_i$model <- d[ind, ]
         out <- std_selected(lm_out = lm_out_i,
                             to_scale = to_scale,
-                            to_center = to_center)
+                            to_center = to_center,
+                            to_standardize = to_standardize)
         stats::coef(out)
       }
   }

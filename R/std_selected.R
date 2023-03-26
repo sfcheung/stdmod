@@ -61,6 +61,18 @@
 #'        Specify only the original variables. If `NULL`, then no term
 #'        will be centered. Default is `NULL`.
 #'
+#' @param to_standardize The terms to be standardized, specified by a formula
+#'        as in [lm()]. For example, if the terms to be standardized
+#'        is `x1` and `x3`, use `~ x1 + x3`. No need to specify the
+#'        interaction term. To standardize the outcome variable, list it on the
+#'        *right hand side*
+#'        as a predictor.
+#'        Specify only the original variables.
+#'        This is a shortcut to `to_center` and `to_scale`. Listing a variable
+#'        in `to_standardize` is equivalent to listing this variable in
+#'        both `to_center` and `to_scale`.
+#'        Default is `NULL`.
+#'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
 #' @references
@@ -99,6 +111,14 @@
 #'                                to_center = ~ .)
 #' summary(lm_std)
 #'
+#' # Use to_standardize as a shortcut
+#' lm_stdwx2 <- std_selected(lm_raw, to_standardize = ~ mod + iv)
+#' # The results are the same
+#' coef(lm_stdwx)
+#' coef(lm_stdwx2)
+#' all.equal(coef(lm_stdwx), coef(lm_stdwx2))
+#'
+#'
 #' @export
 #' @describeIn std_selected The base function to center or
 #'             scale selected variables in a regression model
@@ -106,7 +126,8 @@
 
 std_selected <- function(lm_out,
                          to_scale = NULL,
-                         to_center = NULL) {
+                         to_center = NULL,
+                         to_standardize = NULL) {
     if (missing(lm_out)) {
         stop("The arguments lm_out cannot be empty.")
       }
@@ -139,6 +160,15 @@ std_selected <- function(lm_out,
         center_f <- stats::as.formula(to_center)
         center_terms <- attr(stats::terms(center_f, data = dat), "term.labels")
       }
+
+    if (is.null(to_standardize)) {
+      } else {
+        std_f <- stats::as.formula(to_standardize)
+        std_terms <- attr(stats::terms(std_f, data = dat), "term.labels")
+        scale_terms <- unique(c(scale_terms, std_terms))
+        center_terms <- unique(c(center_terms, std_terms))
+      }
+
 
     # Check if the terms are valid
 

@@ -50,15 +50,25 @@
 #'
 #' # Standardize all variables except for categorical variables.
 #' # Interaction terms are formed after standardization.
-#' lm_std <- std_selected(lm_raw, to_scale = ~ .,
-#'                                to_center = ~ .)
+#' lm_std <- std_selected(lm_raw, to_center = ~ .,
+#'                                to_scale = ~ .)
+#' # Alternative: use to_standardize as a shortcut
+#' # lm_std <- std_selected(lm_raw, to_standardize = ~ .)
 #' summary(lm_std)
 #'
 #' confint(lm_std)
 #'
+#' # Use to_standardize as a shortcut
+#' lm_std2 <- std_selected(lm_raw, to_standardize = ~ .)
+#' # The results are the same
+#' confint(lm_std)
+#' confint(lm_std2)
+#' all.equal(confint(lm_std), confint(lm_std2))
+#'
 #' # With bootstrapping
 #' # nboot = 100 just for illustration. nboot >= 2000 should be used in read
 #' # research.
+#' set.seed(89572)
 #' lm_std_boot <- std_selected_boot(lm_raw, to_scale = ~ .,
 #'                                          to_center = ~ .,
 #'                                          nboot = 100)
@@ -71,6 +81,15 @@
 #' # Force OLS confidence intervals
 #'
 #' confint(lm_std_boot, type = "lm")
+#'
+#' # Use to_standardize as a shortcut
+#' set.seed(89572)
+#' lm_std_boot2 <- std_selected_boot(lm_raw, to_standardize = ~ .,
+#'                                           nboot = 100)
+#' # The results are the same
+#' confint(lm_std_boot)
+#' confint(lm_std_boot2)
+#' all.equal(confint(lm_std_boot), confint(lm_std_boot2))
 #'
 #' @export
 
@@ -114,6 +133,7 @@ confint.std_selected <- function(object, parm, level = .95, type, ...) {
         return(out)
       }
     if (type == "lm") {
+        object$boot_est <- NULL
         NextMethod()
       }
   }

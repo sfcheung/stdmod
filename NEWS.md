@@ -1,9 +1,21 @@
-# stdmod 0.2.6.2
+# stdmod 0.2.7
 
 - Updated pkgdown site to bootstrap 5. (0.2.6.1)
 - Fixed a missing whitepace in the note of
   the `print()` method of the `summary()` output of
   `std_selected()`. (0.2.6.2)
+- Added `to_standardize` to `std_selected()` and
+  `std_selected_boot()`. (0.2.6.3)
+- Fixed a bug with `confint.std_selected()` when
+  `type = "lm"` and bootstrapping is requested. Should
+  not be an issue because *t*-based CIs should not be
+  used when bootstrapping is requested. This option
+  is just for testing. (0.2.6.4)
+- Updated examples to use `to_standardize` or
+  mention it as a shortcut. (0.2.6.5)
+- Updated vignettes to introduce `to_standardize`. (0.2.6.6)
+- Fixed a link in a vignette. (0.2.6.7)
+- Finalized to 0.2.7. (0.2.7)
 
 # stdmod 0.2.6
 

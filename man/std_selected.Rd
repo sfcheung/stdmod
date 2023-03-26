@@ -5,12 +5,13 @@
 \alias{std_selected_boot}
 \title{Standardize Variables in a Regression Model}
 \usage{
-std_selected(lm_out, to_scale = NULL, to_center = NULL)
+std_selected(lm_out, to_scale = NULL, to_center = NULL, to_standardize = NULL)
 
 std_selected_boot(
   lm_out,
   to_scale = NULL,
   to_center = NULL,
+  to_standardize = NULL,
   conf = 0.95,
   nboot = 100,
   boot_args = NULL,
@@ -40,6 +41,18 @@ interaction term. To center  the outcome variable, list it on the
 as a predictor.
 Specify only the original variables. If \code{NULL}, then no term
 will be centered. Default is \code{NULL}.}
+
+\item{to_standardize}{The terms to be standardized, specified by a formula
+as in \code{\link[=lm]{lm()}}. For example, if the terms to be standardized
+is \code{x1} and \code{x3}, use \code{~ x1 + x3}. No need to specify the
+interaction term. To standardize the outcome variable, list it on the
+\emph{right hand side}
+as a predictor.
+Specify only the original variables.
+This is a shortcut to \code{to_center} and \code{to_scale}. Listing a variable
+in \code{to_standardize} is equivalent to listing this variable in
+both \code{to_center} and \code{to_scale}.
+Default is \code{NULL}.}
 
 \item{conf}{The level of confidence for the confidence interval.
 Default is .95.}
@@ -171,6 +184,14 @@ lm_std <- std_selected(lm_raw, to_scale = ~ .,
                                to_center = ~ .)
 summary(lm_std)
 
+# Use to_standardize as a shortcut
+lm_stdwx2 <- std_selected(lm_raw, to_standardize = ~ mod + iv)
+# The results are the same
+coef(lm_stdwx)
+coef(lm_stdwx2)
+all.equal(coef(lm_stdwx), coef(lm_stdwx2))
+
+
 
 dat <- test_x_1_w_1_v_1_cat1_n_500
 head(dat)
@@ -180,6 +201,7 @@ lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
 summary(lm_raw)
 # Standardize all variables as in std_selected above, and compute the
 # nonparametric bootstrapping percentile confidence intervals.
+set.seed(87053)
 lm_std_boot <- std_selected_boot(lm_raw,
                                  to_scale = ~ .,
                                  to_center = ~ .,
@@ -187,6 +209,18 @@ lm_std_boot <- std_selected_boot(lm_raw,
                                  nboot = 100)
 # In real analysis, nboot should be at least 2000.
 summary(lm_std_boot)
+
+# Use to_standardize as a shortcut
+set.seed(87053)
+lm_std_boot2 <- std_selected_boot(lm_raw,
+                                  to_standardize = ~ .,
+                                  conf = .95,
+                                  nboot = 100)
+# The results are the same
+confint(lm_std_boot)
+confint(lm_std_boot2)
+all.equal(confint(lm_std_boot), confint(lm_std_boot2))
+
 
 }
 \references{

@@ -48,3 +48,8 @@ test_that("confint_boot with user confidence level", {
       )
   })
 
+test_that("confint with type 'lm'", {
+    expect_true(
+        all(confint_lm == confint_lm_no_boot)
+      )
+  })

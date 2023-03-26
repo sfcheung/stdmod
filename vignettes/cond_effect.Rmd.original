@@ -1,7 +1,7 @@
 ---
 title: "Conditional Effects by cond_effect()"
 author: "Shu Fai Cheung"
-date: "2023-03-26"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Conditional Effects by cond_effect()}
@@ -9,7 +9,16 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width  = 6,
+  fig.height = 4,
+  fig.align = "center",
+  fig.path = ""
+)
+```
 
 # Introduction
 
@@ -25,22 +34,32 @@ It can compute the conditional effect of a predictor (the focal variable)
 on an outcome variable (dependent variable)
 for selected levels of the moderator:
 
-
-```
-#>   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig
-#>    High             3.950                      0.012 0.117 0.107 0.915    
-#>  Medium             3.343                      0.214 0.083 2.560 0.011 *  
-#>     Low             2.736                      0.415 0.115 3.601 0.000 ***
+```{r echo = FALSE}
+library(stdmod)
+data(sleep_emo_con)
+lm_out <- lm(sleep_duration ~ age + gender +
+                              emotional_stability * conscientiousness,
+                              sleep_emo_con)
+cond_out <- cond_effect(output = lm_out,
+                        x = "emotional_stability",
+                        w = "conscientiousness")
+print(cond_out, table_only = TRUE)
 ```
 
 It can also compute standardized conditional moderation effect of this predictor:
 
-
-```
-#>   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig
-#>    High             1.000                      0.007 0.063 0.107 0.915    
-#>  Medium             0.000                      0.115 0.045 2.560 0.011 *  
-#>     Low            -1.000                      0.223 0.062 3.601 0.000 ***
+```{r echo = FALSE}
+data(sleep_emo_con)
+lm_out <- lm(sleep_duration ~ age + gender +
+                              emotional_stability * conscientiousness,
+                              sleep_emo_con)
+lm_std <- std_selected(lm_out,
+                       to_center = ~ .,
+                       to_scale = ~ .)
+cond_std <- cond_effect(output = lm_std,
+                        x = "emotional_stability",
+                        w = "conscientiousness")
+print(cond_std, table_only = TRUE)
 ```
 
 Nonparametric bootstrap percentile confidence interval can also be formed
@@ -68,8 +87,7 @@ These are the only required arguments. Just setting them can generate the
 graph:
 
 
-
-```r
+```{r}
 library(stdmod)
 data(sleep_emo_con)
 lm_out <- lm(sleep_duration ~ age + gender +
@@ -79,28 +97,6 @@ cond_out <- cond_effect(output = lm_out,
                         x = "emotional_stability",
                         w = "conscientiousness")
 cond_out
-#> The effects of emotional_stability on sleep_duration, conditional on conscientiousness:
-#> 
-#>   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig
-#>    High             3.950                      0.012 0.117 0.107 0.915    
-#>  Medium             3.343                      0.214 0.083 2.560 0.011 *  
-#>     Low             2.736                      0.415 0.115 3.601 0.000 ***
-#> 
-#> 
-#> The regression model:
-#> 
-#> 	sleep_duration ~ age + gender + emotional_stability * conscientiousness
-#> 
-#> Interpreting the levels of conscientiousness:
-#> 
-#>   Level conscientiousness % Below From Mean (in SD)
-#>    High             3.950   83.60              1.00
-#>  Medium             3.343   49.60              0.00
-#>     Low             2.736   16.60             -1.00
-#> 
-#> - % Below: The percent of cases equal to or less than a level.
-#> - From Mean (in SD): Distance of a level from the mean,
-#>   in standard deviation (+ve above, -ve below).
 ```
 
 By default, the print method of `cond_effect()` output prints the
@@ -111,13 +107,8 @@ the percentage of cases equal to or less than this level. The regression
 model is also printed. If only the table of effects is needed, call `print()`
 and set `table_only` to `TRUE`:
 
-
-```r
+```{r}
 print(cond_out, table_only = TRUE)
-#>   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig
-#>    High             3.950                      0.012 0.117 0.107 0.915    
-#>  Medium             3.343                      0.214 0.083 2.560 0.011 *  
-#>     Low             2.736                      0.415 0.115 3.601 0.000 ***
 ```
 
 More options in printing the output can be found in the help page of
@@ -136,8 +127,7 @@ Users can also use percentiles to define "Low", "Medium", and "High" by setting
 and 84th percentile, which corresponds approximately to one SD below mean,
 mean, and one SD above mean, respectively, for a normal distribution.
 
-
-```r
+```{r}
 data(sleep_emo_con)
 lm_out <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
@@ -147,21 +137,6 @@ cond_out <- cond_effect(output = lm_out,
                         w = "conscientiousness",
                         w_method = "percentile")
 print(cond_out, title = FALSE, model = FALSE)
-#>   Level conscientiousness emotional_stability Effect  S.E.      t     p Sig
-#>    High             4.000                     -0.004 0.122 -0.034 0.973    
-#>  Medium             3.400                      0.195 0.084  2.322 0.021 *  
-#>     Low             2.700                      0.427 0.119  3.600 0.000 ***
-#> 
-#> Interpreting the levels of conscientiousness:
-#> 
-#>   Level conscientiousness % Below From Mean (in SD)
-#>    High             4.000   87.20              1.08
-#>  Medium             3.400   57.00              0.09
-#>     Low             2.700   16.60             -1.06
-#> 
-#> - % Below: The percent of cases equal to or less than a level.
-#> - From Mean (in SD): Distance of a level from the mean,
-#>   in standard deviation (+ve above, -ve below).
 ```
 
 Note that the empirical percentage of cases equal to or less than a level may
@@ -174,8 +149,7 @@ If the moderator is a categorical variable (a string variable or
   a factor), then the conditional effect of the moderator for each value of
   this categorical moderator will be printed:
 
-
-```r
+```{r}
 set.seed(61452)
 sleep_emo_con$city <- sample(c("Alpha", "Beta", "Gamma"),
                                nrow(sleep_emo_con), replace = TRUE)
@@ -185,10 +159,6 @@ cond_out <- cond_effect(lm_cat,
                         x = "emotional_stability",
                         w = "city")
 print(cond_out, title = FALSE, model = FALSE)
-#>  Level  city emotional_stability Effect  S.E.     t     p Sig
-#>  Alpha Alpha                      0.408 0.135 3.027 0.003  **
-#>   Beta  Beta                      0.351 0.147 2.388 0.017  * 
-#>  Gamma Gamma                      0.020 0.149 0.131 0.896
 ```
 
 # Nonparametric Bootstrap Confidence Intervals
@@ -208,8 +178,7 @@ percentile confidence interval for each conditional effect.
 To make the results reproducible, call `set.seed()` before
 calling `cond_effect_boot()`, as illustrated below.
 
-
-```r
+```{r}
 lm_out <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
                               sleep_emo_con)
@@ -223,22 +192,6 @@ cond_std <- cond_effect_boot(output = lm_std,
                              w = "conscientiousness",
                              nboot = 2000)
 print(cond_std, model = FALSE, title = FALSE, level_info = FALSE)
-#>   Level conscientiousness emotional_stability Effect CI Lower CI Upper  S.E.
-#>    High             1.000                      0.007   -0.107    0.117 0.063
-#>  Medium             0.000                      0.115    0.029    0.202 0.045
-#>     Low            -1.000                      0.223    0.071    0.364 0.062
-#>      t     p Sig
-#>  0.107 0.915    
-#>  2.560 0.011 *  
-#>  3.601 0.000 ***
-#> 
-#> [CI Lower, CI Upper] shows the 95% nonparametric bootstrap confidence interval(s)
-#>  (based on 2000 bootstrap samples)
-#> 
-#> Note:
-#> 
-#> - The variable(s) sleep_duration, emotional_stability, conscientiousness is/are standardized.
-#> - The conditional effects are the standardized effects of emotional_stability on sleep_duration.
 ```
 
 # Further Information

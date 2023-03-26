@@ -49,8 +49,7 @@ tmpfct <- function(d, i, lm_out) {
       }
     lm_out_i <- update(lm_out, data = d_i)
     lm_std_i <- std_selected(lm_out_i,
-                          to_center = ~ .,
-                          to_scale = ~ .)
+                          to_standardize = ~ .)
     out0 <- cond_effect(lm_std_i, x = "emotional_stability", w = "conscientiousness")
     out0[, 3]
   }
@@ -69,8 +68,9 @@ test_that("Check std boot est", {
 # Work on std_selected_boot
 
 lm_std_b <- std_selected_boot(lm_out,
-                            to_center = ~ .,
-                            to_scale = ~ .,
+                            to_center = ~ gender + emotional_stability + sleep_duration,
+                            to_scale = ~ age + gender,
+                            to_standardize = ~ age + conscientiousness + emotional_stability + sleep_duration,
                             nboot = 50)
 set.seed(875415)
 boot_out_std_b <- cond_effect_boot(lm_std_b, x = "emotional_stability", w = "conscientiousness",

@@ -45,7 +45,9 @@
 #' print(out, t_ci = TRUE)
 #' confint(out)
 #'
-#' lm_std <- std_selected(lm_raw, to_scale = ~ iv + mod, to_center = ~ iv + mod)
+#' lm_std <- std_selected(lm_raw, to_center = ~ iv + mod, to_scale = ~ iv + mod)
+#' # Alternative: use to_standardize as a shortcut
+#' # lm_std <- std_selected(lm_raw, to_standardize = ~ iv + mod)
 #' out <- cond_effect(lm_std, x = iv, w = mod)
 #' print(out, t_ci = TRUE)
 #' confint(out)
