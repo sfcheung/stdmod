@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.width  = 6,
   fig.height = 4,
-  fig.align = 'center'
+  fig.align = "center"
 )
 ```
 
@@ -23,11 +23,16 @@ knitr::opts_chunk$set(
 
 Instead of standardizing all variables, even variables that (a) are categorical
 and should not be standardized, or (b) measured on meaningful unites and do
-not need to be standardized, `std_selected()` allows users to have more
+not need to be standardized, `std_selected()` from the package
+`stdmod` allows users to have more
 control on how standardization is to be conducted.
 
 A moderated regression model is used as an example but it can also be used for
 regression models without interaction terms.
+
+More about this package can be found
+in `vignette("stdmod", package = "stdmod")`
+or at [https://sfcheung.github.io/stdmod/](https://sfcheung.github.io/stdmod/).
 
 # Setup the Environment
 
@@ -49,7 +54,7 @@ and conscientiousness of the IPIP Big Five markers. Please refer to
 
 The names of some variables are shortened for readability:
 
-```{r}
+```{r shorten_names}
 colnames(sleep_emo_con)[3:4] <- c("cons", "emot")
 head(sleep_emo_con, 3)
 ```
@@ -73,7 +78,7 @@ emotional stability on sleep duration.
 This package has a simple function, `plotmod()`, for generating a typical plot
 of the moderation effect:
 
-```{r}
+```{r std_selected_lm_raw_plot}
 plotmod(lm_raw,
         x = "emot",
         w = "cons",
@@ -94,7 +99,7 @@ regression, we can pass the `lm()` output to `std_selected()` and specify the
 variables to be mean centered:
 
 
-```{r}
+```{r lm_w_centered}
 lm_w_centered <- std_selected(lm_raw,
                               to_center = ~ cons)
 printCoefmat(summary(lm_w_centered)$coefficients, digits = 3)
@@ -113,7 +118,7 @@ This example demonstrates centering more than one variable. In the following
 model, both emotional stability and conscientiousness are centered. They are
 placed after `~` and joined by `+`.
 
-```{r}
+```{r lm_xw_centered}
 lm_xw_centered <- std_selected(lm_raw,
                                to_center = ~ emot + cons)
 printCoefmat(summary(lm_xw_centered)$coefficients, digits = 3)
@@ -125,10 +130,23 @@ To standardize a variable we first mean center it and then scale it by its
 standard deviation. Scaling is done by listing the variable on `to_scale`.
 The input format is identical to that of `to_center`.
 
-```{r}
+```r
 lm_xw_std <- std_selected(lm_raw,
                           to_center = ~ emot + cons,
                           to_scale  = ~ emot + cons)
+```
+
+Since 0.2.6.3 of `stdmod`, `to_standardize` can be used as a shortcut.
+Listing a variable on `to_standardize` is equivalent to listing it
+on both `to_center` and `to_scale`. Therefore, the following
+call can also be used:
+
+```{r lm_xw_std}
+lm_xw_std <- std_selected(lm_raw,
+                          to_standardize = ~ emot + cons)
+```
+
+```{r lm_xw_std_coef}
 printCoefmat(summary(lm_xw_std)$coefficients, digits = 3)
 ```
 
@@ -137,7 +155,7 @@ is at mean level, for each one standard deviation increase of
 emotional stability, the predicted sleep duration increases by
 `r formatC(coef(lm_xw_std)["emot"], 4, format = "f")` hour.
 
-```{r}
+```{r std_selected_lm_xw_std_plot}
 plotmod(lm_xw_std,
         x = "emot",
         w = "cons",
@@ -163,10 +181,17 @@ variable). We
 just add the variable to the right hand side of `~` in `to_center` and
 `to_scale` as appropriate.
 
-```{r}
+```r
 lm_xwy_std <- std_selected(lm_raw,
                            to_center = ~ emot + cons + sleep_duration,
                            to_scale  = ~ emot + cons + sleep_duration)
+```
+
+Since 0.2.6.3, `to_standardize` can be used as a shortcut:
+
+```{r lm_xwy_std}
+lm_xwy_std <- std_selected(lm_raw,
+                           to_standardize = ~ emot + cons + sleep_duration)
 printCoefmat(summary(lm_xwy_std)$coefficients, digits = 3)
 ```
 
@@ -175,7 +200,7 @@ is at mean level, the standardized moderation effect of
 emotional stability on sleep duration is
 `r formatC(coef(lm_xwy_std)["emot"], 4, format = "f")`.
 
-```{r}
+```{r std_selected_lm_xwy_std_plot}
 plotmod(lm_xwy_std,
         x = "emot",
         w = "cons",
@@ -197,10 +222,17 @@ we can use `~ .` as a shortcut. `std_selected()` will automatically
 skip categorical variables (i.e., factors or string variables in the
 regression model of `lm()`).
 
-```{r}
+```r
 lm_all_std <- std_selected(lm_raw,
                            to_center = ~ .,
                            to_scale  = ~ .)
+```
+
+Since 0.2.6.3, `to_standardize` can be used as a shortcut:
+
+```{r lm_all_std}
+lm_all_std <- std_selected(lm_raw,
+                           to_standardize = ~ .)
 printCoefmat(summary(lm_all_std)$coefficients, digits = 3)
 ```
 
@@ -209,8 +241,9 @@ printCoefmat(summary(lm_all_std)$coefficients, digits = 3)
 For comparison, this is the results of standardizing all variables, including
 the product term and the categorical variable.
 
-```{r}
+```{r lm_beta}
 library(lm.beta) # For generating the typical standardized solution
+packageVersion("lm.beta")
 lm_usual_std <- lm.beta(lm_raw)
 printCoefmat(summary(lm_usual_std)$coefficients, digits = 3)
 ```
@@ -223,15 +256,15 @@ difficult to interpret.
 
 # Improved Confidence Interval For "Betas"
 
-It has been shown (e.g., Yuan & Chan, 2011) that the standard errors of
+It has been shown (e.g., [Yuan & Chan, 2011](https://doi.org/10.1007/s11336-011-9224-6)) that the standard errors of
 standardized regression coefficients (betas) computed just by standardizing
 the variables
 are biased, and consequently the confidence intervals are also invalid. The
 function `std_selected_boot()` is a wrapper of `std_selected()` that also
 forms the confidence interval of the regression coefficients when standardization
 is conducted,
-using nonparametric bootstrapping as suggested by Cheung, Cheung, Lau, Hui,
-and Vong (2022).
+using nonparametric bootstrapping as suggested by
+[Cheung, Cheung, Lau, Hui, and Vong (2022)](https://doi.org/10.1037/hea0001188).
 
 We use the same example above that standardizes emotional stability,
 conscientiousness, and sleep duration, to illustrate this function.
@@ -239,7 +272,7 @@ The argument `nboot` specifies the number of nonparametric bootstrap samples.
 The level of confidence set by `conf`. The default is .95, denoting 95%
 confidence intervals. If this is the desired level, this argument can be omitted.
 
-```{r echo = FALSE}
+```{r echo = FALSE, eval = TRUE}
 if (file.exists("eg_lm_xwy_std_ci.rds")) {
     lm_xwy_std_ci <- readRDS("eg_lm_xwy_std_ci.rds")
   } else {
@@ -248,19 +281,18 @@ if (file.exists("eg_lm_xwy_std_ci.rds")) {
         to_center = ~ emot + cons + sleep_duration,
         to_scale  = ~ emot + cons + sleep_duration,
         nboot = 2000)
-    saveRDS(lm_xwy_std_ci, "eg_lm_xwy_std_ci.rds")
+    saveRDS(lm_xwy_std_ci, "eg_lm_xwy_std_ci.rds", compress = "xz")
   }
 ```
 
-```{r eval = FALSE}
+```r
 set.seed(58702)
 lm_xwy_std_ci <- std_selected_boot(lm_raw,
-                                   to_center = ~ emot + cons + sleep_duration,
-                                   to_scale  = ~ emot + cons + sleep_duration,
-                                   nboot = 2000)
+                    to_standardize = ~ emot + cons + sleep_duration,
+                    nboot = 2000)
 ```
 
-```{r}
+```{r lm_xwy_std_ci_summary}
 summary(lm_xwy_std_ci)
 ```
 
@@ -282,7 +314,7 @@ are standardized in the same model, whether they are involved in the moderation 
 Further information on the functions can be found in their help pages
 (`std_selected()` and `std_selected_boot()`). For example, parallel computation
 can be used when doing bootstrapping, if the number of bootstrapping samples
-request is large.
+requested is large.
 
 # Reference
 
