@@ -35,7 +35,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
                         <h4 data-toc-skip class="author">Shu Fai
 Cheung</h4>
             
-            <h4 data-toc-skip class="date">2023-03-13</h4>
+            <h4 data-toc-skip class="date">2023-03-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/stdmod.Rmd" class="external-link"><code>vignettes/stdmod.Rmd</code></a></small>
       <div class="d-none name"><code>stdmod.Rmd</code></div>
@@ -99,6 +99,14 @@ Cheung</h4>
 
     
     
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>This vignette illustrates how to use <code><a href="../reference/std_selected.html">std_selected()</a></code>, the
+main function from the <code>stdmod</code> package. More about this
+package can be found in
+<code><a href="../articles/stdmod.html">vignette("stdmod", package = "stdmod")</a></code> or at <a href="https://sfcheung.github.io/stdmod/">https://sfcheung.github.io/stdmod/</a>.</p>
+</div>
 <div class="section level2">
 <h2 id="this-guide-shows-to-use-std_selected-to">This Guide Shows to use <code>std_selected()</code> to:<a class="anchor" aria-label="anchor" href="#this-guide-shows-to-use-std_selected-to"></a>
 </h2>
@@ -191,11 +199,17 @@ term should be formed <em>after</em> standardization.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm_stdall</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>,</span>
 <span>                          to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
-<span>                          to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_stdall</span><span class="op">)</span></span>
+<span>                          to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span></code></pre></div>
+<p>Since 0.2.6.3, <code>to_standardize</code> can be used as a
+shortcut:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lm_stdall</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>,</span>
+<span>                          to_standardize <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_stdall</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call to std_selected():</span></span>
-<span><span class="co">#&gt; std_selected(lm_out = lm_out, to_scale = ~., to_center = ~.)</span></span>
+<span><span class="co">#&gt; std_selected(lm_out = lm_out, to_standardize = ~.)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span></span>
 <span><span class="co">#&gt; - Variable(s) centered: sleep age gender emot cons</span></span>
@@ -258,6 +272,10 @@ example).</p>
 <p><code><a href="../reference/std_selected.html">std_selected()</a></code> will also skip categorical variables
 automatically skipped because standardizing them will make their
 coefficients not easy to interpret.</p>
+<p>Since 0.2.6.3, <code>to_standardize</code> is added as a shortcut.
+Listing a variable on <code>to_standardize</code> is equivalent to
+listing this variable on both <code>to_center</code> and
+<code>to_scale</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="advantage">Advantage<a class="anchor" aria-label="anchor" href="#advantage"></a>
@@ -272,25 +290,31 @@ we need to interpret them.</p>
 <p>There is one problem with standardized coefficients. The confidence
 intervals based on ordinary least squares (OLS) fitted to the
 standardized variables do not take into account the sampling variation
-of the sample means and standard deviations (Yuan &amp; Chan, 2011).
-Cheung, Cheung, Lau, Hui, and Vong (2022) suggest using nonparametric
-bootstrapping, with standardization conducted in each bootstrap
-sample.</p>
+of the sample means and standard deviations (<a href="https://doi.org/10.1007/s11336-011-9224-6" class="external-link">Yuan &amp; Chan,
+2011</a>). <a href="https://doi.org/10.1037/hea0001188" class="external-link">Cheung, Cheung,
+Lau, Hui, and Vong (2022)</a> suggest using nonparametric bootstrapping,
+with standardization conducted in each bootstrap sample.</p>
 <p>This can be done by <code><a href="../reference/std_selected.html">std_selected_boot()</a></code>, a wrapper of
 <code><a href="../reference/std_selected.html">std_selected()</a></code>:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">870432</span><span class="op">)</span></span>
 <span><span class="va">lm_stdall_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_out</span>,</span>
 <span>                        to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
 <span>                        to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
 <span>                        nboot <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span></code></pre></div>
+<p>Since 0.2.6.3, <code>to_standardize</code> can be used as a
+shortcut:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lm_stdall_boot <span class="ot">&lt;-</span> <span class="fu">std_selected_boot</span>(lm_out,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">to_standardize =</span> <span class="sc">~</span> .</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">nboot =</span> <span class="dv">5000</span>)</span></code></pre></div>
 <p>The minimum additional argument is <code>nboot</code>, the number of
 bootstrap samples.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_stdall_boot</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Call to std_selected():</span></span>
-<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; Call to std_selected_boot():</span></span>
+<span><span class="co">#&gt; std_selected_boot(lm_out = lm_out, to_scale = ~., to_center = ~., </span></span>
+<span><span class="co">#&gt;     nboot = 5000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span></span>
 <span><span class="co">#&gt; - Variable(s) centered: sleep age gender emot cons</span></span>
@@ -353,15 +377,20 @@ they are measured on interpretable units, such as hours.</p>
 conscientiousness, and do not standardize sleep duration. We just list
 <code>emot</code> and <code>cons</code> on <code>to_center</code> and
 <code>to_scale</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm_std1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>,</span>
 <span>                        to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span>,</span>
-<span>                        to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std1</span><span class="op">)</span></span>
+<span>                        to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span><span class="op">)</span></span></code></pre></div>
+<p>Since 0.2.6.3, <code>to_standardize</code> can be used a
+shortuct:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lm_std1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>,</span>
+<span>                        to_standardize <span class="op">=</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call to std_selected():</span></span>
-<span><span class="co">#&gt; std_selected(lm_out = lm_out, to_scale = ~emot + cons, to_center = ~emot + </span></span>
-<span><span class="co">#&gt;     cons)</span></span>
+<span><span class="co">#&gt; std_selected(lm_out = lm_out, to_standardize = ~emot + cons)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span></span>
 <span><span class="co">#&gt; - Variable(s) centered: emot cons</span></span>
@@ -413,18 +442,25 @@ decreases by 0.1534.</p>
 <p>The function <code><a href="../reference/std_selected.html">std_selected_boot()</a></code> can also be used to
 form the nonparametric bootstrap confidence interval when only some of
 the variables are standardized:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">870432</span><span class="op">)</span></span>
 <span><span class="va">lm_std1_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_out</span>,</span>
 <span>                        to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span>,</span>
 <span>                        to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span>,</span>
 <span>                        nboot <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span></code></pre></div>
+<p>Since 0.2.6.3, <code>to_standardize</code> can be used as a
+shortcut:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lm_std1_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_out</span>,</span>
+<span>                        to_standardize <span class="op">=</span> <span class="op">~</span> <span class="va">emot</span> <span class="op">+</span> <span class="va">cons</span>,</span>
+<span>                        nboot <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span></code></pre></div>
 <p>Again, the only additional argument is <code>nboot</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std1_boot</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Call to std_selected():</span></span>
-<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; Call to std_selected_boot():</span></span>
+<span><span class="co">#&gt; std_selected_boot(lm_out = lm_out, to_scale = ~emot + cons, to_center = ~emot + </span></span>
+<span><span class="co">#&gt;     cons, nboot = 5000)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Selected variable(s) are centered by mean and/or scaled by SD</span></span>
 <span><span class="co">#&gt; - Variable(s) centered: emot cons</span></span>
@@ -478,11 +514,11 @@ standardized moderation effect is -0.2915 to -0.0124.</p>
 <h2 id="further-information">Further Information<a class="anchor" aria-label="anchor" href="#further-information"></a>
 </h2>
 <p>A more detailed illustration can be found at
-<code><a href="../articles/moderation.html">vignette("moderation")</a></code>.</p>
-<p><code><a href="../articles/std_selected.html">vignette("std_selected")</a></code> illustrates how
-<code><a href="../reference/std_selected.html">std_selected()</a></code> can be used to form nonparametric bootstrap
-percentile confidence interval for standardized regression coefficients
-(“betas”) for regression models without a product term.</p>
+<code><a href="../articles/moderation.html">vignette("moderation", package = "stdmod")</a></code>.</p>
+<p><code><a href="../articles/std_selected.html">vignette("std_selected", package = "stdmod")</a></code> illustrates
+how <code><a href="../reference/std_selected.html">std_selected()</a></code> can be used to form nonparametric
+bootstrap percentile confidence interval for standardized regression
+coefficients (“betas”) for regression models without a product term.</p>
 <p>Further information on the functions can be found in their help pages
 (<code><a href="../reference/std_selected.html">std_selected()</a></code> and <code><a href="../reference/std_selected.html">std_selected_boot()</a></code>). For
 example, parallel computation can be used when doing bootstrapping, if

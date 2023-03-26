@@ -14,7 +14,7 @@ cond_effect() or cond_effect_boot()."><meta property="og:image" content="https:/
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -190,7 +190,9 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Medium 366.8425 424.5426</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Low    340.6543 416.2935</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Alternative: use to_standardize as a shortcut</span></span></span>
+<span class="r-in"><span><span class="co"># lm_std &lt;- std_selected(lm_raw, to_standardize = ~ iv + mod)</span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="cond_effect.html">cond_effect</a></span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">out</span>, t_ci <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The effects of iv on dv, conditional on mod:</span>

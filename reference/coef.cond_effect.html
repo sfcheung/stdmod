@@ -16,7 +16,7 @@ cond_effect() or cond_effect_boot()."><meta property="og:image" content="https:/
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -166,7 +166,7 @@ conditional effects in a <code>cond_effect</code>-class object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     High   Medium      Low </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 412.9112 395.6925 378.4739 </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_standardize <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="cond_effect.html">cond_effect</a></span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">out</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The effects of iv on dv, conditional on mod:</span>

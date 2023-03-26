@@ -35,7 +35,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
                         <h4 data-toc-skip class="author">Shu Fai
 Cheung</h4>
             
-            <h4 data-toc-skip class="date">2023-03-13</h4>
+            <h4 data-toc-skip class="date">2023-03-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/cond_effect.Rmd" class="external-link"><code>vignettes/cond_effect.Rmd</code></a></small>
       <div class="d-none name"><code>cond_effect.Rmd</code></div>
@@ -99,6 +99,13 @@ Cheung</h4>
 
     
     
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>This vignette illustrates how to use <code><a href="../reference/cond_effect.html">cond_effect()</a></code> from
+the <code>stdmod</code> package. More about this package can be found in
+<code><a href="../articles/stdmod.html">vignette("stdmod", package = "stdmod")</a></code> or at <a href="https://sfcheung.github.io/stdmod/">https://sfcheung.github.io/stdmod/</a>.</p>
+</div>
 <div class="section level2">
 <h2 id="what-cond_effect-can-do">What <code>cond_effect()</code> Can Do<a class="anchor" aria-label="anchor" href="#what-cond_effect-can-do"></a>
 </h2>
@@ -262,10 +269,11 @@ this categorical moderator will be printed:</p>
 <h2 id="nonparametric-bootstrap-confidence-intervals">Nonparametric Bootstrap Confidence Intervals<a class="anchor" aria-label="anchor" href="#nonparametric-bootstrap-confidence-intervals"></a>
 </h2>
 <p>If one or more variables are standardized, the OLS confidence
-intervals are not appropriate (Cheung, Cheung, Lau, Hui, &amp; Vong,
-2022; Yuan &amp; Chan, 2011). Users can call
-<code><a href="../reference/cond_effect.html">cond_effect_boot()</a></code> to use nonparametric bootstrapping to
-form the percentile confidence interval for each conditional effect.</p>
+intervals are not appropriate (<a href="https://doi.org/10.1037/hea0001188" class="external-link">Cheung, Cheung, Lau, Hui,
+&amp; Vong, 2022</a>; <a href="https://doi.org/10.1007/s11336-011-9224-6" class="external-link">Yuan &amp; Chan,
+2011</a>). Users can call <code><a href="../reference/cond_effect.html">cond_effect_boot()</a></code> to use
+nonparametric bootstrapping to form the percentile confidence interval
+for each conditional effect.</p>
 <ul>
 <li>
 <code>conf</code>: The level of confidence, expressed as a
@@ -274,31 +282,33 @@ proportion. Default is .95, requesting a 95% confidence interval.</li>
 <code>nboot</code> The number of bootstrap samples to drawn. Should
 be at least 2000 but 5000 is preferable.</li>
 </ul>
+<p>To make the results reproducible, call <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed()</a></code> before
+calling <code><a href="../reference/cond_effect.html">cond_effect_boot()</a></code>, as illustrated below.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm_out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
 <span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
 <span>                              <span class="va">sleep_emo_con</span><span class="op">)</span></span>
 <span><span class="co"># Standardize all variables and do the moderated regression again</span></span>
+<span><span class="co"># Use to_standardize as a shortcut to to_center and to_scale</span></span>
 <span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_out</span>,</span>
-<span>                       to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span>
-<span>                       to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
-<span><span class="co"># `nboot` is the sufficient. Set it to at least 2000 in real analysis</span></span>
+<span>                       to_standardize <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">897043</span><span class="op">)</span></span>
 <span><span class="va">cond_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cond_effect.html">cond_effect_boot</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">lm_std</span>,</span>
 <span>                             x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
 <span>                             w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
-<span>                             nboot <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
+<span>                             nboot <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cond_std</span>, model <span class="op">=</span> <span class="cn">FALSE</span>, title <span class="op">=</span> <span class="cn">FALSE</span>, level_info <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   Level conscientiousness emotional_stability Effect CI Lower CI Upper  S.E.</span></span>
-<span><span class="co">#&gt;    High             1.000                      0.007   -0.113    0.130 0.063</span></span>
-<span><span class="co">#&gt;  Medium             0.000                      0.115    0.028    0.215 0.045</span></span>
-<span><span class="co">#&gt;     Low            -1.000                      0.223    0.079    0.367 0.062</span></span>
+<span><span class="co">#&gt;    High             1.000                      0.007   -0.107    0.117 0.063</span></span>
+<span><span class="co">#&gt;  Medium             0.000                      0.115    0.029    0.202 0.045</span></span>
+<span><span class="co">#&gt;     Low            -1.000                      0.223    0.071    0.364 0.062</span></span>
 <span><span class="co">#&gt;      t     p Sig</span></span>
 <span><span class="co">#&gt;  0.107 0.915    </span></span>
 <span><span class="co">#&gt;  2.560 0.011 *  </span></span>
 <span><span class="co">#&gt;  3.601 0.000 ***</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [CI Lower, CI Upper] shows the 95% nonparametric bootstrap confidence interval(s)</span></span>
-<span><span class="co">#&gt;  (based on 500 bootstrap samples)</span></span>
+<span><span class="co">#&gt;  (based on 2000 bootstrap samples)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Note:</span></span>
 <span><span class="co">#&gt; </span></span>

@@ -35,7 +35,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
                         <h4 data-toc-skip class="author">Shu Fai
 Cheung</h4>
             
-            <h4 data-toc-skip class="date">2023-03-13</h4>
+            <h4 data-toc-skip class="date">2023-03-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/plotmod.Rmd" class="external-link"><code>vignettes/plotmod.Rmd</code></a></small>
       <div class="d-none name"><code>plotmod.Rmd</code></div>
@@ -100,16 +100,23 @@ Cheung</h4>
     
     
 <div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<p>This vignette illustrates how to use <code><a href="../reference/plotmod.html">plotmod()</a></code> from the
+<code>stdmod</code> package. More about this package can be found in
+<code><a href="../articles/stdmod.html">vignette("stdmod", package = "stdmod")</a></code> or at <a href="https://sfcheung.github.io/stdmod/">https://sfcheung.github.io/stdmod/</a>.</p>
+</div>
+<div class="section level2">
 <h2 id="what-plotmod-can-do">What <code>plotmod()</code> Can Do<a class="anchor" aria-label="anchor" href="#what-plotmod-can-do"></a>
 </h2>
 <p>It can visualize a moderation effect by plotting the effect of the
 predictor (focal variable) on the outcome variable (dependent variable)
 for different levels of the moderator:</p>
-<p><img src="plotmod_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="plotmod_files/figure-html/plotmod_example-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>It can also plot a tumble graph (Bodner, 2016), in which the width of
 each line depends on the distribution of the predictor (focal variable)
 in each level of the moderator:</p>
-<p><img src="plotmod_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="plotmod_files/figure-html/plotmod_example2-1.png" width="576" style="display: block; margin: auto;"></p>
 <p><code><a href="../reference/plotmod.html">plotmod()</a></code> is not designed to be a versatile tool. It is
 designed to be a function “good-enough” for common scenarios. The output
 of <code><a href="../reference/plotmod.html">plotmod()</a></code> is a <code>ggplot</code> object and so can be
@@ -143,7 +150,7 @@ the graph:</p>
 <span><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_raw</span>,</span>
 <span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
 <span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotmod_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="plotmod_files/figure-html/plotmod_example_raw-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="levels-of-the-moderator">Levels of the Moderator<a class="anchor" aria-label="anchor" href="#levels-of-the-moderator"></a>
@@ -168,7 +175,7 @@ distribution.</p>
 <span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
 <span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
 <span>        w_method <span class="op">=</span> <span class="st">"percentile"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotmod_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="plotmod_files/figure-html/plotmod_example_raw_numeric-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level4">
 <h4 id="categorical-moderators">Categorical Moderators<a class="anchor" aria-label="anchor" href="#categorical-moderators"></a>
@@ -186,7 +193,7 @@ factor), then one line will be drawn for each category.</p>
 <span><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_cat</span>,</span>
 <span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
 <span>        w <span class="op">=</span> <span class="st">"city"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotmod_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="plotmod_files/figure-html/plotmod_example_raw_cat-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level3">
@@ -213,7 +220,7 @@ implemented in <code><a href="../reference/plotmod.html">plotmod()</a></code>.)<
 <span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
 <span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
 <span>        graph_type <span class="op">=</span> <span class="st">"tumble"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotmod_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="plotmod_files/figure-html/plotmod_tumble-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>The graph above shows that, the distribution of the predictor shifts
 to the left when the moderator is low.</p>
 </div>
@@ -239,7 +246,7 @@ respectively.</p>
 <span>        x_label <span class="op">=</span> <span class="st">"EMO"</span>,</span>
 <span>        w_label <span class="op">=</span> <span class="st">"CON"</span>,</span>
 <span>        y_label <span class="op">=</span> <span class="st">"SLEEP"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotmod_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="plotmod_files/figure-html/plotmod_annotate-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="title">Title<a class="anchor" aria-label="anchor" href="#title"></a>
@@ -254,7 +261,7 @@ argument <code>title</code>:</p>
 <span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
 <span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
 <span>        title <span class="op">=</span> <span class="st">"EMO Effects For Low/High CON"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotmod_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="plotmod_files/figure-html/plotmod_title-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Some journals require submitted figures to have no title because they
 will be described by figure captions, supplied separately. The title can
 be disabled by setting <code>no_title</code> to <code>TRUE</code>.</p>
@@ -274,7 +281,7 @@ end-points can be set by <code>point_size</code>:</p>
 <span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span>,</span>
 <span>        point_size <span class="op">=</span> <span class="fl">8</span>,</span>
 <span>        line_width <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotmod_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="plotmod_files/figure-html/plotmod_line_width-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -297,7 +304,7 @@ removes the subtitle:</p>
 <span>              w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotmod_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="plotmod_files/figure-html/plotmod_cond-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="definitions-of-the-levels-of-the-moderator">Definitions of the Levels of the Moderator<a class="anchor" aria-label="anchor" href="#definitions-of-the-levels-of-the-moderator"></a>
@@ -315,7 +322,7 @@ caption. This can also be disabled by adding a
 <span>             x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
 <span>             w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></span>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotmod_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="plotmod_files/figure-html/plotmod_levels-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="any-variables-standardized">Any Variables Standardized?<a class="anchor" aria-label="anchor" href="#any-variables-standardized"></a>
@@ -329,17 +336,24 @@ graph:</p>
 <span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
 <span>             <span class="va">sleep_emo_con</span><span class="op">)</span></span>
 <span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>,</span>
-<span>                       to_center <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span>,</span>
-<span>                       to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_std</span>,</span>
+<span>                       to_standardize <span class="op">=</span> <span class="op">~</span> <span class="va">emotional_stability</span> <span class="op">+</span> <span class="va">conscientiousness</span><span class="op">)</span></span>
+<span><span class="co"># Before Version 0.2.6.3 of stdmod, to_center and to_scale need to be used:</span></span>
+<span><span class="co"># lm_std &lt;- std_selected(lm_raw,</span></span>
+<span><span class="co">#                        to_center = ~ emotional_stability + conscientiousness,</span></span>
+<span><span class="co">#                        to_scale = ~ emotional_stability + conscientiousness)</span></span></code></pre></div>
+<p>The output of <code><a href="../reference/std_selected.html">std_selected()</a></code> can then be passed to
+<code><a href="../reference/plotmod.html">plotmod()</a></code>:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotmod.html">plotmod</a></span><span class="op">(</span><span class="va">lm_std</span>,</span>
 <span>        x <span class="op">=</span> <span class="st">"emotional_stability"</span>,</span>
 <span>        w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotmod_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="plotmod_files/figure-html/plotmod_std_selected-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>If the predictor, moderator, and outcome variable are all
 standardized, then the moderation effect is standardized moderation
-effect (Cheung, Cheung, Lau, Hui, &amp; Vong, 2022), and the conditional
-effect printed on the graph are the standardized effects of the
-predictor for different levels of the moderator.</p>
+effect (<a href="https://doi.org/10.1037/hea0001188" class="external-link">Cheung, Cheung,
+Lau, Hui, &amp; Vong, 2022</a>), and the conditional effect printed on
+the graph are the standardized effects of the predictor for different
+levels of the moderator.</p>
 <p>If which variables are standardized will be reported in the main text
 and so the figure does not need to report this, set
 <code>note_standardized</code> to <code>FALSE</code>.</p>
@@ -352,7 +366,7 @@ and so the figure does not need to report this, set
 Therefore, it can be manipulated by functions that modify a
 <code>ggplot</code> object. For example, users can change the colors of
 the lines and the theme:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">sleep_duration</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span></span>
 <span>                              <span class="va">emotional_stability</span> <span class="op">*</span> <span class="va">conscientiousness</span>,</span>
 <span>             <span class="va">sleep_emo_con</span><span class="op">)</span></span>
@@ -361,7 +375,7 @@ the lines and the theme:</p>
 <span>              w <span class="op">=</span> <span class="st">"conscientiousness"</span><span class="op">)</span></span>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotmod_files/figure-html/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="plotmod_files/figure-html/plotmod_tweak-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="technical-notes-for-tumble-graph">Technical Notes for Tumble Graph<a class="anchor" aria-label="anchor" href="#technical-notes-for-tumble-graph"></a>

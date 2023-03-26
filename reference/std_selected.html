@@ -12,7 +12,7 @@ selected variables in a regression model and refit the model"><meta property="og
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,12 +67,13 @@ selected variables in a regression model and refit the model</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">std_selected</span><span class="op">(</span><span class="va">lm_out</span>, to_scale <span class="op">=</span> <span class="cn">NULL</span>, to_center <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">std_selected</span><span class="op">(</span><span class="va">lm_out</span>, to_scale <span class="op">=</span> <span class="cn">NULL</span>, to_center <span class="op">=</span> <span class="cn">NULL</span>, to_standardize <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">std_selected_boot</span><span class="op">(</span></span>
 <span>  <span class="va">lm_out</span>,</span>
 <span>  to_scale <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  to_center <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  to_standardize <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  conf <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  nboot <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  boot_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -109,6 +110,20 @@ interaction term. To center  the outcome variable, list it on the
 as a predictor.
 Specify only the original variables. If <code>NULL</code>, then no term
 will be centered. Default is <code>NULL</code>.</p></dd>
+
+
+<dt>to_standardize</dt>
+<dd><p>The terms to be standardized, specified by a formula
+as in <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code>. For example, if the terms to be standardized
+is <code>x1</code> and <code>x3</code>, use <code>~ x1 + x3</code>. No need to specify the
+interaction term. To standardize the outcome variable, list it on the
+<em>right hand side</em>
+as a predictor.
+Specify only the original variables.
+This is a shortcut to <code>to_center</code> and <code>to_scale</code>. Listing a variable
+in <code>to_standardize</code> is equivalent to listing this variable in
+both <code>to_center</code> and <code>to_scale</code>.
+Default is <code>NULL</code>.</p></dd>
 
 
 <dt>conf</dt>
@@ -472,6 +487,23 @@ units. <em>Health Psychology</em>, <em>41</em>(7), 502-505.
 <span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use to_standardize as a shortcut</span></span></span>
+<span class="r-in"><span><span class="va">lm_stdwx2</span> <span class="op">&lt;-</span> <span class="fu">std_selected</span><span class="op">(</span><span class="va">lm_raw</span>, to_standardize <span class="op">=</span> <span class="op">~</span> <span class="va">mod</span> <span class="op">+</span> <span class="va">iv</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># The results are the same</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">lm_stdwx</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)          iv         mod          v1     cat1gp2     cat1gp3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6765.06947   806.87814   284.39275   -12.75999  -158.67255   -43.16606 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      iv:mod </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    35.11145 </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">lm_stdwx2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)          iv         mod          v1     cat1gp2     cat1gp3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  6765.06947   806.87814   284.39275   -12.75999  -158.67255   -43.16606 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      iv:mod </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    35.11145 </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">lm_stdwx</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">lm_stdwx2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">test_x_1_w_1_v_1_cat1_n_500</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></span>
@@ -512,6 +544,7 @@ units. <em>Health Psychology</em>, <em>41</em>(7), 502-505.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># Standardize all variables as in std_selected above, and compute the</span></span></span>
 <span class="r-in"><span><span class="co"># nonparametric bootstrapping percentile confidence intervals.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">87053</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">lm_std_boot</span> <span class="op">&lt;-</span> <span class="fu">std_selected_boot</span><span class="op">(</span><span class="va">lm_raw</span>,</span></span>
 <span class="r-in"><span>                                 to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
 <span class="r-in"><span>                                 to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
@@ -550,13 +583,13 @@ units. <em>Health Psychology</em>, <em>41</em>(7), 502-505.
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate  CI Lower  CI Upper Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.064582 -0.006563  0.146194   0.048250   1.338   0.1814    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.737384  0.696026  0.780176   0.027363  26.948   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.259899  0.196187  0.307074   0.027369   9.496   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.034271 -0.109850  0.028408   0.027325  -1.254   0.2104    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.145006 -0.275510 -0.021606   0.065647  -2.209   0.0276 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.039448 -0.163569  0.086189   0.068799  -0.573   0.5666    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.032087 -0.021926  0.083538   0.025451   1.261   0.2080    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.064582 -0.030117  0.168321   0.048250   1.338   0.1814    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.737384  0.704088  0.794772   0.027363  26.948   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.259899  0.212934  0.313041   0.027369   9.496   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.034271 -0.083459  0.039235   0.027325  -1.254   0.2104    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.145006 -0.312675 -0.004647   0.065647  -2.209   0.0276 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.039448 -0.184479  0.122235   0.068799  -0.573   0.5666    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.032087 -0.010333  0.081698   0.025451   1.261   0.2080    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -570,6 +603,35 @@ units. <em>Health Psychology</em>, <em>41</em>(7), 502-505.
 <span class="r-out co"><span class="r-pr">#&gt;</span> - [CI Lower, CI Upper] are bootstrap percentile confidence intervals.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Std. Error are not bootstrap SEs.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use to_standardize as a shortcut</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">87053</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lm_std_boot2</span> <span class="op">&lt;-</span> <span class="fu">std_selected_boot</span><span class="op">(</span><span class="va">lm_raw</span>,</span></span>
+<span class="r-in"><span>                                  to_standardize <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>                                  conf <span class="op">=</span> <span class="fl">.95</span>,</span></span>
+<span class="r-in"><span>                                  nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># The results are the same</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   2.5 %      97.5 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.03011698  0.16832106</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.70408792  0.79477219</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.21293423  0.31304112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.08345938  0.03923478</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.31267483 -0.00464722</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.18447930  0.12223465</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.01033317  0.08169839</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   2.5 %      97.5 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.03011698  0.16832106</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.70408792  0.79477219</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.21293423  0.31304112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.08345938  0.03923478</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.31267483 -0.00464722</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.18447930  0.12223465</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.01033317  0.08169839</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

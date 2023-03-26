@@ -12,7 +12,7 @@ in the output of std_selected() or std_selected_boot()."><meta property="og:imag
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -166,8 +166,10 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Standardize all variables except for categorical variables.</span></span></span>
 <span class="r-in"><span><span class="co"># Interaction terms are formed after standardization.</span></span></span>
-<span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
-<span class="r-in"><span>                               to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>                               to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Alternative: use to_standardize as a shortcut</span></span></span>
+<span class="r-in"><span><span class="co"># lm_std &lt;- std_selected(lm_raw, to_standardize = ~ .)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call to std_selected():</span>
@@ -226,9 +228,34 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.17462329  0.09572673</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.01791790  0.08209267</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use to_standardize as a shortcut</span></span></span>
+<span class="r-in"><span><span class="va">lm_std2</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_standardize <span class="op">=</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># The results are the same</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   2.5 %      97.5 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.03021975  0.15938347</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.68362100  0.79114661</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.20612513  0.31367234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.08795872  0.01941694</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.27398880 -0.01602419</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.17462329  0.09572673</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.01791790  0.08209267</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   2.5 %      97.5 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.03021975  0.15938347</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.68362100  0.79114661</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.20612513  0.31367234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.08795872  0.01941694</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.27398880 -0.01602419</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.17462329  0.09572673</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.01791790  0.08209267</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># With bootstrapping</span></span></span>
 <span class="r-in"><span><span class="co"># nboot = 100 just for illustration. nboot &gt;= 2000 should be used in read</span></span></span>
 <span class="r-in"><span><span class="co"># research.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">89572</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">lm_std_boot</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_scale <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
 <span class="r-in"><span>                                         to_center <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
 <span class="r-in"><span>                                         nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
@@ -264,13 +291,13 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate  CI Lower  CI Upper Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.064582 -0.014443  0.156470   0.048250   1.338   0.1814    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.737384  0.693527  0.782723   0.027363  26.948   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.259899  0.191964  0.310830   0.027369   9.496   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.034271 -0.093986  0.049931   0.027325  -1.254   0.2104    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.145006 -0.288098 -0.009450   0.065647  -2.209   0.0276 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.039448 -0.156946  0.088749   0.068799  -0.573   0.5666    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.032087 -0.009541  0.080095   0.025451   1.261   0.2080    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.064582 -0.019442  0.125707   0.048250   1.338   0.1814    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.737384  0.689069  0.793351   0.027363  26.948   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.259899  0.197401  0.319224   0.027369   9.496   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.034271 -0.096125  0.017143   0.027325  -1.254   0.2104    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.145006 -0.270961 -0.012335   0.065647  -2.209   0.0276 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.039448 -0.147733  0.099144   0.068799  -0.573   0.5666    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.032087 -0.004905  0.086319   0.025451   1.261   0.2080    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -288,26 +315,52 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-in"><span><span class="co"># Bootstrap percentile intervals, default when bootstrap was conduced</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    2.5 %       97.5 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.014442564  0.156470267</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.693527006  0.782722755</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.191964251  0.310829733</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.093986415  0.049930738</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.288097554 -0.009450087</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.156946125  0.088749196</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.009540501  0.080095211</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    2.5 %      97.5 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.019442340  0.12570734</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.689068561  0.79335143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.197400624  0.31922399</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.096125083  0.01714287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.270961023 -0.01233464</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.147733373  0.09914400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.004904705  0.08631912</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Force OLS confidence intervals</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span>, type <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   2.5 %      97.5 %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.01346761  0.14263132</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.69685728  0.77791033</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.20524238  0.31455508</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.09497481  0.02643303</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.27918562 -0.01082737</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.16331437  0.08441781</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.01228121  0.07645599</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.03021975  0.15938347</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.68362100  0.79114661</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.20612513  0.31367234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.08795872  0.01941694</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.27398880 -0.01602419</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.17462329  0.09572673</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.01791790  0.08209267</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use to_standardize as a shortcut</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">89572</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lm_std_boot2</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected_boot</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_standardize <span class="op">=</span> <span class="op">~</span> <span class="va">.</span>,</span></span>
+<span class="r-in"><span>                                          nboot <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># The results are the same</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    2.5 %      97.5 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.019442340  0.12570734</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.689068561  0.79335143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.197400624  0.31922399</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.096125083  0.01714287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.270961023 -0.01233464</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.147733373  0.09914400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.004904705  0.08631912</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    2.5 %      97.5 %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.019442340  0.12570734</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.689068561  0.79335143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.197400624  0.31922399</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.096125083  0.01714287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.270961023 -0.01233464</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.147733373  0.09914400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.004904705  0.08631912</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">lm_std_boot2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
