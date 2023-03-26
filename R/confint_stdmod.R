@@ -114,6 +114,7 @@ confint.std_selected <- function(object, parm, level = .95, type, ...) {
         return(out)
       }
     if (type == "lm") {
+        object$boot_est <- NULL
         NextMethod()
       }
   }
