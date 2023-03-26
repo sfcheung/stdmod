@@ -1,4 +1,4 @@
-# stdmod 0.2.6.4
+# stdmod 0.2.6.5
 
 - Updated pkgdown site to bootstrap 5. (0.2.6.1)
 - Fixed a missing whitepace in the note of
@@ -11,6 +11,8 @@
   not be an issue because *t*-based CIs should not be
   used when bootstrapping is requested. This option
   is just for testing. (0.2.6.4)
+- Updated examples to use `to_standardize` or
+  mention it as a shortcut. (0.2.6.5)
 
 # stdmod 0.2.6
 

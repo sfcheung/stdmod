@@ -48,6 +48,22 @@ test_that("Check std, mean +/- a SD", {
       )
   })
 
+lm_std2 <- std_selected(lm_out,
+                        to_center = ~ age,
+                        to_scale = ~ .,
+                        to_standardize = ~ .)
+out_std2 <- cond_effect(lm_std2, x = "emotional_stability", w = "conscientiousness")
+
+test_that("cond_effect, to_standardize", {
+    expect_equivalent(
+        coef(out_std),
+        coef(out_std2)
+      )
+  })
+
+out_std <- cond_effect(lm_std, x = "emotional_stability", w = "conscientiousness")
+
+
 out_ustd_p <- cond_effect(lm_out, x = "emotional_stability", w = "conscientiousness",
                           w_method = "percentile", w_percentiles = c(.20, .40, .90))
 out_std_p <- cond_effect(lm_std, x = "emotional_stability", w = "conscientiousness",

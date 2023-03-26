@@ -116,7 +116,7 @@
 #' summary(lm_raw)
 #' cond_effect(lm_raw, x = iv, w = mod)
 #'
-#' lm_std <- std_selected(lm_raw, to_scale = ~ iv + mod, to_center = ~ iv + mod)
+#' lm_std <- std_selected(lm_raw, to_standardize = ~ iv + mod)
 #' cond_effect(lm_std, x = iv, w = mod)
 #'
 #' # Categorical moderator

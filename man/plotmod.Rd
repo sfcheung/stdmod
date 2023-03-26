@@ -194,6 +194,9 @@ plotmod(lm_out,
         y_label = "Sleep Duration")
 
 # Standardize all variables except for categorical variables
+# Alternative: use to_standardize as a shortcut
+# lm_std <- std_selected(lm_out,
+#                        to_standardize = ~ .)
 lm_std <- std_selected(lm_out,
                        to_scale = ~ .,
                        to_center = ~ .)

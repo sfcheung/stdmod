@@ -62,6 +62,7 @@
 #' summary(lm_raw)
 #' # Standardize all variables as in std_selected above, and compute the
 #' # nonparametric bootstrapping percentile confidence intervals.
+#' set.seed(87053)
 #' lm_std_boot <- std_selected_boot(lm_raw,
 #'                                  to_scale = ~ .,
 #'                                  to_center = ~ .,
@@ -69,6 +70,18 @@
 #'                                  nboot = 100)
 #' # In real analysis, nboot should be at least 2000.
 #' summary(lm_std_boot)
+#'
+#' # Use to_standardize as a shortcut
+#' set.seed(87053)
+#' lm_std_boot2 <- std_selected_boot(lm_raw,
+#'                                   to_standardize = ~ .,
+#'                                   conf = .95,
+#'                                   nboot = 100)
+#' # The results are the same
+#' confint(lm_std_boot)
+#' confint(lm_std_boot2)
+#' all.equal(confint(lm_std_boot), confint(lm_std_boot2))
+#'
 #'
 #' @export
 #' @describeIn std_selected A wrapper of [std_selected()] that forms

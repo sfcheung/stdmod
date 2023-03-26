@@ -111,6 +111,14 @@
 #'                                to_center = ~ .)
 #' summary(lm_std)
 #'
+#' # Use to_standardize as a shortcut
+#' lm_stdwx2 <- std_selected(lm_raw, to_standardize = ~ mod + iv)
+#' # The results are the same
+#' coef(lm_stdwx)
+#' coef(lm_stdwx2)
+#' all.equal(coef(lm_stdwx), coef(lm_stdwx2))
+#'
+#'
 #' @export
 #' @describeIn std_selected The base function to center or
 #'             scale selected variables in a regression model
