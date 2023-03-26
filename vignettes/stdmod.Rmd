@@ -19,6 +19,16 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Introduction
+
+This vignette illustrates how to use
+`std_selected()`, the main function from
+the `stdmod` package.
+More about this package can be found
+in `vignette("stdmod", package = "stdmod")`
+or at [https://sfcheung.github.io/stdmod/](https://sfcheung.github.io/stdmod/).
+
+
 # This Guide Shows to use `std_selected()` to:
 
 - get the correct standardized regression coefficients of a moderated
@@ -84,13 +94,24 @@ Instead of doing the standardization ourselves before calling `lm()`, we can pas
 the `lm()` output to `std_selected()`, and use `~ .` for
 the arguments  `to_scale` and `to_center`.
 
-
-```{r}
+```r
 lm_stdall <- std_selected(lm_out,
                           to_scale = ~ .,
                           to_center = ~ .)
+```
+
+Since 0.2.6.3, `to_standardize` can be used as a shortcut:
+
+```{r}
+lm_stdall <- std_selected(lm_out,
+                          to_standardize = ~ .)
+```
+
+```{r}
 summary(lm_stdall)
 ```
+
+
 
 In this example, the coefficient of the product term, which naturally can
 be called the
@@ -117,6 +138,10 @@ including the outcome variable (sleep duration in this example).
 `std_selected()` will also skip categorical variables automatically skipped
 because standardizing them will make their coefficients not easy to interpret.
 
+Since 0.2.6.3, `to_standardize` is added as a shortcut. Listing a variable
+on `to_standardize` is equivalent to listing this variable
+on both `to_center` and `to_scale`.
+
 ## Advantage
 
 Using `std_selected` minimizes impact on the workflow. Do regression
@@ -128,8 +153,9 @@ interpret them.
 There is one problem with standardized coefficients. The confidence intervals
 based on ordinary least squares (OLS)  fitted to the standardized
 variables do not take into account the sampling variation of
-the sample means and standard deviations (Yuan & Chan, 2011). Cheung, Cheung, Lau, Hui,
-and Vong (2022) suggest using nonparametric bootstrapping, with standardization conducted
+the sample means and standard deviations ([Yuan & Chan, 2011](https://doi.org/10.1007/s11336-011-9224-6)).
+[Cheung, Cheung, Lau, Hui, and Vong (2022)](https://doi.org/10.1037/hea0001188)
+suggest using nonparametric bootstrapping, with standardization conducted
 in each bootstrap sample.
 
 This can be done by `std_selected_boot()`, a wrapper of `std_selected()`:
@@ -143,7 +169,7 @@ if (file.exists("stdmod_lm_stdall_boot.rds")) {
                             to_scale = ~ .,
                             to_center = ~ .,
                             nboot = 5000)
-    saveRDS(lm_stdall_boot, "stdmod_lm_stdall_boot.rds")
+    saveRDS(lm_stdall_boot, "stdmod_lm_stdall_boot.rds", compress = "xz")
   }
 ```
 
@@ -154,6 +180,15 @@ lm_stdall_boot <- std_selected_boot(lm_out,
                         to_center = ~ .,
                         nboot = 5000)
 ```
+
+Since 0.2.6.3, `to_standardize` can be used as a shortcut:
+
+```r
+lm_stdall_boot <- std_selected_boot(lm_out,
+                        to_standardize = ~ .
+                        nboot = 5000)
+```
+
 
 The minimum additional argument is `nboot`, the number of bootstrap samples.
 
@@ -184,10 +219,20 @@ and do not standardize sleep
 duration. We just list `emot` and `cons` on
 `to_center` and `to_scale`:
 
-```{r}
+```r
 lm_std1 <- std_selected(lm_out,
                         to_scale = ~ emot + cons,
                         to_center = ~ emot + cons)
+```
+
+Since 0.2.6.3, `to_standardize` can be used a shortuct:
+
+```{r}
+lm_std1 <- std_selected(lm_out,
+                        to_standardize = ~ emot + cons)
+```
+
+```{r}
 summary(lm_std1)
 ```
 
@@ -211,7 +256,7 @@ if (file.exists("stdmod_lm_std1_boot.rds")) {
                             to_scale = ~ emot + cons,
                             to_center = ~ emot + cons,
                             nboot = 5000)
-    saveRDS(lm_std1_boot, "stdmod_lm_std1_boot.rds")
+    saveRDS(lm_std1_boot, "stdmod_lm_std1_boot.rds", compress = "xz")
   }
 ```
 
@@ -220,6 +265,14 @@ set.seed(870432)
 lm_std1_boot <- std_selected_boot(lm_out,
                         to_scale = ~ emot + cons,
                         to_center = ~ emot + cons,
+                        nboot = 5000)
+```
+
+Since 0.2.6.3, `to_standardize` can be used as a shortcut:
+
+```r
+lm_std1_boot <- std_selected_boot(lm_out,
+                        to_standardize = ~ emot + cons,
                         nboot = 5000)
 ```
 
@@ -239,9 +292,10 @@ moderation effect is `r formatC(tmp["emot:cons", "CI Lower"], 4, format = "f")` 
 
 # Further Information
 
-A more detailed illustration can be found at `vignette("moderation")`.
+A more detailed illustration can be found at
+`vignette("moderation", package = "stdmod")`.
 
-`vignette("std_selected")` illustrates how `std_selected()` can be used
+`vignette("std_selected", package = "stdmod")` illustrates how `std_selected()` can be used
 to form nonparametric bootstrap percentile confidence interval for
 standardized regression coefficients ("betas") for regression models
 without a product term.

@@ -15,15 +15,19 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.width  = 6,
   fig.height = 4,
-  fig.align = 'center'
+  fig.align = "center"
 )
 ```
 
 # Purpose
 
-This document demonstrates how to use `stdmod_lavaan()` to compute the
+This document demonstrates how to use `stdmod_lavaan()` from
+the package `stdmod` to compute the
 standardized moderation effect in a path model fitted by `lavaan::sem()`.
 
+More about this package can be found
+in `vignette("stdmod", package = "stdmod")`
+or at [https://sfcheung.github.io/stdmod/](https://sfcheung.github.io/stdmod/).
 
 # Setup the Environment
 
@@ -74,8 +78,8 @@ standardizedSolution(fit)[3, ]
 
 After fitting the path model by `lavaan::lavaan()`, we can use `stdmod_lavaan()`
 to compute the standardized moderation effect using the standard deviations
-of the focal variable, the moderator, and the outcome variable (Cheung,
-Cheung, Lau, Hui, & Vong, 2022).
+of the focal variable, the moderator, and the outcome variable
+[(Cheung, Cheung, Lau, Hui, & Vong, 2022)](https://doi.org/10.1037/hea0001188).
 
 The minimal arguments are:
 
