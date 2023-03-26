@@ -216,7 +216,7 @@ lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
 summary(lm_raw)
 cond_effect(lm_raw, x = iv, w = mod)
 
-lm_std <- std_selected(lm_raw, to_scale = ~ iv + mod, to_center = ~ iv + mod)
+lm_std <- std_selected(lm_raw, to_standardize = ~ iv + mod)
 cond_effect(lm_std, x = iv, w = mod)
 
 # Categorical moderator
@@ -233,10 +233,11 @@ dat <- test_x_1_w_1_v_1_cat1_n_500
 lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
 summary(lm_raw)
 
-lm_std <- std_selected(lm_raw, to_scale = ~ iv + mod, to_center = ~ iv + mod)
+lm_std <- std_selected(lm_raw, to_standardize = ~ iv + mod)
 cond_effect(lm_std, x = iv, w = mod)
 
 # Form nonparametric bootstrap confidence intervals
+# Use 2000 or even 5000 for nboot in real research
 out <- cond_effect_boot(lm_std, x = iv, w = mod, nboot = 50)
 out
 
