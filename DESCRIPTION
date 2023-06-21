@@ -1,6 +1,6 @@
 Package: stdmod
 Title: Standardized Moderation Effect and Its Confidence Interval
-Version: 0.2.7.1
+Version: 0.2.7.2
 Authors@R:
     c(person(given = "Shu Fai",
            family = "Cheung",
@@ -26,10 +26,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Suggests:
     testthat,
-    dplyr,
     knitr,
     rmarkdown,
-    lavaan,
     visreg,
     lm.beta
 Depends:
@@ -39,5 +37,6 @@ Imports:
     ggplot2,
     stats,
     utils,
+    lavaan,
     rlang
 VignetteBuilder: knitr

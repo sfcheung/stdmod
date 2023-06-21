@@ -5,22 +5,26 @@ context("Check standardizing selected variables with std_selected")
 
 dat <- test_x_1_w_1_v_1_cat1_n_500
 
-lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
-lm_zx  <- lm(dv ~ iv*mod + v1 + cat1, dplyr::mutate(dat, iv = scale(iv)[, 1]))
-lm_zw  <- lm(dv ~ iv*mod + v1 + cat1, dplyr::mutate(dat, mod = scale(mod)[, 1]))
-lm_zy  <- lm(dv ~ iv*mod + v1 + cat1, dplyr::mutate(dat, dv = scale(dv)[, 1]))
-lm_zxzw  <- lm(dv ~ iv*mod + v1 + cat1, dplyr::mutate(dat, iv = scale(iv)[, 1],
-                                                  mod = scale(mod)[, 1]))
-lm_zxzy  <- lm(dv ~ iv*mod + v1 + cat1, dplyr::mutate(dat, iv = scale(iv)[, 1],
-                                                  dv = scale(dv)[, 1]))
-lm_zyzw  <- lm(dv ~ iv*mod + v1 + cat1, dplyr::mutate(dat, dv = scale(dv)[, 1],
-                                                  mod = scale(mod)[, 1]))
-lm_zall  <- lm(dv ~ iv*mod + v1 + cat1, dplyr::mutate(dat, iv = scale(iv)[, 1],
-                                                  mod = scale(mod)[, 1],
-                                                  dv = scale(dv)[, 1]))
+transform0 <- function(data, vars) {
+    for (x in vars) {
+        data[x] <- scale(data[[x]])[, 1]
+      }
+    data
+  }
 
-lm_cxsw  <- lm(dv ~ iv*mod + v1 + cat1, dplyr::mutate(dat, iv = scale(iv, scale = FALSE, center = TRUE)[, 1],
-                                                  mod = scale(mod, scale = sd(dat$mod), center = FALSE)[, 1]))
+lm_raw <- lm(dv ~ iv*mod + v1 + cat1, dat)
+lm_zx  <- lm(dv ~ iv*mod + v1 + cat1, transform0(dat, c("iv")))
+lm_zw  <- lm(dv ~ iv*mod + v1 + cat1, transform0(dat, c("mod")))
+lm_zy  <- lm(dv ~ iv*mod + v1 + cat1, transform0(dat, c("dv")))
+lm_zxzw  <- lm(dv ~ iv*mod + v1 + cat1, transform0(dat, c("iv", "mod")))
+lm_zxzy  <- lm(dv ~ iv*mod + v1 + cat1, transform0(dat, c("iv", "dv")))
+lm_zyzw  <- lm(dv ~ iv*mod + v1 + cat1, transform0(dat, c("dv", "mod")))
+lm_zall  <- lm(dv ~ iv*mod + v1 + cat1, transform0(dat, c("iv", "dv", "mod")))
+
+dat_tmp <- dat
+dat_tmp$iv <- scale(dat$iv, scale = FALSE, center = TRUE)[, 1]
+dat_tmp$mod <- scale(dat$mod, scale = sd(dat$mod), center = FALSE)[, 1]
+lm_cxsw  <- lm(dv ~ iv*mod + v1 + cat1, dat_tmp)
 
 
 stdmod_x <- std_selected(lm_raw, to_scale = ~ iv,  to_center = ~ iv)
