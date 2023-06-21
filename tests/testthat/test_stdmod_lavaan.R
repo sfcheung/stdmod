@@ -9,13 +9,17 @@ test_that("stdmod_lavaan", {
 
   dat <- test_x_1_w_1_v_2_n_500
 
-  # Results based on stdmod
+  transform0 <- function(data, vars) {
+      for (x in vars) {
+          data[x] <- scale(data[[x]])[, 1]
+        }
+      data
+    }
 
+  # Results based on stdmod
   lm_raw <- lm(dv ~ iv*mod + v1 + v2, dat)
-  lm_zall  <- lm(dv ~ iv*mod + v1 + v2, dplyr::mutate(dat, iv = scale(iv)[, 1],
-                                                    mod = scale(mod)[, 1],
-                                                    dv = scale(dv)[, 1]))
-  stdmod_xyw <- stdmod(lm_raw, x = iv, y = dv, w = mod, 
+  lm_zall  <- lm(dv ~ iv*mod + v1 + v2, transform0(dat, c("iv", "mod", "dv")))
+  stdmod_xyw <- stdmod(lm_raw, x = iv, y = dv, w = mod,
                       x_rescale = TRUE, y_rescale = TRUE, w_rescale = TRUE)
   stdmod_xyw
   coef(lm_zall)["iv:mod"]
@@ -29,7 +33,7 @@ test_that("stdmod_lavaan", {
   dat$iv <- (dat$iv - 10)
   dat$iv_mod <- dat$iv * dat$mod
 
-  mod <- 
+  mod <-
   "
   dv ~ iv + mod + mod + v1 + v2 + iv_mod
   "
@@ -52,7 +56,7 @@ test_that("stdmod_lavaan", {
 
 
   set.seed(6589107)
-  stdmod_xyw_boot <- stdmod_boot(lm_raw, x = iv, y = dv, w = mod, 
+  stdmod_xyw_boot <- stdmod_boot(lm_raw, x = iv, y = dv, w = mod,
                                     x_rescale = TRUE, y_rescale = TRUE, w_rescale = TRUE,
                                     nboot = 100)
   stdmod_xyw_boot$ci
