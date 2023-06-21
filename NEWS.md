@@ -1,3 +1,7 @@
+# stdmod 0.2.7.1
+
+- Added an R CMD check for noSuggests. (0.2.7.1)
+
 # stdmod 0.2.7
 
 - Updated pkgdown site to bootstrap 5. (0.2.6.1)
