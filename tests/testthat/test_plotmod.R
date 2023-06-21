@@ -1,4 +1,5 @@
 skip_on_cran()
+skip_if_not_installed("visreg")
 # False alarm in R-devel
 
 library(testthat)

@@ -1,7 +1,9 @@
-# stdmod 0.2.7.2
+# stdmod 0.2.7.3
 
 - Added an R CMD check for noSuggests. (0.2.7.1)
 - Removed `dplyr` from the tests and Suggests. (0.2.7.2)
+- The tests using `visreg` will be skipped if `visreg` is
+  not installed. (0.2.7.3)
 
 # stdmod 0.2.7
 
