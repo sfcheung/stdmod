@@ -1,6 +1,7 @@
-# stdmod 0.2.7.1
+# stdmod 0.2.7.2
 
 - Added an R CMD check for noSuggests. (0.2.7.1)
+- Removed `dplyr` from the tests and Suggests. (0.2.7.2)
 
 # stdmod 0.2.7
 
