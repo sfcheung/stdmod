@@ -46,6 +46,11 @@ print.summary.std_selected <- function(x, ...) {
       print(x$std_selected_call)
     }
   scaled_or_centered <- any(c(!is.null(x$centered_terms), !is.null(x$scaled_terms)))
+  if (!is.null(x$scaled_terms)) {
+      scaled <- TRUE
+    } else {
+      scaled <- TRUE
+    }
   opt_width <- 0.9 * getOption("width")
   cat("\n")
   tmp <- character(0)
@@ -92,6 +97,15 @@ print.summary.std_selected <- function(x, ...) {
   if (scaled_or_centered) {
       tmp1 <- paste("- Estimates and their statistics are based on the data after",
                      "mean-centering, scaling, or standardization.", collapse = " ")
+      tmp <- c(tmp,
+               strwrap(tmp1, exdent = 2))
+    }
+  if (scaled && is.null(x$nboot)) {
+      tmp1 <- paste("- One or more variables are scaled by SD or",
+                     "standardized. OLS standard errors and",
+                     "confidence intervals may be biased for their",
+                     "coefficients.",
+                     "Please use `std_selected_boot()`.", collapse = " ")
       tmp <- c(tmp,
                strwrap(tmp1, exdent = 2))
     }

@@ -108,63 +108,60 @@ The standardized moderation effect of `mod` on the `iv`-`med` path is
 `stdmod_lavaan()` can also be used to form nonparametric bootstrap
 confidence interval for the standardized moderation effect.
 
-Only two additional arguments are required:
+There are two approaches to do this. First, if bootstrap
+confidence intervals was requested when fitting the model,
+the stored bootstrap estimates will be used. This is
+efficient because there is no need to do bootstrapping
+again.
 
-- `boot_ci`: Set it to `TRUE` to request nonparametric bootstrap confidence
-             interval.
-- `R`: Set the number of bootstrap samples. Should be at least 2000.
-
-However, the function can be slow if the model takes some time to fit because
-the model will be fitted `R` times. If the model cannot be fitted quickly,
-we highly suggest using parallel processing. This can be requested using
-arguments in `boot::boot()` because `stdmod_lavaan()` internally calls
-`boot::boot()` to do the bootstrapping. These are the two possible arguments
-to use for parallel processing:
-
--  `parallel`: Can be `"no"`, `"multicore"`, or `"snow"`.  See `boot::boot()`
-               on which one to use. The following example uses `"snow"`.
-- `ncpus`: The number of processors to use. Let `boot::boot()` decides or set
-            it based on the configuration of the computer.
+We fit the model again, with bootstrapping:
 
 ```{r echo = FALSE}
-if (file.exists("egl_out_boot.rds")) {
-    fit_iv_mod_std_ci <- readRDS("egl_out_boot.rds")
+if (file.exists("egl_lavaan_boot.rds")) {
+    fit <- readRDS("egl_lavaan_boot.rds")
   } else {
-    set.seed(860947)
-    fit_iv_mod_std_ci <- stdmod_lavaan(fit = fit,
-                                        x = "iv",
-                                        y = "med",
-                                        w = "mod",
-                                        x_w = "iv:mod",
-                                        boot_ci = TRUE,
-                                        R = 2000,
-                                        parallel = "snow",
-                                        ncpus = 6)
-    saveRDS(out_boot, "egl_out_boot.rds")
+    fit <- sem(mod, test_mod1, fixed.x = FALSE,
+              se = "boot",
+              bootstrap = 2000,
+              iseed = 987543)
+    saveRDS(fit, "egl_lavaan_boot.rds")
   }
 ```
 
 ```{r eval = FALSE}
-set.seed(860947)
-fit_iv_mod_std_ci <- stdmod_lavaan(fit = fit,
-                                    x = "iv",
-                                    y = "med",
-                                    w = "mod",
-                                    x_w = "iv:mod",
-                                    boot_ci = TRUE,
-                                    R = 2000,
-                                    parallel = "snow",
-                                    ncpus = 6)
-fit_iv_mod_std_ci
+fit <- sem(mod, test_mod1, fixed.x = FALSE,
+           se = "boot",
+           bootstrap = 2000,
+           iseed = 987543)
 ```
 
-```{r echo = FALSE}
+If bootstrapping has been done when fitting the model,
+just adding `boot_ci = TRUE` is enough to request
+nonparametric percentile bootstrap confidence interval:
+
+```{r}
+fit_iv_mod_std_ci <- stdmod_lavaan(fit = fit,
+                                   x = "iv",
+                                   y = "med",
+                                   w = "mod",
+                                   x_w = "iv:mod",
+                                   boot_ci = TRUE)
 fit_iv_mod_std_ci
 ```
 
 The 95% confidence interval of the standardized moderation effect is
 `r formatC(confint(fit_iv_mod_std_ci)[1], 3, format = "f")` to
 `r formatC(confint(fit_iv_mod_std_ci)[2], 3, format = "f")`.
+
+The second approach, not covered here, uses
+[`do_boot()`](https://sfcheung.github.io/manymome/articles/do_boot.html)
+from
+the [`manymome`](https://sfcheung.github.io/manymome/index.html) package.
+to generate bootstrap estimates. To use the stored bootstrap
+estimates, set `boot_out` to the output of `do_boot()`.
+The stored bootstrap estimates will then be used. This method
+can be used when non-bootstrapping confidence intervals are
+needed when fitting the model.
 
 # Remarks
 
