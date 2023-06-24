@@ -5,7 +5,18 @@
 \alias{std_selected_boot}
 \title{Standardize Variables in a Regression Model}
 \usage{
-std_selected(lm_out, to_scale = NULL, to_center = NULL, to_standardize = NULL)
+std_selected(
+  lm_out,
+  to_scale = NULL,
+  to_center = NULL,
+  to_standardize = NULL,
+  conf = 0.95,
+  nboot = 100,
+  boot_args = NULL,
+  save_boot_est = TRUE,
+  full_output = FALSE,
+  do_boot = FALSE
+)
 
 std_selected_boot(
   lm_out,

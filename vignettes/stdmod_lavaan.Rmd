@@ -140,7 +140,7 @@ if (file.exists("egl_out_boot.rds")) {
                                         R = 2000,
                                         parallel = "snow",
                                         ncpus = 6)
-    saveRDS(out_boot, "egl_out_boot.rds")
+    saveRDS(fit_iv_mod_std_ci, "egl_out_boot.rds")
   }
 ```
 

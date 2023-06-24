@@ -101,67 +101,18 @@ std_selected_boot <- function(lm_out,
     if (missing(lm_out)) {
         stop("The arguments lm_out cannot be empty.")
       }
-
-    # Get the data frame.
-    # Form the bootstrapping function.
-    # Do the bootstrapping.
-    # Collect the results.
-    # Return the results.
-
-    # Do std_selected
-
-    std_selected_out <- std_selected(lm_out = lm_out,
-                                     to_scale = to_scale,
-                                     to_center = to_center,
-                                     to_standardize = to_standardize)
-
-    if (do_boot) {
-        # Get the data frame
-
-        dat <- lm_out$model
-        k <- ncol(dat)
-        n <- nrow(dat)
-
-        # Create the boot function
-
-        bootfct <- create_boot_selected(lm_out,
-                                        to_scale,
-                                        to_center,
-                                        to_standardize)
-
-        # Do bootstrapping
-
-        boot_out <- do.call(boot::boot,
-                      c(list(data = dat, statistic = bootfct, R = nboot),
-                      boot_args))
-
-        # Collect output
-
-        p <- length(boot_out$t0)
-
-        cis <- t(sapply(seq_len(p), function(x) {
-                    boot::boot.ci(boot_out, conf = conf,
-                                  type = "perc", index = x)$percent[4:5]
-                  }))
-        rownames(cis) <- names(boot_out$t0)
-        colnames(cis) <- c("CI Lower", "CI Upper")
-
-
-        # Append bootstrapping output
-
-        std_selected_out$boot_ci <- cis
-        std_selected_out$nboot <- nboot
-        std_selected_out$conf <- conf
-        tmp <- boot_out$t
-        colnames(tmp) <- names(boot_out$t0)
-        std_selected_out$boot_est <- tmp
-        std_selected_out$std_selected_boot_call <- match.call()
-        if (full_output) {
-            std_selected_out$boot_out <- boot_out
+    my_call <- match.call()
+    my_call[[1]] <- quote(std_selected)
+    args0 <- formals(std_selected_boot)
+    my_call_names <- names(my_call[-1])
+    for (xx in names(args0)) {
+        if (!(xx %in% my_call_names)) {
+            if (!is.null(args0[[xx]])) {
+                my_call[[xx]] <- args0[[xx]]
+              }
           }
       }
-
-    std_selected_out
+    eval(my_call, envir = parent.frame())
   }
 
 create_boot_selected <- function(lm_out,
