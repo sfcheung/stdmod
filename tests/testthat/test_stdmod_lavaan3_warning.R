@@ -8,13 +8,13 @@ dat <- test_mod3_miss
 # Results based on stdmod_lavaan
 
 library(lavaan)
-mod <- 
+mod <-
 "
 med ~ iv + mod + iv:mod + cov1
 dv ~ med + cov2
 "
 # No need to test no boot case.
-# Users should know fit the warning message before calling stdmod_lavaan 
+# Users should know fit the warning message before calling stdmod_lavaan
 # suppressWarnings(fit <- sem(mod, dat[-c(485:500), ], missing = "fiml.x"))
 # test_that("No boot, warning on run", {
 #     expect_warning(
@@ -35,7 +35,8 @@ test_that("Boot", {
                                               w = "mod",
                                               x_w = "iv:mod",
                                               boot_ci = TRUE,
-                                              R = 100))
+                                              R = 100,
+                                              use_old_version = TRUE))
       })
     expect_equal(
         sum(is.na(out_boot$boot_out$t)),

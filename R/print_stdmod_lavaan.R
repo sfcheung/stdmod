@@ -41,15 +41,18 @@
 #'
 #' # Compute the standardized moderation effect and
 #' # its percentile confidence interval based on nonparametric bootstrapping
-#' set.seed(8479075)
-#' system.time(out_boot <- stdmod_lavaan(fit = fit,
-#'                                       x = "iv",
-#'                                       y = "med",
-#'                                       w = "mod",
-#'                                       x_w = "iv:mod",
-#'                                       boot_ci = TRUE,
-#'                                       R = 50))
-#' # In real analysis, R should be at least 2000.
+#' # Fit the model with bootstrap confidence intervals
+#' # At least 2000 bootstrap samples should be used
+#' # in real research. 50 is used here only for
+#' # illustration.
+#' fit <- sem(mod, dat, se = "boot", bootstrap = 50,
+#'            iseed = 89574)
+#' out_boot <- stdmod_lavaan(fit = fit,
+#'                           x = "iv",
+#'                           y = "med",
+#'                           w = "mod",
+#'                           x_w = "iv:mod",
+#'                           boot_ci = TRUE)
 #'
 #' out_boot
 #'
@@ -111,6 +114,18 @@ print.stdmod_lavaan <- function(x,
                       "- Number of bootstrap samples with valid results: ",
                       nboot_real)
         cat("\n", tmp, "\n", sep = "")
+      }
+    if (has_bootci) {
+        if (isTRUE(x$old_version) || is.null(x$old_version)) {
+            cat(strwrap(paste0("NOTE: Bootstrapping conducted by the old version method (0.2.7.4 or before). ",
+                              "The method in the newer version is recommended.")), sep = "\n")
+          } else {
+            cat("\n")
+            cat(strwrap(paste0("NOTE: Bootstrapping conducted by the method in 0.2.7.5 or later. ",
+                              "To use the method in the older versions for reproducing previous results, ",
+                              "set 'use_old_version' to 'TRUE'.")), sep = "\n")
+
+          }
       }
     invisible(x)
   }
