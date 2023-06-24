@@ -35,7 +35,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
                         <h4 data-toc-skip class="author">Shu Fai Cheung
 and David Weng Ngai Vong</h4>
             
-            <h4 data-toc-skip class="date">2023-06-21</h4>
+            <h4 data-toc-skip class="date">2023-06-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/stdmod_lavaan.Rmd" class="external-link"><code>vignettes/stdmod_lavaan.Rmd</code></a></small>
       <div class="d-none name"><code>stdmod_lavaan.Rmd</code></div>
@@ -264,49 +264,31 @@ the outcome variable being moderated.</li>
 <p><code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> can also be used to form nonparametric
 bootstrap confidence interval for the standardized moderation
 effect.</p>
-<p>Only two additional arguments are required:</p>
-<ul>
-<li>
-<code>boot_ci</code>: Set it to <code>TRUE</code> to request
-nonparametric bootstrap confidence interval.</li>
-<li>
-<code>R</code>: Set the number of bootstrap samples. Should be at
-least 2000.</li>
-</ul>
-<p>However, the function can be slow if the model takes some time to fit
-because the model will be fitted <code>R</code> times. If the model
-cannot be fitted quickly, we highly suggest using parallel processing.
-This can be requested using arguments in <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code>
-because <code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> internally calls
-<code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> to do the bootstrapping. These are the two
-possible arguments to use for parallel processing:</p>
-<ul>
-<li>
-<code>parallel</code>: Can be <code>"no"</code>,
-<code>"multicore"</code>, or <code>"snow"</code>. See
-<code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> on which one to use. The following example
-uses <code>"snow"</code>.</li>
-<li>
-<code>ncpus</code>: The number of processors to use. Let
-<code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> decides or set it based on the configuration
-of the computer.</li>
-</ul>
+<p>There are two approaches to do this. First, if bootstrap confidence
+intervals was requested when fitting the model, the stored bootstrap
+estimates will be used. This is efficient because there is no need to do
+bootstrapping again.</p>
+<p>We fit the model again, with bootstrapping:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">860947</span><span class="op">)</span></span>
-<span><span class="va">fit_iv_mod_std_ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stdmod_lavaan.html">stdmod_lavaan</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">fit</span>,</span>
-<span>                                    x <span class="op">=</span> <span class="st">"iv"</span>,</span>
-<span>                                    y <span class="op">=</span> <span class="st">"med"</span>,</span>
-<span>                                    w <span class="op">=</span> <span class="st">"mod"</span>,</span>
-<span>                                    x_w <span class="op">=</span> <span class="st">"iv:mod"</span>,</span>
-<span>                                    boot_ci <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                                    R <span class="op">=</span> <span class="fl">2000</span>,</span>
-<span>                                    parallel <span class="op">=</span> <span class="st">"snow"</span>,</span>
-<span>                                    ncpus <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
-<span><span class="va">fit_iv_mod_std_ci</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; </span></span>
+<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">sem</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">test_mod1</span>, fixed.x <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>           se <span class="op">=</span> <span class="st">"boot"</span>,</span>
+<span>           bootstrap <span class="op">=</span> <span class="fl">2000</span>,</span>
+<span>           iseed <span class="op">=</span> <span class="fl">987543</span><span class="op">)</span></span></code></pre></div>
+<p>If bootstrapping has been done when fitting the model, just adding
+<code>boot_ci = TRUE</code> is enough to request nonparametric
+percentile bootstrap confidence interval:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fit_iv_mod_std_ci</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/stdmod_lavaan.html">stdmod_lavaan</a></span><span class="op">(</span>fit <span class="op">=</span> <span class="va">fit</span>,</span>
+<span>                                   x <span class="op">=</span> <span class="st">"iv"</span>,</span>
+<span>                                   y <span class="op">=</span> <span class="st">"med"</span>,</span>
+<span>                                   w <span class="op">=</span> <span class="st">"mod"</span>,</span>
+<span>                                   x_w <span class="op">=</span> <span class="st">"iv:mod"</span>,</span>
+<span>                                   boot_ci <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">fit_iv_mod_std_ci</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
 <span><span class="co">#&gt; stdmod_lavaan(fit = fit, x = "iv", y = "med", w = "mod", x_w = "iv:mod", </span></span>
-<span><span class="co">#&gt;     boot_ci = TRUE, R = 100)</span></span>
+<span><span class="co">#&gt;     boot_ci = TRUE)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                  Variable</span></span>
 <span><span class="co">#&gt; Focal Variable         iv</span></span>
@@ -314,18 +296,29 @@ of the computer.</li>
 <span><span class="co">#&gt; Outcome Variable      med</span></span>
 <span><span class="co">#&gt; Product Term       iv:mod</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;              lhs op    rhs   est    se      z pvalue ci.lower ci.upper</span></span>
-<span><span class="co">#&gt; Original     med  ~ iv:mod 0.257 0.025 10.169      0    0.208    0.307</span></span>
-<span><span class="co">#&gt; Standardized med  ~ iv:mod 0.440    NA     NA     NA    0.296    0.515</span></span>
+<span><span class="co">#&gt;              lhs op    rhs   est    se     z pvalue ci.lower ci.upper</span></span>
+<span><span class="co">#&gt; Original     med  ~ iv:mod 0.257 0.035 7.298      0    0.184    0.322</span></span>
+<span><span class="co">#&gt; Standardized med  ~ iv:mod 0.440    NA    NA     NA    0.322    0.539</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Confidence interval of standardized moderation effect:</span></span>
 <span><span class="co">#&gt; - Level of confidence: 95%</span></span>
 <span><span class="co">#&gt; - Bootstrapping Method: Nonparametric</span></span>
 <span><span class="co">#&gt; - Type: Percentile</span></span>
-<span><span class="co">#&gt; - Number of bootstrap samples requests: 100</span></span>
-<span><span class="co">#&gt; - Number of bootstrap samples with valid results: 100</span></span></code></pre>
+<span><span class="co">#&gt; - Number of bootstrap samples requests: </span></span>
+<span><span class="co">#&gt; - Number of bootstrap samples with valid results: 2000</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; NOTE: Bootstrapping conducted by the method in 0.2.7.5 or later. To use</span></span>
+<span><span class="co">#&gt; the method in the older versions for reproducing previous results, set</span></span>
+<span><span class="co">#&gt; 'use_old_version' to 'TRUE'.</span></span></code></pre></div>
 <p>The 95% confidence interval of the standardized moderation effect is
-0.296 to 0.515.</p>
+0.322 to 0.539.</p>
+<p>The second approach, not covered here, uses <a href="https://sfcheung.github.io/manymome/articles/do_boot.html" class="external-link"><code>do_boot()</code></a>
+from the <a href="https://sfcheung.github.io/manymome/index.html" class="external-link"><code>manymome</code></a>
+package. to generate bootstrap estimates. To use the stored bootstrap
+estimates, set <code>boot_out</code> to the output of
+<code>do_boot()</code>. The stored bootstrap estimates will then be
+used. This method can be used when non-bootstrapping confidence
+intervals are needed when fitting the model.</p>
 </div>
 <div class="section level2">
 <h2 id="remarks">Remarks<a class="anchor" aria-label="anchor" href="#remarks"></a>

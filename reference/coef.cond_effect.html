@@ -16,7 +16,7 @@ cond_effect() or cond_effect_boot()."><meta property="og:image" content="https:/
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -160,8 +160,8 @@ conditional effects in a <code>cond_effect</code>-class object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Low  95.354   17.20             -1.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - % Below: The percent of cases equal to or less than a level.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   in standard deviation (+ve above, -ve below).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean, in standard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   deviation (+ve above, -ve below).</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     High   Medium      Low </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 412.9112 395.6925 378.4739 </span>
@@ -189,12 +189,15 @@ conditional effects in a <code>cond_effect</code>-class object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Low -1.000   17.20             -1.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - % Below: The percent of cases equal to or less than a level.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   in standard deviation (+ve above, -ve below).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean, in standard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   deviation (+ve above, -ve below).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The variable(s) iv, mod is/are standardized.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - One or more variables are scaled by SD or standardized. OLS standard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   errors and confidence intervals may be biased for their coefficients.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Please use `cond_effect_boot()`.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     High   Medium      Low </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 841.9896 806.8781 771.7667 </span>

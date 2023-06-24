@@ -14,7 +14,7 @@ cond_effect() or cond_effect_boot()."><meta property="og:image" content="https:/
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -168,7 +168,9 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Medium 100.395   395.693 14.684 26.948 0.000 ***  366.843  424.543</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Low  95.354   378.474 19.249 19.662 0.000 ***  340.654  416.293</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [CI.Lo(t), CI.Hi(t)] shows the 95% confidence interval(s) based on t statistics.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [CI.Lo(t), CI.Hi(t)] shows the 95% confidence interval(s) based on t</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> statistics.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The regression model:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -182,8 +184,8 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Low  95.354   17.20             -1.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - % Below: The percent of cases equal to or less than a level.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   in standard deviation (+ve above, -ve below).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean, in standard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   deviation (+ve above, -ve below).</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           2.5 %   97.5 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> High   371.9915 453.8309</span>
@@ -202,7 +204,8 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Medium  0.000   806.878 29.942 26.948 0.000 ***  748.048  865.708</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Low -1.000   771.767 39.251 19.662 0.000 ***  694.647  848.887</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [CI.Lo(t), CI.Hi(t)] shows the 95% confidence interval(s) based on t statistics.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [CI.Lo(t), CI.Hi(t)] shows the 95% confidence interval(s) based on t</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> statistics.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> They should not be used when one or more variables are standardized.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The regression model:</span>
@@ -217,12 +220,15 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Low -1.000   17.20             -1.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - % Below: The percent of cases equal to or less than a level.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   in standard deviation (+ve above, -ve below).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean, in standard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   deviation (+ve above, -ve below).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The variable(s) iv, mod is/are standardized.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - One or more variables are scaled by SD or standardized. OLS standard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   errors and confidence intervals may be biased for their coefficients.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Please use `cond_effect_boot()`.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           2.5 %   97.5 %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> High   758.5480 925.4311</span>
@@ -265,7 +271,9 @@ the bootstrap estimates. This method does not do the bootstrapping itself.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    gp2  gp2   434.302 24.937 17.416 0.000 ***  385.305  483.299</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    gp3  gp3   369.807 28.858 12.815 0.000 ***  313.107  426.506</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [CI.Lo(t), CI.Hi(t)] shows the 95% confidence interval(s) based on t statistics.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [CI.Lo(t), CI.Hi(t)] shows the 95% confidence interval(s) based on t</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> statistics.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The regression model:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

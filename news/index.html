@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,10 +58,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.7.3" id="stdmod-0273">stdmod 0.2.7.3<a class="anchor" aria-label="anchor" href="#stdmod-0273"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2.8" id="stdmod-028">stdmod 0.2.8<a class="anchor" aria-label="anchor" href="#stdmod-028"></a></h2>
 <ul><li>Added an R CMD check for noSuggests. (0.2.7.1)</li>
 <li>Removed <code>dplyr</code> from the tests and Suggests. (0.2.7.2)</li>
 <li>The tests using <code>visreg</code> will be skipped if <code>visreg</code> is not installed. (0.2.7.3)</li>
+<li>Add a note in the printout of a <code>cond_effect</code>-class object and the summary of a <code>std_selected</code>-class object. If one or more variables are standardized but bootstrapping is not requested, users will be recommended to use <code><a href="../reference/std_selected.html">std_selected_boot()</a></code>. (0.2.7.4)</li>
+<li>
+<code><a href="../reference/stdmod_lavaan.html">stdmod_lavaan()</a></code> switched to the bootstrapping algorithm used by <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan()</a></code>. It also updated to allow for partial standardization. To use the older algorithm, set <code>use_old_version()</code> to <code>TRUE</code>. (0.2.7.5)</li>
+<li>Finalized to 0.2.8. (0.2.8)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.7" id="stdmod-027">stdmod 0.2.7<a class="anchor" aria-label="anchor" href="#stdmod-027"></a></h2><p class="text-muted">CRAN release: 2023-03-26</p>

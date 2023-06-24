@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -344,8 +344,8 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Low  95.354   17.20             -1.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - % Below: The percent of cases equal to or less than a level.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   in standard deviation (+ve above, -ve below).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean, in standard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   deviation (+ve above, -ve below).</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">lm_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="std_selected.html">std_selected</a></span><span class="op">(</span><span class="va">lm_raw</span>, to_standardize <span class="op">=</span> <span class="op">~</span> <span class="va">iv</span> <span class="op">+</span> <span class="va">mod</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">cond_effect</span><span class="op">(</span><span class="va">lm_std</span>, x <span class="op">=</span> <span class="va">iv</span>, w <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></span></span>
@@ -369,12 +369,15 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Low -1.000   17.20             -1.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - % Below: The percent of cases equal to or less than a level.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   in standard deviation (+ve above, -ve below).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean, in standard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   deviation (+ve above, -ve below).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The variable(s) iv, mod is/are standardized.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - One or more variables are scaled by SD or standardized. OLS standard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   errors and confidence intervals may be biased for their coefficients.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Please use `cond_effect_boot()`.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Categorical moderator</span></span></span>
 <span class="r-in"><span><span class="va">lm_cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dv</span> <span class="op">~</span> <span class="va">iv</span><span class="op">*</span><span class="va">cat1</span> <span class="op">+</span> <span class="va">v1</span>, <span class="va">dat</span><span class="op">)</span></span></span>
@@ -471,12 +474,15 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Low -1.000   17.20             -1.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - % Below: The percent of cases equal to or less than a level.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   in standard deviation (+ve above, -ve below).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean, in standard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   deviation (+ve above, -ve below).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - The variable(s) iv, mod is/are standardized.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - One or more variables are scaled by SD or standardized. OLS standard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   errors and confidence intervals may be biased for their coefficients.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Please use `cond_effect_boot()`.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Form nonparametric bootstrap confidence intervals</span></span></span>
 <span class="r-in"><span><span class="co"># Use 2000 or even 5000 for nboot in real research</span></span></span>
@@ -485,12 +491,12 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The effects of iv on dv, conditional on mod:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Level    mod iv Effect CI Lower CI Upper   S.E.      t     p Sig</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    High  1.000   841.990  726.971  940.491 42.468 19.826 0.000 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Medium  0.000   806.878  717.141  862.348 29.942 26.948 0.000 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Low -1.000   771.767  692.879  827.437 39.251 19.662 0.000 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    High  1.000   841.990  694.075  919.414 42.468 19.826 0.000 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Medium  0.000   806.878  714.618  876.922 29.942 26.948 0.000 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Low -1.000   771.767  677.803  855.436 39.251 19.662 0.000 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [CI Lower, CI Upper] shows the 95% nonparametric bootstrap confidence interval(s)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  (based on 50 bootstrap samples)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [CI Lower, CI Upper] shows the 95% nonparametric bootstrap confidence</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> interval(s) (based on 50 bootstrap samples).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> The regression model:</span>
@@ -505,8 +511,8 @@ nonparametric bootstrap confidence intervals.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Low -1.000   17.20             -1.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - % Below: The percent of cases equal to or less than a level.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   in standard deviation (+ve above, -ve below).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - From Mean (in SD): Distance of a level from the mean, in standard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   deviation (+ve above, -ve below).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

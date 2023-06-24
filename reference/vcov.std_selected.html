@@ -14,7 +14,7 @@ std_selected_boot()."><meta property="og:image" content="https://sfcheung.github
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -163,21 +163,21 @@ users can request the variance-covariance matrix of the bootstrap estimates.</p>
 <span class="r-in"><span><span class="co"># VCOV of bootstrap estimates, default when bootstrap was conducted</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">lm_std_boot</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               (Intercept)            iv           mod            v1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  1.536489e-03  9.568250e-05 -1.095276e-04  0.0001865437</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           9.568250e-05  4.146328e-04 -2.432351e-04  0.0000340697</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod         -1.095276e-04 -2.432351e-04  7.260336e-04  0.0001532043</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1           1.865437e-04  3.406970e-05  1.532043e-04  0.0010457165</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -2.410846e-03 -2.734371e-04  2.458697e-04 -0.0003150773</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -2.069590e-03  2.855683e-05  2.656795e-05 -0.0002051235</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       9.113406e-05  1.294361e-04 -1.132562e-04 -0.0001200609</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  1.428285e-03 -1.712150e-05  7.503641e-05  2.042482e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv          -1.712150e-05  4.442566e-04 -3.248787e-04 -4.588781e-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          7.503641e-05 -3.248787e-04  7.924142e-04  8.099015e-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1           2.042482e-04 -4.588781e-05  8.099015e-05  9.004586e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -2.121657e-03 -2.175352e-06  5.257831e-05 -2.719232e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -1.922741e-03  7.050081e-05 -2.509538e-04 -2.982106e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -2.017472e-04  1.338373e-04 -1.416426e-04 -7.092508e-05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                   cat1gp2       cat1gp3        iv:mod</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -0.0024108465 -2.069590e-03  9.113406e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv          -0.0002734371  2.855683e-05  1.294361e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.0002458697  2.656795e-05 -1.132562e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.0003150773 -2.051235e-04 -1.200609e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2      0.0045177085  2.407089e-03 -3.947109e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3      0.0024070895  3.914567e-03  8.545288e-05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod      -0.0003947109  8.545288e-05  4.998478e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -2.121657e-03 -1.922741e-03 -2.017472e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv          -2.175352e-06  7.050081e-05  1.338373e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          5.257831e-05 -2.509538e-04 -1.416426e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -2.719232e-04 -2.982106e-04 -7.092508e-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2      3.954751e-03  2.014940e-03  2.320263e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3      2.014940e-03  3.644739e-03  2.032413e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       2.320263e-04  2.032413e-04  5.108183e-04</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># For OLS VCOV</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">lm_std_boot</span>, type <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span></span></span>

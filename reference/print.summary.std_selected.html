@@ -12,7 +12,7 @@ of std_selected() or std_selected_boot()."><meta property="og:image" content="ht
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -152,6 +152,9 @@ of <code><a href="std_selected.html">std_selected()</a></code> or <code><a href=
 <span class="r-out co"><span class="r-pr">#&gt;</span> Note:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> - Estimates and their statistics are based on the data after</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   mean-centering, scaling, or standardization.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> - One or more variables are scaled by SD or standardized. OLS standard</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   errors and confidence intervals may be biased for their coefficients.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Please use `std_selected_boot()`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># With bootstrapping</span></span></span>
@@ -191,14 +194,14 @@ of <code><a href="std_selected.html">std_selected()</a></code> or <code><a href=
 <span class="r-out co"><span class="r-pr">#&gt;</span> -1.96117 -0.39474 -0.02285  0.37579  2.11040 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Estimate   CI Lower   CI Upper Std. Error t value Pr(&gt;|t|)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.0645819 -0.0005936  0.1491718  0.0482503   1.338   0.1814    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.7373838  0.6887268  0.7763855  0.0273632  26.948   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.2598987  0.2008832  0.3074666  0.0273687   9.496   &lt;2e-16 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.0342709 -0.0902115  0.0272759  0.0273250  -1.254   0.2104    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.1450065 -0.2768718 -0.0106607  0.0656469  -2.209   0.0276 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.0394483 -0.1964224  0.0802801  0.0687988  -0.573   0.5666    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.0320874 -0.0048116  0.0747295  0.0254507   1.261   0.2080    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate CI Lower CI Upper Std. Error t value Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  0.06458 -0.01545  0.14780    0.04825   1.338   0.1814    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv           0.73738  0.69686  0.77768    0.02736  26.948   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mod          0.25990  0.21435  0.31169    0.02737   9.496   &lt;2e-16 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v1          -0.03427 -0.08828  0.02174    0.02733  -1.254   0.2104    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp2     -0.14501 -0.27253 -0.02739    0.06565  -2.209   0.0276 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cat1gp3     -0.03945 -0.17744  0.09618    0.06880  -0.573   0.5666    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iv:mod       0.03209 -0.01784  0.08506    0.02545   1.261   0.2080    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
