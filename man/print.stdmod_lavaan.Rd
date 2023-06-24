@@ -49,15 +49,18 @@ out_noboot
 
 # Compute the standardized moderation effect and
 # its percentile confidence interval based on nonparametric bootstrapping
-set.seed(8479075)
-system.time(out_boot <- stdmod_lavaan(fit = fit,
-                                      x = "iv",
-                                      y = "med",
-                                      w = "mod",
-                                      x_w = "iv:mod",
-                                      boot_ci = TRUE,
-                                      R = 50))
-# In real analysis, R should be at least 2000.
+# Fit the model with bootstrap confidence intervals
+# At least 2000 bootstrap samples should be used
+# in real research. 50 is used here only for
+# illustration.
+fit <- sem(mod, dat, se = "boot", bootstrap = 50,
+           iseed = 89574)
+out_boot <- stdmod_lavaan(fit = fit,
+                          x = "iv",
+                          y = "med",
+                          w = "mod",
+                          x_w = "iv:mod",
+                          boot_ci = TRUE)
 
 out_boot
 

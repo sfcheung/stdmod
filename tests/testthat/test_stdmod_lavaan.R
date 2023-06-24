@@ -51,7 +51,8 @@ test_that("stdmod_lavaan", {
   out_noboot <- stdmod_lavaan(fit = fit, x = "iv",
                                   y = "dv",
                                   w = "mod",
-                                  x_w = "iv_mod")
+                                  x_w = "iv_mod",
+                                  use_old_version = TRUE)
   out_noboot
 
 
@@ -65,7 +66,8 @@ test_that("stdmod_lavaan", {
                                   y = "dv",
                                   w = "mod",
                                   x_w = "iv_mod",
-                            boot_ci = TRUE, R = 100))
+                            boot_ci = TRUE, R = 100,
+                            use_old_version = TRUE))
   out_boot$ci
   round(stdmod_xyw_boot$ci, 5)
   round(out_boot$ci, 5)

@@ -18,7 +18,8 @@ fit <- sem(mod, dat, likelihood = "wishart")
 out_noboot <- stdmod_lavaan(fit = fit, x = "iv",
                             y = "med",
                             w = "mod",
-                            x_w = "iv:mod")
+                            x_w = "iv:mod",
+                            use_old_version = TRUE)
 out_noboot$ci
 out_noboot$stdmod
 coef(out_noboot)
@@ -47,7 +48,8 @@ system.time(out_boot <- stdmod_lavaan(fit = fit,
                                       w = "mod",
                                       x_w = "iv:mod",
                                       boot_ci = TRUE,
-                                      R = 100))
+                                      R = 100,
+                                      use_old_version = TRUE))
 out_boot$ci
 confint(out_boot)
 out_boot$stdmod
@@ -77,7 +79,8 @@ system.time(out_boot <- stdmod_lavaan(fit = fit,
                                       x_w = "iv:mod",
                                       boot_ci = TRUE,
                                       R = 100,
-                                      conf = .90))
+                                      conf = .90,
+                                      use_old_version = TRUE))
 out_boot$ci
 confint(out_boot, level = .90)
 

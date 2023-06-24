@@ -10,6 +10,11 @@
   are standardized but bootstrapping is not requested,
   users will be recommended to use `std_selected_boot()`.
   (0.2.7.4)
+- `stdmod_lavaan()` switched to the bootstrapping
+  algorithm used by `lavaan()`. It also updated to allow
+  for partial standardization. To use the older algorithm,
+  set `use_old_version()` to `TRUE`. (0.2.7.5)
+
 
 # stdmod 0.2.7
 

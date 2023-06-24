@@ -14,7 +14,7 @@ summary(lm_std)$coefficients
 # Results based on stdmod_lavaan
 
 library(lavaan)
-mod <- 
+mod <-
 "
 med ~ iv + mod + iv:mod + cov1
 dv ~ med + cov2
@@ -33,7 +33,8 @@ iv_mod_std
 out_noboot <- stdmod_lavaan(fit = fit, x = "iv",
                             y = "med",
                             w = "mod",
-                            x_w = "iv:mod")
+                            x_w = "iv:mod",
+                            use_old_version = TRUE)
 out_noboot
 
 set.seed(6589107)
@@ -49,7 +50,8 @@ system.time(out_boot <- stdmod_lavaan(fit = fit,
                                       w = "mod",
                                       x_w = "iv:mod",
                                       boot_ci = TRUE,
-                                      R = 100))
+                                      R = 100,
+                                      use_old_version = TRUE))
 out_boot$ci
 
 test_that("stdmod_lavaan", {
@@ -99,7 +101,8 @@ med_mod_std
 out_noboot <- stdmod_lavaan(fit = fit, x = "med",
                             y = "dv",
                             w = "mod",
-                            x_w = "med:mod")
+                            x_w = "med:mod",
+                            use_old_version = TRUE)
 out_noboot$stdmod
 
 tmpfct <- function(d, i) {
@@ -121,7 +124,8 @@ system.time(out_boot <- stdmod_lavaan(fit = fit,
                                       w = "mod",
                                       x_w = "med:mod",
                                       boot_ci = TRUE,
-                                      R = 100))
+                                      R = 100,
+                                      use_old_version = TRUE))
 out_boot$boot_out$t
 
 test_that("stdmod_lavaan", {
