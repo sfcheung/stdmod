@@ -1,4 +1,4 @@
-# stdmod 0.2.7.4
+# stdmod 0.2.8
 
 - Added an R CMD check for noSuggests. (0.2.7.1)
 - Removed `dplyr` from the tests and Suggests. (0.2.7.2)
@@ -14,7 +14,7 @@
   algorithm used by `lavaan()`. It also updated to allow
   for partial standardization. To use the older algorithm,
   set `use_old_version()` to `TRUE`. (0.2.7.5)
-
+- Finalized to 0.2.8. (0.2.8)
 
 # stdmod 0.2.7
 
