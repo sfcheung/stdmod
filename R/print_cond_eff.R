@@ -128,24 +128,27 @@ print.cond_effect <- function(x,
     if (has_bootci) {
         nboot <- attr(x, "nboot")
         conf <- attr(x, "conf")
-        if (boot_info &  !table_only) {
-            cat("\n[CI Lower, CI Upper] shows the ",
-                round(conf* 100, 2),
+        if (boot_info && !table_only) {
+            tmp <- paste("[CI Lower, CI Upper] shows the ",
+                round(conf * 100, 2),
                 "% nonparametric bootstrap confidence interval(s)",
+                " (based on ", nboot, " bootstrap samples).",
                 sep = "")
-            cat("\n (based on", nboot, "bootstrap samples)")
             cat("\n")
+            cat(strwrap(tmp, exdent = 0), sep = "\n")
           }
       }
 
     if (t_ci) {
         t_ci_level_txt <- paste0(as.character(t_ci_level * 100), "%")
-        cat("\n[CI.Lo(t), CI.Hi(t)] shows the ",
-            t_ci_level_txt, " confidence interval(s)",
-            " based on t statistics.",
-            sep = "")
+        tmp <- paste("[CI.Lo(t), CI.Hi(t)] shows the ",
+                     t_ci_level_txt, " confidence interval(s)",
+                     " based on t statistics.",
+                     sep = "")
+        cat("\n")
+        cat(strwrap(tmp, exdent = 0), sep = "\n")
         if (any(y_std, x_std, w_std)) {
-            cat("\nThey should not be used when one or more",
+            cat("They should not be used when one or more",
                 " variables are standardized.",
                 sep = "")
           }
@@ -165,8 +168,10 @@ print.cond_effect <- function(x,
             print(w_df, row.names = FALSE)
             cat("\n")
             cat("- % Below: The percent of cases equal to or less than a level.\n")
-            cat("- From Mean (in SD): Distance of a level from the mean,\n",
-                "  in standard deviation (+ve above, -ve below).\n", sep = "")
+            cat(strwrap(paste(
+                "- From Mean (in SD): Distance of a level from the mean,",
+                "in standard deviation (+ve above, -ve below).", sep = " "),
+                exdent = 2), sep = "\n")
           }
       }
     if (any(y_std, x_std, w_std)) {
@@ -177,12 +182,21 @@ print.cond_effect <- function(x,
         v_txt <- paste0("- The variable(s) ", v_std, " is/are standardized.")
         if (standardized & !table_only) {
             cat("\nNote:\n\n")
-            cat(v_txt, "\n", sep = "")
+            cat(strwrap(v_txt, exdent = 2), sep = "\n")
             if (y_std & x_std) {
-                cat("- The conditional effects are the standardized effects of ",
+                cat(strwrap(paste(
+                    "- The conditional effects are the standardized effects of ",
                     iv,
                     " on ",
-                    y, ".", "\n", sep = "")
+                    y, ".", sep = ""), exdent = 2), sep = "\n")
+              }
+            if (!has_bootci) {
+                tmp1 <- paste("- One or more variables are scaled by SD or",
+                    "standardized. OLS standard errors and",
+                    "confidence intervals may be biased for their",
+                    "coefficients.",
+                    "Please use `cond_effect_boot()`.", collapse = " ")
+                cat(strwrap(tmp1, exdent = 2), sep = "\n")
               }
           }
       }

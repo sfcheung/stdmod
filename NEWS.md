@@ -1,9 +1,15 @@
-# stdmod 0.2.7.3
+# stdmod 0.2.7.4
 
 - Added an R CMD check for noSuggests. (0.2.7.1)
 - Removed `dplyr` from the tests and Suggests. (0.2.7.2)
 - The tests using `visreg` will be skipped if `visreg` is
   not installed. (0.2.7.3)
+- Add a note in the printout of a `cond_effect`-class
+  object and the summary of
+  a `std_selected`-class object. If one or more variables
+  are standardized but bootstrapping is not requested,
+  users will be recommended to use `std_selected_boot()`.
+  (0.2.7.4)
 
 # stdmod 0.2.7
 
