@@ -1,4 +1,4 @@
-# stdmod 0.2.8.9002
+# stdmod 0.2.9
 
 - Fixed the issue with `stdmod-package`. (0.2.8.9001)
 - Improved the printout of the `summary()` of `std_selected()`
@@ -6,9 +6,12 @@
   Small numbers are rounded to prevent
   the use of scientific notation, and
   small *p*-values can be printed in
-  formats like `*p*<.001`. Users can also
+  formats like *p*<.001. Users can also
   control the number of digits in the
-  printout. (0.2.8.9002).
+  printout. See the help page
+  of `print.summary.std_selected()`
+  to learn more about new arguments (0.2.8.9002).
+- Finalized to 0.2.9. (0.2.9)
 
 # stdmod 0.2.8
 
