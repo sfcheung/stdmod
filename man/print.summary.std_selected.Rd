@@ -4,12 +4,70 @@
 \alias{print.summary.std_selected}
 \title{Print the Summary of a 'std_selected' Class Object}
 \usage{
-\method{print}{summary.std_selected}(x, ...)
+\method{print}{summary.std_selected}(
+  x,
+  ...,
+  est_digits = 4,
+  t_digits = 4,
+  pvalue_less_than = 0.001,
+  default_style = FALSE
+)
 }
 \arguments{
 \item{x}{The output of \code{\link[=summary]{summary()}}.}
 
 \item{...}{Arguments to be passed to \code{\link[=summary]{summary()}}.}
+
+\item{est_digits}{The number of digits
+after the decimal to be displayed for
+the coefficient estimates, their
+standard errors, and bootstrap
+confidence intervals (if present). Note
+that the values will be rounded to
+this number of digits before printing.
+If all digits at this position are
+zero for all values, the values may
+be displayed with fewer digits.
+Note that the coefficient table is
+printed by \code{\link[stats:printCoefmat]{stats::printCoefmat()}}.
+If some numbers are vary large, the
+number of digits after the decimal
+may be smaller than \code{est_digits} due
+to a limit on the column width.
+This value also determines the number
+of digits for displayed R-squared
+if \code{default_style} is \code{FALSE}.
+Default if 4.}
+
+\item{t_digits}{The number of digits
+after the decimal to be displayed
+for the \emph{t} statistic (in the column
+\code{"t value"}). This value also
+determines the number of digits for
+the \emph{F} statistic for the R-squared
+if \code{default_style} is \code{FALSE}.
+Default is 4.}
+
+\item{pvalue_less_than}{If a \emph{p}-value
+is less than this value, it will be
+displayed with \verb{"<(this value)".}
+For example, if \code{pvalue_less_than}
+is .001, the default, \emph{p}-values less
+than .001 will be displayed as
+\verb{<.001}. This value also determines
+the printout of the \emph{p}-value of
+the \emph{F} statistic if \code{default_style}
+is \code{FALSE}. (This argument does what
+\code{eps.Pvalue} does in
+\code{\link[stats:printCoefmat]{stats::printCoefmat()}}.)}
+
+\item{default_style}{Logical. If
+\code{FALSE}, the default, R-squared
+and \emph{F} statistic will be displayed
+in a more readable style. If \code{TRUE},
+then the default style in the
+printout of the \code{summary} of
+\code{\link[=lm]{lm()}} output will be used.}
 }
 \value{
 \code{x} is returned invisibly.

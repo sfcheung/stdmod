@@ -9,6 +9,57 @@
 #' @param x The output of [summary()].
 #' @param ...  Arguments to be passed to [summary()].
 #'
+#' @param est_digits The number of digits
+#' after the decimal to be displayed for
+#' the coefficient estimates, their
+#' standard errors, and bootstrap
+#' confidence intervals (if present). Note
+#' that the values will be rounded to
+#' this number of digits before printing.
+#' If all digits at this position are
+#' zero for all values, the values may
+#' be displayed with fewer digits.
+#' Note that the coefficient table is
+#' printed by [stats::printCoefmat()].
+#' If some numbers are vary large, the
+#' number of digits after the decimal
+#' may be smaller than `est_digits` due
+#' to a limit on the column width.
+#' This value also determines the number
+#' of digits for displayed R-squared
+#' if `default_style` is `FALSE`.
+#' Default if 4.
+#'
+#' @param t_digits The number of digits
+#' after the decimal to be displayed
+#' for the *t* statistic (in the column
+#' `"t value"`). This value also
+#' determines the number of digits for
+#' the *F* statistic for the R-squared
+#' if `default_style` is `FALSE`.
+#' Default is 4.
+#'
+#' @param pvalue_less_than If a *p*-value
+#' is less than this value, it will be
+#' displayed with `"<(this value)".`
+#' For example, if `pvalue_less_than`
+#' is .001, the default, *p*-values less
+#' than .001 will be displayed as
+#' `<.001`. This value also determines
+#' the printout of the *p*-value of
+#' the *F* statistic if `default_style`
+#' is `FALSE`. (This argument does what
+#' `eps.Pvalue` does in
+#' [stats::printCoefmat()].)
+#'
+#' @param default_style Logical. If
+#' `FALSE`, the default, R-squared
+#' and *F* statistic will be displayed
+#' in a more readable style. If `TRUE`,
+#' then the default style in the
+#' printout of the `summary` of
+#' [lm()] output will be used.
+#'
 #'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
@@ -37,7 +88,11 @@
 #'
 #' @export
 
-print.summary.std_selected <- function(x, ...) {
+print.summary.std_selected <- function(x, ...,
+                                       est_digits = 4,
+                                       t_digits = 4,
+                                       pvalue_less_than = .001,
+                                       default_style = FALSE) {
   if (!is.null(x$std_selected_boot_call)) {
       cat("\nCall to std_selected_boot():\n")
       print(x$std_selected_boot_call)
@@ -92,7 +147,30 @@ print.summary.std_selected <- function(x, ...) {
     }
   cat("\n")
   cat(tmp, sep = "\n")
-  NextMethod()
+  x_rsq <- x$r.squared
+  x_rsq_adj <- x$adj.r.squared
+  x_fstatistic <- x$fstatistic
+  x$coefficients[, "Estimate"] <- round(x$coefficients[, "Estimate"], est_digits)
+  x$coefficients[, "Std. Error"] <- round(x$coefficients[, "Std. Error"], est_digits)
+  if (!is.null(x$nboot)) {
+      x$coefficients[, "CI Lower"] <- round(x$coefficients[, "CI Lower"], est_digits)
+      x$coefficients[, "CI Upper"] <- round(x$coefficients[, "CI Upper"], est_digits)
+    }
+  x$coefficients[, "t value"] <- round(x$coefficients[, "t value"], t_digits)
+  if (!default_style) {
+      x$fstatistic <- NULL
+    }
+  NextMethod(eps.Pvalue = pvalue_less_than,
+             dig.tst = t_digits)
+  if (!default_style) {
+      cat(format_rsq(rsq = x_rsq,
+                       rsq_adj = x_rsq_adj,
+                       digits = est_digits), sep = "\n")
+      print_fstatistic(x_fstatistic,
+                       f_digits = t_digits,
+                       p_digits = ceiling(-log10(pvalue_less_than)))
+      cat("\n")
+    }
   tmp <- character(0)
   if (scaled_or_centered) {
       tmp1 <- paste("- Estimates and their statistics are based on the data after",
@@ -148,3 +226,55 @@ format_dat_sc <- function(x) {
   dat_sc$Note <- format(dat_sc$Note)
   dat_sc
 }
+
+#' @noRd
+
+print_fstatistic <- function(fstatistic,
+                             f_digits = 4,
+                             p_digits = 3) {
+     f <- fstatistic["value"]
+     df1 <- fstatistic["numdf"]
+     df2 <- fstatistic["dendf"]
+     f_txt <- paste0("F(",
+                     df1, ", ", df2, ") = ",
+                     round(f, f_digits))
+     p <- stats::pf(f, df1, df2, lower.tail = FALSE)
+     p_txt <- format_pvalue(p,
+                            eps = 10^(-p_digits))
+     cat("ANOVA test of R-squared  : ",
+         f_txt, ", p ", p_txt, "\n", sep = "")
+  }
+
+#' @noRd
+
+format_pvalue <- function(p,
+                          eps = 1e-3) {
+    p_digits <- ceiling(-log10(eps))
+    if (p < eps) {
+        return(paste0("< ",
+               formatC(eps,
+                       digits = p_digits,
+                       format = "f")))
+      } else {
+        return(formatC(p,
+                       digits = p_digits,
+                       format = "f"))
+      }
+  }
+
+#' @noRd
+
+format_rsq <- function(rsq, rsq_adj,
+                       digits = 4) {
+    x1 <- c("R-squared",
+            "Adjusted R-squared")
+    x2 <- formatC(c(rsq, rsq_adj),
+                  digits = digits,
+                  format = "f")
+    x1max <- max(nchar(x1))
+    i <- which(nchar(x1) != x1max)
+    x1[i] <- paste0(x1[i],
+                    paste0(rep(" ", x1max - nchar(x1[1])),
+                           collapse = ""))
+    paste0(x1, "       : ", x2)
+  }
