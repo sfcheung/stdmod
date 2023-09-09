@@ -1,3 +1,7 @@
+# stdmod 0.2.8.9001
+
+- Fixed the issue with `stdmod-package`. (0.2.8.9001)
+
 # stdmod 0.2.8
 
 - Added an R CMD check for noSuggests. (0.2.7.1)
