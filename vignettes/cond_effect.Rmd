@@ -1,7 +1,7 @@
 ---
 title: "Conditional Effects by cond_effect()"
 author: "Shu Fai Cheung"
-date: "2023-03-26"
+date: "2023-09-09"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Conditional Effects by cond_effect()}
@@ -99,8 +99,8 @@ cond_out
 #>     Low             2.736   16.60             -1.00
 #> 
 #> - % Below: The percent of cases equal to or less than a level.
-#> - From Mean (in SD): Distance of a level from the mean,
-#>   in standard deviation (+ve above, -ve below).
+#> - From Mean (in SD): Distance of a level from the mean, in standard
+#>   deviation (+ve above, -ve below).
 ```
 
 By default, the print method of `cond_effect()` output prints the
@@ -160,8 +160,8 @@ print(cond_out, title = FALSE, model = FALSE)
 #>     Low             2.700   16.60             -1.06
 #> 
 #> - % Below: The percent of cases equal to or less than a level.
-#> - From Mean (in SD): Distance of a level from the mean,
-#>   in standard deviation (+ve above, -ve below).
+#> - From Mean (in SD): Distance of a level from the mean, in standard
+#>   deviation (+ve above, -ve below).
 ```
 
 Note that the empirical percentage of cases equal to or less than a level may
@@ -232,13 +232,15 @@ print(cond_std, model = FALSE, title = FALSE, level_info = FALSE)
 #>  2.560 0.011 *  
 #>  3.601 0.000 ***
 #> 
-#> [CI Lower, CI Upper] shows the 95% nonparametric bootstrap confidence interval(s)
-#>  (based on 2000 bootstrap samples)
+#> [CI Lower, CI Upper] shows the 95% nonparametric bootstrap confidence
+#> interval(s) (based on 2000 bootstrap samples).
 #> 
 #> Note:
 #> 
-#> - The variable(s) sleep_duration, emotional_stability, conscientiousness is/are standardized.
-#> - The conditional effects are the standardized effects of emotional_stability on sleep_duration.
+#> - The variable(s) sleep_duration, emotional_stability,
+#>   conscientiousness is/are standardized.
+#> - The conditional effects are the standardized effects of
+#>   emotional_stability on sleep_duration.
 ```
 
 # Further Information
