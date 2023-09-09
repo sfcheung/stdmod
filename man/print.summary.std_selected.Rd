@@ -28,6 +28,12 @@ this number of digits before printing.
 If all digits at this position are
 zero for all values, the values may
 be displayed with fewer digits.
+Note that the coefficient table is
+printed by \code{\link[stats:printCoefmat]{stats::printCoefmat()}}.
+If some numbers are vary large, the
+number of digits after the decimal
+may be smaller than \code{est_digits} due
+to a limit on the column width.
 This value also determines the number
 of digits for displayed R-squared
 if \code{default_style} is \code{FALSE}.

@@ -19,6 +19,12 @@
 #' If all digits at this position are
 #' zero for all values, the values may
 #' be displayed with fewer digits.
+#' Note that the coefficient table is
+#' printed by [stats::printCoefmat()].
+#' If some numbers are vary large, the
+#' number of digits after the decimal
+#' may be smaller than `est_digits` due
+#' to a limit on the column width.
 #' This value also determines the number
 #' of digits for displayed R-squared
 #' if `default_style` is `FALSE`.
@@ -256,7 +262,7 @@ format_pvalue <- function(p,
       }
   }
 
-#' @norR
+#' @noRd
 
 format_rsq <- function(rsq, rsq_adj,
                        digits = 4) {
