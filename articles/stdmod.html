@@ -15,8 +15,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Arimo-0.4.6/font.css" rel="stylesheet">
-<link href="../deps/Noto_Sans_Mono-0.4.6/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Arimo-0.4.7/font.css" rel="stylesheet">
+<link href="../deps/Noto_Sans_Mono-0.4.7/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="A Quick Start Guide on Using std_selected()">
@@ -35,7 +35,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
                         <h4 data-toc-skip class="author">Shu Fai
 Cheung</h4>
             
-            <h4 data-toc-skip class="date">2023-06-24</h4>
+            <h4 data-toc-skip class="date">2023-09-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/stdmod.Rmd" class="external-link"><code>vignettes/stdmod.Rmd</code></a></small>
       <div class="d-none name"><code>stdmod.Rmd</code></div>
@@ -235,18 +235,20 @@ shortcut:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)   </span></span>
-<span><span class="co">#&gt; (Intercept)  0.05492    0.04883   1.125  0.26124   </span></span>
-<span><span class="co">#&gt; age          0.03712    0.04428   0.838  0.40221   </span></span>
-<span><span class="co">#&gt; gendermale  -0.18440    0.11702  -1.576  0.11570   </span></span>
-<span><span class="co">#&gt; emot         0.11501    0.04493   2.560  0.01076 * </span></span>
-<span><span class="co">#&gt; cons         0.13050    0.04517   2.889  0.00403 **</span></span>
-<span><span class="co">#&gt; emot:cons   -0.10829    0.04337  -2.497  0.01286 * </span></span>
+<span><span class="co">#&gt; (Intercept)   0.0549     0.0488  1.1248  0.26124   </span></span>
+<span><span class="co">#&gt; age           0.0371     0.0443  0.8384  0.40221   </span></span>
+<span><span class="co">#&gt; gendermale   -0.1844     0.1170 -1.5759  0.11570   </span></span>
+<span><span class="co">#&gt; emot          0.1150     0.0449  2.5600  0.01076 * </span></span>
+<span><span class="co">#&gt; cons          0.1305     0.0452  2.8893  0.00403 **</span></span>
+<span><span class="co">#&gt; emot:cons    -0.1083     0.0434 -2.4967  0.01286 * </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residual standard error: 0.9771 on 494 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span></span>
-<span><span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; R-squared                : 0.0548</span></span>
+<span><span class="co">#&gt; Adjusted R-squared       : 0.0452</span></span>
+<span><span class="co">#&gt; ANOVA test of R-squared  : F(5, 494) = 5.7277, p &lt; 0.001</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Note:</span></span>
 <span><span class="co">#&gt; - Estimates and their statistics are based on the data after</span></span>
@@ -344,19 +346,21 @@ bootstrap samples.</p>
 <span><span class="co">#&gt; -4.2941 -0.5563  0.0063  0.6663  4.3187 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;              Estimate  CI Lower  CI Upper Std. Error t value Pr(&gt;|t|)   </span></span>
-<span><span class="co">#&gt; (Intercept)  0.054919  0.007176  0.104459   0.048827   1.125  0.26124   </span></span>
-<span><span class="co">#&gt; age          0.037125 -0.034742  0.107166   0.044280   0.838  0.40221   </span></span>
-<span><span class="co">#&gt; gendermale  -0.184402 -0.439171  0.078317   0.117016  -1.576  0.11570   </span></span>
-<span><span class="co">#&gt; emot         0.115014  0.029085  0.201193   0.044927   2.560  0.01076 * </span></span>
-<span><span class="co">#&gt; cons         0.130502  0.028767  0.226530   0.045167   2.889  0.00403 **</span></span>
-<span><span class="co">#&gt; emot:cons   -0.108292 -0.204263 -0.008952   0.043374  -2.497  0.01286 * </span></span>
+<span><span class="co">#&gt;             Estimate CI Lower CI Upper Std. Error t value Pr(&gt;|t|)   </span></span>
+<span><span class="co">#&gt; (Intercept)   0.0549   0.0072   0.1045     0.0488  1.1248  0.26124   </span></span>
+<span><span class="co">#&gt; age           0.0371  -0.0347   0.1072     0.0443  0.8384  0.40221   </span></span>
+<span><span class="co">#&gt; gendermale   -0.1844  -0.4392   0.0783     0.1170 -1.5759  0.11570   </span></span>
+<span><span class="co">#&gt; emot          0.1150   0.0291   0.2012     0.0449  2.5600  0.01076 * </span></span>
+<span><span class="co">#&gt; cons          0.1305   0.0288   0.2265     0.0452  2.8893  0.00403 **</span></span>
+<span><span class="co">#&gt; emot:cons    -0.1083  -0.2043  -0.0090     0.0434 -2.4967  0.01286 * </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residual standard error: 0.9771 on 494 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span></span>
-<span><span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; R-squared                : 0.0548</span></span>
+<span><span class="co">#&gt; Adjusted R-squared       : 0.0452</span></span>
+<span><span class="co">#&gt; ANOVA test of R-squared  : F(5, 494) = 5.7277, p &lt; 0.001</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Note:</span></span>
 <span><span class="co">#&gt; - Estimates and their statistics are based on the data after</span></span>
@@ -419,18 +423,20 @@ shortuct:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)  6.45575    0.47828  13.498  &lt; 2e-16 ***</span></span>
-<span><span class="co">#&gt; age          0.01789    0.02133   0.838  0.40221    </span></span>
-<span><span class="co">#&gt; gendermale  -0.26127    0.16579  -1.576  0.11570    </span></span>
-<span><span class="co">#&gt; emot         0.16295    0.06365   2.560  0.01076 *  </span></span>
-<span><span class="co">#&gt; cons         0.18490    0.06399   2.889  0.00403 ** </span></span>
-<span><span class="co">#&gt; emot:cons   -0.15343    0.06145  -2.497  0.01286 *  </span></span>
+<span><span class="co">#&gt; (Intercept)   6.4557     0.4783 13.4979  &lt; 0.001 ***</span></span>
+<span><span class="co">#&gt; age           0.0179     0.0213  0.8384  0.40221    </span></span>
+<span><span class="co">#&gt; gendermale   -0.2613     0.1658 -1.5759  0.11570    </span></span>
+<span><span class="co">#&gt; emot          0.1630     0.0637  2.5600  0.01076 *  </span></span>
+<span><span class="co">#&gt; cons          0.1849     0.0640  2.8893  0.00403 ** </span></span>
+<span><span class="co">#&gt; emot:cons    -0.1534     0.0615 -2.4967  0.01286 *  </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residual standard error: 1.384 on 494 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span></span>
-<span><span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; R-squared                : 0.0548</span></span>
+<span><span class="co">#&gt; Adjusted R-squared       : 0.0452</span></span>
+<span><span class="co">#&gt; ANOVA test of R-squared  : F(5, 494) = 5.7277, p &lt; 0.001</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Note:</span></span>
 <span><span class="co">#&gt; - Estimates and their statistics are based on the data after</span></span>
@@ -494,18 +500,20 @@ shortcut:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;             Estimate CI Lower CI Upper Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)  6.45575  5.64871  7.27347    0.47828  13.498  &lt; 2e-16 ***</span></span>
-<span><span class="co">#&gt; age          0.01789 -0.01839  0.05436    0.02133   0.838  0.40221    </span></span>
-<span><span class="co">#&gt; gendermale  -0.26127 -0.62328  0.11048    0.16579  -1.576  0.11570    </span></span>
-<span><span class="co">#&gt; emot         0.16295  0.04049  0.28927    0.06365   2.560  0.01076 *  </span></span>
-<span><span class="co">#&gt; cons         0.18490  0.04153  0.32293    0.06399   2.889  0.00403 ** </span></span>
-<span><span class="co">#&gt; emot:cons   -0.15343 -0.29147 -0.01238    0.06145  -2.497  0.01286 *  </span></span>
+<span><span class="co">#&gt; (Intercept)   6.4557   5.6487   7.2735     0.4783 13.4979  &lt; 0.001 ***</span></span>
+<span><span class="co">#&gt; age           0.0179  -0.0184   0.0544     0.0213  0.8384  0.40221    </span></span>
+<span><span class="co">#&gt; gendermale   -0.2613  -0.6233   0.1105     0.1658 -1.5759  0.11570    </span></span>
+<span><span class="co">#&gt; emot          0.1630   0.0405   0.2893     0.0637  2.5600  0.01076 *  </span></span>
+<span><span class="co">#&gt; cons          0.1849   0.0415   0.3229     0.0640  2.8893  0.00403 ** </span></span>
+<span><span class="co">#&gt; emot:cons    -0.1534  -0.2915  -0.0124     0.0615 -2.4967  0.01286 *  </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residual standard error: 1.384 on 494 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.0548, Adjusted R-squared:  0.04523 </span></span>
-<span><span class="co">#&gt; F-statistic: 5.728 on 5 and 494 DF,  p-value: 3.768e-05</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; R-squared                : 0.0548</span></span>
+<span><span class="co">#&gt; Adjusted R-squared       : 0.0452</span></span>
+<span><span class="co">#&gt; ANOVA test of R-squared  : F(5, 494) = 5.7277, p &lt; 0.001</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Note:</span></span>
 <span><span class="co">#&gt; - Estimates and their statistics are based on the data after</span></span>
