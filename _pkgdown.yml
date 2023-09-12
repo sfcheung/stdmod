@@ -14,7 +14,8 @@ template:
     base_font: {google: "Arimo"}
     heading_font: {google: "Arimo"}
     code_font: {google: "Noto Sans Mono"}
-
+  includes:
+    in_header: <meta name="google-site-verification" content="0VLBmFnW_UJFI-7gXnORPBsWxqZwmzuGpK-TeVRLBjQ" />
 figures:
   fig.width: 6
   fig.height: 4
