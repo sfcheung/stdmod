@@ -23,29 +23,14 @@ summary(lm1_std_boot)
 summary(lm2_std_boot)
 summary(lm3_std_boot)
 
-test_highest2 <- function(lm_out) {
-    lm_highest <- lmhelprs::highest_order(lm_out)
-    lm_out2 <- stats::update(lm_out,
-                           paste0("~ .-", lm_highest),
-                           evaluate = TRUE)
-    # lm_out2 <- eval(call2,
-    #                 envir = parent.frame())
-    lmhelprs::hierarchical_lm(lm_out, lm_out2)
-  }
-
 lm1_std
 update(lm1_std,  ~ . -iv:mod)
 update(lm1_std,  ~ . -iv:mod, evaluate = FALSE)
+update(lm1_std_boot,  ~ . -iv:mod)
+update(lm1_std_boot,  ~ . -iv:mod, evaluate = FALSE)
 lm1_out
 update(lm1_out,  ~ . -iv:mod)
 update(lm1_out,  ~ . -iv:mod, evaluate = FALSE)
-test_highest2(lm1_out)
-test_highest2(lm1_std)
-test_highest2(lm2_out)
-test_highest2(lm2_std)
-test_highest2(lm3_out)
-test_highest2(lm3_std)
-
 
 library(lmhelprs)
 test_highest(lm1_out)
@@ -54,5 +39,3 @@ test_highest(lm2_out)
 test_highest(lm2_std)
 test_highest(lm3_out)
 test_highest(lm3_std)
-
-
