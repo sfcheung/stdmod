@@ -57,6 +57,11 @@ summary.std_selected <- function(object, ...) {
                                 object$boot_ci,
                                 out$coefficients[, -1])
       }
+    lm_out <- eval(object$lm_out_call, envir = parent.frame())
+    out$highest_order <- tryCatch(lmhelprs::highest_order(lm_out),
+                                  error = function(e) NA)
+    out$f_highest <- tryCatch(lmhelprs::test_highest(lm_out),
+                              error = function(e) NA)
     class(out) <- c("summary.std_selected", class(out))
     out
   }
