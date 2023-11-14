@@ -42,6 +42,7 @@
 #' summary(lm_std_boot)
 #'
 #' @export
+#' @importFrom stats anova
 
 summary.std_selected <- function(object, ...) {
     out <- stats::summary.lm(object, ...)
@@ -57,6 +58,43 @@ summary.std_selected <- function(object, ...) {
                                 object$boot_ci,
                                 out$coefficients[, -1])
       }
+    out$highest_order <- tryCatch(highest_order(object),
+                                  error = function(e) NA)
+    if (!is.na(out$highest_order)) {
+        lm_out <- eval(object$lm_out_call,
+                       envir = parent.frame())
+        lm_call0 <- stats::update(lm_out,
+                                  paste0("~ .-", out$highest_order),
+                                  evaluate = FALSE)
+        lm_out0 <- eval(lm_call0,
+                        envir = parent.frame())
+        names(lm_out0)
+        anova_out <- anova(lm_out0, lm_out)
+        rsq_change <- summary(lm_out)$r.squared - summary(lm_out0)$r.squared
+        anova_out1 <- cbind(R.sq.change = c(NA, rsq_change), anova_out)
+        class(anova_out1) <- class(anova_out)
+        attr(anova_out1, "heading") <- attr(anova_out, "heading")
+        out$f_highest <- anova_out1
+      } else {
+        out$f_highest <- NA
+      }
     class(out) <- c("summary.std_selected", class(out))
     out
+  }
+
+#' @noRd
+# Adapted from lmhelprs
+
+highest_order <- function(lm_out) {
+    terms_x <- stats::terms(lm_out)
+    labels_x <- labels(terms_x)
+    order_x <- attr(terms_x, "order")
+    order_max <- which.max(order_x)
+    order_min <- which.min(order_x)
+    max_n <- sum(order_x == max(order_x))
+    if ((order_max == order_min) ||
+        (max_n != 1)) {
+        stop("No unique highest order term.")
+      }
+    labels_x[order_max]
   }
