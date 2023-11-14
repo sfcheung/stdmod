@@ -1,4 +1,5 @@
 library(testthat)
+library(stdmod)
 
 set.seed(64252)
 dat <- test_x_1_w_1_v_1_cat1_n_500
