@@ -43,9 +43,10 @@
 
 update.std_selected <- function(object, formula., ..., evaluate = TRUE) {
     # Adapted from update.default in stats
-    if (is.null(call <- stats::getCall(object))) {
-        stop("need an object with call component")
-      }
+    # if (is.null(call <- stats::getCall(object))) {
+    #     stop("need an object with call component")
+    #   }
+    call <- object$lm_out_call
     extras <- match.call(expand.dots = FALSE)$...
     if (!missing(formula.)) {
         call$formula <- stats::update.formula(stats::formula(object), formula.)
@@ -63,20 +64,18 @@ update.std_selected <- function(object, formula., ..., evaluate = TRUE) {
     if (is.null(extras$data)) {
         lm_out_call$data <- object$lm_out_call$data
       }
+    if (!is.null(object$std_selected_boot_call)) {
+        new_call <- object$std_selected_boot_call
+        new_call$lm_out <- lm_out_call
+      } else {
+        new_call <- object$std_selected_call
+        new_call$lm_out <- lm_out_call
+      }
     if (evaluate) {
         # lm_out <- eval(lm_out_call, parent.frame())
-        if (!is.null(object$std_selected_boot_call)) {
-            new_call <- object$std_selected_boot_call
-            new_call$lm_out <- lm_out_call
-            out <- eval(new_call, parent.frame())
-            return(out)
-          } else {
-            new_call <- object$std_selected_call
-            new_call$lm_out <- lm_out_call
-            out <- eval(new_call, parent.frame())
-            return(out)
-          }
+        out <- eval(new_call, parent.frame())
+        return(out)
       } else {
-        return(call)
+        return(new_call)
       }
   }

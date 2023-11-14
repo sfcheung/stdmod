@@ -171,6 +171,19 @@ print.summary.std_selected <- function(x, ...,
                        p_digits = ceiling(-log10(pvalue_less_than)))
       cat("\n")
     }
+  if (!is.na(x$highest_order) && !identical(x$f_highest, NA)) {
+      rsq_highest <- formatC(x$f_highest[2, "R.sq.change"],
+                             digits = est_digits,
+                             format = "f")
+      cat("= Test the highest order term =",
+          paste0("The highest order term             : ", x$highest_order),
+          paste0("R-squared increase adding this term: ", rsq_highest),
+          sep = "\n")
+      print_fstatistic_change(x$f_highest,
+                              f_digits = t_digits,
+                              p_digits = ceiling(-log10(pvalue_less_than)))
+      cat("\n")
+    }
   tmp <- character(0)
   if (scaled_or_centered) {
       tmp1 <- paste("- Estimates and their statistics are based on the data after",
@@ -241,7 +254,31 @@ print_fstatistic <- function(fstatistic,
      p <- stats::pf(f, df1, df2, lower.tail = FALSE)
      p_txt <- format_pvalue(p,
                             eps = 10^(-p_digits))
+     if (!grepl("^<", p_txt)) {
+        p_txt <- paste0("= ", p_txt)
+       }
      cat("ANOVA test of R-squared  : ",
+         f_txt, ", p ", p_txt, "\n", sep = "")
+  }
+
+#' @noRd
+
+print_fstatistic_change <- function(fstatistic,
+                                    f_digits = 4,
+                                    p_digits = 3) {
+     f <- fstatistic[2, "F"]
+     df1 <- fstatistic[2, "Df"]
+     df2 <- fstatistic[2, "Res.Df"]
+     f_txt <- paste0("F(",
+                     df1, ", ", df2, ") = ",
+                     round(f, f_digits))
+     p <- fstatistic[2, "Pr(>F)"]
+     p_txt <- format_pvalue(p,
+                            eps = 10^(-p_digits))
+     if (!grepl("^<", p_txt)) {
+        p_txt <- paste0("= ", p_txt)
+       }
+     cat("F test of R-squared increase       : ",
          f_txt, ", p ", p_txt, "\n", sep = "")
   }
 
