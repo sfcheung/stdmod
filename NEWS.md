@@ -1,3 +1,18 @@
+# stdmod 0.2.9.1
+
+- Revised `update.std_selected()`. Though
+  still not recommended, it should now
+  work more reliably if it needs to be
+  called. (0.2.9.1)
+- Improved the printout of the `summary()` of `std_selected()`
+  and `std_selected_boot()` outputs.
+  It now prints the R-squared increase
+  of the highest order term, as well as
+  the *F* test for the increase, if the
+  model has one and only one highest
+  order term (e.g., an interaction
+  term). (0.2.9.1)
+
 # stdmod 0.2.9
 
 - Fixed the issue with `stdmod-package`. (0.2.8.9001)
