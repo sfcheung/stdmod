@@ -61,20 +61,9 @@ summary.std_selected <- function(object, ...) {
     out$highest_order <- tryCatch(highest_order(object),
                                   error = function(e) NA)
     if (!is.na(out$highest_order)) {
-        lm_out <- eval(object$lm_out_call,
-                       envir = parent.frame())
-        lm_call0 <- stats::update(lm_out,
-                                  paste0("~ .-", out$highest_order),
-                                  evaluate = FALSE)
-        lm_out0 <- eval(lm_call0,
-                        envir = parent.frame())
-        names(lm_out0)
-        anova_out <- anova(lm_out0, lm_out)
-        rsq_change <- summary(lm_out)$r.squared - summary(lm_out0)$r.squared
-        anova_out1 <- cbind(R.sq.change = c(NA, rsq_change), anova_out)
-        class(anova_out1) <- class(anova_out)
-        attr(anova_out1, "heading") <- attr(anova_out, "heading")
-        out$f_highest <- anova_out1
+        lm_out <- eval(object$lm_out_call, envir = parent.frame())
+        out$highest_order <- lmhelprs::highest_order(lm_out)
+        out$f_highest <- lmhelprs::test_highest(lm_out)
       } else {
         out$f_highest <- NA
       }
