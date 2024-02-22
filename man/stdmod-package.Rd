@@ -3,7 +3,6 @@
 \docType{package}
 \name{stdmod-package}
 \alias{stdmod-package}
-\alias{_PACKAGE}
 \title{stdmod: Standardized Moderation Effect and Its Confidence Interval}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}

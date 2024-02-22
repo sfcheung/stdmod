@@ -1,9 +1,7 @@
-# stdmod 0.2.9.1
+# stdmod 0.2.9.2
 
-- Revised `update.std_selected()`. Though
-  still not recommended, it should now
-  work more reliably if it needs to be
-  called. (0.2.9.1)
+## New Features
+
 - Improved the printout of the `summary()` of `std_selected()`
   and `std_selected_boot()` outputs.
   It now prints the R-squared increase
@@ -12,6 +10,20 @@
   model has one and only one highest
   order term (e.g., an interaction
   term). (0.2.9.1)
+
+- Added the argument `w_values` to
+  `cond_effect()` and `plolmod()`.
+  Users can specify the
+  values of the moderator (`w`)
+  to be used to compute the conditional
+  effects. (0.2.9.2)
+
+## Miscellaneous
+
+- Revised `update.std_selected()`. Though
+  still not recommended, it should now
+  work more reliably if it needs to be
+  called. (0.2.9.1)
 
 # stdmod 0.2.9
 
