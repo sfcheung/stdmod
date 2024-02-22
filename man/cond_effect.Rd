@@ -12,7 +12,8 @@ cond_effect(
   w_method = c("sd", "percentile"),
   w_percentiles = c(0.16, 0.5, 0.84),
   w_sd_to_percentiles = NA,
-  w_from_mean_in_sd = 1
+  w_from_mean_in_sd = 1,
+  w_values = NULL
 )
 
 cond_effect_boot(
@@ -91,6 +92,19 @@ respectively. Default is \code{NA}.}
 "low" and
 "high" for the moderator. Default is 1.
 Ignored if \code{w} is categorical.}
+
+\item{w_values}{The values of \code{w} to
+be used. Default is \code{NULL}. If a
+numeric vector is supplied, these
+values will be used to compute the
+conditional effects. Other arguments
+on generating levels are ignored.
+Note that, if \code{w} has been standardized
+or centered, these values are for
+the standardized or centered \code{w}.
+The values will always be sorted.
+This argument is ignored if \code{w} is
+categorical.}
 
 \item{...}{Arguments to be passed to \code{\link[=cond_effect]{cond_effect()}}.}
 

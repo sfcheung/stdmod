@@ -117,6 +117,20 @@
 #'                            `x_sd_to_percentiles` is set to 1, then the lower
 #'                            and upper percentiles are 16th and 84th,
 #'                            respectively. Default is `NA`.
+#'
+#' @param w_values The values of `w` to
+#' be used. Default is `NULL`. If a
+#' numeric vector is supplied, these
+#' values will be used to compute the
+#' conditional effects. Other arguments
+#' on generating levels are ignored.
+#' Note that, if `w` has been standardized
+#' or centered, these values are for
+#' the standardized or centered `w`.
+#' The values will always be sorted.
+#' This argument is ignored if `w` is
+#' categorical.
+#'
 #' @param note_standardized If `TRUE`, will check whether a variable has SD
 #'                          nearly equal to one. If yes, will report this in the
 #'                          plot.
@@ -192,6 +206,7 @@ plotmod <- function(output, x, w,
                             x_percentiles = c(.16, .84),
                             w_sd_to_percentiles = NA,
                             x_sd_to_percentiles= NA,
+                            w_values = NULL,
                             note_standardized = TRUE,
                             no_title = FALSE,
                             line_width = 1,
@@ -225,32 +240,37 @@ plotmod <- function(output, x, w,
         stop("x variable must be a numeric variable.")
       }
     if (w_numeric) {
-        w_levels <- gen_levels(mf0[, w],
-                              method = w_method,
-                              from_mean_in_sd = w_from_mean_in_sd,
-                              levels = c(-1, 1),
-                              sd_levels = c(-1, 1),
-                              sd_to_percentiles = w_sd_to_percentiles,
-                              percentiles = w_percentiles)
-        tmp <- length(w_levels)
-        if (tmp == 2) {
-          w_levels_labels <- c("Low", "High")
-        }
-        if (tmp == 3) {
-          w_levels_labels <- c("Low", "Medium", "High")
-        }
-        if (tmp > 3) {
-          if (w_method == "percentile") {
-              w_levels_labels <- paste0(formatC(w_percentiles * 100,
-                                                digits = 0,
-                                                format = "f"),
-                                        "%")
-            } else {
-              w_levels_labels <- formatC(w_levels,
-                                         digits = 2,
-                                         format = "f")
+        if (is.numeric(w_values)) {
+            w_levels <- sort(w_values, decreasing = TRUE)
+            w_levels_labels <- as.character(w_levels)
+          } else {
+            w_levels <- gen_levels(mf0[, w],
+                                  method = w_method,
+                                  from_mean_in_sd = w_from_mean_in_sd,
+                                  levels = c(-1, 1),
+                                  sd_levels = c(-1, 1),
+                                  sd_to_percentiles = w_sd_to_percentiles,
+                                  percentiles = w_percentiles)
+            tmp <- length(w_levels)
+            if (tmp == 2) {
+              w_levels_labels <- c("Low", "High")
             }
-        }
+            if (tmp == 3) {
+              w_levels_labels <- c("Low", "Medium", "High")
+            }
+            if (tmp > 3) {
+              if (w_method == "percentile") {
+                  w_levels_labels <- paste0(formatC(w_percentiles * 100,
+                                                    digits = 0,
+                                                    format = "f"),
+                                            "%")
+                } else {
+                  w_levels_labels <- formatC(w_levels,
+                                            digits = 2,
+                                            format = "f")
+                }
+            }
+          }
       } else {
         w_lo <- NA
         w_hi <- NA

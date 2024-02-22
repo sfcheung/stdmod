@@ -21,6 +21,7 @@ plotmod(
   x_percentiles = c(0.16, 0.84),
   w_sd_to_percentiles = NA,
   x_sd_to_percentiles = NA,
+  w_values = NULL,
   note_standardized = TRUE,
   no_title = FALSE,
   line_width = 1,
@@ -146,6 +147,19 @@ above the mean. Therefore, if
 \code{x_sd_to_percentiles} is set to 1, then the lower
 and upper percentiles are 16th and 84th,
 respectively. Default is \code{NA}.}
+
+\item{w_values}{The values of \code{w} to
+be used. Default is \code{NULL}. If a
+numeric vector is supplied, these
+values will be used to compute the
+conditional effects. Other arguments
+on generating levels are ignored.
+Note that, if \code{w} has been standardized
+or centered, these values are for
+the standardized or centered \code{w}.
+The values will always be sorted.
+This argument is ignored if \code{w} is
+categorical.}
 
 \item{note_standardized}{If \code{TRUE}, will check whether a variable has SD
 nearly equal to one. If yes, will report this in the

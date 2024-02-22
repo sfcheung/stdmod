@@ -102,6 +102,19 @@
 #'                          "high" for the moderator. Default is 1.
 #'                          Ignored if `w` is categorical.
 #'
+#' @param w_values The values of `w` to
+#' be used. Default is `NULL`. If a
+#' numeric vector is supplied, these
+#' values will be used to compute the
+#' conditional effects. Other arguments
+#' on generating levels are ignored.
+#' Note that, if `w` has been standardized
+#' or centered, these values are for
+#' the standardized or centered `w`.
+#' The values will always be sorted.
+#' This argument is ignored if `w` is
+#' categorical.
+#'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
 #'
@@ -133,7 +146,8 @@ cond_effect <- function(output,
                       w_method = c("sd", "percentile"),
                       w_percentiles = c(.16, .50, .84),
                       w_sd_to_percentiles = NA,
-                      w_from_mean_in_sd = 1
+                      w_from_mean_in_sd = 1,
+                      w_values = NULL
                       ) {
     mf0 <- stats::model.frame(output)
     w_method <- match.arg(w_method)
@@ -165,15 +179,20 @@ cond_effect <- function(output,
         class(output0) <- tmp[!(tmp %in% "std_selected")]
       }
     if (w_numeric) {
-        w_levels <- gen_levels(mf0[, w],
-                              method = w_method,
-                              from_mean_in_sd = w_from_mean_in_sd,
-                              levels = c(-1, 0, 1),
-                              sd_levels = c(-1, 0, 1),
-                              sd_to_percentiles = w_sd_to_percentiles,
-                              percentiles = w_percentiles)
-        w_levels <- sort(w_levels, decreasing = TRUE)
-        w_levels_labels <- c("High", "Medium", "Low")
+        if (is.numeric(w_values)) {
+            w_levels <- sort(w_values, decreasing = TRUE)
+            w_levels_labels <- as.character(w_levels)
+          } else {
+            w_levels <- gen_levels(mf0[, w],
+                                  method = w_method,
+                                  from_mean_in_sd = w_from_mean_in_sd,
+                                  levels = c(-1, 0, 1),
+                                  sd_levels = c(-1, 0, 1),
+                                  sd_to_percentiles = w_sd_to_percentiles,
+                                  percentiles = w_percentiles)
+            w_levels <- sort(w_levels, decreasing = TRUE)
+            w_levels_labels <- c("High", "Medium", "Low")
+          }
       } else {
         w_levels <- levels(as.factor(mf0[, w]))
         w_levels_labels <- w_levels
