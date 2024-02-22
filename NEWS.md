@@ -1,8 +1,9 @@
-# stdmod 0.2.9.2
+# stdmod 0.2.10
 
 ## New Features
 
-- Improved the printout of the `summary()` of `std_selected()`
+- Improved the printout of the `summary()`
+  of `std_selected()`
   and `std_selected_boot()` outputs.
   It now prints the R-squared increase
   of the highest order term, as well as
