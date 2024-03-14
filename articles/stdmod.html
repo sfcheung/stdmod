@@ -91,7 +91,7 @@
                         <h4 data-toc-skip class="author">Shu Fai
 Cheung</h4>
             
-            <h4 data-toc-skip class="date">2024-02-22</h4>
+            <h4 data-toc-skip class="date">2024-03-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sfcheung/stdmod/blob/HEAD/vignettes/stdmod.Rmd" class="external-link"><code>vignettes/stdmod.Rmd</code></a></small>
       <div class="d-none name"><code>stdmod.Rmd</code></div>
@@ -314,9 +314,9 @@ with standardization conducted in each bootstrap sample.</p>
 <span>                        nboot <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span></code></pre></div>
 <p>Since 0.2.6.3, <code>to_standardize</code> can be used as a
 shortcut:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lm_stdall_boot <span class="ot">&lt;-</span> <span class="fu">std_selected_boot</span>(lm_out,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">to_standardize =</span> <span class="sc">~</span> .</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">nboot =</span> <span class="dv">5000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>lm_stdall_boot <span class="ot">&lt;-</span> <span class="fu">std_selected_boot</span>(lm_out,</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>                        <span class="at">to_standardize =</span> <span class="sc">~</span> .</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                        <span class="at">nboot =</span> <span class="dv">5000</span>)</span></code></pre></div>
 <p>The minimum additional argument is <code>nboot</code>, the number of
 bootstrap samples.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
