@@ -243,6 +243,7 @@ plotmod <- function(output, x, w,
         if (is.numeric(w_values)) {
             w_levels <- sort(w_values, decreasing = TRUE)
             w_levels_labels <- as.character(w_levels)
+            w_method <- "user"
           } else {
             w_levels <- gen_levels(mf0[, w],
                                   method = w_method,
@@ -446,6 +447,9 @@ plotmod <- function(output, x, w,
                               "Low: ", w_from_mean_in_sd,
                               "SD below mean; Hi: ",
                               w_from_mean_in_sd, " SD above mean")
+          }
+        if (w_method == "user") {
+            cap_txt <- NULL
           }
       } else {
         cap_txt <- NULL

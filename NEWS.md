@@ -1,3 +1,11 @@
+# stdmod 0.2.10.1
+
+## Bug Fixes
+
+- In `plotmod()`, labels regarding SDs
+  will no longer be displayed when
+  `w_values` is set. (0.2.10.1)
+
 # stdmod 0.2.10
 
 ## New Features
