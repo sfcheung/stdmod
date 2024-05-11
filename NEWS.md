@@ -1,4 +1,11 @@
-# stdmod 0.2.10.1
+# stdmod 0.2.10.2
+
+## New Features
+
+- 0.2.10.2: A work-in-progress branch
+  for `std_selected_lavaan()`. Should
+  keep ahead of the `devel` branch
+  whenever that branch is updated.
 
 ## Bug Fixes
 
