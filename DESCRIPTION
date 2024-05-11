@@ -39,5 +39,7 @@ Imports:
     utils,
     lavaan,
     manymome,
-    rlang
+    rlang,
+    methods,
+    numDeriv
 VignetteBuilder: knitr
