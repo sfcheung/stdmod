@@ -143,7 +143,8 @@
 #' If set to `"text"`, it will be printed
 #' in a format similar to the one in
 #' the `summary`-method of `lavaan`.
-#' (NOTE: `"text"` not yet available.)
+#' (NOTE: `"text"` supported but not
+#' fully implemented.)
 #'
 #' @param std_se String. If set to `"none"`,
 #' the default, standard errors will not
@@ -214,7 +215,6 @@ std_selected_lavaan <- function(object,
       }
     output <- match.arg(output)
     std_se <- tolower(match.arg(std_se))
-    do_se <- (std_se != "none")
     ngroups <- lavaan::lavTech(object, what = "ngroups")
 
     # Get the variables to be standardized
@@ -266,19 +266,35 @@ std_selected_lavaan <- function(object,
     std[i, "std.p"] <- est_std
     std[i, "std.p.by"] <- est_std_by
 
-    # Standard Errors
+    # Standard errors
+    if ("bootstrap" %in% std_se) {
+        boot_est <- std_boot(object = object,
+                             std_fct = std_fct)
+        # Store the boot_est
+        est_std_se <- apply(boot_est,
+                            MARGIN = 2,
+                            FUN = stats::sd)
+      }
     if ("delta" %in% std_se) {
         est_std_se <- mapply(std_se_delta,
                              std_fct = std_fct,
                              MoreArgs = list(fit_est = fit_est,
                                              fit_vcov = fit_vcov,
                                              method = "numDeriv"))
+      }
+    if (std_se != "none") {
         std[i, "std.p.se"] <- est_std_se
+        # TODO:
+        # - Need to decide how to compute bootstrap p-value
         tmp <- std[i, "std.p"] / std[i, "std.p.se"]
         tmp[std[i, "std.p.se"] < sqrt(.Machine$double.eps)] <- NA
         std[i, "std.p.z"] <- tmp
         std[i, "std.p.pvalue"] <- stats::pnorm(abs(std[i, "std.p.z"]), lower.tail = FALSE) * 2
       }
+
+    # Confidence intervals
+    # TODO:
+    # - Add bootstrap CI
     if (("delta" %in% std_se) && std_ci) {
         pcrit <- abs(stats::qnorm((1 - level) / 2))
         std[i, "std.p.ci.lower"] <- std[i, "std.p"] - pcrit * std[i, "std.p.se"]
@@ -342,6 +358,38 @@ fix_to_standardize <- function(object,
         to_standardize <- setdiff(to_standardize, names(prods))
       }
     to_standardize
+  }
+
+#' @noRd
+
+std_boot <- function(object,
+                     std_fct) {
+    # TODO:
+    # - Can retrieve estimates from do_boot()
+    boot_est <- tryCatch(lavaan::lavInspect(object,
+                                            what = "boot"),
+                         error = function(e) e)
+    if (inherits(boot_est, "error")) {
+        stop("Bootstrap SEs/CIs requested but bootstrap not used when fitting the model.")
+      }
+    boot_est_err <- attr(boot_est, "error.idx")
+    if (length(boot_est_err) > 0) {
+        boot_est <- boot_est[-boot_est_err, ]
+      }
+    est_std_boot <- sapply(asplit(boot_est, 1),
+                      function(yy) {
+                          sapply(std_fct, function(xx) xx(yy))
+                        },
+                      simplify = TRUE)
+    est_std_boot <- t(est_std_boot)
+    est_std_boot
+  }
+
+#' @noRd
+
+std_se_boot <- function(std_fct,
+                        boot_est) {
+
   }
 
 #' @noRd
@@ -419,13 +467,8 @@ gen_std_i <- function(fit,
                       i,
                       to_standardize = ".all.",
                       prods = list()) {
-    force(fit)
-    force(i)
-    fit_model <- fit@Model
     pt <- lavaan::parameterTable(fit)
     p_free <- pt$free > 0
-    p_est <- pt$est
-
     pt_i <- pt[i, ]
 
     tmp <- to_standardize_for_i(prods = prods,
@@ -457,19 +500,13 @@ gen_std_i <- function(fit,
             par <- get(".x.", parent.frame())
           }
         # Just in case ...
-        force(p_est)
-        force(fit)
         force(p_free)
-        force(fit_model)
-        force(pt)
         force(slot_opt)
         force(slot_pat)
         force(slot_mod)
         force(slot_smp)
         force(slot_dat)
         force(slot_opt1)
-        force(prod_names)
-        force(prods)
         force(std_i_internal)
         slot_mod1 <- lavaan::lav_model_set_parameters(slot_mod,
                                                       par)
@@ -652,6 +689,7 @@ gen_std_i_internal <- function(fit,
                     d_w_s)
       }
 
+    std_by <- unique(std_by)
     out_fct <- function(std_out_i,
                         fit_sd_all) {
         # Just in case ...
