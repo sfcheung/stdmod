@@ -854,6 +854,10 @@ gen_std_i <- function(fit,
         slot_pat1 <- slot_pat
         slot_pat1$est[p_free] <- par
         slot_pat1$start[p_free] <- par
+        tmp <- (slot_pat1$free == 0) & (slot_pat1$op != ":=") &
+               (slot_pat1$start != slot_pat1$est)
+        tmp <- which(tmp)
+        slot_pat1$start[tmp] <- slot_pat1$est[tmp]
         slot_opt1$start <- par
         fit_new <- lavaan::lavaan(slotOptions = slot_opt1,
                                   slotParTable = slot_pat1,
