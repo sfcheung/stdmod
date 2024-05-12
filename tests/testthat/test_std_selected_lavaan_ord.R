@@ -29,14 +29,18 @@ f1 ~ ageyr + f2 + f3
 fit <- sem(mod,
            dat,
            ordered = c("x1", "x2", "x3",
-                       "x4", "x5", "x6"))
+                       "x4", "x5", "x6"),
+           fixed.x = FALSE,
+           conditional.x = FALSE)
 lavNames(fit, "ov.ord")
 lavNames(fit, "ov.ind")
 est <- parameterEstimates(fit, standardized = TRUE)
 est[, c(1, 2, 3, 4, 11)]
 
 out <- std_selected_lavaan(fit, standardized = TRUE)
-out[, c(1, 2, 3, 4, 10, 11)]
+out[, c(1, 2, 3, 4, 10, 11, 12)]
+
+i <- which(round(out$std.all, 3) != round(out$std.p, 3))
 
 # TO PROCESS
 
