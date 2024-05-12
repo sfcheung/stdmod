@@ -335,8 +335,6 @@ std_selected_lavaan <- function(object,
 
     # p-values
     if (has_se && std_pvalue && std_z) {
-        # TODO:
-        # - Need to decide how to compute bootstrap p-value
         if ("bootstrap" %in% std_se) {
             est_pvalue <- std_pvalue_boot_all(boot_est)
           }
