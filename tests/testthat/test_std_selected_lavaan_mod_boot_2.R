@@ -1,0 +1,54 @@
+skip_on_cran()
+# Parallel processing
+# Long test
+
+# testthat::test_file("./tests/testthat/test_std_selected_lavaan_mod_boot_2.R")
+
+library(manymome)
+
+#Load a test data of 500 cases
+data(test_mod1)
+library(lavaan)
+dat <- test_mod1
+dat$group <- rep(c("gp1", "gp2"), nrow(dat))[seq_len(nrow(dat))]
+dat$iv_mod <- dat$iv * dat$mod
+head(dat)
+
+mod <-
+"
+dv ~ med + cov2
+"
+fit_gp <- sem(mod,
+              data = dat,
+              group = "group")
+
+test_that("Get do_boot results", {
+  fit_boot_gp <- sem(mod,
+                    data = dat,
+                    group = "group",
+                    se = "boot",
+                    bootstrap = 50,
+                    iseed = 4567)
+
+  boot_out_gp <- do_boot(fit_gp,
+                        R = 50,
+                        seed = 4567,
+                        parallel = FALSE,
+                        progress = FALSE)
+
+  out_gp <- std_selected_lavaan(fit_gp,
+                                standardized = TRUE,
+                                not_to_standardize = c("dv", "med", "cov2"),
+                                progress = FALSE,
+                                std_se = "bootstrap",
+                                boot_out = boot_out_gp)
+
+  out_boot_gp <- std_selected_lavaan(fit_boot_gp,
+                                    standardized = TRUE,
+                                    not_to_standardize = c("dv", "med", "cov2"),
+                                    progress = FALSE,
+                                    std_se = "bootstrap")
+
+  expect_equal(round(out_gp[c(1:4, 10:13), "std.p.se"], 2),
+               round(out_boot_gp[c(1:4, 10:13), "se"], 2))
+})
