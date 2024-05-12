@@ -151,15 +151,23 @@
 #' be computed for the standardized
 #' solution. If set to `"delta"`,
 #' delta method will be used to compute
-#' the standard errors. If est to
-#' `"bootstrap"` *and* bootstrap
+#' the standard errors. If set to
+#' `"bootstrap"`, then what it does
+#' depends whether `boot_out` is set.
+#' If `boot_out` is to an output of
+#' [manymome::do_boot()], its content
+#' will be used. If `boot_out` is
+#' `NULL` *and* bootstrap
 #' estimates are available in `object`
 #' (e.g., bootstrapping is requested
 #' when fitting the model in `lavaan`),
-#' then bootstrap standard errors and
-#' confidence intervals will be
-#' computed. (NOTE: Bootstrap SEs
-#' and CIs are not yet available.)
+#' then the stored bootstrap estimates
+#' will be sued. If not available,
+#' the bootstrapping will be conducted
+#' using [lavaan::bootstrapLavaan()],
+#' using arguments `bootstrap`,
+#' `parallel`, `ncpus`, `cl`, and
+#' `iseed`.`
 #'
 #' @param std_z Logical. If `TRUE` and
 #' `std_se` is not set to `"none"`,
@@ -203,6 +211,76 @@
 #' progress bars will be displayed
 #' for long process.
 #'
+#' @param boot_out If `std_se` is
+#' `"bootstrap"` and this argument
+#' is set to an output of
+#' [manymome::do_boot()], its output
+#' will be used in computing statistics
+#' such as standard errors and
+#' confidence intervals. This allows
+#' users to use methods other than
+#' bootstrapping when fitting the
+#' model, while they can still request
+#' bootstrapping for the standardized
+#' solution.
+#'
+#' @param bootstrap If `std_se` is
+#' `"bootstrap"` but bootstrapping is
+#' not requested when fitting the model
+#' and `boot_out` is not set,
+#' [lavaan::bootstrapLavaan()] will be
+#' called to do bootstrapping. This
+#' argument is the number of bootstrap
+#' samples to draw. Default is 100.
+#' Should be set to 5000 or even 10000
+#' for stable results.
+#'
+#' @param parallel If `std_se` is
+#' `"bootstrap"` but bootstrapping is
+#' not requested when fitting the model
+#' and `boot_out` is not set,
+#' [lavaan::bootstrapLavaan()] will be
+#' called to do bootstrapping. This
+#' argument is to be passed to
+#' [lavaan::bootstrapLavaan()]. Default
+#' is `"no"`.
+#'
+#' @param ncpus If `std_se` is
+#' `"bootstrap"` but bootstrapping is
+#' not requested when fitting the model
+#' and `boot_out` is not set,
+#' [lavaan::bootstrapLavaan()] will be
+#' called to do bootstrapping. This
+#' argument is to be passed to
+#' [lavaan::bootstrapLavaan()]. Default
+#' is `parallel::detectCores(logical = FALSE) - 1`.
+#' Ignored if `parallel` is `"no"`.
+#'
+#' @param cl If `std_se` is
+#' `"bootstrap"` but bootstrapping is
+#' not requested when fitting the model
+#' and `boot_out` is not set,
+#' [lavaan::bootstrapLavaan()] will be
+#' called to do bootstrapping. This
+#' argument is to be passed to
+#' [lavaan::bootstrapLavaan()]. Default
+#' is `NULL`.
+#' Ignored if `parallel` is `"no"`.
+#'
+#' @param iseed If `std_se` is
+#' `"bootstrap"` but bootstrapping is
+#' not requested when fitting the model
+#' and `boot_out` is not set,
+#' [lavaan::bootstrapLavaan()] will be
+#' called to do bootstrapping. This
+#' argument is to be passed to
+#' [lavaan::bootstrapLavaan()] to set
+#' the seed for the random resampling.
+#' Default
+#' is `NULL`. Should be set to an integer
+#' for reproducible results.
+#' Ignored if `parallel` is `"no"`.
+#'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
 #' @references
@@ -235,7 +313,13 @@ std_selected_lavaan <- function(object,
                                 std_pvalue = TRUE,
                                 std_ci = TRUE,
                                 level = .95,
+                                bootstrap = 100L,
                                 progress = TRUE,
+                                boot_out = NULL,
+                                parallel = c("no", "snow", "multicore"),
+                                ncpus = parallel::detectCores(logical = FALSE) - 1,
+                                cl = NULL,
+                                iseed = NULL,
                                 ...,
                                 delta_method = c("numDeriv", "lavaan")) {
     if (!isTRUE(requireNamespace("pbapply", quietly = TRUE)) ||
@@ -246,6 +330,7 @@ std_selected_lavaan <- function(object,
         stop("'object' is not a lavaan-class object.")
       }
     output <- match.arg(output)
+    parallel <- match.arg(parallel)
     std_se <- tolower(match.arg(std_se))
     has_se <- !identical("none", std_se)
     ngroups <- lavaan::lavTech(object, what = "ngroups")
@@ -310,7 +395,13 @@ std_selected_lavaan <- function(object,
             # - Add the option to call bootstrapLavaan internally
             boot_est <- std_boot(object = object,
                                  std_fct = std_fct,
-                                 progress = progress)
+                                 boot_out = boot_out,
+                                 progress = progress,
+                                 bootstrap = bootstrap,
+                                 parallel = parallel,
+                                 ncpus = ncpus,
+                                 cl = cl,
+                                 iseed = iseed)
             # TODO:
             # - Store the boot_est
             est_std_se <- std_se_boot_all(boot_est)
@@ -423,20 +514,69 @@ fix_to_standardize <- function(object,
 
 #' @noRd
 
+boot_out_to_boot_est_map <- function(object,
+                                     boot_out) {
+    ptable <- lavaan::parameterTable(object)
+    ptable_free <- ptable[ptable$free > 0, ]
+    ptable_free <- ptable_free[order(ptable_free$free), ]
+    boot_out_est <- boot_out[[1]]$est
+    if (is.null(boot_out_est$group)) {
+        boot_out_est$group <- 1
+      }
+    boot_out_est$b_id <- seq_len(nrow(boot_out_est))
+    out <- merge(boot_out_est[, c("lhs", "op", "rhs", "group", "b_id")],
+                 ptable_free[, c("lhs", "op", "rhs", "group", "free")])
+    out <- out[order(out$free), ]
+    out
+  }
+
+boot_out_to_boot_est_i <- function(x,
+                                   b_map) {
+    as.vector(x$est[b_map, "est"])
+  }
+
+#' @noRd
+
 std_boot <- function(object,
                      std_fct,
+                     boot_out,
+                     bootstrap,
+                     parallel,
+                     ncpus,
+                     cl,
+                     iseed,
                      progress = FALSE) {
     # TODO:
     # - Can retrieve estimates from do_boot()
-    boot_est <- tryCatch(lavaan::lavInspect(object,
-                                            what = "boot"),
-                         error = function(e) e)
-    if (inherits(boot_est, "error")) {
-        stop("Bootstrap SEs/CIs requested but bootstrap not used when fitting the model.")
-      }
-    boot_est_err <- attr(boot_est, "error.idx")
-    if (length(boot_est_err) > 0) {
-        boot_est <- boot_est[-boot_est_err, ]
+    if (!is.null(boot_out)) {
+        if (!inherits(boot_out, "boot_out")) {
+            stop("boot_out is not an output of manymome::do_boot().")
+          }
+        boot_map <- boot_out_to_boot_est_map(object = object,
+                                             boot_out = boot_out)
+        i_ok <- sapply(boot_out, function(x) x$ok)
+        boot_out <- boot_out[i_ok]
+        boot_est <- sapply(boot_out,
+                           FUN = boot_out_to_boot_est_i,
+                           b_map = boot_map$b_id)
+        boot_est <- t(boot_est)
+      } else {
+        boot_est <- tryCatch(lavaan::lavInspect(object,
+                                                what = "boot"),
+                            error = function(e) e)
+        if (inherits(boot_est, "error")) {
+            # stop("Bootstrap SEs/CIs requested but bootstrap not used when fitting the model.")
+            boot_est <- lavaan::bootstrapLavaan(object,
+                                                R = bootstrap,
+                                                parallel = parallel,
+                                                ncpus = ncpus,
+                                                cl = cl,
+                                                iseed = iseed)
+          }
+        boot_est_err <- attr(boot_est, "error.idx")
+        if (length(boot_est_err) > 0) {
+            boot_est <- boot_est[-boot_est_err, ]
+          }
       }
     if (progress) {
         cat("\nCompute bootstrapping standardized solution:\n")
