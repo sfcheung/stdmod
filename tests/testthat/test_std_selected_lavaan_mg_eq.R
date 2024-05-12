@@ -2,6 +2,8 @@ skip_on_cran()
 # A long test
 # With between-group constraints
 
+# testthat::test_file("./tests/testthat/test_std_selected_lavaan_mg_eq.R")
+
 library(testthat)
 library(lavaan)
 library(manymome)

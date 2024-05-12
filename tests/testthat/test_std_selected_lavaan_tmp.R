@@ -63,4 +63,5 @@ fit_boot <- sem(mod, data = test_mod1,
                 bootstrap = 100,
                 iseed = 1234)
 out_boot <- std_selected_lavaan(fit_boot, standardized = TRUE,
-                                std_se = "boot")
+                                std_se = "boot",
+                                std_ci = TRUE)

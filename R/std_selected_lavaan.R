@@ -161,6 +161,21 @@
 #' computed. (NOTE: Bootstrap SEs
 #' and CIs are not yet available.)
 #'
+#' @param std_z Logical. If `TRUE` and
+#' `std_se` is not set to `"none"`,
+#' standard error will be computed
+#' using the method specified in
+#' `std_se`. Default is `TRUE`.
+#'
+#' @param std_pvalue Logical. If `TRUE`,
+#' `std_se` is not set to `"none"`,
+#' and `std_z` is `TRUE`, *p*-values
+#' will be computed using the method
+#' specified in `std_se`. For
+#' bootstrapping, the method proposed by
+#' Asparouhov and Muthén (2021) is used.
+#' Default is `TRUE`.
+#'
 #' @param std_ci Logical. If `TRUE` and
 #' `std_se` is not set to `"none"`,
 #' confidence intervals will be
@@ -182,6 +197,9 @@
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
 #' @references
+#' Asparouhov, A., & Muthén, B. (2021). Bootstrap p-value computation.
+#' Retrieved from https://www.statmodel.com/download/FAQ-Bootstrap%20-%20Pvalue.pdf
+#'
 #' Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
 #' (2022) Improving an old way to measure moderation effect in standardized
 #' units. *Health Psychology*, *41*(7), 502-505.
@@ -198,23 +216,24 @@
 #' @export
 #'
 
-# TODO:
-# - Add a column to indicate variables being standardized.
-
 std_selected_lavaan <- function(object,
                                 to_standardize = ".all.",
                                 not_to_standardize = NULL,
                                 skip_categorical_x = TRUE,
                                 output = c("data.frame", "text"),
                                 std_se = c("none", "delta", "bootstrap"),
+                                std_z = TRUE,
+                                std_pvalue = TRUE,
                                 std_ci = TRUE,
                                 level = .95,
-                                ...) {
+                                ...,
+                                delta_method = c("numDeriv", "lavaan")) {
     if (!inherits(object, "lavaan")) {
         stop("'object' is not a lavaan-class object.")
       }
     output <- match.arg(output)
     std_se <- tolower(match.arg(std_se))
+    has_se <- !identical("none", std_se)
     ngroups <- lavaan::lavTech(object, what = "ngroups")
 
     # Get the variables to be standardized
@@ -267,38 +286,57 @@ std_selected_lavaan <- function(object,
     std[i, "std.p.by"] <- est_std_by
 
     # Standard errors
-    if ("bootstrap" %in% std_se) {
-        boot_est <- std_boot(object = object,
-                             std_fct = std_fct)
-        # Store the boot_est
-        est_std_se <- apply(boot_est,
-                            MARGIN = 2,
-                            FUN = stats::sd)
-      }
-    if ("delta" %in% std_se) {
-        est_std_se <- mapply(std_se_delta,
-                             std_fct = std_fct,
-                             MoreArgs = list(fit_est = fit_est,
-                                             fit_vcov = fit_vcov,
-                                             method = "numDeriv"))
-      }
-    if (std_se != "none") {
+    if (has_se) {
+        if ("bootstrap" %in% std_se) {
+            boot_est <- std_boot(object = object,
+                                std_fct = std_fct)
+            # TODO:
+            # - Store the boot_est
+            est_std_se <- std_se_boot_all(boot_est)
+          }
+        if ("delta" %in% std_se) {
+            est_std_se <- std_se_delta_all(std_fct = std_fct,
+                                          fit_est = fit_est,
+                                          fit_vcov = fit_vcov,
+                                          method = delta_method)
+          }
         std[i, "std.p.se"] <- est_std_se
+      }
+
+    # z statistic
+    if (has_se && std_z) {
+        # Same for delta and bootstrap
+        est_std_z <- std[i, "std.p"] / std[i, "std.p.se"]
+        est_std_z[std[i, "std.p.se"] < sqrt(.Machine$double.eps)] <- NA
+        std[i, "std.p.z"] <- est_std_z
+      }
+
+    # p-values
+    if (has_se && std_pvalue && std_z) {
         # TODO:
         # - Need to decide how to compute bootstrap p-value
-        tmp <- std[i, "std.p"] / std[i, "std.p.se"]
-        tmp[std[i, "std.p.se"] < sqrt(.Machine$double.eps)] <- NA
-        std[i, "std.p.z"] <- tmp
-        std[i, "std.p.pvalue"] <- stats::pnorm(abs(std[i, "std.p.z"]), lower.tail = FALSE) * 2
+        if ("bootstrap" %in% std_se) {
+            est_pvalue <- std_pvalue_boot_all(boot_est)
+          }
+        if ("delta" %in% std_se) {
+            est_pvalue <- std_pvalue_delta_all(est_std_z)
+          }
+        std[i, "std.p.pvalue"] <- est_pvalue
       }
 
     # Confidence intervals
-    # TODO:
-    # - Add bootstrap CI
-    if (("delta" %in% std_se) && std_ci) {
-        pcrit <- abs(stats::qnorm((1 - level) / 2))
-        std[i, "std.p.ci.lower"] <- std[i, "std.p"] - pcrit * std[i, "std.p.se"]
-        std[i, "std.p.ci.upper"] <- std[i, "std.p"] + pcrit * std[i, "std.p.se"]
+    if (has_se && std_ci) {
+        if ("bootstrap" %in% std_se) {
+            ci <- std_ci_boot_all(x_est = est_std,
+                                  x_est_boot = boot_est,
+                                  level = level)
+          }
+        if ("delta" %in% std_se) {
+            ci <- std_ci_delta_all(x_est = est_std,
+                                   x_se = est_std_se)
+          }
+        std[i, "std.p.ci.lower"] <- ci[, "ci.lower"]
+        std[i, "std.p.ci.upper"] <- ci[, "ci.upper"]
       }
 
     # Store results in the parameter estimates table
@@ -320,6 +358,7 @@ std_selected_lavaan <- function(object,
     if (ngroups == 1) {
         est$group <- NULL
       }
+    class(est) <- c("std_selected_lavaan", class(est))
     est
   }
 
@@ -387,9 +426,96 @@ std_boot <- function(object,
 
 #' @noRd
 
-std_se_boot <- function(std_fct,
-                        boot_est) {
+std_se_boot_all <- function(boot_est) {
+    out <- apply(boot_est,
+                 MARGIN = 2,
+                 FUN = stats::sd)
+    out
+  }
 
+#' @noRd
+
+std_ci_boot_all <- function(x_est,
+                            x_est_boot,
+                            level = .95) {
+    if (is.null(dim(x_est_boot))) {
+        x_est_boot <- matrix(x_est_boot, ncol = 1)
+      }
+    boot0 <- list(t0 = x_est,
+                  t = x_est_boot,
+                  R = nrow(x_est_boot))
+    p <- ncol(x_est_boot)
+    boot_ci_out0 <- lapply(seq_len(p),
+        function(xx) {
+            tmp <- range(x_est_boot[, xx])
+            if (isTRUE(all.equal(tmp[1], tmp[2]))) {
+                return(c(x_est[xx], x_est[xx]))
+              }
+            boot::boot.ci(boot0,
+                          type = "perc",
+                          index = xx,
+                          conf = level)$percent[4:5]
+          })
+    out <- do.call(rbind, boot_ci_out0)
+    colnames(out) <- c("ci.lower", "ci.upper")
+    out
+  }
+
+#' @noRd
+
+std_pvalue_boot_all <- function(x_est_boot,
+                                h0 = 0,
+                                min_size = 100,
+                                warn = FALSE) {
+    if (is.null(dim(x_est_boot))) {
+        x_est_boot <- matrix(x_est_boot, ncol = 1)
+      }
+    p <- ncol(x_est_boot)
+    out <- sapply(asplit(x_est_boot, MARGIN = 2),
+                  std_pvalue_boot_i,
+                  h0 = h0,
+                  min_size = min_size,
+                  warn = warn)
+    out
+  }
+
+#' @noRd
+
+std_pvalue_boot_i <- function(x,
+                              h0 = 0,
+                              min_size = 100,
+                              warn = FALSE) {
+    # Adapted from manymome:::est2p()
+    # Based on the method in
+    # https://www.statmodel.com/download/FAQ-Bootstrap%20-%20Pvalue.pdf
+    x <- x[!is.na(x)]
+    if (length(x) == 0) return(NA)
+    if (length(x) < min_size) {
+        if (warn) {
+          warning(paste("Bootstrap p-value not computed. Less than ",
+                        min_size,
+                        "bootstrap estimates."))
+        }
+        return(NA)
+      }
+    b <- length(x)
+    m0 <- sum((x < h0))
+    out <- 2 * min(m0 / b, 1 - m0 / b)
+    out
+  }
+
+#' @noRd
+
+std_se_delta_all <- function(std_fct,
+                             fit_est,
+                             fit_vcov,
+                             method = "numDeriv") {
+    out <- mapply(std_se_delta,
+                  std_fct = std_fct,
+                  MoreArgs = list(fit_est = fit_est,
+                                  fit_vcov = fit_vcov,
+                                  method = method))
+    out
   }
 
 #' @noRd
@@ -400,11 +526,31 @@ std_se_delta <- function(std_fct,
                          method = c("numDeriv", "lavaan")) {
     method <- match.arg(method)
     std_a <- switch(method,
-                    numDeriv = numDeriv::grad(std_fct,
-                                              x = fit_est),
-                    lavaan = lavaan::lav_func_gradient_complex(std_fct,
-                                                               x = fit_est))
+      numDeriv = numDeriv::grad(std_fct,
+                                x = fit_est),
+      lavaan = suppressWarnings(lavaan::lav_func_gradient_complex(std_fct,
+                                  x = fit_est)))
     out <- sqrt(colSums(std_a * (fit_vcov %*% std_a)))
+    out
+  }
+
+#' @noRd
+
+std_ci_delta_all <- function(x_est,
+                             x_se,
+                             level = .95) {
+    pcrit <- abs(stats::qnorm(1 - level) / 2)
+    cilo <- x_est - pcrit * x_se
+    cihi <- x_est + pcrit * x_se
+    out <- cbind(ci.lower = cilo,
+                 ci.upper = cihi)
+    out
+  }
+
+#' @noRd
+
+std_pvalue_delta_all <- function(est_std_z) {
+    out <- stats::pnorm(abs(est_std_z), lower.tail = FALSE) * 2
     out
   }
 

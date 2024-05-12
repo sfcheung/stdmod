@@ -1,6 +1,8 @@
 skip_on_cran()
 # A long test
 
+# testthat::test_file("./tests/testthat/test_std_selected_lavaan.R")
+
 library(testthat)
 library(lavaan)
 library(manymome)
