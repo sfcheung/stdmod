@@ -194,6 +194,15 @@
 #' which will be use to generate the
 #' output.
 #'
+#' @param delta_method The method used
+#' to compute delta method standard
+#' errors. For internal use and should
+#' not be changed.
+#'
+#' @param progress Logical. If `TRUE`,
+#' progress bars will be displayed
+#' for long process.
+#'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
 #' @references
@@ -226,8 +235,13 @@ std_selected_lavaan <- function(object,
                                 std_pvalue = TRUE,
                                 std_ci = TRUE,
                                 level = .95,
+                                progress = TRUE,
                                 ...,
                                 delta_method = c("numDeriv", "lavaan")) {
+    if (!isTRUE(requireNamespace("pbapply", quietly = TRUE)) ||
+        !interactive()) {
+        progress <- FALSE
+      }
     if (!inherits(object, "lavaan")) {
         stop("'object' is not a lavaan-class object.")
       }
@@ -289,7 +303,8 @@ std_selected_lavaan <- function(object,
     if (has_se) {
         if ("bootstrap" %in% std_se) {
             boot_est <- std_boot(object = object,
-                                std_fct = std_fct)
+                                 std_fct = std_fct,
+                                 progress = progress)
             # TODO:
             # - Store the boot_est
             est_std_se <- std_se_boot_all(boot_est)
@@ -298,7 +313,8 @@ std_selected_lavaan <- function(object,
             est_std_se <- std_se_delta_all(std_fct = std_fct,
                                           fit_est = fit_est,
                                           fit_vcov = fit_vcov,
-                                          method = delta_method)
+                                          method = delta_method,
+                                          progress = progress)
           }
         std[i, "std.p.se"] <- est_std_se
       }
@@ -402,7 +418,8 @@ fix_to_standardize <- function(object,
 #' @noRd
 
 std_boot <- function(object,
-                     std_fct) {
+                     std_fct,
+                     progress = FALSE) {
     # TODO:
     # - Can retrieve estimates from do_boot()
     boot_est <- tryCatch(lavaan::lavInspect(object,
@@ -415,11 +432,20 @@ std_boot <- function(object,
     if (length(boot_est_err) > 0) {
         boot_est <- boot_est[-boot_est_err, ]
       }
-    est_std_boot <- sapply(asplit(boot_est, 1),
-                      function(yy) {
-                          sapply(std_fct, function(xx) xx(yy))
-                        },
-                      simplify = TRUE)
+    if (progress) {
+        cat("\nCompute bootstrapping standardized solution:\n")
+        est_std_boot <- pbapply::pbsapply(asplit(boot_est, 1),
+                          function(yy) {
+                              sapply(std_fct, function(xx) xx(yy))
+                            },
+                          simplify = TRUE)
+      } else {
+        est_std_boot <- sapply(asplit(boot_est, 1),
+                          function(yy) {
+                              sapply(std_fct, function(xx) xx(yy))
+                            },
+                          simplify = TRUE)
+      }
     est_std_boot <- t(est_std_boot)
     est_std_boot
   }
@@ -509,12 +535,22 @@ std_pvalue_boot_i <- function(x,
 std_se_delta_all <- function(std_fct,
                              fit_est,
                              fit_vcov,
-                             method = "numDeriv") {
-    out <- mapply(std_se_delta,
-                  std_fct = std_fct,
-                  MoreArgs = list(fit_est = fit_est,
-                                  fit_vcov = fit_vcov,
-                                  method = method))
+                             method = "numDeriv",
+                             progress = FALSE) {
+    if (progress) {
+        cat("\nCompute delta method standard errors:\n")
+        out <- pbapply::pbsapply(std_fct,
+                                 FUN = std_se_delta,
+                                 fit_est = fit_est,
+                                 fit_vcov = fit_vcov,
+                                 method = method)
+      } else {
+        out <- sapply(std_fct,
+                      FUN = std_se_delta,
+                      fit_est = fit_est,
+                      fit_vcov = fit_vcov,
+                      method = method)
+      }
     out
   }
 

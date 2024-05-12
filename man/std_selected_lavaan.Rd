@@ -11,9 +11,13 @@ std_selected_lavaan(
   skip_categorical_x = TRUE,
   output = c("data.frame", "text"),
   std_se = c("none", "delta", "bootstrap"),
+  std_z = TRUE,
+  std_pvalue = TRUE,
   std_ci = TRUE,
   level = 0.95,
-  ...
+  progress = TRUE,
+  ...,
+  delta_method = c("numDeriv", "lavaan")
 )
 }
 \arguments{
@@ -58,7 +62,8 @@ the one from \code{\link[lavaan:parameterEstimates]{lavaan::parameterEstimates()
 If set to \code{"text"}, it will be printed
 in a format similar to the one in
 the \code{summary}-method of \code{lavaan}.
-(NOTE: \code{"text"} not yet available.)}
+(NOTE: \code{"text"} supported but not
+fully implemented.)}
 
 \item{std_se}{String. If set to \code{"none"},
 the default, standard errors will not
@@ -75,6 +80,21 @@ confidence intervals will be
 computed. (NOTE: Bootstrap SEs
 and CIs are not yet available.)}
 
+\item{std_z}{Logical. If \code{TRUE} and
+\code{std_se} is not set to \code{"none"},
+standard error will be computed
+using the method specified in
+\code{std_se}. Default is \code{TRUE}.}
+
+\item{std_pvalue}{Logical. If \code{TRUE},
+\code{std_se} is not set to \code{"none"},
+and \code{std_z} is \code{TRUE}, \emph{p}-values
+will be computed using the method
+specified in \code{std_se}. For
+bootstrapping, the method proposed by
+Asparouhov and Muthén (2021) is used.
+Default is \code{TRUE}.}
+
 \item{std_ci}{Logical. If \code{TRUE} and
 \code{std_se} is not set to \code{"none"},
 confidence intervals will be
@@ -88,10 +108,19 @@ confidence intervals of both
 the unstandardized and
 standardized solution.}
 
+\item{progress}{Logical. If \code{TRUE},
+progress bars will be displayed
+for long process.}
+
 \item{...}{Optional arguments to be
 passed to the \code{\link[lavaan:parameterEstimates]{lavaan::parameterEstimates()}},
 which will be use to generate the
 output.}
+
+\item{delta_method}{The method used
+to compute delta method standard
+errors. For internal use and should
+not be changed.}
 }
 \value{
 A data frame storing the parameter
@@ -199,6 +228,9 @@ when defining the user parameters.
 
 }
 \references{
+Asparouhov, A., & Muthén, B. (2021). Bootstrap p-value computation.
+Retrieved from https://www.statmodel.com/download/FAQ-Bootstrap\%20-\%20Pvalue.pdf
+
 Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
 (2022) Improving an old way to measure moderation effect in standardized
 units. \emph{Health Psychology}, \emph{41}(7), 502-505.

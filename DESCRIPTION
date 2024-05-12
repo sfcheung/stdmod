@@ -41,5 +41,6 @@ Imports:
     manymome,
     rlang,
     methods,
-    numDeriv
+    numDeriv,
+    pbapply
 VignetteBuilder: knitr

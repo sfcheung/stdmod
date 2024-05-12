@@ -12,7 +12,7 @@ fit <- sem(mod, data = test_mod1)
 
 # Standardize all variables
 
-out <- std_selected_lavaan(fit, standardized = TRUE)
+out <- std_selected_lavaan(fit, standardized = TRUE, std_se = "delta")
 out
 std <- standardizedSolution(fit)
 
