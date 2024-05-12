@@ -296,14 +296,18 @@ std_selected_lavaan <- function(object,
                          exact = TRUE)
     est_std_by <- sapply(est_std_by,
                          function(x) {paste0(x, collapse = ",")})
+    # TODO:
+    # - Add support for user-defined parameters
     std[i, "std.p"] <- est_std
     std[i, "std.p.by"] <- est_std_by
 
     # Standard errors
-    if (has_se) {
+    if (has_se) (
         if ("bootstrap" %in% std_se) {
             # TODO:
             # - Add the option to retrieve do_boot() output
+            # - Add the option to call do_boot() internally
+            # - Add the option to call bootstrapLavaan internally
             boot_est <- std_boot(object = object,
                                  std_fct = std_fct,
                                  progress = progress)
