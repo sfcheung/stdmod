@@ -504,6 +504,8 @@ fix_to_standardize <- function(object,
     all_names <- unique(union(lavaan::lavNames(object, "ov"),
                               lavaan::lavNames(object, "lv")))
     cat_vars <- find_categorical(object)
+    # Exclude ov.ord from cat_vars
+    cat_vars <- setdiff(cat_vars, lavaan::lavNames(object, "ov.ord"))
     if (is.null(not_to_standardize)) {
         if (identical(to_standardize, ".all.")) {
             to_standardize <- all_names
