@@ -559,8 +559,6 @@ std_boot <- function(object,
                      cl,
                      iseed,
                      progress = FALSE) {
-    # TODO:
-    # - Can retrieve estimates from do_boot()
     if (!is.null(boot_out)) {
         if (!inherits(boot_out, "boot_out")) {
             stop("boot_out is not an output of manymome::do_boot().")
