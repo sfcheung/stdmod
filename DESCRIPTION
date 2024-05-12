@@ -25,13 +25,16 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 Suggests:
-    testthat,
+    testthat (>= 3.0.0)
     knitr,
     rmarkdown,
     visreg,
     lm.beta
 Depends:
     R (>= 4.0.0)
+Config/testthat/edition: 3
+Config/testthat/parallel: true
+Config/testthat/start-first: std_selected_lavaan_*
 Imports:
     boot,
     ggplot2,
