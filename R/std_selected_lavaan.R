@@ -302,7 +302,7 @@ std_selected_lavaan <- function(object,
     std[i, "std.p.by"] <- est_std_by
 
     # Standard errors
-    if (has_se) (
+    if (has_se) {
         if ("bootstrap" %in% std_se) {
             # TODO:
             # - Add the option to retrieve do_boot() output
