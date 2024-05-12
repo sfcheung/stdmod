@@ -1,3 +1,7 @@
+skip_on_cran()
+
+# Long tests
+
 # testthat::test_file("./tests/testthat/test_std_selected_lavaan_mg_eq.R")
 
 # With between-group constraints
