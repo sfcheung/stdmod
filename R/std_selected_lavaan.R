@@ -302,6 +302,8 @@ std_selected_lavaan <- function(object,
     # Standard errors
     if (has_se) {
         if ("bootstrap" %in% std_se) {
+            # TODO:
+            # - Add the option to retrieve do_boot() output
             boot_est <- std_boot(object = object,
                                  std_fct = std_fct,
                                  progress = progress)
