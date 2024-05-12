@@ -281,6 +281,18 @@
 #' for reproducible results.
 #' Ignored if `parallel` is `"no"`.
 #'
+#' @param store_boot_est Logical. If
+#' `std_se` is `"bootstrap"` and this
+#' argument is `TRUE`, the default,
+#' the bootstrap estimates of the
+#' standardized solution will be stored
+#' in the attribute `"boot_est"`. These
+#' estimates can be used for
+#' diagnosis of the bootstrapping. If
+#' `FALSE`, then the bootstrap estimates
+#' will not be stored.
+#'
+#'
 #' @author Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 #'
 #' @references
@@ -313,9 +325,10 @@ std_selected_lavaan <- function(object,
                                 std_pvalue = TRUE,
                                 std_ci = TRUE,
                                 level = .95,
-                                bootstrap = 100L,
                                 progress = TRUE,
                                 boot_out = NULL,
+                                bootstrap = 100L,
+                                store_boot_est = TRUE,
                                 parallel = c("no", "snow", "multicore"),
                                 ncpus = parallel::detectCores(logical = FALSE) - 1,
                                 cl = NULL,
@@ -398,8 +411,8 @@ std_selected_lavaan <- function(object,
                                  ncpus = ncpus,
                                  cl = cl,
                                  iseed = iseed)
-            # TODO:
-            # - Store the boot_est
+            std_labels <- lavaan::lav_partable_labels(std)
+            colnames(boot_est) <- std_labels[i]
             est_std_se <- std_se_boot_all(boot_est)
           }
         if ("delta" %in% std_se) {
@@ -466,6 +479,10 @@ std_selected_lavaan <- function(object,
         est$group <- NULL
       }
     class(est) <- c("std_selected_lavaan", class(est))
+    attr(est, "call") <- match.call()
+    if(store_boot_est && ("bootstrap" %in% std_se)) {
+        attr(est, "boot_est") <- boot_est
+      }
     est
   }
 
