@@ -385,6 +385,8 @@ fix_to_standardize <- function(object,
                                not_to_standardize = NULL,
                                skip_categorical_x = TRUE,
                                prods = NULL) {
+    # TODO:
+    # - Handle ordinal endogenous variables.
     if (!identical(to_standardize, ".all.") && !is.null(not_to_standardize)) {
         stop("Do not specify both to_standardize and not_to_standardize.")
       }
