@@ -532,7 +532,10 @@ std_selected_lavaan <- function(object,
     attr(est, "partable") <- lavaan::parameterTable(object)
     attr(est, "est") <- lavaan::parameterEstimates(object)
     attr(est, "level") <- level
-
+    attr(est, "std_se") <- std_se
+    attr(est, "R") <- ifelse("bootstrap" %in% std_se,
+                             nrow(boot_est),
+                             NA)
     est
   }
 
