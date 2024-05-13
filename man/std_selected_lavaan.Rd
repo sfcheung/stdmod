@@ -24,7 +24,7 @@ std_selected_lavaan(
   cl = NULL,
   iseed = NULL,
   ...,
-  delta_method = c("numDeriv", "lavaan")
+  delta_method = c("lavaan", "numDeriv")
 )
 }
 \arguments{
@@ -304,11 +304,10 @@ symmetric around the point estimate.
 \item It only supports observed variable
 interaction terms, and only support
 two-way interactions.
+\item It does not support multilevel
+models.
 \item It only supports models fitted to
 raw data.
-\item It does not yet support ordinal
-endogenous variables (e.g.,
-ordinal indicators).
 \item Intercepts not supported.
 \item User-defined parameters not
 supported. Users should take care of
