@@ -69,7 +69,13 @@ test_that("All est", {
   expect_equal(out$std.all,
                out$std.p,
                ignore_attr = TRUE)
+  expect_output(print(out, output = "text"),
+                "Estimates")
+  expect_output(print(out, output = "text", standardized_only = TRUE),
+                "Standardized")
 })
+
+
 
 # (which(std_nox$est.std != std$est.std))
 #  4  5  6 11 12 13 14 15 16

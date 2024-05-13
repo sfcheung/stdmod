@@ -58,4 +58,8 @@ test_that("User parameters", {
                std$ci.upper,
                ignore_attr = TRUE,
                tolerance = 1e-4)
+  expect_output(print(out, output = "text"),
+                "Estimates")
+  expect_output(print(out, output = "text", standardized_only = TRUE),
+                "Estimates")
 })
