@@ -416,8 +416,6 @@ std_selected_lavaan <- function(object,
     # Standard errors
     if (has_se) {
         if ("bootstrap" %in% std_se) {
-            # TODO:
-            # - Support user-parameters
             boot_est <- std_boot(object = object,
                                  std_fct = std_fct,
                                  boot_out = boot_out,
@@ -478,8 +476,6 @@ std_selected_lavaan <- function(object,
     # p-values
     if (has_se && std_pvalue && std_z) {
         if ("bootstrap" %in% std_se) {
-            # TODO:
-            # - Support user-parameters
             est_pvalue <- std_pvalue_boot_all(cbind(boot_est, boot_est_user))
           }
         if ("delta" %in% std_se) {
@@ -491,8 +487,6 @@ std_selected_lavaan <- function(object,
     # Confidence intervals
     if (has_se && std_ci) {
         if ("bootstrap" %in% std_se) {
-            # TODO:
-            # - Support user-parameters
             ci <- std_ci_boot_all(x_est = c(est_std, std_def),
                                   x_est_boot = cbind(boot_est, boot_est_user),
                                   level = level)
