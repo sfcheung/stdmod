@@ -53,7 +53,7 @@ test_that("Get do_boot results", {
                ignore_attr = TRUE)
   expect_output(print(out, output = "text"),
                 "Estimates")
-  expect_output(print(out_boot, output = "text", standardized_only = TRUE),
+  expect_output(print(out, output = "text", standardized_only = TRUE),
                 "Standardized")
 })
 

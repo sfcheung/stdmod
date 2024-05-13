@@ -536,6 +536,8 @@ std_selected_lavaan <- function(object,
     attr(est, "R") <- ifelse("bootstrap" %in% std_se,
                              nrow(boot_est),
                              NA)
+    attr(est, "prods") <- prods
+    attr(est, "categorical") <- find_categorical(object)
     est
   }
 

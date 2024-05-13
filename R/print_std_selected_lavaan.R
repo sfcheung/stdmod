@@ -92,6 +92,10 @@ print.std_selected_lavaan <- function(x,
         return(invisible(x))
       }
 
+    tmp <- stats::na.omit(x$std.p.by)
+    tmp <- unique(unlist(strsplit(tmp, ",", fixed = TRUE)))
+    std.p.by.vars <- tmp
+
     # Add columns required for print
     ptable <- attr(x, "partable")
     est0 <- attr(x, "est")
@@ -99,8 +103,8 @@ print.std_selected_lavaan <- function(x,
     est1$id <- seq_len(nrow(est1))
     i0 <- colnames(x) %in% c("se", "z", "pvalue",
                              "ci.lower", "ci.upper")
-    est1 <- merge(est1,
-                  x[, !i0])
+    # est1 <- merge(est1,
+    #               x[, !i0])
     i0 <- colnames(ptable) %in% c("est", "se",
                                   "user", "free",
                                   "ustart", "plabel",
@@ -109,6 +113,11 @@ print.std_selected_lavaan <- function(x,
     est1 <- merge(est1, ptable[, !i0])
     est1 <- est1[order(est1$id), ]
     est1$id <- NULL
+
+    # Move std.p.by to the right
+    i <- match("std.p.by", colnames(est1))
+    est1 <- cbind(est1[, -i], est1[, i, drop = FALSE])
+
     class(est1) <- class(est0)
     pe_attrib <- attr(x, "pe_attrib")
     tmp <- !(names(pe_attrib) %in% names(attributes(est1)))
@@ -119,7 +128,7 @@ print.std_selected_lavaan <- function(x,
       }
     header_stdp <- character(0)
     header_stdp <- c(header_stdp,
-                     "Selected Standardization (std.p):",
+                     "Selected Standardization (Bs):",
                      "",
                      "  Only selected variables are standardized")
     # TODO:
@@ -153,16 +162,40 @@ print.std_selected_lavaan <- function(x,
     footer_stdp <- c(footer_stdp,
                      "Note:")
     footer_stdp <- c(footer_stdp,
-                     strwrap(paste("- The column 'std.p.by' lists variable(s) standardized when computing the",
-                                    "standardized solution."),
+                     strwrap(paste("- The column 'Bs.by' lists variable(s) standardized when computing the",
+                                    "standardized coefficient of a parameter.",
+                                    "('NA' for user-defined parameters because they are computed from other standardized parameters.)"),
                              exdent = 2))
-    footer_stdp <- c(footer_stdp,
-                     strwrap(paste("- Product terms, if any, have variable(s) standardized before computing them.",
-                                    "That is, the product terms themselves are not standardized."),
-                             exdent = 2))
-    footer_stdp <- c(footer_stdp,
-                     strwrap(paste("- Dummy variaables which are preditors, if any, are not standardied."),
-                             exdent = 2))
+    if (length(std.p.by.vars) > 0) {
+        if (length(std.p.by.vars) == 1) {
+            footer_stdp <- c(footer_stdp,
+                            strwrap(paste("- This variable is standardized:",
+                                          std.p.by.vars),
+                                    exdent = 2))
+          } else {
+            footer_stdp <- c(footer_stdp,
+                            strwrap(paste("- These variables are standardized:",
+                                          paste0(std.p.by.vars, collapse = ", ")),
+                                    exdent = 2))
+          }
+      }
+    prods <- attr(x, "prods")
+    if (length(prods) > 0) {
+        footer_stdp <- c(footer_stdp,
+                        strwrap(paste0("- Product terms (",
+                                      paste0(names(prods), collapse = ", "),
+                                      ") have variables standardized before computing them. ",
+                                      "That is, the product terms themselves are not standardized."),
+                                exdent = 2))
+      }
+    cat_vars <- attr(x, "categorical")
+    if (length(cat_vars)) {
+        footer_stdp <- c(footer_stdp,
+                        strwrap(paste0("- Dummy variables (",
+                                paste0(cat_vars, collapse = ", "),
+                                ") which are predictors are not standardied."),
+                                exdent = 2))
+      }
     if ("delta" %in% std_se) {
         footer_stdp <- c(footer_stdp,
                          strwrap(paste("- Delta method standard errors, p-values, and confidence intervals are",
@@ -187,6 +220,10 @@ print.std_selected_lavaan <- function(x,
         # tmp[tmp == "std.p.z"] <- "Std.p.z"
         # tmp[tmp == "std.p.pvalue"] <- "Std.p.Pvalue"
         # tmp[tmp == "std.p.by"] <- "Std.by.Vars"
+        tmp <- gsub("std.p.", "Bs.", tmp, fixed = TRUE)
+        tmp <- gsub("std.p", "Bs", tmp, fixed = TRUE)
+        tmp <- gsub("ci.lower", "CI.Lo", tmp, fixed = TRUE)
+        tmp <- gsub("ci.upper", "CI.Hi", tmp, fixed = TRUE)
         colnames(est1) <- tmp
         out <- utils::capture.output(print(est1, ..., nd = nd))
         i <- sort(match(comps, out))[1]
@@ -211,6 +248,14 @@ print.std_selected_lavaan <- function(x,
         est2$std.p.pvalue <- NULL
         est2$std.p.ci.lower <- NULL
         est2$std.p.ci.upper <- NULL
+
+        tmp <- colnames(est2)
+        tmp <- gsub("std.p.", "Bs.", tmp, fixed = TRUE)
+        # tmp <- gsub("std.p", "Bs", tmp, fixed = TRUE)
+        # tmp <- gsub("ci.lower", "CI.Lo", tmp, fixed = TRUE)
+        # tmp <- gsub("ci.upper", "CI.Hi", tmp, fixed = TRUE)
+        colnames(est2) <- tmp
+
         out <- utils::capture.output(print(est2, nd = nd))
         i <- which(grepl("Parameter Estimates:", out, fixed = TRUE))
         j <- sort(match(comps, out))[1]
@@ -220,9 +265,13 @@ print.std_selected_lavaan <- function(x,
         out <- append(out,
                       header_stdp,
                       after = i)
-        out <- gsub("    Estimate ",
-                    "Standardized ",
+        out <- gsub("         Estimate ",
+                    "Standardized (Bs) ",
                     out)
+        out <- gsub("P(>|z|)",
+                    "p-value",
+                    out,
+                    fixed = TRUE)
         out <- c(out, footer_stdp)
         cat(out, sep = "\n")
         return(invisible(x))
