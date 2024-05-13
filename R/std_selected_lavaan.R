@@ -399,6 +399,17 @@ std_selected_lavaan <- function(object,
     std[i, "std.p"] <- est_std
     std[i, "std.p.by"] <- est_std_by
 
+    # User-parameters
+    def.function <- object@Model@def.function
+    has_def <- is.function(def.function)
+    if (has_def) {
+        std_def <- def_std(std = std,
+                           ptable = ptable,
+                           def.function = def.function)
+        i_def <- match(names(std_def), std$label)
+        std[i_def, "std.p"] <- std_def
+      }
+
     # Standard errors
     if (has_se) {
         if ("bootstrap" %in% std_se) {
@@ -421,8 +432,24 @@ std_selected_lavaan <- function(object,
                                           fit_vcov = fit_vcov,
                                           method = delta_method,
                                           progress = progress)
+            if (has_def) {
+            # TODO:
+            # - Not yet work
+                est_std_user_se <- std_se_delta_user(std = std,
+                                                     ptable = ptable,
+                                                     i = i,
+                                                     def.function = def.function,
+                                                     std_fct = std_fct,
+                                                     fit_vcov = fit_vcov,
+                                                     method = delta_method,
+                                                     progress = progress)
+              }
           }
         std[i, "std.p.se"] <- est_std_se
+        if (has_def) {
+            i_def <- match(names(est_std_user_se), std$label)
+            std[i_def, "std.p.se"] <- est_std_user_se
+          }
       }
 
     # z statistic
@@ -484,6 +511,18 @@ std_selected_lavaan <- function(object,
         attr(est, "boot_est") <- boot_est
       }
     est
+  }
+
+#' @noRd
+
+def_std <- function(std,
+                    ptable,
+                    def.function) {
+     p_free <- which(ptable$free > 0)
+     i_free <- order(ptable$free[p_free])
+     std_free <- std[p_free, "std.p"][i_free]
+     out <- def.function(.x. = std_free)
+     out
   }
 
 #' @noRd
@@ -709,6 +748,74 @@ std_pvalue_boot_i <- function(x,
     out <- 2 * min(m0 / b, 1 - m0 / b)
     out
   }
+
+#' @noRd
+
+std_se_delta_user <- function(std,
+                              ptable,
+                              i,
+                              def.function,
+                              std_fct,
+                              fit_vcov,
+                              method = "numDeriv",
+                              progress = FALSE) {
+
+    p_free <- which(ptable$free > 0)
+    i_free <- order(ptable$free[p_free])
+
+    # Compute VCOV of standardized solution
+    std_fct_all <- function(x) {
+        sapply(std_fct, function(xx) xx(x))
+      }
+    # TODO:
+    # - Need to improve efficiency
+    a <- numDeriv::jacobian(func = std_fct_all,
+                            x = ptable[p_free, "est"])
+    std_vcov <- a %*% tcrossprod(fit_vcov, a)
+
+    std_free <- std[i, "std.p"][which(ptable[i, "free"] > 0)]
+    tmp <- def.function(.x. = std_free)
+    p_def <- length(tmp)
+    def_names <- names(tmp)
+    # This works but is inefficient
+    browser()
+    def_split <- lapply(seq_len(p_def),
+        function(xx) {
+          force(xx)
+          out <- function(x) {
+                     def.function(.x. = x)[xx]
+                   }
+          out
+        }
+      )
+    if (progress) {
+        # TODO:
+        # - Not yet working
+        cat("\nCompute delta method standard errors for user-parameters:\n")
+        out <- pbapply::pbsapply(def_split,
+                                 FUN = std_se_delta,
+                                 fit_est = std_free,
+                                 fit_vcov = std_vcov,
+                                 method = method)
+      } else {
+        out <- sapply(def_split,
+                      FUN = std_se_delta,
+                      fit_est = std_free,
+                      fit_vcov = std_vcov,
+                      method = method)
+      }
+    names(out) <- def_names
+    out
+  }
+
+
+#' @noRd
+# TODO:
+# - Find an existing multivariate version of grad
+
+std_jac_delta <- function() {
+
+}
 
 #' @noRd
 
