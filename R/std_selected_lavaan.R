@@ -430,6 +430,17 @@ std_selected_lavaan <- function(object,
             std_labels <- lavaan::lav_partable_labels(std)
             colnames(boot_est) <- std_labels[i]
             est_std_se <- std_se_boot_all(boot_est)
+            if (has_def) {
+                boot_est_user <- std_boot_user(std = std,
+                                               ptable = ptable,
+                                               i = i,
+                                               def.function = def.function,
+                                               boot_est = boot_est)
+                est_std_user_se <- std_se_boot_all(boot_est_user)
+              } else {
+                boot_est_user <- NULL
+                est_std_user_se <- numeric(0)
+              }
           }
         if ("delta" %in% std_se) {
             est_std_se <- std_se_delta_all(std_fct = std_fct,
@@ -469,7 +480,7 @@ std_selected_lavaan <- function(object,
         if ("bootstrap" %in% std_se) {
             # TODO:
             # - Support user-parameters
-            est_pvalue <- std_pvalue_boot_all(boot_est)
+            est_pvalue <- std_pvalue_boot_all(cbind(boot_est, boot_est_user))
           }
         if ("delta" %in% std_se) {
             est_pvalue <- std_pvalue_delta_all(est_std_z)
@@ -482,8 +493,8 @@ std_selected_lavaan <- function(object,
         if ("bootstrap" %in% std_se) {
             # TODO:
             # - Support user-parameters
-            ci <- std_ci_boot_all(x_est = est_std,
-                                  x_est_boot = boot_est,
+            ci <- std_ci_boot_all(x_est = c(est_std, std_def),
+                                  x_est_boot = cbind(boot_est, boot_est_user),
                                   level = level)
           }
         if ("delta" %in% std_se) {
@@ -616,6 +627,30 @@ boot_out_to_boot_est_i <- function(x,
                                    b_map) {
     as.vector(x$est[b_map, "est"])
   }
+
+
+#' @noRd
+
+std_boot_user <- function(std,
+                          ptable,
+                          i,
+                          def.function,
+                          boot_est) {
+    boot_est_split <- asplit(boot_est, MARGIN = 1)
+    # TODO:
+    # - A quick but inefficient solution. Fix it later.
+    std_split <- lapply(boot_est_split, function(x) {
+        std[i, "std.p"] <- x
+        std[, "std.p", drop = FALSE]
+      })
+    out <- lapply(std_split,
+                  def_std,
+                  ptable = ptable,
+                  def.function = def.function)
+    est_std_boot_user <- do.call(rbind, out)
+    est_std_boot_user
+  }
+
 
 #' @noRd
 
