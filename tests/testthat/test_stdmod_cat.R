@@ -1,7 +1,7 @@
 library(testthat)
 library(stdmod)
 
-context("Check stdmod with a categorical covariate")
+# context("Check stdmod with a categorical covariate")
 
 dat <- test_x_1_w_1_v_1_cat1_n_500
 
@@ -38,50 +38,58 @@ stdmod_xyw <- stdmod(lm_raw, x = iv, y = dv, w = mod,
 stdmod_xyw2 <- stdmod(lm_raw, x = iv, y = dv, w = mod)
 
 test_that("Standardize x", {
-    expect_equivalent(
-        stdmod_x, coef(lm_zx)["iv:mod"]
+    expect_equal(
+        stdmod_x, coef(lm_zx)["iv:mod"],
+        ignore_attr = TRUE
       )
   })
 
 test_that("Standardize y", {
-    expect_equivalent(
-        stdmod_y, coef(lm_zy)["iv:mod"]
+    expect_equal(
+        stdmod_y, coef(lm_zy)["iv:mod"],
+        ignore_attr = TRUE
       )
   })
 
 test_that("Standardize w", {
-    expect_equivalent(
-        stdmod_w, coef(lm_zw)["iv:mod"]
+    expect_equal(
+        stdmod_w, coef(lm_zw)["iv:mod"],
+        ignore_attr = TRUE
       )
   })
 
 test_that("Standardize xy", {
-    expect_equivalent(
-        stdmod_xy, coef(lm_zxzy)["iv:mod"]
+    expect_equal(
+        stdmod_xy, coef(lm_zxzy)["iv:mod"],
+        ignore_attr = TRUE
       )
   })
 
 test_that("Standardize xw", {
-    expect_equivalent(
-        stdmod_xw, coef(lm_zxzw)["iv:mod"]
+    expect_equal(
+        stdmod_xw, coef(lm_zxzw)["iv:mod"],
+        ignore_attr = TRUE
       )
   })
 
 test_that("Standardize yw", {
-    expect_equivalent(
-        stdmod_yw, coef(lm_zyzw)["iv:mod"]
+    expect_equal(
+        stdmod_yw, coef(lm_zyzw)["iv:mod"],
+        ignore_attr = TRUE
       )
   })
 
 test_that("Standardize x, y, and w", {
-    expect_equivalent(
-        stdmod_xyw, coef(lm_zall)["iv:mod"]
+    expect_equal(
+        stdmod_xyw, coef(lm_zall)["iv:mod"],
+        ignore_attr = TRUE
       )
   })
 
 test_that("Standardize x, y, and w with default", {
-    expect_equivalent(
-        stdmod_xyw2, coef(lm_zall)["iv:mod"]
+    expect_equal(
+        stdmod_xyw2, coef(lm_zall)["iv:mod"],
+        ignore_attr = TRUE
       )
   })
 

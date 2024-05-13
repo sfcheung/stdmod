@@ -24,8 +24,9 @@ stdmod_x2b
 stdmod_x2
 
 test_that("Change dataset", {
-    expect_equivalent(
-        coef(stdmod_x2), coef(stdmod_x2b)
+    expect_equal(
+        coef(stdmod_x2), coef(stdmod_x2b),
+        ignore_attr = TRUE
       )
   })
 
@@ -38,7 +39,8 @@ set.seed(1234)
 stdmod_x_bt2b <- std_selected_boot(lm_raw2, to_scale = ~ iv,  to_center = ~ iv, nboot = 100)
 
 test_that("Change dataset", {
-    expect_equivalent(
-        stdmod_x_bt2$boot_ci, stdmod_x_bt2b$boot_ci
+    expect_equal(
+        stdmod_x_bt2$boot_ci, stdmod_x_bt2b$boot_ci,
+        ignore_attr = TRUE
       )
   })

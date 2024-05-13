@@ -75,15 +75,15 @@ test_that("stdmod_lavaan2", {
   out_boot_user$ci
   expect_equal(
       out_boot$ci, out_boot_user$ci,
-      check.attributes = FALSE
+      ignore_attr = TRUE
     )
   expect_equal(
       round(stdmod_xyw_boot$ci, 2),
       round(out_boot$ci, 2),
-      check.attributes = FALSE
+      ignore_attr = TRUE
     )
   expect_equal(
       stdmod_xyw, out_boot$stdmod,
-      check.attributes = FALSE
+      ignore_attr = TRUE
     )
   })

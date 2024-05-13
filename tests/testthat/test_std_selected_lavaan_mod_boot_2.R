@@ -50,5 +50,6 @@ test_that("Get do_boot results", {
                                     std_se = "bootstrap")
 
   expect_equal(round(out_gp[c(1:4, 10:13), "std.p.se"], 2),
-               round(out_boot_gp[c(1:4, 10:13), "se"], 2))
+               round(out_boot_gp[c(1:4, 10:13), "se"], 2),
+               ignore_attr = TRUE)
 })

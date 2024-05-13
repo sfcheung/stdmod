@@ -42,9 +42,11 @@ test_that("Standardized coefficients and SEs", {
   std_est <- sapply(fit_std,
                     function(x) x(fit_est))
   expect_equal(std_est,
-               std[i, "est.std"])
+               std[i, "est.std"],
+               ignore_attr = TRUE)
   expect_equal(std_se,
-               std[i, "se"])
+               std[i, "se"],
+               ignore_attr = TRUE)
 })
 
 fit2 <- sem(mod,
@@ -56,7 +58,8 @@ std2_nox <- standardizedSolution(fit2, type = "std.nox")
 test_that("Alternate values", {
   fit_std_2 <- gen_std_i(fit = fit, i = 2)
   expect_equal(as.vector(fit_std_2(coef(fit2))),
-               std2[2, "est.std"])
+               std2[2, "est.std"],
+               ignore_attr = TRUE)
 })
 
 # Delta method
@@ -64,7 +67,8 @@ test_that("Alternate values", {
 test_that("All est", {
   out <- std_selected_lavaan(fit, standardized = TRUE, skip_categorical_x = FALSE)
   expect_equal(out$std.all,
-               out$std.p)
+               out$std.p,
+               ignore_attr = TRUE)
 })
 
 # (which(std_nox$est.std != std$est.std))
@@ -82,9 +86,11 @@ test_that("Standardized coefficients: No X", {
   std_est <- sapply(fit_std,
                     function(x) x(fit_est))
   expect_equal(std_est,
-               std_nox[i, "est.std"])
+               std_nox[i, "est.std"],
+               ignore_attr = TRUE)
   expect_equal(std_se,
-               std_nox[i, "se"])
+               std_nox[i, "se"],
+               ignore_attr = TRUE)
 })
 
 # (which(std_lv$est.std != std$est.std))
@@ -102,8 +108,10 @@ test_that("Standardized coefficients: lv", {
   std_est <- sapply(fit_std,
                     function(x) x(fit_est))
   expect_equal(std_est,
-               std_lv[i, "est.std"])
+               std_lv[i, "est.std"],
+               ignore_attr = TRUE)
   expect_equal(std_se,
-               std_lv[i, "se"])
+               std_lv[i, "se"],
+               ignore_attr = TRUE)
 })
 

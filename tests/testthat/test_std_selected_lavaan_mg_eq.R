@@ -50,9 +50,11 @@ test_that("Standardized coefficient: Equal loadings", {
   std_est <- sapply(fit_std,
                     function(x) x(fit_est))
   expect_equal(std_est,
-               std[i, "est.std"])
+               std[i, "est.std"],
+               ignore_attr = TRUE)
   expect_equal(std_se,
-               std[i, "se"])
+               std[i, "se"],
+               ignore_attr = TRUE)
 })
 
 fit2 <- sem(mod,
@@ -66,7 +68,8 @@ std2_nox <- standardizedSolution(fit2, type = "std.nox")
 test_that("Alternate values", {
   fit_std_2 <- gen_std_i(fit = fit, i = 29)
   expect_equal(as.vector(fit_std_2(coef(fit2))),
-               std2[29, "est.std"])
+               std2[29, "est.std"],
+               ignore_attr = TRUE)
 })
 
 # Delta method
@@ -75,7 +78,8 @@ test_that("All est", {
   out <- std_selected_lavaan(fit, standardized = TRUE, skip_categorical_x = FALSE)
   i <- out$op %in% c("~~", "~", "=~")
   expect_equal(out$std.all[i],
-               out$std.p[i])
+               out$std.p[i],
+               ignore_attr = TRUE)
 })
 
 # (which(std_nox$est.std != std$est.std))
@@ -93,9 +97,11 @@ test_that("Standardized coefficients: No X", {
   std_est <- sapply(fit_std,
                     function(x) x(fit_est))
   expect_equal(std_est,
-               std_nox[i, "est.std"])
+               std_nox[i, "est.std"],
+               ignore_attr = TRUE)
   expect_equal(std_se,
-               std_nox[i, "se"])
+               std_nox[i, "se"],
+               ignore_attr = TRUE)
 })
 
 # (which(std_lv$est.std != std$est.std))
@@ -113,9 +119,11 @@ test_that("Standardized coefficients: lv", {
   std_est <- sapply(fit_std,
                     function(x) x(fit_est))
   expect_equal(std_est,
-               std_lv[i, "est.std"])
+               std_lv[i, "est.std"],
+               ignore_attr = TRUE)
   expect_equal(std_se,
-               std_lv[i, "se"])
+               std_lv[i, "se"],
+               ignore_attr = TRUE)
 })
 
 # Automatically skip ageXX
@@ -125,6 +133,8 @@ test_that("to_standardize", {
                                       to_standardize = c("f1", "x1", "x2", "x3"))
   std_nox_out2 <- std_selected_lavaan(fit,
                                       not_to_standardize = c("age13", "age14", "age15"))
-  expect_equal(std_nox_out1$std.p, std_nox_out2$std.p)
-  expect_equal(std_nox_out1$std.p, std_out$std.p)
+  expect_equal(std_nox_out1$std.p, std_nox_out2$std.p,
+               ignore_attr = TRUE)
+  expect_equal(std_nox_out1$std.p, std_out$std.p,
+               ignore_attr = TRUE)
 })

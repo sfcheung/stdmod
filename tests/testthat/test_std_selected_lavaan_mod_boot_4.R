@@ -46,6 +46,7 @@ test_that("Get do_boot results", {
 
   expect_equal(round(out_boot_lav_gp[c(1:4, 10:13), "std.p.se"], 2),
                round(out_boot_gp[c(1:4, 10:13), "se"], 2),
-               tolerance = 1e-3)
+               tolerance = 1e-3,
+               ignore_attr = TRUE)
 
 })

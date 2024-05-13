@@ -58,45 +58,55 @@ test_that("Standardized coefficient", {
   std_a <- grad(fit_std_2, x = coef(fit))
   std_se <- sqrt(colSums(std_a * (vcov(fit) %*% std_a)))
   expect_equal(as.vector(fit_std_2(coef(fit))),
-               std[i, "est.std"])
+               std[i, "est.std"],
+               ignore_attr = TRUE)
   expect_equal(std_se,
-               std[i, "se"])
+               std[i, "se"],
+               ignore_attr = TRUE)
 
   i <- 5
   fit_std_2 <- gen_std_i(fit = fit, i = i)
   std_a <- grad(fit_std_2, x = coef(fit))
   std_se <- sqrt(colSums(std_a * (vcov(fit) %*% std_a)))
   expect_equal(as.vector(fit_std_2(coef(fit))),
-               std[i, "est.std"])
+               std[i, "est.std"],
+               ignore_attr = TRUE)
   expect_equal(std_se,
-               std[i, "se"])
+               std[i, "se"],
+               ignore_attr = TRUE)
 
   i <- 8
   fit_std_2 <- gen_std_i(fit = fit, i = i)
   std_a <- grad(fit_std_2, x = coef(fit))
   std_se <- sqrt(colSums(std_a * (vcov(fit) %*% std_a)))
   expect_equal(as.vector(fit_std_2(coef(fit))),
-               std[i, "est.std"])
+               std[i, "est.std"],
+               ignore_attr = TRUE)
   expect_equal(std_se,
-               std[i, "se"])
+               std[i, "se"],
+               ignore_attr = TRUE)
 
   i <- 11
   fit_std_2 <- gen_std_i(fit = fit, i = i)
   std_a <- grad(fit_std_2, x = coef(fit))
   std_se <- sqrt(colSums(std_a * (vcov(fit) %*% std_a)))
   expect_equal(as.vector(fit_std_2(coef(fit))),
-               std[i, "est.std"])
+               std[i, "est.std"],
+               ignore_attr = TRUE)
   expect_equal(std_se,
-               std[i, "se"])
+               std[i, "se"],
+               ignore_attr = TRUE)
 
   i <- 12
   fit_std_2 <- gen_std_i(fit = fit, i = i)
   std_a <- grad(fit_std_2, x = coef(fit))
   std_se <- sqrt(colSums(std_a * (vcov(fit) %*% std_a)))
   expect_equal(as.vector(fit_std_2(coef(fit))),
-               std[i, "est.std"])
+               std[i, "est.std"],
+               ignore_attr = TRUE)
   expect_equal(std_se,
-               std[i, "se"])
+               std[i, "se"],
+               ignore_attr = TRUE)
 
 })
 
@@ -109,7 +119,8 @@ fit2 <- sem(mod,
 test_that("Alternate values", {
   fit_std_2 <- gen_std_i(fit = fit, i = 2)
   expect_equal(as.vector(fit_std_2(coef(fit2))),
-               std2[2, "est.std"])
+               std2[2, "est.std"],
+               ignore_attr = TRUE)
 })
 
 # Delta method
@@ -127,11 +138,13 @@ test_that("All est", {
                 })
   expect_equal(std_se / std$se[i_std],
                rep(1, length(std_se)),
-               tolerance = 1e-5)
+               tolerance = 1e-5,
+               ignore_attr = TRUE)
   fit_std_all_est <- sapply(fit_std_all, function(xx) xx(coef(fit)))
   expect_equal(fit_std_all_est / standardizedSolution(fit)$est.std[i_std],
                rep(1, length(fit_std_all_est)),
-               tolerance = 1e-5)
+               tolerance = 1e-5,
+               ignore_attr = TRUE)
 })
 
 # (which(std_nox$est.std != std$est.std))
@@ -145,10 +158,12 @@ test_that("Standardized coefficients: No X", {
   std_se <- sqrt(colSums(std_a * (vcov(fit) %*% std_a)))
   expect_equal(as.vector(fit_std_2(coef(fit))),
                std_nox[i, "est.std"],
-               tolerance = 1e-5)
+               tolerance = 1e-5,
+               ignore_attr = TRUE)
   expect_equal(std_se,
                std_nox[i, "se"],
-               tolerance = 1e-5)
+               tolerance = 1e-5,
+               ignore_attr = TRUE)
 
   i <- 11
   fit_std_2 <- gen_std_i(fit = fit, i = i, to_standardize = "f1")
@@ -156,10 +171,12 @@ test_that("Standardized coefficients: No X", {
   std_se <- sqrt(colSums(std_a * (vcov(fit) %*% std_a)))
   expect_equal(as.vector(fit_std_2(coef(fit))),
                std_nox[i, "est.std"],
-               tolerance = 1e-5)
+               tolerance = 1e-5,
+               ignore_attr = TRUE)
   expect_equal(std_se,
                std_nox[i, "se"],
-               tolerance = 1e-5)
+               tolerance = 1e-5,
+               ignore_attr = TRUE)
 
   i <- 15
   fit_std_2 <- gen_std_i(fit = fit, i = i, to_standardize = "f1")
@@ -167,10 +184,12 @@ test_that("Standardized coefficients: No X", {
   std_se <- sqrt(colSums(std_a * (vcov(fit) %*% std_a)))
   expect_equal(as.vector(fit_std_2(coef(fit))),
                std_nox[i, "est.std"],
-               tolerance = 1e-5)
+               tolerance = 1e-5,
+               ignore_attr = TRUE)
   expect_equal(std_se,
                std_nox[i, "se"],
-               tolerance = 1e-5)
+               tolerance = 1e-5,
+               ignore_attr = TRUE)
 
 })
 
@@ -184,9 +203,11 @@ test_that("Standardized coefficients: lv", {
   std_a <- grad(fit_std_2, x = coef(fit))
   std_se <- sqrt(colSums(std_a * (vcov(fit) %*% std_a)))
   expect_equal(as.vector(fit_std_2(coef(fit))),
-               std_lv[i, "est.std"])
+               std_lv[i, "est.std"],
+               ignore_attr = TRUE)
   expect_equal(std_se,
-               std_lv[i, "se"])
+               std_lv[i, "se"],
+               ignore_attr = TRUE)
 
 })
 

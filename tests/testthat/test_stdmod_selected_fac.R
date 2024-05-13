@@ -1,7 +1,7 @@
 library(testthat)
 library(stdmod)
 
-context("Check standardizing selected variables with std_selected for factors")
+# context("Check standardizing selected variables with std_selected for factors")
 
 dat <- test_x_1_w_1_v_1_cat1_n_500
 dat$cat1 <- as.factor(dat$cat1)
@@ -38,50 +38,58 @@ stdmod_xyw <- std_selected(lm_raw, to_scale = ~ dv + iv + mod,  to_center = ~ mo
 stdmod_cxsw <- std_selected(lm_raw, to_scale = ~ mod, to_center = ~ iv)
 
 test_that("Standardize x", {
-    expect_equivalent(
-        coef(stdmod_x), coef(lm_zx)
+    expect_equal(
+        coef(stdmod_x), coef(lm_zx),
+        ignore_attr = TRUE
       )
   })
 
 test_that("Standardize y", {
-    expect_equivalent(
-        coef(stdmod_y), coef(lm_zy)
+    expect_equal(
+        coef(stdmod_y), coef(lm_zy),
+        ignore_attr = TRUE
       )
   })
 
 test_that("Standardize w", {
-    expect_equivalent(
-        coef(stdmod_w), coef(lm_zw)
+    expect_equal(
+        coef(stdmod_w), coef(lm_zw),
+        ignore_attr = TRUE
       )
   })
 
 test_that("Standardize xy", {
-    expect_equivalent(
-        coef(stdmod_xy), coef(lm_zxzy)
+    expect_equal(
+        coef(stdmod_xy), coef(lm_zxzy),
+        ignore_attr = TRUE
       )
   })
 
 test_that("Standardize xw", {
-    expect_equivalent(
-        coef(stdmod_xw), coef(lm_zxzw)
+    expect_equal(
+        coef(stdmod_xw), coef(lm_zxzw),
+        ignore_attr = TRUE
       )
   })
 
 test_that("Standardize yw", {
-    expect_equivalent(
-        coef(stdmod_yw), coef(lm_zyzw)
+    expect_equal(
+        coef(stdmod_yw), coef(lm_zyzw),
+        ignore_attr = TRUE
       )
   })
 
 test_that("Standardize x, y, and w", {
-    expect_equivalent(
-        coef(stdmod_xyw), coef(lm_zall)
+    expect_equal(
+        coef(stdmod_xyw), coef(lm_zall),
+        ignore_attr = TRUE
       )
   })
 
 test_that("Center x and scale w", {
-    expect_equivalent(
-        coef(stdmod_cxsw), coef(lm_cxsw)
+    expect_equal(
+        coef(stdmod_cxsw), coef(lm_cxsw),
+        ignore_attr = TRUE
       )
   })
 
@@ -96,28 +104,36 @@ stdmod_nb_xyw <- std_selected_boot(lm_raw, to_scale = ~ dv + iv + mod,  to_cente
 stdmod_nb_cxsw <- std_selected_boot(lm_raw, to_scale = ~ mod, to_center = ~ iv, do_boot = FALSE)
 
 test_that("std_selected_boot with do_boot = FALSE", {
-    expect_equivalent(
-        coef(stdmod_nb_x), coef(stdmod_x)
+    expect_equal(
+        coef(stdmod_nb_x), coef(stdmod_x),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
-        coef(stdmod_nb_y), coef(stdmod_y)
+    expect_equal(
+        coef(stdmod_nb_y), coef(stdmod_y),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
-        coef(stdmod_nb_w), coef(stdmod_w)
+    expect_equal(
+        coef(stdmod_nb_w), coef(stdmod_w),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
-        coef(stdmod_nb_xw), coef(stdmod_xw)
+    expect_equal(
+        coef(stdmod_nb_xw), coef(stdmod_xw),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
-        coef(stdmod_nb_yw), coef(stdmod_yw)
+    expect_equal(
+        coef(stdmod_nb_yw), coef(stdmod_yw),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
-        coef(stdmod_nb_xy), coef(stdmod_xy)
+    expect_equal(
+        coef(stdmod_nb_xy), coef(stdmod_xy),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
-        coef(stdmod_nb_xyw), coef(stdmod_xyw)
+    expect_equal(
+        coef(stdmod_nb_xyw), coef(stdmod_xyw),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
-        coef(stdmod_nb_cxsw), coef(stdmod_cxsw)
+    expect_equal(
+        coef(stdmod_nb_cxsw), coef(stdmod_cxsw),
+        ignore_attr = TRUE
       )
   })

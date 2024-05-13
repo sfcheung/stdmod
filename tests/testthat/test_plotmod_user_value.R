@@ -33,7 +33,8 @@ p0_check <- structure(list(x = c(1.95023867728441, 1.95023867728441, 1.950238677
 
 test_that("Check plotmod lm", {
   expect_equal(layer_data(p0, 2)[, colnames(p0_check)],
-               p0_check)
+               p0_check,
+               ignore_attr = TRUE)
   })
 
 p1 <- plotmod(output = lm_std,
@@ -52,6 +53,7 @@ p1_check <- structure(list(x = c(-1, -1, -1), xend = c(1, 1, 1), y = c(0.5368886
 
 test_that("Check plotmod lm, std", {
   expect_equal(layer_data(p1, 2)[, colnames(p1_check)],
-               p1_check)
+               p1_check,
+               ignore_attr = TRUE)
   })
 

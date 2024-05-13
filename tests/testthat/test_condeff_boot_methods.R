@@ -24,17 +24,19 @@ boot_out_std <- cond_effect_boot(lm_std, x = "emotional_stability", w = "conscie
 
 
 test_that("confint.cond_effect", {
-    expect_equivalent(
+    expect_equal(
         confint(boot_out_ustd),
-        attr(boot_out_ustd, "boot_ci")
+        attr(boot_out_ustd, "boot_ci"),
+        ignore_attr = TRUE
       )
     expect_true(
         all(confint(boot_out_ustd, level = .90) %*% matrix(c(-1, 1), 2, 1) <
             attr(boot_out_ustd, "boot_ci") %*% matrix(c(-1, 1), 2, 1))
       )
-    expect_equivalent(
+    expect_equal(
         confint(boot_out_std),
-        attr(boot_out_std, "boot_ci")
+        attr(boot_out_std, "boot_ci"),
+        ignore_attr = TRUE
       )
     expect_true(
         all(confint(boot_out_std, level = .90) %*% matrix(c(-1, 1), 2, 1) <
@@ -43,12 +45,14 @@ test_that("confint.cond_effect", {
   })
 
 test_that("coef.cond_effect", {
-    expect_equivalent(
+    expect_equal(
         coef(boot_out_ustd),
-        as.data.frame(out_ustd)[, "x's Effect"]
+        as.data.frame(out_ustd)[, "x's Effect"],
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         coef(boot_out_std),
-        as.data.frame(boot_out_std)[, "x's Effect"]
+        as.data.frame(boot_out_std)[, "x's Effect"],
+        ignore_attr = TRUE
       )
   })

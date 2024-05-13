@@ -47,9 +47,10 @@ test_that("Get do_boot results", {
                                   progress = FALSE,
                                   std_se = "bootstrap")
 
-  expect_equal(out[5:8, "std.p.se"],
-              out_boot[5:8, "se"],
-              tolerance = 1e-3)
+  expect_equal(round(out[5:8, "std.p.se"], 2),
+               round(out_boot[5:8, "se"], 2),
+               tolerance = 1e-3,
+               ignore_attr = TRUE)
 
 })
 

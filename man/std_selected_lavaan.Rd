@@ -16,6 +16,13 @@ std_selected_lavaan(
   std_ci = TRUE,
   level = 0.95,
   progress = TRUE,
+  boot_out = NULL,
+  bootstrap = 100L,
+  store_boot_est = TRUE,
+  parallel = c("no", "snow", "multicore"),
+  ncpus = parallel::detectCores(logical = FALSE) - 1,
+  cl = NULL,
+  iseed = NULL,
   ...,
   delta_method = c("numDeriv", "lavaan")
 )
@@ -70,15 +77,23 @@ the default, standard errors will not
 be computed for the standardized
 solution. If set to \code{"delta"},
 delta method will be used to compute
-the standard errors. If est to
-\code{"bootstrap"} \emph{and} bootstrap
+the standard errors. If set to
+\code{"bootstrap"}, then what it does
+depends whether \code{boot_out} is set.
+If \code{boot_out} is to an output of
+\code{\link[manymome:do_boot]{manymome::do_boot()}}, its content
+will be used. If \code{boot_out} is
+\code{NULL} \emph{and} bootstrap
 estimates are available in \code{object}
 (e.g., bootstrapping is requested
 when fitting the model in \code{lavaan}),
-then bootstrap standard errors and
-confidence intervals will be
-computed. (NOTE: Bootstrap SEs
-and CIs are not yet available.)}
+then the stored bootstrap estimates
+will be sued. If not available,
+the bootstrapping will be conducted
+using \code{\link[lavaan:bootstrap]{lavaan::bootstrapLavaan()}},
+using arguments \code{bootstrap},
+\code{parallel}, \code{ncpus}, \code{cl}, and
+\code{iseed}.`}
 
 \item{std_z}{Logical. If \code{TRUE} and
 \code{std_se} is not set to \code{"none"},
@@ -111,6 +126,87 @@ standardized solution.}
 \item{progress}{Logical. If \code{TRUE},
 progress bars will be displayed
 for long process.}
+
+\item{boot_out}{If \code{std_se} is
+\code{"bootstrap"} and this argument
+is set to an output of
+\code{\link[manymome:do_boot]{manymome::do_boot()}}, its output
+will be used in computing statistics
+such as standard errors and
+confidence intervals. This allows
+users to use methods other than
+bootstrapping when fitting the
+model, while they can still request
+bootstrapping for the standardized
+solution.}
+
+\item{bootstrap}{If \code{std_se} is
+\code{"bootstrap"} but bootstrapping is
+not requested when fitting the model
+and \code{boot_out} is not set,
+\code{\link[lavaan:bootstrap]{lavaan::bootstrapLavaan()}} will be
+called to do bootstrapping. This
+argument is the number of bootstrap
+samples to draw. Default is 100.
+Should be set to 5000 or even 10000
+for stable results.}
+
+\item{store_boot_est}{Logical. If
+\code{std_se} is \code{"bootstrap"} and this
+argument is \code{TRUE}, the default,
+the bootstrap estimates of the
+standardized solution will be stored
+in the attribute \code{"boot_est"}. These
+estimates can be used for
+diagnosis of the bootstrapping. If
+\code{FALSE}, then the bootstrap estimates
+will not be stored.}
+
+\item{parallel}{If \code{std_se} is
+\code{"bootstrap"} but bootstrapping is
+not requested when fitting the model
+and \code{boot_out} is not set,
+\code{\link[lavaan:bootstrap]{lavaan::bootstrapLavaan()}} will be
+called to do bootstrapping. This
+argument is to be passed to
+\code{\link[lavaan:bootstrap]{lavaan::bootstrapLavaan()}}. Default
+is \code{"no"}.}
+
+\item{ncpus}{If \code{std_se} is
+\code{"bootstrap"} but bootstrapping is
+not requested when fitting the model
+and \code{boot_out} is not set,
+\code{\link[lavaan:bootstrap]{lavaan::bootstrapLavaan()}} will be
+called to do bootstrapping. This
+argument is to be passed to
+\code{\link[lavaan:bootstrap]{lavaan::bootstrapLavaan()}}. Default
+is \code{parallel::detectCores(logical = FALSE) - 1}.
+Ignored if \code{parallel} is \code{"no"}.}
+
+\item{cl}{If \code{std_se} is
+\code{"bootstrap"} but bootstrapping is
+not requested when fitting the model
+and \code{boot_out} is not set,
+\code{\link[lavaan:bootstrap]{lavaan::bootstrapLavaan()}} will be
+called to do bootstrapping. This
+argument is to be passed to
+\code{\link[lavaan:bootstrap]{lavaan::bootstrapLavaan()}}. Default
+is \code{NULL}.
+Ignored if \code{parallel} is \code{"no"}.}
+
+\item{iseed}{If \code{std_se} is
+\code{"bootstrap"} but bootstrapping is
+not requested when fitting the model
+and \code{boot_out} is not set,
+\code{\link[lavaan:bootstrap]{lavaan::bootstrapLavaan()}} will be
+called to do bootstrapping. This
+argument is to be passed to
+\code{\link[lavaan:bootstrap]{lavaan::bootstrapLavaan()}} to set
+the seed for the random resampling.
+Default
+is \code{NULL}. Should be set to an integer
+for reproducible results.
+Ignored if \code{parallel} is \code{"no"}.}
 
 \item{...}{Optional arguments to be
 passed to the \code{\link[lavaan:parameterEstimates]{lavaan::parameterEstimates()}},
