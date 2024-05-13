@@ -83,12 +83,11 @@
 #' interaction terms, and only support
 #' two-way interactions.
 #'
+#' - It does not support multilevel
+#' models.
+#'
 #' - It only supports models fitted to
 #' raw data.
-#'
-#' - It does not yet support ordinal
-#' endogenous variables (e.g.,
-#' ordinal indicators).
 #'
 #' - Intercepts not supported.
 #'
