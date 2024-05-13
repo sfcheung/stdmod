@@ -338,9 +338,10 @@ std_selected_lavaan <- function(object,
         !interactive()) {
         progress <- FALSE
       }
-    if (!inherits(object, "lavaan")) {
-        stop("'object' is not a lavaan-class object.")
-      }
+
+    # Check whether the object is supported
+    std_selected_lavaan_check_fit(object)
+
     output <- match.arg(output)
     parallel <- match.arg(parallel)
     std_se <- tolower(match.arg(std_se))
@@ -483,6 +484,27 @@ std_selected_lavaan <- function(object,
         attr(est, "boot_est") <- boot_est
       }
     est
+  }
+
+#' @noRd
+
+std_selected_lavaan_check_fit <- function(object) {
+    if (!inherits(object, "lavaan")) {
+        stop("'object' is not a lavaan-class object.")
+      }
+    if (lavaan::lavInspect(object, what = "nlevels") > 1) {
+        stop("Multilevel SEM models are not supported.")
+      }
+    opt <- lavaan::lavInspect(object, what = "options")
+    if (isTRUE(opt$conditional.x)) {
+        stop("Does not support models with conditional.x = TRUE.")
+      }
+    tmp <- tryCatch(lavaan::lavInspect(object, what = "data"),
+                    error = function(e) e)
+    if (inherits(tmp, "error")) {
+        stop("The model needs to be fitted to raw data.")
+      }
+    return(TRUE)
   }
 
 #' @noRd
