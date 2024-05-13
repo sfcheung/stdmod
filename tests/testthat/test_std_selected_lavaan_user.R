@@ -1,6 +1,4 @@
-skip("WIP")
-
-# testthat::test_file("./tests/testthat/test_std_selected_lavaan.R")
+# testthat::test_file("./tests/testthat/test_std_selected_lavaan_user.R")
 
 library(testthat)
 library(lavaan)
@@ -32,14 +30,29 @@ std_nox <- standardizedSolution(fit, type = "std.nox")
 std_lv <- standardizedSolution(fit, type = "std.lv")
 
 test_that("User parameters", {
-  out <- std_selected_lavaan(fit, standardized = TRUE, std_se = "delta")
+  system.time(out <- std_selected_lavaan(fit,
+                                         standardized = TRUE,
+                                         std_se = "delta",
+                                         ci = TRUE,
+                                         progress = FALSE))
   expect_equal(out$std.all,
                out$std.p,
                ignore_attr = TRUE)
-  std[, c("lhs", "op", "rhs", "se")]
-  out[, c("lhs", "op", "rhs", "std.p.se")]
+  # std[1:5, c("lhs", "op", "rhs", "se", "ci.lower", "ci.upper")]
+  # out[1:5, c("lhs", "op", "rhs", "std.p.se", "std.p.ci.lower", "std.p.ci.upper")]
+  # std[24:27, c("lhs", "op", "rhs", "se", "ci.lower", "ci.upper")]
+  # out[24:27, c("lhs", "op", "rhs", "std.p.se", "std.p.ci.lower", "std.p.ci.upper")]
+
   expect_equal(out$std.p.se,
                std$se,
+               ignore_attr = TRUE,
+               tolerance = 1e-4)
+  expect_equal(out$std.p.ci.lower,
+               std$ci.lower,
+               ignore_attr = TRUE,
+               tolerance = 1e-4)
+  expect_equal(out$std.p.ci.upper,
+               std$ci.upper,
                ignore_attr = TRUE,
                tolerance = 1e-4)
 })

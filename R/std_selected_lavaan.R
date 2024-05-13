@@ -394,21 +394,24 @@ std_selected_lavaan <- function(object,
                          exact = TRUE)
     est_std_by <- sapply(est_std_by,
                          function(x) {paste0(x, collapse = ",")})
-    # TODO:
-    # - Add support for user-defined parameters
     std[i, "std.p"] <- est_std
     std[i, "std.p.by"] <- est_std_by
 
     # User-parameters
     def.function <- object@Model@def.function
-    has_def <- is.function(def.function)
+    has_def <- ":=" %in% ptable$op
+
     if (has_def) {
         std_def <- def_std(std = std,
                            ptable = ptable,
                            def.function = def.function)
         i_def <- match(names(std_def), std$label)
         std[i_def, "std.p"] <- std_def
+      } else {
+        std_def <- numeric(0)
+        i_def <- numeric(0)
       }
+    i0 <- c(i, i_def)
 
     # Standard errors
     if (has_se) {
@@ -433,8 +436,6 @@ std_selected_lavaan <- function(object,
                                           method = delta_method,
                                           progress = progress)
             if (has_def) {
-            # TODO:
-            # - Not yet work
                 est_std_user_se <- std_se_delta_user(std = std,
                                                      ptable = ptable,
                                                      i = i,
@@ -443,11 +444,12 @@ std_selected_lavaan <- function(object,
                                                      fit_vcov = fit_vcov,
                                                      method = delta_method,
                                                      progress = progress)
+              } else {
+                est_std_user_se <- numeric(0)
               }
           }
         std[i, "std.p.se"] <- est_std_se
         if (has_def) {
-            i_def <- match(names(est_std_user_se), std$label)
             std[i_def, "std.p.se"] <- est_std_user_se
           }
       }
@@ -455,9 +457,9 @@ std_selected_lavaan <- function(object,
     # z statistic
     if (has_se && std_z) {
         # Same for delta and bootstrap
-        est_std_z <- std[i, "std.p"] / std[i, "std.p.se"]
-        est_std_z[std[i, "std.p.se"] < sqrt(.Machine$double.eps)] <- NA
-        std[i, "std.p.z"] <- est_std_z
+        est_std_z <- std[i0, "std.p"] / std[i0, "std.p.se"]
+        est_std_z[std[i0, "std.p.se"] < sqrt(.Machine$double.eps)] <- NA
+        std[i0, "std.p.z"] <- est_std_z
       }
 
     # p-values
@@ -468,7 +470,7 @@ std_selected_lavaan <- function(object,
         if ("delta" %in% std_se) {
             est_pvalue <- std_pvalue_delta_all(est_std_z)
           }
-        std[i, "std.p.pvalue"] <- est_pvalue
+        std[i0, "std.p.pvalue"] <- est_pvalue
       }
 
     # Confidence intervals
@@ -479,11 +481,12 @@ std_selected_lavaan <- function(object,
                                   level = level)
           }
         if ("delta" %in% std_se) {
-            ci <- std_ci_delta_all(x_est = est_std,
-                                   x_se = est_std_se)
+            ci <- std_ci_delta_all(x_est = c(est_std, std_def),
+                                   x_se = c(est_std_se, est_std_user_se),
+                                   level = level)
           }
-        std[i, "std.p.ci.lower"] <- ci[, "ci.lower"]
-        std[i, "std.p.ci.upper"] <- ci[, "ci.upper"]
+        std[i0, "std.p.ci.lower"] <- ci[, "ci.lower"]
+        std[i0, "std.p.ci.upper"] <- ci[, "ci.upper"]
       }
 
     # Store results in the parameter estimates table
@@ -762,23 +765,29 @@ std_se_delta_user <- function(std,
 
     p_free <- which(ptable$free > 0)
     i_free <- order(ptable$free[p_free])
+    i_std_free <- which(ptable[i, "free"] > 0)
 
     # Compute VCOV of standardized solution
     std_fct_all <- function(x) {
-        sapply(std_fct, function(xx) xx(x))
+        suppressWarnings(sapply(std_fct, function(xx) xx(x)))
       }
     # TODO:
-    # - Need to improve efficiency
-    a <- numDeriv::jacobian(func = std_fct_all,
-                            x = ptable[p_free, "est"])
+    # - Decide the best default
+    # a <- switch(method,
+    #        numDeriv = numDeriv::jacobian(func = std_fct_all,
+    #                                      x = ptable[p_free, "est"]),
+    #        lavaan = lavaan::lav_func_jacobian_complex(func = std_fct_all,
+    #                                      x = ptable[p_free, "est"]))
+    a <- lavaan::lav_func_jacobian_complex(func = std_fct_all,
+                                         x = ptable[p_free, "est"])
     std_vcov <- a %*% tcrossprod(fit_vcov, a)
 
-    std_free <- std[i, "std.p"][which(ptable[i, "free"] > 0)]
+    std_free <- std[i, "std.p"][i_std_free]
+    std_vcov_free <- std_vcov[i_std_free, i_std_free]
     tmp <- def.function(.x. = std_free)
     p_def <- length(tmp)
     def_names <- names(tmp)
     # This works but is inefficient
-    browser()
     def_split <- lapply(seq_len(p_def),
         function(xx) {
           force(xx)
@@ -789,33 +798,22 @@ std_se_delta_user <- function(std,
         }
       )
     if (progress) {
-        # TODO:
-        # - Not yet working
         cat("\nCompute delta method standard errors for user-parameters:\n")
         out <- pbapply::pbsapply(def_split,
                                  FUN = std_se_delta,
                                  fit_est = std_free,
-                                 fit_vcov = std_vcov,
+                                 fit_vcov = std_vcov_free,
                                  method = method)
       } else {
         out <- sapply(def_split,
                       FUN = std_se_delta,
                       fit_est = std_free,
-                      fit_vcov = std_vcov,
+                      fit_vcov = std_vcov_free,
                       method = method)
       }
     names(out) <- def_names
     out
   }
-
-
-#' @noRd
-# TODO:
-# - Find an existing multivariate version of grad
-
-std_jac_delta <- function() {
-
-}
 
 #' @noRd
 
@@ -862,7 +860,7 @@ std_se_delta <- function(std_fct,
 std_ci_delta_all <- function(x_est,
                              x_se,
                              level = .95) {
-    pcrit <- abs(stats::qnorm(1 - level) / 2)
+    pcrit <- abs(stats::qnorm((1 - level) / 2))
     cilo <- x_est - pcrit * x_se
     cihi <- x_est + pcrit * x_se
     out <- cbind(ci.lower = cilo,
