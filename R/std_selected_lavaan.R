@@ -333,7 +333,7 @@ std_selected_lavaan <- function(object,
                                 cl = NULL,
                                 iseed = NULL,
                                 ...,
-                                delta_method = c("numDeriv", "lavaan")) {
+                                delta_method = c("lavaan", "numDeriv")) {
     if (!isTRUE(requireNamespace("pbapply", quietly = TRUE)) ||
         !interactive()) {
         progress <- FALSE
@@ -344,6 +344,7 @@ std_selected_lavaan <- function(object,
 
     output <- match.arg(output)
     parallel <- match.arg(parallel)
+    delta_method <- match.arg(delta_method)
     std_se <- tolower(match.arg(std_se))
     has_se <- !identical("none", std_se)
     ngroups <- lavaan::lavTech(object, what = "ngroups")
