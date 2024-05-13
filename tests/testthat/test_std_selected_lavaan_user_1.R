@@ -1,4 +1,7 @@
-# testthat::test_file("./tests/testthat/test_std_selected_lavaan_user.R")
+skip_on_cran()
+# Long test
+
+# testthat::test_file("./tests/testthat/test_std_selected_lavaan_user_1.R")
 
 library(testthat)
 library(lavaan)
