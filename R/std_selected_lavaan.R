@@ -525,6 +525,14 @@ std_selected_lavaan <- function(object,
     if(store_boot_est && ("bootstrap" %in% std_se)) {
         attr(est, "boot_est") <- boot_est
       }
+
+    # Adapted from semhelpinghands::standardizedSolution_boot_ci()
+    fit_summary <- lavaan::summary(object)
+    attr(est, "pe_attrib") <- attributes(fit_summary$pe)
+    attr(est, "partable") <- lavaan::parameterTable(object)
+    attr(est, "est") <- lavaan::parameterEstimates(object)
+    attr(est, "level") <- level
+
     est
   }
 
