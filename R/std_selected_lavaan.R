@@ -438,8 +438,6 @@ std_selected_lavaan <- function(object,
     # Standard errors
     if (has_se) {
         if ("bootstrap" %in% std_se) {
-            # TODO:
-            # - Handle vector_form
             boot_est <- std_boot(object = object,
                                  std_fct = std_fct,
                                  std_fct_v = std_fct_v,
