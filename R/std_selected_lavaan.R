@@ -678,8 +678,6 @@ std_boot_user <- function(std,
                           def.function,
                           boot_est) {
     boot_est_split <- asplit(boot_est, MARGIN = 1)
-    # TODO:
-    # - A quick but inefficient solution. Fix it later.
     std_split <- lapply(boot_est_split, function(x) {
         std[i, "std.p"] <- x
         std[, "std.p", drop = FALSE]
@@ -871,13 +869,6 @@ std_se_delta_user <- function(std,
         std_fct_all <- function(x) {
             suppressWarnings(sapply(std_fct, function(xx) xx(x)))
           }
-        # TODO:
-        # - Decide the best default
-        # a <- switch(method,
-        #        numDeriv = numDeriv::jacobian(func = std_fct_all,
-        #                                      x = ptable[p_free, "est"]),
-        #        lavaan = lavaan::lav_func_jacobian_complex(func = std_fct_all,
-        #                                      x = ptable[p_free, "est"]))
         a <- lavaan::lav_func_jacobian_complex(func = std_fct_all,
                                             x = ptable[p_free, "est"])
         std_vcov <- a %*% tcrossprod(fit_vcov, a)
