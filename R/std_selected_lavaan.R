@@ -470,15 +470,18 @@ std_selected_lavaan <- function(object,
                                           fit_vcov = fit_vcov,
                                           method = delta_method,
                                           progress = progress)
+            std_vcov <- attr(est_std_se,
+                             which = "std_vcov",
+                             exact = TRUE)
             if (has_def) {
-                # TODO:
-                # - Handle vector_form
                 est_std_user_se <- std_se_delta_user(std = std,
                                                      ptable = ptable,
                                                      i = i,
                                                      def.function = def.function,
                                                      std_fct = std_fct,
+                                                     std_fct_v = std_fct_v,
                                                      fit_vcov = fit_vcov,
+                                                     std_vcov = std_vcov,
                                                      method = delta_method,
                                                      progress = progress)
               } else {
@@ -845,28 +848,35 @@ std_se_delta_user <- function(std,
                               i,
                               def.function,
                               std_fct,
+                              std_fct_v,
                               fit_vcov,
+                              std_vcov,
                               method = "numDeriv",
                               progress = FALSE) {
+    vector_form <- is.function(std_fct_v)
 
     p_free <- which(ptable$free > 0)
     i_free <- order(ptable$free[p_free])
     i_std_free <- which(ptable[i, "free"] > 0)
 
     # Compute VCOV of standardized solution
-    std_fct_all <- function(x) {
-        suppressWarnings(sapply(std_fct, function(xx) xx(x)))
+    if (vector_form) {
+        # std_vcov already available
+      } else {
+        std_fct_all <- function(x) {
+            suppressWarnings(sapply(std_fct, function(xx) xx(x)))
+          }
+        # TODO:
+        # - Decide the best default
+        # a <- switch(method,
+        #        numDeriv = numDeriv::jacobian(func = std_fct_all,
+        #                                      x = ptable[p_free, "est"]),
+        #        lavaan = lavaan::lav_func_jacobian_complex(func = std_fct_all,
+        #                                      x = ptable[p_free, "est"]))
+        a <- lavaan::lav_func_jacobian_complex(func = std_fct_all,
+                                            x = ptable[p_free, "est"])
+        std_vcov <- a %*% tcrossprod(fit_vcov, a)
       }
-    # TODO:
-    # - Decide the best default
-    # a <- switch(method,
-    #        numDeriv = numDeriv::jacobian(func = std_fct_all,
-    #                                      x = ptable[p_free, "est"]),
-    #        lavaan = lavaan::lav_func_jacobian_complex(func = std_fct_all,
-    #                                      x = ptable[p_free, "est"]))
-    a <- lavaan::lav_func_jacobian_complex(func = std_fct_all,
-                                         x = ptable[p_free, "est"])
-    std_vcov <- a %*% tcrossprod(fit_vcov, a)
 
     std_free <- std[i, "std.p"][i_std_free]
     std_vcov_free <- std_vcov[i_std_free, i_std_free]
@@ -915,6 +925,7 @@ std_se_delta_all <- function(std_fct,
                                                   x = fit_est)
         out0 <- a %*% tcrossprod(fit_vcov, a)
         out <- sqrt(diag(out0))
+        attr(out, "std_vcov") <- out0
       } else {
         if (progress) {
             cat("\nCompute delta method standard errors:\n")
