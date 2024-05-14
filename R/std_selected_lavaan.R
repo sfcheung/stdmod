@@ -91,11 +91,6 @@
 #'
 #' - Intercepts not supported.
 #'
-#' - User-defined parameters not
-#' supported. Users should take care of
-#' appropriate standardization themselves
-#' when defining the user parameters.
-#'
 #' @return
 #' A data frame storing the parameter
 #' estimates, similar in form to the
