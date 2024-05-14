@@ -464,8 +464,6 @@ std_selected_lavaan <- function(object,
               }
           }
         if ("delta" %in% std_se) {
-            # TODO:
-            # - Handle vector_form
             est_std_se <- std_se_delta_all(std_fct = std_fct,
                                           std_fct_v = std_fct_v,
                                           fit_est = fit_est,
