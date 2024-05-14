@@ -467,6 +467,7 @@ std_selected_lavaan <- function(object,
             # TODO:
             # - Handle vector_form
             est_std_se <- std_se_delta_all(std_fct = std_fct,
+                                          std_fct_v = std_fct_v,
                                           fit_est = fit_est,
                                           fit_vcov = fit_vcov,
                                           method = delta_method,
@@ -905,23 +906,32 @@ std_se_delta_user <- function(std,
 #' @noRd
 
 std_se_delta_all <- function(std_fct,
+                             std_fct_v,
                              fit_est,
                              fit_vcov,
                              method = "numDeriv",
                              progress = FALSE) {
-    if (progress) {
-        cat("\nCompute delta method standard errors:\n")
-        out <- pbapply::pbsapply(std_fct,
-                                 FUN = std_se_delta,
-                                 fit_est = fit_est,
-                                 fit_vcov = fit_vcov,
-                                 method = method)
+    vector_form <- is.function(std_fct_v)
+    if (vector_form) {
+        a <- lavaan::lav_func_jacobian_complex(func = std_fct_v,
+                                                  x = fit_est)
+        out0 <- a %*% tcrossprod(fit_vcov, a)
+        out <- sqrt(diag(out0))
       } else {
-        out <- sapply(std_fct,
-                      FUN = std_se_delta,
-                      fit_est = fit_est,
-                      fit_vcov = fit_vcov,
-                      method = method)
+        if (progress) {
+            cat("\nCompute delta method standard errors:\n")
+            out <- pbapply::pbsapply(std_fct,
+                                    FUN = std_se_delta,
+                                    fit_est = fit_est,
+                                    fit_vcov = fit_vcov,
+                                    method = method)
+          } else {
+            out <- sapply(std_fct,
+                          FUN = std_se_delta,
+                          fit_est = fit_est,
+                          fit_vcov = fit_vcov,
+                          method = method)
+          }
       }
     out
   }
