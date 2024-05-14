@@ -206,6 +206,11 @@
 #' errors. For internal use and should
 #' not be changed.
 #'
+#' @param vector_form The internal
+#' method used to compute standardized
+#' solution. For internal use and should
+#' not be changed.
+#'
 #' @param progress Logical. If `TRUE`,
 #' progress bars will be displayed
 #' for long process.
@@ -334,7 +339,7 @@ std_selected_lavaan <- function(object,
                                 iseed = NULL,
                                 ...,
                                 delta_method = c("lavaan", "numDeriv"),
-                                vector_form = FALSE) {
+                                vector_form = TRUE) {
     if (!isTRUE(requireNamespace("pbapply", quietly = TRUE)) ||
         !interactive()) {
         progress <- FALSE

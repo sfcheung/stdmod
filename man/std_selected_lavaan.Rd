@@ -24,7 +24,8 @@ std_selected_lavaan(
   cl = NULL,
   iseed = NULL,
   ...,
-  delta_method = c("lavaan", "numDeriv")
+  delta_method = c("lavaan", "numDeriv"),
+  vector_form = TRUE
 )
 }
 \arguments{
@@ -216,6 +217,11 @@ output.}
 \item{delta_method}{The method used
 to compute delta method standard
 errors. For internal use and should
+not be changed.}
+
+\item{vector_form}{The internal
+method used to compute standardized
+solution. For internal use and should
 not be changed.}
 }
 \value{
