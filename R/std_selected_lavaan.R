@@ -333,7 +333,8 @@ std_selected_lavaan <- function(object,
                                 cl = NULL,
                                 iseed = NULL,
                                 ...,
-                                delta_method = c("lavaan", "numDeriv")) {
+                                delta_method = c("lavaan", "numDeriv"),
+                                vector_form = FALSE) {
     if (!isTRUE(requireNamespace("pbapply", quietly = TRUE)) ||
         !interactive()) {
         progress <- FALSE
@@ -377,22 +378,40 @@ std_selected_lavaan <- function(object,
     # Generate the function for each parameter with
     # a standardized solution.
     i <- which(!(std$op %in% c("~1", "==", ":=")))
+    # If vector_form is TRUE:
+    #   std_fct is a list of gen_std_i_internal() output
     std_fct <- gen_std(object = object,
                        i = i,
                        to_standardize = to_standardize,
-                       prods = prods)
+                       prods = prods,
+                       internal_only = vector_form)
+    if (vector_form) {
+        std_fct_v <- gen_std_vector(fit = object,
+                                    i_vector = i,
+                                    std_fct_vector = std_fct)
+      }
 
     # Compute the standardized solution
     fit_est <- methods::getMethod("coef",
                   signature = "lavaan",
                   where = asNamespace("lavaan"))(object)
     fit_vcov <- lavaan::lavInspect(object, what = "vcov")
-    est_std_full <- lapply(std_fct, function(xx) xx(fit_est))
+    if (vector_form) {
+        est_std_full <- std_fct_v(fit_est)
+      } else {
+        est_std_full <- lapply(std_fct, function(xx) xx(fit_est))
+      }
     est_std <- unlist(est_std_full)
-    est_std_by <- lapply(est_std_full,
-                         FUN = attr,
-                         which = "std_by",
-                         exact = TRUE)
+    if (vector_form) {
+        est_std_by <- attr(est_std_full,
+                           which = "std_by",
+                           exact = TRUE)
+      } else {
+        est_std_by <- lapply(est_std_full,
+                            FUN = attr,
+                            which = "std_by",
+                            exact = TRUE)
+      }
     est_std_by <- sapply(est_std_by,
                          function(x) {paste0(x, collapse = ",")})
     std[i, "std.p"] <- est_std
@@ -417,6 +436,8 @@ std_selected_lavaan <- function(object,
     # Standard errors
     if (has_se) {
         if ("bootstrap" %in% std_se) {
+            # TODO:
+            # - Handle vector_form
             boot_est <- std_boot(object = object,
                                  std_fct = std_fct,
                                  boot_out = boot_out,
@@ -442,12 +463,16 @@ std_selected_lavaan <- function(object,
               }
           }
         if ("delta" %in% std_se) {
+            # TODO:
+            # - Handle vector_form
             est_std_se <- std_se_delta_all(std_fct = std_fct,
                                           fit_est = fit_est,
                                           fit_vcov = fit_vcov,
                                           method = delta_method,
                                           progress = progress)
             if (has_def) {
+                # TODO:
+                # - Handle vector_form
                 est_std_user_se <- std_se_delta_user(std = std,
                                                      ptable = ptable,
                                                      i = i,
@@ -959,7 +984,8 @@ std_rows <- function(object) {
 gen_std <- function(object,
                     i = NULL,
                     to_standardize = ".all.",
-                    prods = NULL) {
+                    prods = NULL,
+                    internal_only = FALSE) {
     if (is.null(i)) {
         i <- std_rows(object)
       }
@@ -970,9 +996,94 @@ gen_std <- function(object,
                   gen_std_i,
                   fit = object,
                   to_standardize = to_standardize,
-                  prods = prods)
+                  prods = prods,
+                  internal_only = internal_only)
     out
   }
+
+
+#' @noRd
+# Adapted from semhelpinghands::standardizedSolution_boot_ci()
+
+gen_std_vector <- function(fit,
+                           i_vector,
+                           std_fct_vector) {
+    pt <- lavaan::parameterTable(fit)
+    p_free <- pt$free > 0
+
+    slot_opt <- fit@Options
+    slot_pat <- fit@ParTable
+    slot_mod <- fit@Model
+    slot_smp <- fit@SampleStats
+    slot_dat <- fit@Data
+
+    slot_opt1 <- slot_opt
+    slot_opt1$do.fit <- FALSE
+    slot_opt1$se <- "none"
+    slot_opt1$test <- "none"
+    slot_opt1$baseline <- FALSE
+    slot_opt1$h1 <- FALSE
+
+    out <- function(par) {
+        if (missing(par)) {
+            par <- get(".x.", parent.frame())
+          }
+        # Just in case ...
+        force(p_free)
+        force(slot_opt)
+        force(slot_pat)
+        force(slot_mod)
+        force(slot_smp)
+        force(slot_dat)
+        force(slot_opt1)
+        force(i_vector)
+        force(std_fct_vector)
+        slot_mod1 <- lavaan::lav_model_set_parameters(slot_mod,
+                                                      par)
+        slot_pat1 <- slot_pat
+        slot_pat1$est[p_free] <- par
+        slot_pat1$start[p_free] <- par
+        tmp <- (slot_pat1$free == 0) & (slot_pat1$op != ":=") &
+               (slot_pat1$start != slot_pat1$est)
+        tmp <- which(tmp)
+        slot_pat1$start[tmp] <- slot_pat1$est[tmp]
+        slot_opt1$start <- par
+        fit_new <- lavaan::lavaan(slotOptions = slot_opt1,
+                                  slotParTable = slot_pat1,
+                                  slotModel = slot_mod1,
+                                  slotSampleStats = slot_smp,
+                                  slotData = slot_dat)
+        fit_cov_all <- lavaan::lavInspect(fit_new,
+                                          what = "cov.all",
+                                          drop.list.single.group = FALSE)
+        fit_sd_all <- lapply(fit_cov_all, function(x) sqrt(diag(x)))
+        i_group_vector <- pt[i_vector, "group"]
+        fit_sd_all_list <- lapply(i_group_vector,
+                                    function(x) {
+                                        fit_sd_all[[x]]
+                                      })
+        # fit_sd_all <- fit_sd_all[[i_group]]
+        # std_out_i <- lavaan::parameterTable(fit_new)[i, ]
+        ptable_new <- lavaan::parameterTable(fit_new)
+        std_out_i_list <- lapply(i_vector,
+                                   function(x) {
+                                        ptable_new[x, ]
+                                      })
+        out0 <- lapply(seq_along(std_fct_vector), function(x) {
+                    std_fct_vector[[x]](std_out_i = std_out_i_list[[x]],
+                                        fit_sd_all = fit_sd_all_list[[x]])
+                  })
+        out1 <- unlist(out0)
+        attr(out1, "std_by") <- lapply(out0,
+                                       FUN = attr,
+                                       which = "std_by",
+                                       exact = TRUE)
+        attr(out1, "est_vcov") <- fit_cov_all
+        out1
+      }
+    out
+  }
+
 
 #' @noRd
 # Adapted from semhelpinghands::standardizedSolution_boot_ci()
@@ -980,7 +1091,8 @@ gen_std <- function(object,
 gen_std_i <- function(fit,
                       i,
                       to_standardize = ".all.",
-                      prods = list()) {
+                      prods = list(),
+                      internal_only = FALSE) {
     pt <- lavaan::parameterTable(fit)
     p_free <- pt$free > 0
     pt_i <- pt[i, ]
@@ -1009,6 +1121,11 @@ gen_std_i <- function(fit,
                                          to_standardize_i = to_standardize_i,
                                          prod_names = prod_names,
                                          prods = prods)
+
+    if (internal_only) {
+        return(std_i_internal)
+      }
+
     out <- function(par) {
         if (missing(par)) {
             par <- get(".x.", parent.frame())
