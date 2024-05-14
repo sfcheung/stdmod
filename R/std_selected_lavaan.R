@@ -389,6 +389,8 @@ std_selected_lavaan <- function(object,
         std_fct_v <- gen_std_vector(fit = object,
                                     i_vector = i,
                                     std_fct_vector = std_fct)
+      } else {
+        std_fct_v <- NULL
       }
 
     # Compute the standardized solution
@@ -440,6 +442,7 @@ std_selected_lavaan <- function(object,
             # - Handle vector_form
             boot_est <- std_boot(object = object,
                                  std_fct = std_fct,
+                                 std_fct_v = std_fct_v,
                                  boot_out = boot_out,
                                  progress = progress,
                                  bootstrap = bootstrap,
@@ -689,6 +692,7 @@ std_boot_user <- function(std,
 
 std_boot <- function(object,
                      std_fct,
+                     std_fct_v,
                      boot_out,
                      bootstrap,
                      parallel,
@@ -696,6 +700,7 @@ std_boot <- function(object,
                      cl,
                      iseed,
                      progress = FALSE) {
+    vector_form <- is.function(std_fct_v)
     if (!is.null(boot_out)) {
         if (!inherits(boot_out, "boot_out")) {
             stop("boot_out is not an output of manymome::do_boot().")
@@ -728,17 +733,29 @@ std_boot <- function(object,
       }
     if (progress) {
         cat("\nCompute bootstrapping standardized solution:\n")
-        est_std_boot <- pbapply::pbsapply(asplit(boot_est, 1),
-                          function(yy) {
-                              sapply(std_fct, function(xx) xx(yy))
-                            },
-                          simplify = TRUE)
+        if (vector_form) {
+            est_std_boot <- pbapply::pbsapply(asplit(boot_est, 1),
+                              std_fct_v,
+                              simplify = TRUE)
+          } else {
+            est_std_boot <- pbapply::pbsapply(asplit(boot_est, 1),
+                              function(yy) {
+                                  sapply(std_fct, function(xx) xx(yy))
+                                },
+                              simplify = TRUE)
+          }
       } else {
-        est_std_boot <- sapply(asplit(boot_est, 1),
-                          function(yy) {
-                              sapply(std_fct, function(xx) xx(yy))
-                            },
-                          simplify = TRUE)
+        if (vector_form) {
+            est_std_boot <- sapply(asplit(boot_est, 1),
+                              std_fct_v,
+                              simplify = TRUE)
+          } else {
+            est_std_boot <- sapply(asplit(boot_est, 1),
+                              function(yy) {
+                                  sapply(std_fct, function(xx) xx(yy))
+                                },
+                              simplify = TRUE)
+          }
       }
     est_std_boot <- t(est_std_boot)
     est_std_boot
