@@ -1,7 +1,7 @@
 library(testthat)
 library(stdmod)
 
-context("Check standardized moderation effect given a lavaan output")
+# context("Check standardized moderation effect given a lavaan output")
 
 dat <- test_mod1
 
@@ -58,12 +58,12 @@ test_that("stdmod_lavaan", {
   expect_equal(
       out_boot$ci,
       stdmod_xyw_boot$boot_ci["iv:mod", ],
-      check.attributes = FALSE
+      ignore_attr = TRUE
     )
   expect_equal(
       iv_mod_std,
       coef(stdmod_xyw_boot)["iv:mod"],
-      check.attributes = FALSE
+      ignore_attr = TRUE
     )
   })
 
@@ -132,6 +132,6 @@ test_that("stdmod_lavaan", {
   expect_equal(
       out_boot$boot_out$t,
       stdmod_xyw_boot$t,
-      check.attributes = FALSE
+      ignore_attr = TRUE
     )
   })

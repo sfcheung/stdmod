@@ -3,7 +3,7 @@ skip_on_cran()
 library(testthat)
 library(stdmod)
 
-context("Check setting vcov in summary if bootstrapping is done")
+# context("Check setting vcov in summary if bootstrapping is done")
 
 dat <- test_x_1_w_1_v_1_cat1_n_500
 
@@ -25,26 +25,30 @@ colnames(vcov_check) <- rownames(vcov_check) <- colnames(vcov_lm)
 stdmod_wy_no_boot <- std_selected(lm_raw, to_scale = ~ mod + dv, to_center = ~ mod + dv)
 
 test_that("vcov by method with type boot  == vcov from boot estimates", {
-    expect_equivalent(
-        vcov_method_boot, vcov_check
+    expect_equal(
+        vcov_method_boot, vcov_check,
+        ignore_attr = TRUE
       )
   })
 
 test_that("vcov by method with type lm == vcov from lm", {
-    expect_equivalent(
-        vcov_method_lm, vcov_lm
+    expect_equal(
+        vcov_method_lm, vcov_lm,
+        ignore_attr = TRUE
       )
   })
 
 test_that("vcov by method default == vcov from boot since 0.2.0.0", {
-    expect_equivalent(
-        vcov_method_def, vcov_check
+    expect_equal(
+        vcov_method_def, vcov_check,
+        ignore_attr = TRUE
       )
   })
 
 test_that("No boot: vcov by method default == vcov from lm", {
-    expect_equivalent(
-        vcov(stdmod_wy_no_boot), vcov_lm
+    expect_equal(
+        vcov(stdmod_wy_no_boot), vcov_lm,
+        ignore_attr = TRUE
       )
   })
 

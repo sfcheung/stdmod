@@ -8,7 +8,7 @@ set.seed(8970808)
 
 nboot <- 100
 
-context("Check standardizing selected variables with std_selected with bootstrapping")
+# context("Check standardizing selected variables with std_selected with bootstrapping")
 
 dat <- test_x_1_w_1_v_1_cat1_n_500
 
@@ -47,17 +47,19 @@ stdmod_wy_check <- boot(dat, tmpfct, R = nboot)
 stdmod_wy_check$t
 stdmod_wy$boot_est
 test_that("Standardize w and y: boot est", {
-    expect_equivalent(
-        stdmod_wy_check$t, stdmod_wy$boot_est
+    expect_equal(
+        stdmod_wy_check$t, stdmod_wy$boot_est,
+        ignore_attr = TRUE
       )
   })
 
 set.seed(868945)
 stdmod_wy_std <- std_selected_boot(lm_raw, to_standardize = ~ mod + dv, nboot = nboot)
 test_that("Standardize w and y: boot est, to_standardize", {
-    expect_equivalent(
+    expect_equal(
         confint(stdmod_wy_std),
-        confint(stdmod_wy)
+        confint(stdmod_wy),
+        ignore_attr = TRUE
       )
   })
 
@@ -72,8 +74,9 @@ tmpfct <- function(d, i) {
 set.seed(80985715)
 stdmod_xwy_check <- boot(dat, tmpfct, R = nboot)
 test_that("Standardize x, w and y: boot est", {
-    expect_equivalent(
-        stdmod_xwy_check$t, stdmod_xwy$boot_est
+    expect_equal(
+        stdmod_xwy_check$t, stdmod_xwy$boot_est,
+        ignore_attr = TRUE
       )
   })
 
@@ -82,9 +85,10 @@ stdmod_xwy_std <- std_selected_boot(lm_raw, to_scale = ~ mod, to_center = ~ mod,
                                 to_standardize = ~ iv + dv,
                                 nboot = nboot)
 test_that("Standardize x, w and y: boot est, to_standardize", {
-    expect_equivalent(
+    expect_equal(
         confint(stdmod_xwy_std),
-        confint(stdmod_xwy)
+        confint(stdmod_xwy),
+        ignore_attr = TRUE
       )
   })
 
@@ -98,28 +102,32 @@ stdmod3_xwy <- std_selected(lm_raw, to_scale = ~ dv + iv + mod,  to_center = ~ m
 
 
 test_that("Standardize w and y: Compare coefficients (selected_boot vs. noboot)", {
-    expect_equivalent(
-        coef(stdmod_wy), coef(stdmod3_wy)
+    expect_equal(
+        coef(stdmod_wy), coef(stdmod3_wy),
+        ignore_attr = TRUE
       )
   })
 
 # test_that("Standardize w and y: Compare bootstrapping ci", {
-#     expect_equivalent(
-#         stdmod_wy$boot_ci["iv:mod",], stdmod2_wy$ci, tolerance = .01
+#     expect_equal(
+#         stdmod_wy$boot_ci["iv:mod",], stdmod2_wy$ci, tolerance = .01,
+#         ignore_attr = TRUE
 #       )
 #   })
 
 
 
 test_that("Standardize x, w and y: Compare coefficients (selected_boot vs. noboot)", {
-    expect_equivalent(
-        coef(stdmod_xwy), coef(stdmod3_xwy)
+    expect_equal(
+        coef(stdmod_xwy), coef(stdmod3_xwy),
+        ignore_attr = TRUE
       )
   })
 
 # test_that("Standardize x, w and y: Compare bootstrapping ci", {
-#     expect_equivalent(
-#         stdmod_xwy$boot_ci["iv:mod",], stdmod2_xwy$ci, tolerance = .01
+#     expect_equal(
+#         stdmod_xwy$boot_ci["iv:mod",], stdmod2_xwy$ci, tolerance = .01,
+#         ignore_attr = TRUE
 #       )
 #   })
 

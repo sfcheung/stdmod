@@ -13,7 +13,7 @@
 
 # stdmod: Standardized Moderation <img src="man/figures/logo.png" align="right" height="150" />
 
-(Version 0.2.10.1, updated on 2024-03-26, [release history](https://sfcheung.github.io/stdmod/news/index.html))
+(Version 0.2.10.2, updated on 2024-06-21, [release history](https://sfcheung.github.io/stdmod/news/index.html))
 
 (Important changes since 0.2.0.0: Bootstrap confidence intervals and
 variance-covariance matrix of estimates are the defaults of `confint()`

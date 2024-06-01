@@ -18,40 +18,48 @@ out_std_p <- cond_effect(lm_std, x = "emotional_stability", w = "conscientiousne
 
 
 test_that("confint.cond_effect", {
-    expect_equivalent(
+    expect_equal(
         confint(out_ustd),
-        t(sapply(attr(out_ustd, "out_all"), function(x) {confint(x)["emotional_stability", ]}))
+        t(sapply(attr(out_ustd, "out_all"), function(x) {confint(x)["emotional_stability", ]})),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         confint(out_std, level = .90),
-        t(sapply(attr(out_std, "out_all"), function(x) {confint(x, level = .90)["emotional_stability", ]}))
+        t(sapply(attr(out_std, "out_all"), function(x) {confint(x, level = .90)["emotional_stability", ]})),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         confint(out_ustd_p, level = .80),
-        t(sapply(attr(out_ustd_p, "out_all"), function(x) {confint(x, level = .80)["emotional_stability", ]}))
+        t(sapply(attr(out_ustd_p, "out_all"), function(x) {confint(x, level = .80)["emotional_stability", ]})),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         confint(out_std_p, level = .91),
-        t(sapply(attr(out_std_p, "out_all"), function(x) {confint(x, level = .91)["emotional_stability", ]}))
+        t(sapply(attr(out_std_p, "out_all"), function(x) {confint(x, level = .91)["emotional_stability", ]})),
+        ignore_attr = TRUE
       )
   })
 
 test_that("coef.cond_effect", {
-    expect_equivalent(
+    expect_equal(
         coef(out_ustd),
-        as.data.frame(out_ustd)[, "x's Effect"]
+        as.data.frame(out_ustd)[, "x's Effect"],
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         coef(out_std),
-        as.data.frame(out_std)[, "x's Effect"]
+        as.data.frame(out_std)[, "x's Effect"],
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         coef(out_ustd_p),
-        as.data.frame(out_ustd_p)[, "x's Effect"]
+        as.data.frame(out_ustd_p)[, "x's Effect"],
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         coef(out_std_p, level = .91),
-        as.data.frame(out_std_p)[, "x's Effect"]
+        as.data.frame(out_std_p)[, "x's Effect"],
+        ignore_attr = TRUE
       )
   })
 
@@ -70,40 +78,48 @@ out_ustd_wcat3 <- cond_effect(lm_out_wcat3, x = "emotional_stability", w = "city
 out_std_wcat3 <- cond_effect(lm_std_wcat3, x = "emotional_stability", w = "city")
 
 test_that("confint.cond_effect, categorical", {
-    expect_equivalent(
+    expect_equal(
         confint(out_ustd_wcat3),
-        t(sapply(attr(out_ustd_wcat3, "out_all"), function(x) {confint(x)["emotional_stability", ]}))
+        t(sapply(attr(out_ustd_wcat3, "out_all"), function(x) {confint(x)["emotional_stability", ]})),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         confint(out_std_wcat3, level = .90),
-        t(sapply(attr(out_std_wcat3, "out_all"), function(x) {confint(x, level = .90)["emotional_stability", ]}))
+        t(sapply(attr(out_std_wcat3, "out_all"), function(x) {confint(x, level = .90)["emotional_stability", ]})),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         confint(out_ustd_wcat3, level = .80),
-        t(sapply(attr(out_ustd_wcat3, "out_all"), function(x) {confint(x, level = .80)["emotional_stability", ]}))
+        t(sapply(attr(out_ustd_wcat3, "out_all"), function(x) {confint(x, level = .80)["emotional_stability", ]})),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         confint(out_std_wcat3, level = .91),
-        t(sapply(attr(out_std_wcat3, "out_all"), function(x) {confint(x, level = .91)["emotional_stability", ]}))
+        t(sapply(attr(out_std_wcat3, "out_all"), function(x) {confint(x, level = .91)["emotional_stability", ]})),
+        ignore_attr = TRUE
       )
   })
 
 test_that("coef.cond_effect, categorical", {
-    expect_equivalent(
+    expect_equal(
         coef(out_ustd_wcat3),
-        as.data.frame(out_ustd_wcat3)[, "x's Effect"]
+        as.data.frame(out_ustd_wcat3)[, "x's Effect"],
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         coef(out_std_wcat3),
-        as.data.frame(out_std_wcat3)[, "x's Effect"]
+        as.data.frame(out_std_wcat3)[, "x's Effect"],
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         coef(out_ustd_wcat3),
-        as.data.frame(out_ustd_wcat3)[, "x's Effect"]
+        as.data.frame(out_ustd_wcat3)[, "x's Effect"],
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         coef(out_std_wcat3),
-        as.data.frame(out_std_wcat3)[, "x's Effect"]
+        as.data.frame(out_std_wcat3)[, "x's Effect"],
+        ignore_attr = TRUE
       )
   })
 
