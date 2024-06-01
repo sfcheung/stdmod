@@ -1,7 +1,7 @@
 library(testthat)
 library(stdmod)
 
-context("Check standardized moderation effect given a lavaan output")
+# context("Check standardized moderation effect given a lavaan output")
 
 test_that("stdmod_lavaan", {
   # skip_if(!interactive(),
@@ -73,14 +73,14 @@ test_that("stdmod_lavaan", {
   round(out_boot$ci, 5)
   expect_equal(
       stdmod_xyw_boot$ci, out_boot$ci,
-      check.attributes = FALSE
+      ignore_attr = TRUE
     )
   expect_equal(
       stdmod_xyw, iv_mod_std,
-      check.attributes = FALSE
+      ignore_attr = TRUE
     )
   expect_equal(
       stdmod_xyw, out_boot$stdmod,
-      check.attributes = FALSE
+      ignore_attr = TRUE
     )
   })

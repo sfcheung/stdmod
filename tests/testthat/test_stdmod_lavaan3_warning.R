@@ -1,7 +1,12 @@
+skip("Disabled")
+
+# Not reliable to hard core failures in convergence because
+# lavaan may change the optimization process.
+
 library(testthat)
 library(stdmod)
 
-context("Check stdmod_lavaan when warning occurs")
+# context("Check stdmod_lavaan when warning occurs")
 
 dat <- test_mod3_miss
 
@@ -40,13 +45,15 @@ test_that("Boot", {
       })
     expect_equal(
         sum(is.na(out_boot$boot_out$t)),
-        9
+        9,
+        ignore_attr = TRUE
       )
     print_out <- capture.output(print(out_boot))
     expect_equal(
         as.numeric(strsplit(print_out[grepl("valid results",
                                             print_out)],
                                             ":")[[1]][2]),
-        91
+        91,
+        ignore_attr = TRUE
       )
   })

@@ -1,7 +1,7 @@
 library(testthat)
 library(stdmod)
 
-context("Test methods for stdmod_lavaan")
+# context("Test methods for stdmod_lavaan")
 
 dat <- test_mod1
 
@@ -36,7 +36,8 @@ test_that("confint.stdmod_lavaan: No boot ci", {
 test_that("coef.stdmod_lavaan: No boot ci", {
   expect_equal(
       coef(out_noboot),
-      out_noboot$stdmod
+      out_noboot$stdmod,
+      ignore_attr = TRUE
     )
   })
 
@@ -59,14 +60,15 @@ test_that("confint.stdmod_lavaan: Has boot ci", {
   expect_equal(
       as.vector(confint(out_boot)),
       out_boot$ci,
-      check.attributes = FALSE
+      ignore_attr = TRUE
     )
   })
 
 test_that("coef.stdmod_lavaan: Has boot ci", {
   expect_equal(
       coef(out_boot),
-      out_boot$stdmod
+      out_boot$stdmod,
+      ignore_attr = TRUE
     )
   })
 
@@ -88,7 +90,7 @@ test_that("confint.stdmod_lavaan: Has boot ci, level .90", {
   expect_equal(
       as.vector(confint(out_boot, level = .90)),
       out_boot$ci,
-      check.attributes = FALSE
+      ignore_attr = TRUE
     )
   })
 

@@ -35,14 +35,16 @@ out_std_check <- c(coef(lm_std_a)["emotional_stability"],
 out_std[, 3]
 
 test_that("Check ustd", {
-    expect_equivalent(
-        out_ustd_check, out_ustd[, 3]
+    expect_equal(
+        out_ustd_check, out_ustd[, 3],
+        ignore_attr = TRUE
       )
   })
 
 test_that("Check std", {
-    expect_equivalent(
-        out_std_check, out_std[, 3]
+    expect_equal(
+        out_std_check, out_std[, 3],
+        ignore_attr = TRUE
       )
   })
 
@@ -54,10 +56,12 @@ out_nb_std <- cond_effect_boot(lm_std, x = "emotional_stability", w = "conscient
                                w_values = c(-1.5, 23), do_boot = FALSE)
 
 test_that("cond_effect_boot with do_boot = FALSE", {
-    expect_equivalent(
-        out_nb_ustd, out_ustd
+    expect_equal(
+        out_nb_ustd, out_ustd,
+        ignore_attr = TRUE
       )
-    expect_equivalent(
-        out_nb_std, out_std
+    expect_equal(
+        out_nb_std, out_std,
+        ignore_attr = TRUE
       )
   })
