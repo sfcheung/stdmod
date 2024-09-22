@@ -32,7 +32,8 @@ p0_check <- structure(list(x = c(1.95023867728441, 1.95023867728441), xend = c(3
 
 test_that("Check plotmod lm", {
   expect_equal(layer_data(p0, 2)[, colnames(p0_check)],
-               p0_check)
+               p0_check,
+               ignore_attr = TRUE)
   })
 
 p0ylim <- layer_scales(p0)$y$range$range
@@ -69,7 +70,8 @@ p0p_check <- structure(list(x = c(1.95023867728441, 1.95023867728441), xend = c(
 
 test_that("Check plotmod lm, percentiles", {
   expect_equal(layer_data(p0p, 2)[, colnames(p0p_check)],
-               p0p_check)
+               p0p_check,
+               ignore_attr = TRUE)
   })
 
 p0pylim <- layer_scales(p0p)$y$range$range
@@ -124,7 +126,8 @@ p1_check <- structure(list(x = c(-1, -1), xend = c(1, 1), y = c(-0.2988884689495
 
 test_that("Check plotmod lm, std", {
   expect_equal(layer_data(p1, 2)[, colnames(p1_check)],
-               p1_check)
+               p1_check,
+               ignore_attr = TRUE)
   })
 
 
@@ -161,7 +164,8 @@ p1p_check <- structure(list(x = c(-1, -1), xend = c(1, 1), y = c(-0.391907940837
 
 test_that("Check plotmod lm, std, percentiles", {
   expect_equal(layer_data(p1p, 2)[, colnames(p1p_check)],
-               p1p_check)
+               p1p_check,
+               ignore_attr = TRUE)
   })
 
 
@@ -233,7 +237,8 @@ p0_wcat_check <- structure(list(x = c(1.95023867728441, 1.95023867728441), xend 
 
 test_that("Check plotmod lm, std, percentiles", {
   expect_equal(layer_data(p0_wcat, 2)[, colnames(p0_wcat_check)],
-               p0_wcat_check)
+               p0_wcat_check,
+               ignore_attr = TRUE)
   })
 
 
@@ -356,7 +361,8 @@ p0_wcat_check <- structure(list(x = c(1.95023867728441, 1.95023867728441, 1.9502
 
 test_that("Check plotmod lm, std, percentiles", {
   expect_equal(layer_data(p0_wcat3, 2)[, colnames(p0_wcat_check)],
-               p0_wcat_check)
+               p0_wcat_check,
+               ignore_attr = TRUE)
   })
 
 
@@ -378,7 +384,8 @@ p1_wcat3_check <- structure(list(x = c(-1, -1, -1), xend = c(1, 1, 1), y = c(0.1
 
 test_that("Check plotmod lm, std, percentiles", {
   expect_equal(layer_data(p1_wcat3, 2)[, colnames(p1_wcat3_check)],
-               p1_wcat3_check)
+               p1_wcat3_check,
+               ignore_attr = TRUE)
   })
 
 

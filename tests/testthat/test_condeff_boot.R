@@ -32,9 +32,10 @@ set.seed(875415)
 boot_out_ustd_check <- boot(dat, tmpfct, R = 50, lm_out = lm_out)
 
 test_that("Check ustd boot est", {
-    expect_equivalent(
+    expect_equal(
         attr(boot_out_ustd, "boot_est"),
-        boot_out_ustd_check$t
+        boot_out_ustd_check$t,
+        ignore_attr = TRUE
       )
   })
 
@@ -59,9 +60,10 @@ set.seed(875415)
 boot_out_std_check <- boot(dat, tmpfct, R = 50, lm_out = lm_out)
 
 test_that("Check std boot est", {
-    expect_equivalent(
+    expect_equal(
         attr(boot_out_std, "boot_est"),
-        boot_out_std_check$t
+        boot_out_std_check$t,
+        ignore_attr = TRUE
       )
   })
 
@@ -79,12 +81,14 @@ boot_out_std_b
 boot_out_std
 
 test_that("Check cond_effect_boot on std_selected_boot", {
-    expect_equivalent(
+    expect_equal(
         attr(boot_out_std_b, "boot_est"),
         attr(boot_out_std, "boot_est"),
+        ignore_attr = TRUE
       )
-    expect_equivalent(
+    expect_equal(
         as.data.frame(boot_out_std_b),
         as.data.frame(boot_out_std),
+        ignore_attr = TRUE
       )
   })

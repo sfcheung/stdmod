@@ -37,14 +37,16 @@ out_std_check <- c(coef(lm_std_hi)["emotional_stability"],
 out_std[, 3]
 
 test_that("Check ustd, mean +/- a SD", {
-    expect_equivalent(
-        out_ustd_check, out_ustd[, 3]
+    expect_equal(
+        out_ustd_check, out_ustd[, 3],
+        ignore_attr = TRUE
       )
   })
 
 test_that("Check std, mean +/- a SD", {
-    expect_equivalent(
-        out_std_check, out_std[, 3]
+    expect_equal(
+        out_std_check, out_std[, 3],
+        ignore_attr = TRUE
       )
   })
 
@@ -55,9 +57,10 @@ lm_std2 <- std_selected(lm_out,
 out_std2 <- cond_effect(lm_std2, x = "emotional_stability", w = "conscientiousness")
 
 test_that("cond_effect, to_standardize", {
-    expect_equivalent(
+    expect_equal(
         coef(out_std),
-        coef(out_std2)
+        coef(out_std2),
+        ignore_attr = TRUE
       )
   })
 
@@ -94,14 +97,16 @@ out_std_p[, 3]
 
 
 test_that("Check ustd, percentile", {
-    expect_equivalent(
-        out_ustd_p[, 3], out_ustd_p_check
+    expect_equal(
+        out_ustd_p[, 3], out_ustd_p_check,
+        ignore_attr = TRUE
       )
   })
 
 test_that("Check ustd, percentile", {
-    expect_equivalent(
-        out_std_p[, 3], out_std_p_check
+    expect_equal(
+        out_std_p[, 3], out_std_p_check,
+        ignore_attr = TRUE
       )
   })
 
@@ -150,14 +155,16 @@ out_std_wcat3_check <- c(coef(lm_std_Alpha)["emotional_stability"],
 out_std_wcat3[, 3]
 
 test_that("Check ustd, 3 categories", {
-    expect_equivalent(
-        out_ustd_wcat3[, 3], out_ustd_wcat3_check
+    expect_equal(
+        out_ustd_wcat3[, 3], out_ustd_wcat3_check,
+        ignore_attr = TRUE
       )
   })
 
 test_that("Check std, 3 categories", {
-    expect_equivalent(
-        out_std_wcat3[, 3], out_std_wcat3_check
+    expect_equal(
+        out_std_wcat3[, 3], out_std_wcat3_check,
+        ignore_attr = TRUE
       )
   })
 
@@ -175,22 +182,28 @@ out_nb_std_wcat3 <- cond_effect_boot(lm_std_wcat3, x = "emotional_stability", w 
 
 
 test_that("cond_effect_boot with do_boot = FALSE", {
-    expect_equivalent(
-        out_nb_ustd, out_ustd
+    expect_equal(
+        out_nb_ustd, out_ustd,
+        ignore_attr = TRUE
       )
-    expect_equivalent(
-        out_nb_std, out_std
+    expect_equal(
+        out_nb_std, out_std,
+        ignore_attr = TRUE
       )
-    expect_equivalent(
-        out_nb_ustd_p, out_ustd_p
+    expect_equal(
+        out_nb_ustd_p, out_ustd_p,
+        ignore_attr = TRUE
       )
-    expect_equivalent(
-        out_nb_std_p, out_std_p
+    expect_equal(
+        out_nb_std_p, out_std_p,
+        ignore_attr = TRUE
       )
-    expect_equivalent(
-        out_nb_ustd_wcat3, out_ustd_wcat3
+    expect_equal(
+        out_nb_ustd_wcat3, out_ustd_wcat3,
+        ignore_attr = TRUE
       )
-    expect_equivalent(
-        out_nb_std_wcat3, out_std_wcat3
+    expect_equal(
+        out_nb_std_wcat3, out_std_wcat3,
+        ignore_attr = TRUE
       )
   })

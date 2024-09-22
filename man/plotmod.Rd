@@ -181,14 +181,14 @@ proposed by Bodner (2016) will be plotted. Default is
 \code{"default"}.}
 }
 \value{
-A \link{ggplot2} graph. Plotted if not assigned to a name. It can
-be further modified like a usual \link{ggplot2} graph.
+A \code{ggplot2} graph. Plotted if not assigned to a name. It can
+be further modified like a usual \code{ggplot2} graph.
 }
 \description{
 Plot the moderation effect in a regression model
 }
 \details{
-This function generate a basic \link{ggplot2} graph
+This function generate a basic \code{ggplot2} graph
 typically found in psychology manuscripts. It tries to
 check whether one or more variables are standardized, and
 report this in the plot if required.

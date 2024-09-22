@@ -1,7 +1,7 @@
 library(testthat)
 library(stdmod)
 
-context("Check setting confint in summary if bootstrapping is done")
+# context("Check setting confint in summary if bootstrapping is done")
 
 dat <- test_x_1_w_1_v_1_cat1_n_500
 
@@ -25,14 +25,16 @@ confint_boot_conf90_check <- boot::boot.ci(stdmod_wy$boot_out, conf = .90,
                                            type = "perc", index = 7)$percent[4:5]
 
 test_that("confint_def == confint by boot since 0.2.0.0", {
-    expect_equivalent(
-        confint_def, confint_boot
+    expect_equal(
+        confint_def, confint_boot,
+        ignore_attr = TRUE
       )
   })
 
 test_that("confint_boot == confint from summary", {
-    expect_equivalent(
-        confint_boot, confint_boot_check
+    expect_equal(
+        confint_boot, confint_boot_check,
+        ignore_attr = TRUE
       )
   })
 

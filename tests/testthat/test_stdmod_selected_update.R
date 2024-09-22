@@ -1,7 +1,7 @@
 library(testthat)
 library(stdmod)
 
-context("Check update method")
+# context("Check update method")
 
 dat <- test_x_1_w_1_v_1_cat1_n_500
 
@@ -81,73 +81,85 @@ confint(stdmod_2b_check, type = "boot")
 # resp_3std <- attr(terms(stdmod_3), "response")
 
 test_that("Check terms labels 1", {
-    expect_equivalent(
-        termlabels_1std, termlabels_1
+    expect_equal(
+        termlabels_1std, termlabels_1,
+        ignore_attr = TRUE
       )
   })
 
 test_that("Check terms labels 2", {
-    expect_equivalent(
-        termlabels_2std, termlabels_2
+    expect_equal(
+        termlabels_2std, termlabels_2,
+        ignore_attr = TRUE
       )
   })
 
 # test_that("Check terms labels 3", {
-#     expect_equivalent(
-#         termlabels_3std, termlabels_3
+#     expect_equal(
+#         termlabels_3std, termlabels_3,
+#         ignore_attr = TRUE
 #       )
 #   })
 
 test_that("Check terms variables 1", {
-    expect_equivalent(
-        termvariables_1std, termvariables_1
+    expect_equal(
+        termvariables_1std, termvariables_1,
+        ignore_attr = TRUE
       )
   })
 
 test_that("Check terms variables 2", {
-    expect_equivalent(
-        termvariables_2std, termvariables_2
+    expect_equal(
+        termvariables_2std, termvariables_2,
+        ignore_attr = TRUE
       )
   })
 
 # test_that("Check terms variables 3", {
-#     expect_equivalent(
-#         termvariables_3std, termvariables_3
+#     expect_equal(
+#         termvariables_3std, termvariables_3,
+#         ignore_attr = TRUE
 #       )
 #   })
 
 test_that("Check coefs 1", {
-    expect_equivalent(
-        coef(stdmod_1), coef(stdmod_1_check)
+    expect_equal(
+        coef(stdmod_1), coef(stdmod_1_check),
+        ignore_attr = TRUE
       )
   })
 
 test_that("Check coefs 2", {
-    expect_equivalent(
-        coef(stdmod_2), coef(stdmod_2_check)
+    expect_equal(
+        coef(stdmod_2), coef(stdmod_2_check),
+        ignore_attr = TRUE
       )
   })
 
 test_that("Check coefs 2b", {
-    expect_equivalent(
-        coef(stdmod_2b), coef(stdmod_2b_check)
+    expect_equal(
+        coef(stdmod_2b), coef(stdmod_2b_check),
+        ignore_attr = TRUE
       )
   })
 
 test_that("Check boot ci 1", {
-    expect_equivalent(
-        confint(stdmod_1, type = "boot"), confint(stdmod_1_check, type = "boot")
+    expect_equal(
+        confint(stdmod_1, type = "boot"), confint(stdmod_1_check, type = "boot"),
+        ignore_attr = TRUE
       )
   })
 
 test_that("Check boot ci 2", {
-    expect_equivalent(
-        confint(stdmod_2, type = "boot"), confint(stdmod_2_check, type = "boot")
+    expect_equal(
+        confint(stdmod_2, type = "boot"), confint(stdmod_2_check, type = "boot"),
+        ignore_attr = TRUE
       )
   })
 
 test_that("Check boot ci 2b", {
-    expect_equivalent(
-        confint(stdmod_2b, type = "boot"), confint(stdmod_2b_check, type = "boot")
+    expect_equal(
+        confint(stdmod_2b, type = "boot"), confint(stdmod_2b_check, type = "boot"),
+        ignore_attr = TRUE
       )
   })
