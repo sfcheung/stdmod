@@ -1,123 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/404.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/articles/cond_effect.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/articles/moderation.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/articles/plotmod.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/articles/std_selected.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/articles/stdmod.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/articles/stdmod_lavaan.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/index.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/add1.std_selected.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/coef.cond_effect.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/coef.stdmod_lavaan.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/cond_effect.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/confint.cond_effect.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/confint.std_selected.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/confint.stdmod_lavaan.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/plotmod.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/print.cond_effect.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/print.std_selected.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/print.stdmod_lavaan.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/print.summary.std_selected.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/sleep_emo_con.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/std_selected.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/stdmod-package.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/stdmod.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/stdmod_lavaan.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/summary.std_selected.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/test_mod1.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/test_mod2.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/test_mod3_miss.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/test_x_1_w_1_v_1_cat1_n_500.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/test_x_1_w_1_v_1_cat1_xw_cov_n_500.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/test_x_1_w_1_v_1_cat1_xw_cov_wcat3_n_500.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/test_x_1_w_1_v_2_n_500.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/update.std_selected.html</loc>
-  </url>
-  <url>
-    <loc>https://sfcheung.github.io/stdmod/reference/vcov.std_selected.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://sfcheung.github.io/stdmod/404.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/LICENSE-text.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/articles/cond_effect.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/articles/index.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/articles/moderation.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/articles/plotmod.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/articles/std_selected.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/articles/stdmod.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/articles/stdmod_lavaan.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/authors.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/index.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/news/index.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/add1.std_selected.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/coef.cond_effect.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/coef.stdmod_lavaan.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/cond_effect.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/confint.cond_effect.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/confint.std_selected.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/confint.stdmod_lavaan.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/index.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/plotmod.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/print.cond_effect.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/print.std_selected.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/print.stdmod_lavaan.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/print.summary.std_selected.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/sleep_emo_con.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/std_selected.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/stdmod-package.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/stdmod.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/stdmod_lavaan.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/summary.std_selected.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/test_mod1.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/test_mod2.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/test_mod3_miss.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/test_x_1_w_1_v_1_cat1_n_500.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/test_x_1_w_1_v_1_cat1_xw_cov_n_500.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/test_x_1_w_1_v_1_cat1_xw_cov_wcat3_n_500.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/test_x_1_w_1_v_2_n_500.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/update.std_selected.html</loc></url>
+<url><loc>https://sfcheung.github.io/stdmod/reference/vcov.std_selected.html</loc></url>
 </urlset>
+
