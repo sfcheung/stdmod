@@ -1,4 +1,4 @@
-# stdmod 0.2.10.2
+# stdmod 0.2.11
 
 ## Miscellaneous
 
