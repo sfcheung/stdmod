@@ -149,6 +149,9 @@ cond_effect <- function(output,
                       w_from_mean_in_sd = 1,
                       w_values = NULL
                       ) {
+    if (n_inter(output) > 1) {
+      stop("Only support a model with one interaction term.")
+    }
     mf0 <- stats::model.frame(output)
     w_method <- match.arg(w_method)
     x0 <- deparse(substitute(x))

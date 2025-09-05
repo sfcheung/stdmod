@@ -8,3 +8,10 @@ sd2 <- function(x) {
         return(stats::sd(x))
       }
   }
+
+#' @noRd
+
+# Find the number of interaction terms
+n_inter <- function(lm_out) {
+  sum(grepl(":", labels(stats::terms(lm_out)), fixed = TRUE))
+}

@@ -1,3 +1,12 @@
+# stdmod 0.2.11.1
+
+## Miscellaneous
+
+- `cond_effect()` now explicitly raises
+  an error if used on a regression model
+  with more than one interaction term.
+  (0.2.11.1).
+
 # stdmod 0.2.11
 
 ## Miscellaneous
@@ -26,7 +35,7 @@
   term). (0.2.9.1)
 
 - Added the argument `w_values` to
-  `cond_effect()` and `plolmod()`.
+  `cond_effect()` and `plotmod()`.
   Users can specify the
   values of the moderator (`w`)
   to be used to compute the conditional
