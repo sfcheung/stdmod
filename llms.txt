@@ -1,0 +1,200 @@
+# stdmod: Standardized Moderation
+
+(Version 0.2.11.1, updated on 2026-01-04, [release
+history](https://sfcheung.github.io/stdmod/news/index.html))
+
+(Important changes since 0.2.0.0: Bootstrap confidence intervals and
+variance-covariance matrix of estimates are the defaults of
+[`confint()`](https://rdrr.io/r/stats/confint.html) and
+[`vcov()`](https://rdrr.io/r/stats/vcov.html) for the output of
+[`std_selected_boot()`](https://sfcheung.github.io/stdmod/reference/std_selected.md).)
+
+This package includes functions for computing a standardized moderation
+effect and forming its confidence interval by nonparametric
+bootstrapping correctly. It was described briefly in the following
+publication ([OSF project page](https://osf.io/ac8de/)). It supports
+moderated regression conducted by
+[`stats::lm()`](https://rdrr.io/r/stats/lm.html) and path analysis with
+product term conducted by
+[`lavaan::lavaan()`](https://rdrr.io/pkg/lavaan/man/lavaan.html).
+
+- Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., &
+  Vong, W. N. (2022) Improving an old way to measure moderation effect
+  in standardized units. *Health Psychology, 41*(7), 502-505.
+  <https://doi.org/10.1037/hea0001188>.
+
+More information on this package:
+
+<https://sfcheung.github.io/stdmod/>
+
+## Quick Links:
+
+- [stdmod](https://sfcheung.github.io/stdmod/articles/stdmod.html): A
+  quick start on how to use
+  [`std_selected()`](https://sfcheung.github.io/stdmod/reference/std_selected.md)
+  and
+  [`std_selected_boot()`](https://sfcheung.github.io/stdmod/reference/std_selected.md),
+  the two main functions, to standardize selected variables in a
+  regression model and refit the model.
+
+- [moderation](https://sfcheung.github.io/stdmod/articles/moderation.html):
+  How to use
+  [`std_selected()`](https://sfcheung.github.io/stdmod/reference/std_selected.md)
+  and
+  [`std_selected_boot()`](https://sfcheung.github.io/stdmod/reference/std_selected.md)
+  to compute standardized moderation effect and form its nonparametric
+  bootstrap confidence interval.
+
+- [std_selected](https://sfcheung.github.io/stdmod/articles/std_selected.html):
+  How to use
+  [`std_selected()`](https://sfcheung.github.io/stdmod/reference/std_selected.md)
+  to mean center or standardize selected variables in any regression
+  models, and use
+  [`std_selected_boot()`](https://sfcheung.github.io/stdmod/reference/std_selected.md)
+  to form nonparametric bootstrap confidence intervals for standardized
+  regression coefficients (*betas* in psychology literature).
+
+- [plotmod](https://sfcheung.github.io/stdmod/articles/plotmod.html):
+  How to generate a typical plot of moderation effect using
+  [`plotmod()`](https://sfcheung.github.io/stdmod/reference/plotmod.md).
+
+- [cond_effect](https://sfcheung.github.io/stdmod/articles/cond_effect.html):
+  How to compute conditional effects of the predictor for selected
+  levels of the moderator, and form nonparametric bootstrap confidence
+  intervals these effects.
+
+# Installation
+
+The stable CRAN version can be installed by
+[`install.packages()`](https://rdrr.io/r/utils/install.packages.html):
+
+    install.packages("stdmod")
+
+The latest version of this package at GitHub can be installed by
+`remotes::install_github()`:
+
+    remotes::install_github("sfcheung/stdmod")
+
+# Implementation
+
+The main function,
+[`std_selected()`](https://sfcheung.github.io/stdmod/reference/std_selected.md),
+accepts an [`lm()`](https://rdrr.io/r/stats/lm.html) output,
+standardizes variables by users, and update the results. If interaction
+terms are present, they will be formed after the standardization. If
+bootstrap confidence intervals are requested using
+[`std_selected_boot()`](https://sfcheung.github.io/stdmod/reference/std_selected.md),
+both standardization and regression will be repeated in each bootstrap
+sample, ensuring that the sampling variability of the standardizers
+(e.g., the standard deviations of the selected variables), are also
+taken into account.
+
+# Issues
+
+If you have any suggestions and found any bugs, please feel feel to open
+a GitHub issue. Thanks.
+
+# Package index
+
+## Standardized Moderation Effect
+
+Standardize selected variables and form nonparametric bootstrapping
+confidence intervals.
+[`std_selected()`](https://sfcheung.github.io/stdmod/reference/std_selected.md)
+and
+[`std_selected_boot()`](https://sfcheung.github.io/stdmod/reference/std_selected.md)
+also support mean-centering and regression models without interaction
+terms.
+[`stdmod_lavaan()`](https://sfcheung.github.io/stdmod/reference/stdmod_lavaan.md)
+provides preliminary support for interaction terms in a model fitted by
+[`lavaan::lavaan()`](https://rdrr.io/pkg/lavaan/man/lavaan.html).
+
+- [`std_selected()`](https://sfcheung.github.io/stdmod/reference/std_selected.md)
+  [`std_selected_boot()`](https://sfcheung.github.io/stdmod/reference/std_selected.md)
+  : Standardize Variables in a Regression Model
+- [`stdmod_lavaan()`](https://sfcheung.github.io/stdmod/reference/stdmod_lavaan.md)
+  : Standardized Moderation Effect and Its Bootstrap CI in 'lavaan'
+- [`stdmod()`](https://sfcheung.github.io/stdmod/reference/stdmod.md)
+  [`stdmod_boot()`](https://sfcheung.github.io/stdmod/reference/stdmod.md)
+  : Standardized Moderation Effect Given an 'lm' Output
+
+## Helper Functions
+
+Plot moderation effects or compute conditional effects for specific
+levels of the moderators.
+
+- [`plotmod()`](https://sfcheung.github.io/stdmod/reference/plotmod.md)
+  : Moderation Effect Plot
+- [`cond_effect()`](https://sfcheung.github.io/stdmod/reference/cond_effect.md)
+  [`cond_effect_boot()`](https://sfcheung.github.io/stdmod/reference/cond_effect.md)
+  : Conditional Effects
+
+## Other Functions
+
+- [`summary(`*`<std_selected>`*`)`](https://sfcheung.github.io/stdmod/reference/summary.std_selected.md)
+  : Summary Method for a 'std_selected' Class Object
+- [`update(`*`<std_selected>`*`)`](https://sfcheung.github.io/stdmod/reference/update.std_selected.md)
+  : The 'update' Method for a 'std_selected' Class Object
+- [`vcov(`*`<std_selected>`*`)`](https://sfcheung.github.io/stdmod/reference/vcov.std_selected.md)
+  : The 'vcov' Method for a 'std_selected' Class Object
+- [`add1(`*`<std_selected>`*`)`](https://sfcheung.github.io/stdmod/reference/add1.std_selected.md)
+  : The 'add1' Method for a 'std_selected' Class Object
+- [`confint(`*`<std_selected>`*`)`](https://sfcheung.github.io/stdmod/reference/confint.std_selected.md)
+  : Confidence Intervals for a 'std_selected' Class Object
+- [`print(`*`<std_selected>`*`)`](https://sfcheung.github.io/stdmod/reference/print.std_selected.md)
+  : Print Basic Information of a 'std_selected' Class Object
+- [`print(`*`<cond_effect>`*`)`](https://sfcheung.github.io/stdmod/reference/print.cond_effect.md)
+  : Print a 'cond_effect' Class Object
+- [`coef(`*`<cond_effect>`*`)`](https://sfcheung.github.io/stdmod/reference/coef.cond_effect.md)
+  : Conditional Effect in a 'cond_effect'-Class Object
+- [`confint(`*`<cond_effect>`*`)`](https://sfcheung.github.io/stdmod/reference/confint.cond_effect.md)
+  : Confidence Intervals for a 'cond_effect' Class Object
+- [`print(`*`<summary.std_selected>`*`)`](https://sfcheung.github.io/stdmod/reference/print.summary.std_selected.md)
+  : Print the Summary of a 'std_selected' Class Object
+- [`confint(`*`<stdmod_lavaan>`*`)`](https://sfcheung.github.io/stdmod/reference/confint.stdmod_lavaan.md)
+  : Confidence Intervals for a 'stdmod_lavaan' Class Object
+- [`print(`*`<stdmod_lavaan>`*`)`](https://sfcheung.github.io/stdmod/reference/print.stdmod_lavaan.md)
+  : Print a 'stdmod_lavaan' Class Object
+- [`coef(`*`<stdmod_lavaan>`*`)`](https://sfcheung.github.io/stdmod/reference/coef.stdmod_lavaan.md)
+  : Standardized Moderation Effect in a 'stdmod_lavaan' Class Object
+
+## Datasets
+
+Datasets used in examples.
+
+- [`sleep_emo_con`](https://sfcheung.github.io/stdmod/reference/sleep_emo_con.md)
+  : Sample Dataset: Predicting Sleep Duration
+- [`test_mod1`](https://sfcheung.github.io/stdmod/reference/test_mod1.md)
+  : Sample Dataset: A Path Model With A Moderator
+- [`test_mod2`](https://sfcheung.github.io/stdmod/reference/test_mod2.md)
+  : Sample Dataset: A Path Model With A Moderator
+- [`test_mod3_miss`](https://sfcheung.github.io/stdmod/reference/test_mod3_miss.md)
+  : Sample Dataset: A Path Model With A Moderator
+- [`test_x_1_w_1_v_1_cat1_n_500`](https://sfcheung.github.io/stdmod/reference/test_x_1_w_1_v_1_cat1_n_500.md)
+  : Sample Dataset: One IV, One Moderator, Two Covariates
+- [`test_x_1_w_1_v_1_cat1_xw_cov_n_500`](https://sfcheung.github.io/stdmod/reference/test_x_1_w_1_v_1_cat1_xw_cov_n_500.md)
+  : Sample Dataset: One IV, One Moderator, Two Covariates
+- [`test_x_1_w_1_v_1_cat1_xw_cov_wcat3_n_500`](https://sfcheung.github.io/stdmod/reference/test_x_1_w_1_v_1_cat1_xw_cov_wcat3_n_500.md)
+  : Sample Dataset: One IV, One 3-Category Moderator, Two Covariates
+- [`test_x_1_w_1_v_2_n_500`](https://sfcheung.github.io/stdmod/reference/test_x_1_w_1_v_2_n_500.md)
+  : Sample Dataset: One IV, One Moderator, Two Covariates
+
+# Articles
+
+### Get Started
+
+- [A Quick Start Guide on Using
+  std_selected()](https://sfcheung.github.io/stdmod/articles/stdmod.md):
+
+### Articles
+
+- [Standardized Moderation Effect by
+  std_selected()](https://sfcheung.github.io/stdmod/articles/moderation.md):
+- [Mean Center and Standardize Selected Variable by
+  std_selected()](https://sfcheung.github.io/stdmod/articles/std_selected.md):
+- [Moderation Effects Plots by
+  plotmod()](https://sfcheung.github.io/stdmod/articles/plotmod.md):
+- [Conditional Effects by
+  cond_effect()](https://sfcheung.github.io/stdmod/articles/cond_effect.md):
+- [Standardized Moderation Effect in a Path Model by
+  stdmod_lavaan()](https://sfcheung.github.io/stdmod/articles/stdmod_lavaan.md):

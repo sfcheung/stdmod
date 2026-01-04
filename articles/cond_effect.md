@@ -1,0 +1,257 @@
+# Conditional Effects by cond_effect()
+
+## Introduction
+
+This vignette illustrates how to use
+[`cond_effect()`](https://sfcheung.github.io/stdmod/reference/cond_effect.md)
+from the `stdmod` package. More about this package can be found in
+[`vignette("stdmod", package = "stdmod")`](https://sfcheung.github.io/stdmod/articles/stdmod.md)
+or at <https://sfcheung.github.io/stdmod/>.
+
+## What `cond_effect()` Can Do
+
+It can compute the conditional effect of a predictor (the focal
+variable) on an outcome variable (dependent variable) for selected
+levels of the moderator:
+
+    #>   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig
+    #>    High             3.950                      0.012 0.117 0.107 0.915    
+    #>  Medium             3.343                      0.214 0.083 2.560 0.011 *  
+    #>     Low             2.736                      0.415 0.115 3.601 0.000 ***
+
+It can also compute standardized conditional moderation effect of this
+predictor:
+
+    #>   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig
+    #>    High             1.000                      0.007 0.063 0.107 0.915    
+    #>  Medium             0.000                      0.115 0.045 2.560 0.011 *  
+    #>     Low            -1.000                      0.223 0.062 3.601 0.000 ***
+
+Nonparametric bootstrap percentile confidence interval can also be
+formed for standardized conditional effect using
+[`cond_effect_boot()`](https://sfcheung.github.io/stdmod/reference/cond_effect.md).
+
+[`cond_effect()`](https://sfcheung.github.io/stdmod/reference/cond_effect.md)
+is not designed to be a versatile tool. It is designed to be a function
+“good-enough” for common scenarios. Nevertheless, it can report some
+useful information along with the conditional effects, as demonstrated
+below.
+
+## Major Arguments
+
+### Regression Output, Predictor (`x`), and Moderator (`w`)
+
+- `output`: The output of [`lm()`](https://rdrr.io/r/stats/lm.html),
+  [`std_selected()`](https://sfcheung.github.io/stdmod/reference/std_selected.md),
+  or
+  [`std_selected_boot()`](https://sfcheung.github.io/stdmod/reference/std_selected.md),
+  with at least one interaction term. Bootstrap estimates in
+  [`std_selected_boot()`](https://sfcheung.github.io/stdmod/reference/std_selected.md)
+  will be ignored because bootstrapping will be done for each level
+  again.
+
+- `x`: The predictor (focal variable).
+
+- `w`: The moderator.
+
+These are the only required arguments. Just setting them can generate
+the graph:
+
+``` r
+library(stdmod)
+data(sleep_emo_con)
+lm_out <- lm(sleep_duration ~ age + gender +
+                              emotional_stability * conscientiousness,
+                              sleep_emo_con)
+cond_out <- cond_effect(output = lm_out,
+                        x = "emotional_stability",
+                        w = "conscientiousness")
+cond_out
+#> The effects of emotional_stability on sleep_duration, conditional on conscientiousness:
+#> 
+#>   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig
+#>    High             3.950                      0.012 0.117 0.107 0.915    
+#>  Medium             3.343                      0.214 0.083 2.560 0.011 *  
+#>     Low             2.736                      0.415 0.115 3.601 0.000 ***
+#> 
+#> 
+#> The regression model:
+#> 
+#>  sleep_duration ~ age + gender + emotional_stability * conscientiousness
+#> 
+#> Interpreting the levels of conscientiousness:
+#> 
+#>   Level conscientiousness % Below From Mean (in SD)
+#>    High             3.950   83.60              1.00
+#>  Medium             3.343   49.60              0.00
+#>     Low             2.736   16.60             -1.00
+#> 
+#> - % Below: The percent of cases equal to or less than a level.
+#> - From Mean (in SD): Distance of a level from the mean, in standard
+#>   deviation (+ve above, -ve below).
+```
+
+By default, the print method of
+[`cond_effect()`](https://sfcheung.github.io/stdmod/reference/cond_effect.md)
+output prints the conditional effects, OLS standard errors, *t*
+statistics, *p*-values, and significant test results, along with other
+information such as the value of each level of the moderator, its
+distance from the mean, the percentage of cases equal to or less than
+this level. The regression model is also printed. If only the table of
+effects is needed, call [`print()`](https://rdrr.io/r/base/print.html)
+and set `table_only` to `TRUE`:
+
+``` r
+print(cond_out, table_only = TRUE)
+#>   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig
+#>    High             3.950                      0.012 0.117 0.107 0.915    
+#>  Medium             3.343                      0.214 0.083 2.560 0.011 *  
+#>     Low             2.736                      0.415 0.115 3.601 0.000 ***
+```
+
+More options in printing the output can be found in the help page of
+[`print.cond_effect()`](https://sfcheung.github.io/stdmod/reference/print.cond_effect.md).
+
+## Levels of the Moderator
+
+### Numeric Moderators
+
+If the moderator is a numeric variable, then, by default, the
+conditional effects for three levels of the moderators will be used: one
+standard deviation (SD) to the mean (“Low”), mean (“Medium”), and one SD
+above mean (“High”).
+
+Users can also use percentiles to define “Low”, “Medium”, and “High” by
+setting `w_method` to `"percentile"`. The default are 16th percentile,
+50th percentile, and 84th percentile, which corresponds approximately to
+one SD below mean, mean, and one SD above mean, respectively, for a
+normal distribution.
+
+``` r
+data(sleep_emo_con)
+lm_out <- lm(sleep_duration ~ age + gender +
+                              emotional_stability * conscientiousness,
+                              sleep_emo_con)
+cond_out <- cond_effect(output = lm_out,
+                        x = "emotional_stability",
+                        w = "conscientiousness",
+                        w_method = "percentile")
+print(cond_out, title = FALSE, model = FALSE)
+#>   Level conscientiousness emotional_stability Effect  S.E.      t     p Sig
+#>    High             4.000                     -0.004 0.122 -0.034 0.973    
+#>  Medium             3.400                      0.195 0.084  2.322 0.021 *  
+#>     Low             2.700                      0.427 0.119  3.600 0.000 ***
+#> 
+#> Interpreting the levels of conscientiousness:
+#> 
+#>   Level conscientiousness % Below From Mean (in SD)
+#>    High             4.000   87.20              1.08
+#>  Medium             3.400   57.00              0.09
+#>     Low             2.700   16.60             -1.06
+#> 
+#> - % Below: The percent of cases equal to or less than a level.
+#> - From Mean (in SD): Distance of a level from the mean, in standard
+#>   deviation (+ve above, -ve below).
+```
+
+Note that the empirical percentage of cases equal to or less than a
+level may not be exactly equal to that for the requested percentile if
+the number of cases is small and/or the number of unique values of the
+moderator is small.
+
+### Categorical Moderators
+
+If the moderator is a categorical variable (a string variable or a
+factor), then the conditional effect of the moderator for each value of
+this categorical moderator will be printed:
+
+``` r
+set.seed(61452)
+sleep_emo_con$city <- sample(c("Alpha", "Beta", "Gamma"),
+                               nrow(sleep_emo_con), replace = TRUE)
+lm_cat <- lm(sleep_duration ~ age + gender + emotional_stability*city,
+                              sleep_emo_con)
+cond_out <- cond_effect(lm_cat,
+                        x = "emotional_stability",
+                        w = "city")
+print(cond_out, title = FALSE, model = FALSE)
+#>  Level  city emotional_stability Effect  S.E.     t     p Sig
+#>  Alpha Alpha                      0.408 0.135 3.027 0.003  **
+#>   Beta  Beta                      0.351 0.147 2.388 0.017  * 
+#>  Gamma Gamma                      0.020 0.149 0.131 0.896
+```
+
+## Nonparametric Bootstrap Confidence Intervals
+
+If one or more variables are standardized, the OLS confidence intervals
+are not appropriate ([Cheung, Cheung, Lau, Hui, & Vong,
+2022](https://doi.org/10.1037/hea0001188); [Yuan & Chan,
+2011](https://doi.org/10.1007/s11336-011-9224-6)). Users can call
+[`cond_effect_boot()`](https://sfcheung.github.io/stdmod/reference/cond_effect.md)
+to use nonparametric bootstrapping to form the percentile confidence
+interval for each conditional effect.
+
+- `conf`: The level of confidence, expressed as a proportion. Default is
+  .95, requesting a 95% confidence interval.
+- `nboot` The number of bootstrap samples to drawn. Should be at least
+  2000 but 5000 is preferable.
+
+To make the results reproducible, call
+[`set.seed()`](https://rdrr.io/r/base/Random.html) before calling
+[`cond_effect_boot()`](https://sfcheung.github.io/stdmod/reference/cond_effect.md),
+as illustrated below.
+
+``` r
+lm_out <- lm(sleep_duration ~ age + gender +
+                              emotional_stability * conscientiousness,
+                              sleep_emo_con)
+# Standardize all variables and do the moderated regression again
+# Use to_standardize as a shortcut to to_center and to_scale
+lm_std <- std_selected(lm_out,
+                       to_standardize = ~ .)
+set.seed(897043)
+cond_std <- cond_effect_boot(output = lm_std,
+                             x = "emotional_stability",
+                             w = "conscientiousness",
+                             nboot = 2000)
+print(cond_std, model = FALSE, title = FALSE, level_info = FALSE)
+#>   Level conscientiousness emotional_stability Effect CI Lower CI Upper  S.E.
+#>    High             1.000                      0.007   -0.107    0.117 0.063
+#>  Medium             0.000                      0.115    0.029    0.202 0.045
+#>     Low            -1.000                      0.223    0.071    0.364 0.062
+#>      t     p Sig
+#>  0.107 0.915    
+#>  2.560 0.011 *  
+#>  3.601 0.000 ***
+#> 
+#> [CI Lower, CI Upper] shows the 95% nonparametric bootstrap confidence
+#> interval(s) (based on 2000 bootstrap samples).
+#> 
+#> Note:
+#> 
+#> - The variable(s) sleep_duration, emotional_stability,
+#>   conscientiousness is/are standardized.
+#> - The conditional effects are the standardized effects of
+#>   emotional_stability on sleep_duration.
+```
+
+## Further Information
+
+Please refer to the help page of
+[`cond_effect()`](https://sfcheung.github.io/stdmod/reference/cond_effect.md)
+and
+[`cond_effect_boot()`](https://sfcheung.github.io/stdmod/reference/cond_effect.md)
+for other options available, such as defining the number of SDs from
+mean to define “Low” and “High”, the percentiles to be used, or using
+parallel processing to speed up bootstrapping.
+
+## Reference
+
+Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
+(2022) Improving an old way to measure moderation effect in standardized
+units. *Health Psychology*, *41*(7), 502-505.
+<https://doi.org/10.1037/hea0001188>.
+
+Yuan, K.-H., & Chan, W. (2011). Biases and standard errors of
+standardized regression coefficients. *Psychometrika, 76*(4), 670-690.
+<https://doi.org/10.1007/s11336-011-9224-6>

@@ -1,0 +1,259 @@
+# Standardized Moderation Effect in a Path Model by stdmod_lavaan()
+
+## Purpose
+
+This document demonstrates how to use
+[`stdmod_lavaan()`](https://sfcheung.github.io/stdmod/reference/stdmod_lavaan.md)
+from the package `stdmod` to compute the standardized moderation effect
+in a path model fitted by
+[`lavaan::sem()`](https://rdrr.io/pkg/lavaan/man/sem.html).
+
+More about this package can be found in
+[`vignette("stdmod", package = "stdmod")`](https://sfcheung.github.io/stdmod/articles/stdmod.md)
+or at <https://sfcheung.github.io/stdmod/>.
+
+## Setup the Environment
+
+``` r
+library(stdmod) # For computing the standardized moderation effect conveniently
+library(lavaan) # For doing path analysis in lavaan.
+```
+
+## Load the Dataset
+
+``` r
+data(test_mod1)
+round(head(test_mod1, 3), 3)
+#>       dv     iv    mod    med   cov1   cov2
+#> 1 23.879 -0.133 -0.544 10.310 -0.511 -0.574
+#> 2 23.096  1.456  1.539 11.384  0.094 -0.264
+#> 3 23.201  0.319  1.774  9.615 -0.172  0.488
+```
+
+This test data set has 300 cases, six variables, all continuous.
+
+## Fit the Model by `lavaan::sem()`
+
+The product term can be formed manually or by the colon operator, `:`.
+[`stdmod_lavaan()`](https://sfcheung.github.io/stdmod/reference/stdmod_lavaan.md)
+will work in both cases.
+
+This is the model to be tested:
+
+``` r
+mod <-
+"
+med ~ iv + mod + iv:mod + cov1
+dv ~ med + cov2
+"
+fit <- sem(mod, test_mod1, fixed.x = FALSE)
+summary(fit)
+#> lavaan 0.6-21.2434 ended normally after 1 iteration
+#> 
+#>   Estimator                                         ML
+#>   Optimization method                           NLMINB
+#>   Number of model parameters                        23
+#> 
+#>   Number of observations                           300
+#> 
+#> Model Test User Model:
+#>                                                       
+#>   Test statistic                                 1.058
+#>   Degrees of freedom                                 5
+#>   P-value (Chi-square)                           0.958
+#> 
+#> Parameter Estimates:
+#> 
+#>   Standard errors                             Standard
+#>   Information                                 Expected
+#>   Information saturated (h1) model          Structured
+#> 
+#> Regressions:
+#>                    Estimate  Std.Err  z-value  P(>|z|)
+#>   med ~                                               
+#>     iv                0.221    0.030    7.264    0.000
+#>     mod               0.104    0.030    3.489    0.000
+#>     iv:mod            0.257    0.025   10.169    0.000
+#>     cov1              0.104    0.025    4.099    0.000
+#>   dv ~                                                
+#>     med               0.246    0.041    5.962    0.000
+#>     cov2              0.191    0.023    8.324    0.000
+#> 
+#> Covariances:
+#>                    Estimate  Std.Err  z-value  P(>|z|)
+#>   iv ~~                                               
+#>     mod               0.481    0.063    7.606    0.000
+#>     iv:mod           -0.149    0.059   -2.501    0.012
+#>     cov1             -0.033    0.058   -0.575    0.565
+#>     cov2             -0.071    0.059   -1.216    0.224
+#>   mod ~~                                              
+#>     iv:mod           -0.180    0.062   -2.923    0.003
+#>     cov1             -0.060    0.059   -1.010    0.313
+#>     cov2             -0.107    0.061   -1.763    0.078
+#>   iv:mod ~~                                           
+#>     cov1             -0.051    0.061   -0.837    0.403
+#>     cov2              0.063    0.063    1.001    0.317
+#>   cov1 ~~                                             
+#>     cov2              0.071    0.061    1.158    0.247
+#> 
+#> Variances:
+#>                    Estimate  Std.Err  z-value  P(>|z|)
+#>    .med               0.201    0.016   12.247    0.000
+#>    .dv                0.169    0.014   12.247    0.000
+#>     iv                0.954    0.078   12.247    0.000
+#>     mod               1.017    0.083   12.247    0.000
+#>     iv:mod            1.088    0.089   12.247    0.000
+#>     cov1              1.039    0.085   12.247    0.000
+#>     cov2              1.076    0.088   12.247    0.000
+```
+
+The results show that `mod` significantly moderates the effect of `iv`
+on `med`.
+
+## Compute the Standardized Moderation Effect
+
+As in the case of regression, the coefficient of `iv:mod` in the
+standardized solution is not the desired standardized coefficient
+because it standardizes the product term.
+
+``` r
+standardizedSolution(fit)[3, ]
+#>   lhs op    rhs est.std    se      z pvalue ci.lower ci.upper
+#> 3 med  ~ iv:mod   0.466 0.043 10.842      0    0.382     0.55
+```
+
+After fitting the path model by
+[`lavaan::lavaan()`](https://rdrr.io/pkg/lavaan/man/lavaan.html), we can
+use
+[`stdmod_lavaan()`](https://sfcheung.github.io/stdmod/reference/stdmod_lavaan.md)
+to compute the standardized moderation effect using the standard
+deviations of the focal variable, the moderator, and the outcome
+variable [(Cheung, Cheung, Lau, Hui, & Vong,
+2022)](https://doi.org/10.1037/hea0001188).
+
+The minimal arguments are:
+
+- `fit`: The output from
+  [`lavaan::lavaan()`](https://rdrr.io/pkg/lavaan/man/lavaan.html) and
+  its wrappers, such as
+  [`lavaan::sem()`](https://rdrr.io/pkg/lavaan/man/sem.html).
+- `x`: The focal variable, the variable with its effect on the outcome
+  variable being moderated.
+- `y`: The outcome variable.
+- `w`: The moderator.
+- `x_w`: The product term.
+
+``` r
+fit_iv_mod_std <- stdmod_lavaan(fit = fit,
+                                x = "iv",
+                                y = "med",
+                                w = "mod",
+                                x_w = "iv:mod")
+fit_iv_mod_std
+#> 
+#> Call:
+#> stdmod_lavaan(fit = fit, x = "iv", y = "med", w = "mod", x_w = "iv:mod")
+#> 
+#>                  Variable
+#> Focal Variable         iv
+#> Moderator             mod
+#> Outcome Variable      med
+#> Product Term       iv:mod
+#> 
+#>              lhs op    rhs   est    se      z pvalue ci.lower ci.upper
+#> Original     med  ~ iv:mod 0.257 0.025 10.169      0    0.208    0.307
+#> Standardized med  ~ iv:mod 0.440    NA     NA     NA       NA       NA
+```
+
+The standardized moderation effect of `mod` on the `iv`-`med` path is
+0.440.
+
+## Form Bootstrap Confidence Interval
+
+[`stdmod_lavaan()`](https://sfcheung.github.io/stdmod/reference/stdmod_lavaan.md)
+can also be used to form nonparametric bootstrap confidence interval for
+the standardized moderation effect.
+
+There are two approaches to do this. First, if bootstrap confidence
+intervals was requested when fitting the model, the stored bootstrap
+estimates will be used. This is efficient because there is no need to do
+bootstrapping again.
+
+We fit the model again, with bootstrapping:
+
+``` r
+fit <- sem(mod, test_mod1, fixed.x = FALSE,
+           se = "boot",
+           bootstrap = 2000,
+           iseed = 987543)
+```
+
+If bootstrapping has been done when fitting the model, just adding
+`boot_ci = TRUE` is enough to request nonparametric percentile bootstrap
+confidence interval:
+
+``` r
+fit_iv_mod_std_ci <- stdmod_lavaan(fit = fit,
+                                   x = "iv",
+                                   y = "med",
+                                   w = "mod",
+                                   x_w = "iv:mod",
+                                   boot_ci = TRUE)
+fit_iv_mod_std_ci
+#> 
+#> Call:
+#> stdmod_lavaan(fit = fit, x = "iv", y = "med", w = "mod", x_w = "iv:mod", 
+#>     boot_ci = TRUE)
+#> 
+#>                  Variable
+#> Focal Variable         iv
+#> Moderator             mod
+#> Outcome Variable      med
+#> Product Term       iv:mod
+#> 
+#>              lhs op    rhs   est    se     z pvalue ci.lower ci.upper
+#> Original     med  ~ iv:mod 0.257 0.035 7.298      0    0.184    0.322
+#> Standardized med  ~ iv:mod 0.440    NA    NA     NA    0.322    0.539
+#> 
+#> Confidence interval of standardized moderation effect:
+#> - Level of confidence: 95%
+#> - Bootstrapping Method: Nonparametric
+#> - Type: Percentile
+#> - Number of bootstrap samples requests: 
+#> - Number of bootstrap samples with valid results: 2000
+#> 
+#> NOTE: Bootstrapping conducted by the method in 0.2.7.5 or later. To use
+#> the method in the older versions for reproducing previous results, set
+#> 'use_old_version' to 'TRUE'.
+```
+
+The 95% confidence interval of the standardized moderation effect is
+0.322 to 0.539.
+
+The second approach, not covered here, uses
+[`do_boot()`](https://sfcheung.github.io/manymome/articles/do_boot.html)
+from the [`manymome`](https://sfcheung.github.io/manymome/index.html)
+package. to generate bootstrap estimates. To use the stored bootstrap
+estimates, set `boot_out` to the output of `do_boot()`. The stored
+bootstrap estimates will then be used. This method can be used when
+non-bootstrapping confidence intervals are needed when fitting the
+model.
+
+## Remarks
+
+The function
+[`stdmod_lavaan()`](https://sfcheung.github.io/stdmod/reference/stdmod_lavaan.md)
+can be used for more complicated path models. The computation of the
+standardized moderation effect in a path model depends only on the
+standard deviations of the three variables involved (`x`, `w`, and `y`).
+
+## Reference(s)
+
+The computation of the standardized moderation effect is based on the
+simple formula presented in the following manuscript, using the standard
+deviations of the outcome variable, focal variable, and the moderator:
+
+Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N.
+(2022) Improving an old way to measure moderation effect in standardized
+units. *Health Psychology*, *41*(7), 502-505.
+<https://doi.org/10.1037/hea0001188>.
