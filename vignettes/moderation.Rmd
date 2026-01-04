@@ -306,7 +306,8 @@ omitted.
 
 
 
-```r
+
+``` r
 set.seed(649017)
 lm_xwy_std_ci <- std_selected_boot(lm_out,
                                    to_standardize = ~ .,
@@ -320,8 +321,7 @@ If the default options are acceptable, the only additional argument is `nboot`.
 summary(lm_xwy_std_ci)
 #> 
 #> Call to std_selected_boot():
-#> std_selected_boot(lm_out = lm_out, to_scale = ~., to_center = ~., 
-#>     nboot = 2000)
+#> std_selected_boot(lm_out = lm_out, to_standardize = ~., nboot = 2000)
 #> 
 #> Selected variable(s) are centered by mean and/or scaled by SD
 #> - Variable(s) centered: sleep_duration age gender emot cons
