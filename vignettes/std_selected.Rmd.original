@@ -1,0 +1,327 @@
+---
+title: "Mean Center and Standardize Selected Variable by std_selected()"
+author: "Shu Fai Cheung and David Weng Ngai Vong"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Mean Center and Standardize Selected Variable by std_selected()}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width  = 6,
+  fig.height = 4,
+  fig.align = "center",
+  fig.path = ""
+)
+```
+
+# Purpose
+
+Instead of standardizing all variables, even variables that (a) are categorical
+and should not be standardized, or (b) measured on meaningful unites and do
+not need to be standardized, `std_selected()` from the package
+`stdmod` allows users to have more
+control on how standardization is to be conducted.
+
+A moderated regression model is used as an example but it can also be used for
+regression models without interaction terms.
+
+More about this package can be found
+in `vignette("stdmod", package = "stdmod")`
+or at [https://sfcheung.github.io/stdmod/](https://sfcheung.github.io/stdmod/).
+
+# Setup the Environment
+
+```{r setup}
+library(stdmod)
+```
+
+# Load the Dataset
+
+```{r load_dataset}
+data(sleep_emo_con)
+head(sleep_emo_con, 3)
+```
+
+This data set has 500 cases of data. The variables are sleep duration,
+age, gender,  and the scores from two personality scales, emotional stability
+and conscientiousness of the IPIP Big Five markers. Please refer to
+(citation to be included) for the detail of the data set.
+
+The names of some variables are shortened for readability:
+
+```{r shorten_names}
+colnames(sleep_emo_con)[3:4] <- c("cons", "emot")
+head(sleep_emo_con, 3)
+```
+
+# Moderated Regression
+
+Suppose we are interested in predicting sleep duration by emotional
+stability, after controlling for gender and age. However, we suspect that the
+effect of emotional stability, if any, may be moderated by conscientiousness.
+Therefore, we conduct a moderated regression as follow:
+
+```{r mod_reg}
+lm_raw <- lm(sleep_duration ~ age + gender + emot * cons,
+             data = sleep_emo_con)
+summary(lm_raw)
+```
+
+The results show that conscientiousness significantly moderates the effect of
+emotional stability on sleep duration.
+
+This package has a simple function, `plotmod()`, for generating a typical plot
+of the moderation effect:
+
+```{r std_selected_lm_raw_plot}
+plotmod(lm_raw,
+        x = "emot",
+        w = "cons",
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")
+```
+
+The function `plotmod()` also prints the conditional effects of the predictor,
+emotional stability in this example.
+
+# Mean Center the Moderator
+
+To know the effect of emotional stability when conscientiousness is equal to its
+mean, we can center conscientiousness by its mean in the data and redo the
+moderated regression. Instead of creating the new variable and rerun the
+regression, we can pass the `lm()` output to `std_selected()` and specify the
+variables to be mean centered:
+
+
+```{r lm_w_centered}
+lm_w_centered <- std_selected(lm_raw,
+                              to_center = ~ cons)
+printCoefmat(summary(lm_w_centered)$coefficients, digits = 3)
+```
+
+The argument for meaning centering is `to_center`. The variable is specified
+in the formula form, placing them on the right hand side of the formula.
+
+In this example, when conscientiousness
+is at mean level, the effect of emotional stability is
+`r formatC(coef(lm_w_centered)["emot"], 4, format = "f")`.
+
+# Mean Center The Moderator and the Focal Variable
+
+This example demonstrates centering more than one variable. In the following
+model, both emotional stability and conscientiousness are centered. They are
+placed after `~` and joined by `+`.
+
+```{r lm_xw_centered}
+lm_xw_centered <- std_selected(lm_raw,
+                               to_center = ~ emot + cons)
+printCoefmat(summary(lm_xw_centered)$coefficients, digits = 3)
+```
+
+# Standardize The Moderator and The Focal Variable
+
+To standardize a variable we first mean center it and then scale it by its
+standard deviation. Scaling is done by listing the variable on `to_scale`.
+The input format is identical to that of `to_center`.
+
+```r
+lm_xw_std <- std_selected(lm_raw,
+                          to_center = ~ emot + cons,
+                          to_scale  = ~ emot + cons)
+```
+
+Since 0.2.6.3 of `stdmod`, `to_standardize` can be used as a shortcut.
+Listing a variable on `to_standardize` is equivalent to listing it
+on both `to_center` and `to_scale`. Therefore, the following
+call can also be used:
+
+```{r lm_xw_std}
+lm_xw_std <- std_selected(lm_raw,
+                          to_standardize = ~ emot + cons)
+```
+
+```{r lm_xw_std_coef}
+printCoefmat(summary(lm_xw_std)$coefficients, digits = 3)
+```
+
+In this example, when conscientiousness
+is at mean level, for each one standard deviation increase of
+emotional stability, the predicted sleep duration increases by
+`r formatC(coef(lm_xw_std)["emot"], 4, format = "f")` hour.
+
+```{r std_selected_lm_xw_std_plot}
+plotmod(lm_xw_std,
+        x = "emot",
+        w = "cons",
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")
+```
+
+The function `plotmod()` automatically checks whether a variable is
+standardized. If yes, it will report this in the plot as table note on the
+bottom.
+
+The pattern of
+the plot does not change. However, the conditional effects reported
+in the graph are now
+based on the model with emotional stability and conscientiousness
+standardized.
+
+# Standardize The Moderator, The Focal Variable, and the Outcome Variable
+
+We can also mean center or standardize the outcome variable (dependent
+variable). We
+just add the variable to the right hand side of `~` in `to_center` and
+`to_scale` as appropriate.
+
+```r
+lm_xwy_std <- std_selected(lm_raw,
+                           to_center = ~ emot + cons + sleep_duration,
+                           to_scale  = ~ emot + cons + sleep_duration)
+```
+
+Since 0.2.6.3, `to_standardize` can be used as a shortcut:
+
+```{r lm_xwy_std}
+lm_xwy_std <- std_selected(lm_raw,
+                           to_standardize = ~ emot + cons + sleep_duration)
+printCoefmat(summary(lm_xwy_std)$coefficients, digits = 3)
+```
+
+In this example, when conscientiousness
+is at mean level, the standardized moderation effect of
+emotional stability on sleep duration is
+`r formatC(coef(lm_xwy_std)["emot"], 4, format = "f")`.
+
+```{r std_selected_lm_xwy_std_plot}
+plotmod(lm_xwy_std,
+        x = "emot",
+        w = "cons",
+        x_label = "Emotional Stability",
+        w_label = "Conscientiousness",
+        y_label = "Sleep Duration")
+```
+
+Again, the pattern of
+the plot does not change, but the conditional effects reported
+in the graph are now
+based on the model with emotional stability, conscientiousness,
+and sleep duration standardized.
+
+# Standardize All Variables
+
+If we want to standardize all variables except for categorical variables, if any,
+we can use `~ .` as a shortcut. `std_selected()` will automatically
+skip categorical variables (i.e., factors or string variables in the
+regression model of `lm()`).
+
+```r
+lm_all_std <- std_selected(lm_raw,
+                           to_center = ~ .,
+                           to_scale  = ~ .)
+```
+
+Since 0.2.6.3, `to_standardize` can be used as a shortcut:
+
+```{r lm_all_std}
+lm_all_std <- std_selected(lm_raw,
+                           to_standardize = ~ .)
+printCoefmat(summary(lm_all_std)$coefficients, digits = 3)
+```
+
+# The Usual Standardized Solution
+
+For comparison, this is the results of standardizing all variables, including
+the product term and the categorical variable.
+
+```{r lm_beta}
+library(lm.beta) # For generating the typical standardized solution
+packageVersion("lm.beta")
+lm_usual_std <- lm.beta(lm_raw)
+printCoefmat(summary(lm_usual_std)$coefficients, digits = 3)
+```
+
+In moderated regression, the coefficient of *standardized* product term,
+`r formatC(coef(lm_usual_std)["emot:cons"], 4, format = "f")`,
+is not interpretable. The coefficient of *standardized* gender,
+`r formatC(coef(lm_usual_std)["gendermale"], 4, format = "f")`, is also
+difficult to interpret.
+
+# Improved Confidence Interval For "Betas"
+
+It has been shown (e.g., [Yuan & Chan, 2011](https://doi.org/10.1007/s11336-011-9224-6)) that the standard errors of
+standardized regression coefficients (betas) computed just by standardizing
+the variables
+are biased, and consequently the confidence intervals are also invalid. The
+function `std_selected_boot()` is a wrapper of `std_selected()` that also
+forms the confidence interval of the regression coefficients when standardization
+is conducted,
+using nonparametric bootstrapping as suggested by
+[Cheung, Cheung, Lau, Hui, and Vong (2022)](https://doi.org/10.1037/hea0001188).
+
+We use the same example above that standardizes emotional stability,
+conscientiousness, and sleep duration, to illustrate this function.
+The argument `nboot` specifies the number of nonparametric bootstrap samples.
+The level of confidence set by `conf`. The default is .95, denoting 95%
+confidence intervals. If this is the desired level, this argument can be omitted.
+
+```{r echo = FALSE, eval = FALSE}
+if (file.exists("eg_lm_xwy_std_ci.rds")) {
+    lm_xwy_std_ci <- readRDS("eg_lm_xwy_std_ci.rds")
+  } else {
+    set.seed(58702)
+    lm_xwy_std_ci <- std_selected_boot(lm_raw,
+        to_center = ~ emot + cons + sleep_duration,
+        to_scale  = ~ emot + cons + sleep_duration,
+        nboot = 2000)
+    saveRDS(lm_xwy_std_ci, "eg_lm_xwy_std_ci.rds", compress = "xz")
+  }
+```
+
+```{r}
+set.seed(58702)
+lm_xwy_std_ci <- std_selected_boot(lm_raw,
+                    to_standardize = ~ emot + cons + sleep_duration,
+                    nboot = 2000)
+```
+
+```{r lm_xwy_std_ci_summary}
+summary(lm_xwy_std_ci)
+```
+
+```{r echo = FALSE}
+tmp <- summary(lm_xwy_std_ci)$coefficients
+```
+
+The standardized moderation effect is `r formatC(tmp["emot:cons", "Estimate"], 4, format = "f")`
+, and the 95% nonparametric bootstrap percentile confidence interval is
+`r formatC(tmp["emot:cons", "CI Lower"], 4, format = "f")` to
+`r formatC(tmp["emot:cons", "CI Upper"], 4, format = "f")`.
+
+Note: As a side product, the nonparametric bootstrap confidence of the
+other coefficients are also reported. They can be used for other variables that
+are standardized in the same model, whether they are involved in the moderation or not.
+
+# Further Information
+
+Further information on the functions can be found in their help pages
+(`std_selected()` and `std_selected_boot()`). For example, parallel computation
+can be used when doing bootstrapping, if the number of bootstrapping samples
+requested is large.
+
+# Reference
+
+Cheung, S. F., Cheung, S.-H., Lau, E. Y. Y., Hui, C. H., & Vong, W. N. (2022)
+Improving an old way to measure moderation effect in standardized units.
+*Health Psychology*, *41*(7), 502-505. https://doi.org/10.1037/hea0001188.
+
+Yuan, K.-H., & Chan, W. (2011). Biases and standard errors of standardized
+regression coefficients. *Psychometrika, 76*(4), 670-690. https://doi.org/10.1007/s11336-011-9224-6
