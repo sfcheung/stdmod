@@ -384,7 +384,8 @@ confidence intervals. If this is the desired level, this argument can be omitted
 
 
 
-```r
+
+``` r
 set.seed(58702)
 lm_xwy_std_ci <- std_selected_boot(lm_raw,
                     to_standardize = ~ emot + cons + sleep_duration,
@@ -396,9 +397,8 @@ lm_xwy_std_ci <- std_selected_boot(lm_raw,
 summary(lm_xwy_std_ci)
 #> 
 #> Call to std_selected_boot():
-#> std_selected_boot(lm_out = lm_raw, to_scale = ~emot + cons + 
-#>     sleep_duration, to_center = ~emot + cons + sleep_duration, 
-#>     nboot = 2000)
+#> std_selected_boot(lm_out = lm_raw, to_standardize = ~emot + cons + 
+#>     sleep_duration, nboot = 2000)
 #> 
 #> Selected variable(s) are centered by mean and/or scaled by SD
 #> - Variable(s) centered: emot cons sleep_duration
