@@ -1,6 +1,6 @@
 Package: stdmod
 Title: Standardized Moderation Effect and Its Confidence Interval
-Version: 0.2.11
+Version: 0.2.11.1
 Authors@R:
     c(person(given = "Shu Fai",
            family = "Cheung",
@@ -23,7 +23,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Suggests:
     testthat,
     knitr,

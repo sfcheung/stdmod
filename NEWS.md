@@ -1,3 +1,13 @@
+# stdmod 0.2.11.1
+
+## Miscellaneous
+
+- Updated vignettes to use precomputed
+  files, instead of using stored objects,
+  when bootstrapping is used. This also
+  addressed Issue 127 on GitHub.
+  (0.2.11.1)
+
 # stdmod 0.2.11
 
 ## Miscellaneous
