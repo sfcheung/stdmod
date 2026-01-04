@@ -27,8 +27,6 @@ or at [https://sfcheung.github.io/stdmod/](https://sfcheung.github.io/stdmod/).
 ``` r
 library(stdmod) # For computing the standardized moderation effect conveniently
 library(lavaan) # For doing path analysis in lavaan.
-#> This is lavaan 0.6-20
-#> lavaan is FREE software! Please report any bugs.
 ```
 
 # Load the Dataset
@@ -62,7 +60,7 @@ dv ~ med + cov2
 "
 fit <- sem(mod, test_mod1, fixed.x = FALSE)
 summary(fit)
-#> lavaan 0.6-20 ended normally after 1 iteration
+#> lavaan 0.6-21.2434 ended normally after 1 iteration
 #> 
 #>   Estimator                                         ML
 #>   Optimization method                           NLMINB
@@ -236,8 +234,9 @@ fit_iv_mod_std_ci
 #> - Number of bootstrap samples requests: 
 #> - Number of bootstrap samples with valid results: 2000
 #> 
-#> NOTE: Bootstrapping conducted by the method in 0.2.7.5 or later. To use the method in the older versions
-#> for reproducing previous results, set 'use_old_version' to 'TRUE'.
+#> NOTE: Bootstrapping conducted by the method in 0.2.7.5 or later. To use
+#> the method in the older versions for reproducing previous results, set
+#> 'use_old_version' to 'TRUE'.
 ```
 
 The 95% confidence interval of the standardized moderation effect is
