@@ -10,7 +10,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/sfcheung/stdmod/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/sfcheung/stdmod/blob/v0.2.12/inst/CITATION)
 
 Cheung SF, Cheung S, Lau EYY, Hui CH, Vong WN (2022). “Improving an old
 way to measure moderation effect in standardized units.” *Health
