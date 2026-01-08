@@ -1,6 +1,8 @@
 # Changelog
 
-## stdmod 0.2.11.1
+## stdmod 0.2.12
+
+CRAN release: 2026-01-07
 
 ### Miscellaneous
 

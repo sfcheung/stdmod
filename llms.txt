@@ -1,6 +1,6 @@
 # stdmod: Standardized Moderation
 
-(Version 0.2.11.1, updated on 2026-01-04, [release
+(Version 0.2.12, updated on 2026-01-07, [release
 history](https://sfcheung.github.io/stdmod/news/index.html))
 
 (Important changes since 0.2.0.0: Bootstrap confidence intervals and
