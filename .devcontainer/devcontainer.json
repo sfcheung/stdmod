@@ -1,5 +1,5 @@
 {
-  "image": "ghcr.io/rocker-org/r-ver:devel",
+  "image": "ghcr.io/rocker-org/r-devel",
   "features": {
     "ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
       "packages": "pkgdown, testthat, knitr, rmarkdown, visreg, lm.beta, ggplot2, lavaan, manymome, rlang"
