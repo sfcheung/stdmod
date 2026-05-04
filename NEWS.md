@@ -1,3 +1,11 @@
+# stdmod 0.2.13
+
+## Miscellaneous
+
+- Fixed a CRAN check issue with R-devel
+  (2026-05-03 r89994 ucrt).
+  (0.2.13)
+
 # stdmod 0.2.12
 
 ## Miscellaneous
