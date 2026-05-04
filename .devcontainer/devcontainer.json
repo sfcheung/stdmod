@@ -1,0 +1,18 @@
+{
+  "image": "ghcr.io/rocker-org/devcontainer/r-ver:devel",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
+      "packages": "pkgdown, testthat, knitr, rmarkdown, visreg, lm.beta, ggplot2, lavaan, manymome, rlang, r-lib/pak"
+    },
+    // "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+    //   "installChromium": true
+    // },
+    // "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
+    //   "packages": "chromium"
+    // },
+    //"ghcr.io/rocker-org/devcontainer-features/pandoc:latest": {
+    //"version": "2.17"
+    //},
+    //"ghcr.io/rocker-org/devcontainer-features/r-dependent-packages:latest": {},
+  },
+}
