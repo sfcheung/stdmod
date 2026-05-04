@@ -1,42 +1,18 @@
 {
-  // Source: https://github.com/rocker-org/devcontainer-images/tree/main/src/r-ver
-	"build": {
-		"dockerfile": "Dockerfile",
-		"context": ".",
-		"args": {
-			"VARIANT": "4",
-			"BASE_IMAGE": "rocker/r-ver"
-		}
-	},
-	"features": {
-		"ghcr.io/devcontainers/features/common-utils:2": {},
-		"ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
-			"packages": "httpgd",
-			"additionalRepositories": "rmv = 'https://community.r-multiverse.org'",
-			"installSystemRequirements": true
-		},
-		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
-			"version": "none",
-			"vscodeRSupport": "lsp",
-			"installDevTools": true,
-			"installREnv": true,
-			"installRMarkdown": true,
-			"installRadian": true,
-			"installVscDebugger": true
-		}
-	},
-	"overrideFeatureInstallOrder": [
-		"ghcr.io/devcontainers/features/common-utils"
-	],
-	"remoteUser": "rstudio",
-	"customizations": {
-		"vscode": {
-			"extensions": ["RDebugger.r-debugger"],
-			"settings": {
-				"r.rterm.linux": "/usr/local/bin/radian",
-				"r.bracketedPaste": true,
-				"r.plot.useHttpgd": true
-			}
-		}
-	}
+  "image": "ghcr.io/rocker-org/devcontainer/r-ver:latest",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
+      "packages": "pkgdown, testthat, knitr, rmarkdown, visreg, lm.beta, ggplot2, lavaan, manymome, rlang, r-lib/pak"
+    },
+    // "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+    //   "installChromium": true
+    // },
+    // "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
+    //   "packages": "chromium"
+    // },
+    //"ghcr.io/rocker-org/devcontainer-features/pandoc:latest": {
+    //"version": "2.17"
+    //},
+    //"ghcr.io/rocker-org/devcontainer-features/r-dependent-packages:latest": {},
+  },
 }
