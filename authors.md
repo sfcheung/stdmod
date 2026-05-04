@@ -10,12 +10,12 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/sfcheung/stdmod/blob/v0.2.12/inst/CITATION)
+[`inst/CITATION`](https://github.com/sfcheung/stdmod/blob/master/inst/CITATION)
 
 Cheung SF, Cheung S, Lau EYY, Hui CH, Vong WN (2022). “Improving an old
 way to measure moderation effect in standardized units.” *Health
-Psychology*, **41**(7), 502–505. ISSN 1930-7810, 0278-6133,
-[doi:10.1037/hea0001188](https://doi.org/10.1037/hea0001188),
+Psychology*, **41**(7), 502–505. ISSN 1930-7810, 0278-6133.
+[doi:10.1037/hea0001188](https://doi.org/10.1037/hea0001188).
 <https://doi.org/10.1037/hea0001188>.
 
     @Article{,

@@ -58,6 +58,7 @@ These are the only required arguments. Just setting them can generate
 the graph:
 
 ``` r
+
 library(stdmod)
 data(sleep_emo_con)
 lm_out <- lm(sleep_duration ~ age + gender +
@@ -102,6 +103,7 @@ effects is needed, call [`print()`](https://rdrr.io/r/base/print.html)
 and set `table_only` to `TRUE`:
 
 ``` r
+
 print(cond_out, table_only = TRUE)
 #>   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig
 #>    High             3.950                      0.012 0.117 0.107 0.915    
@@ -128,6 +130,7 @@ one SD below mean, mean, and one SD above mean, respectively, for a
 normal distribution.
 
 ``` r
+
 data(sleep_emo_con)
 lm_out <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
@@ -166,6 +169,7 @@ factor), then the conditional effect of the moderator for each value of
 this categorical moderator will be printed:
 
 ``` r
+
 set.seed(61452)
 sleep_emo_con$city <- sample(c("Alpha", "Beta", "Gamma"),
                                nrow(sleep_emo_con), replace = TRUE)
@@ -202,6 +206,7 @@ To make the results reproducible, call
 as illustrated below.
 
 ``` r
+
 lm_out <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
                               sleep_emo_con)

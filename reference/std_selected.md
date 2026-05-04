@@ -190,6 +190,7 @@ Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 ## Examples
 
 ``` r
+
 # Load a sample data set
 
 dat <- test_x_1_w_1_v_1_cat1_n_500

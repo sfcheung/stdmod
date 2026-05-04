@@ -15,6 +15,7 @@ or at <https://sfcheung.github.io/stdmod/>.
 ## Setup the Environment
 
 ``` r
+
 library(stdmod) # For computing the standardized moderation effect conveniently
 library(lavaan) # For doing path analysis in lavaan.
 ```
@@ -22,6 +23,7 @@ library(lavaan) # For doing path analysis in lavaan.
 ## Load the Dataset
 
 ``` r
+
 data(test_mod1)
 round(head(test_mod1, 3), 3)
 #>       dv     iv    mod    med   cov1   cov2
@@ -41,6 +43,7 @@ will work in both cases.
 This is the model to be tested:
 
 ``` r
+
 mod <-
 "
 med ~ iv + mod + iv:mod + cov1
@@ -117,6 +120,7 @@ standardized solution is not the desired standardized coefficient
 because it standardizes the product term.
 
 ``` r
+
 standardizedSolution(fit)[3, ]
 #>   lhs op    rhs est.std    se      z pvalue ci.lower ci.upper
 #> 3 med  ~ iv:mod   0.466 0.043 10.842      0    0.382     0.55
@@ -144,6 +148,7 @@ The minimal arguments are:
 - `x_w`: The product term.
 
 ``` r
+
 fit_iv_mod_std <- stdmod_lavaan(fit = fit,
                                 x = "iv",
                                 y = "med",
@@ -182,6 +187,7 @@ bootstrapping again.
 We fit the model again, with bootstrapping:
 
 ``` r
+
 fit <- sem(mod, test_mod1, fixed.x = FALSE,
            se = "boot",
            bootstrap = 2000,
@@ -193,6 +199,7 @@ If bootstrapping has been done when fitting the model, just adding
 confidence interval:
 
 ``` r
+
 fit_iv_mod_std_ci <- stdmod_lavaan(fit = fit,
                                    x = "iv",
                                    y = "med",

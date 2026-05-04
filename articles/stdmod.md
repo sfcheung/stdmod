@@ -21,6 +21,7 @@ or at <https://sfcheung.github.io/stdmod/>.
 ## Sample Dataset
 
 ``` r
+
 library(stdmod)
 dat <- sleep_emo_con
 head(dat, 3)
@@ -39,6 +40,7 @@ hours), conscientiousness, emotional stability, age, and gender (a
 The names of some variables are shortened for readability:
 
 ``` r
+
 colnames(dat)[2:4] <- c("sleep", "cons", "emot")
 head(dat, 3)
 #> # A tibble: 3 × 6
@@ -65,6 +67,7 @@ Suppose this is the moderated regression model:
 [`lm()`](https://rdrr.io/r/stats/lm.html) can be used to fit this model:
 
 ``` r
+
 lm_out <- lm(sleep ~ age + gender + emot * cons,
              dat = dat)
 summary(lm_out)
@@ -110,6 +113,7 @@ Instead of doing the standardization ourselves before calling
 and use `~ .` for the arguments `to_scale` and `to_center`.
 
 ``` r
+
 lm_stdall <- std_selected(lm_out,
                           to_scale = ~ .,
                           to_center = ~ .)
@@ -118,11 +122,13 @@ lm_stdall <- std_selected(lm_out,
 Since 0.2.6.3, `to_standardize` can be used as a shortcut:
 
 ``` r
+
 lm_stdall <- std_selected(lm_out,
                           to_standardize = ~ .)
 ```
 
 ``` r
+
 summary(lm_stdall)
 #> 
 #> Call to std_selected():
@@ -230,6 +236,7 @@ a wrapper of
 [`std_selected()`](https://sfcheung.github.io/stdmod/reference/std_selected.md):
 
 ``` r
+
 set.seed(870432)
 lm_stdall_boot <- std_selected_boot(lm_out,
                         to_scale = ~ .,
@@ -249,6 +256,7 @@ The minimum additional argument is `nboot`, the number of bootstrap
 samples.
 
 ``` r
+
 summary(lm_stdall_boot)
 #> 
 #> Call to std_selected_boot():
@@ -329,6 +337,7 @@ conscientiousness, and do not standardize sleep duration. We just list
 `emot` and `cons` on `to_center` and `to_scale`:
 
 ``` r
+
 lm_std1 <- std_selected(lm_out,
                         to_scale = ~ emot + cons,
                         to_center = ~ emot + cons)
@@ -337,11 +346,13 @@ lm_std1 <- std_selected(lm_out,
 Since 0.2.6.3, `to_standardize` can be used a shortuct:
 
 ``` r
+
 lm_std1 <- std_selected(lm_out,
                         to_standardize = ~ emot + cons)
 ```
 
 ``` r
+
 summary(lm_std1)
 #> 
 #> Call to std_selected():
@@ -412,6 +423,7 @@ can also be used to form the nonparametric bootstrap confidence interval
 when only some of the variables are standardized:
 
 ``` r
+
 set.seed(870432)
 lm_std1_boot <- std_selected_boot(lm_out,
                         to_scale = ~ emot + cons,
@@ -422,6 +434,7 @@ lm_std1_boot <- std_selected_boot(lm_out,
 Since 0.2.6.3, `to_standardize` can be used as a shortcut:
 
 ``` r
+
 lm_std1_boot <- std_selected_boot(lm_out,
                         to_standardize = ~ emot + cons,
                         nboot = 5000)
@@ -430,6 +443,7 @@ lm_std1_boot <- std_selected_boot(lm_out,
 Again, the only additional argument is `nboot`.
 
 ``` r
+
 summary(lm_std1_boot)
 #> 
 #> Call to std_selected_boot():

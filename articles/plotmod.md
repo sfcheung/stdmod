@@ -49,6 +49,7 @@ These are the only required arguments. Just setting them can generate
 the graph:
 
 ``` r
+
 library(stdmod)
 data(sleep_emo_con)
 lm_raw <- lm(sleep_duration ~ age + gender +
@@ -75,6 +76,7 @@ percentile are used, which correspond approximately to one SD below and
 above mean, respectively, for a normal distribution.
 
 ``` r
+
 lm_raw <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
              sleep_emo_con)
@@ -92,6 +94,7 @@ If the moderator is a categorical variable (a string variable or a
 factor), then one line will be drawn for each category.
 
 ``` r
+
 set.seed(61452)
 sleep_emo_con$city <- sample(c("Alpha", "Beta", "Gamma"),
                              nrow(sleep_emo_con),
@@ -125,6 +128,7 @@ implemented in
 To plot a tumble graph, just set `graph_type` to `"tumble"`:
 
 ``` r
+
 lm_raw <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
              sleep_emo_con)
@@ -149,6 +153,7 @@ labels that will be used instead of variable names by setting `x_label`,
 outcome variable, respectively.
 
 ``` r
+
 lm_raw <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
              sleep_emo_con)
@@ -168,6 +173,7 @@ The default title is “Moderation Effect”. This can be changed via the
 argument `title`:
 
 ``` r
+
 lm_raw <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
              sleep_emo_con)
@@ -191,6 +197,7 @@ by `line_width` and the size on the end-points can be set by
 `point_size`:
 
 ``` r
+
 lm_raw <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
              sleep_emo_con)
@@ -217,6 +224,7 @@ call to the output and set `plot.subtitle` to
 which removes the subtitle:
 
 ``` r
+
 lm_raw <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
              sleep_emo_con)
@@ -239,6 +247,7 @@ call and set `plot.caption` to
 [`element_blank()`](https://ggplot2.tidyverse.org/reference/element.html):
 
 ``` r
+
 lm_raw <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
              sleep_emo_con)
@@ -261,6 +270,7 @@ will try to detect if a variable is standardized or not, and report this
 in the graph:
 
 ``` r
+
 lm_raw <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
              sleep_emo_con)
@@ -278,6 +288,7 @@ can then be passed to
 [`plotmod()`](https://sfcheung.github.io/stdmod/reference/plotmod.md):
 
 ``` r
+
 plotmod(lm_std,
         x = "emotional_stability",
         w = "conscientiousness")
@@ -304,6 +315,7 @@ modify a `ggplot` object. For example, users can change the colors of
 the lines and the theme:
 
 ``` r
+
 lm_raw <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
              sleep_emo_con)

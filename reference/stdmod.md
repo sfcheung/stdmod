@@ -155,6 +155,7 @@ Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 ## Examples
 
 ``` r
+
 # Load a test data of 500 cases
 
 dat <- test_x_1_w_1_v_2_n_500

@@ -37,6 +37,7 @@ Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 ## Examples
 
 ``` r
+
 # Load a test data of 500 cases
 dat <- test_mod1
 library(lavaan)

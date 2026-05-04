@@ -239,6 +239,7 @@ Shu Fai Cheung <https://orcid.org/0000-0002-9871-9448>
 ## Examples
 
 ``` r
+
 # Load a sample data set
 
 dat <- test_x_1_w_1_v_1_cat1_n_500
@@ -438,9 +439,9 @@ out
 #> The effects of iv on dv, conditional on mod:
 #> 
 #>   Level    mod iv Effect CI Lower CI Upper   S.E.      t     p Sig
-#>    High  1.000   841.990  745.363  969.398 42.468 19.826 0.000 ***
-#>  Medium  0.000   806.878  731.334  882.046 29.942 26.948 0.000 ***
-#>     Low -1.000   771.767  689.364  833.522 39.251 19.662 0.000 ***
+#>    High  1.000   841.990  745.556  969.398 42.468 19.826 0.000 ***
+#>  Medium  0.000   806.878  731.389  882.734 29.942 26.948 0.000 ***
+#>     Low -1.000   771.767  689.364  835.260 39.251 19.662 0.000 ***
 #> 
 #> [CI Lower, CI Upper] shows the 95% nonparametric bootstrap confidence
 #> interval(s) (based on 50 bootstrap samples).

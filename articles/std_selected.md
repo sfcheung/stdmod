@@ -19,12 +19,14 @@ or at <https://sfcheung.github.io/stdmod/>.
 ## Setup the Environment
 
 ``` r
+
 library(stdmod)
 ```
 
 ## Load the Dataset
 
 ``` r
+
 data(sleep_emo_con)
 head(sleep_emo_con, 3)
 #> # A tibble: 3 × 6
@@ -43,6 +45,7 @@ refer to (citation to be included) for the detail of the data set.
 The names of some variables are shortened for readability:
 
 ``` r
+
 colnames(sleep_emo_con)[3:4] <- c("cons", "emot")
 head(sleep_emo_con, 3)
 #> # A tibble: 3 × 6
@@ -62,6 +65,7 @@ conscientiousness. Therefore, we conduct a moderated regression as
 follow:
 
 ``` r
+
 lm_raw <- lm(sleep_duration ~ age + gender + emot * cons,
              data = sleep_emo_con)
 summary(lm_raw)
@@ -97,6 +101,7 @@ This package has a simple function,
 for generating a typical plot of the moderation effect:
 
 ``` r
+
 plotmod(lm_raw,
         x = "emot",
         w = "cons",
@@ -126,6 +131,7 @@ variable and rerun the regression, we can pass the
 and specify the variables to be mean centered:
 
 ``` r
+
 lm_w_centered <- std_selected(lm_raw,
                               to_center = ~ cons)
 printCoefmat(summary(lm_w_centered)$coefficients, digits = 3)
@@ -154,6 +160,7 @@ following model, both emotional stability and conscientiousness are
 centered. They are placed after `~` and joined by `+`.
 
 ``` r
+
 lm_xw_centered <- std_selected(lm_raw,
                                to_center = ~ emot + cons)
 printCoefmat(summary(lm_xw_centered)$coefficients, digits = 3)
@@ -175,6 +182,7 @@ its standard deviation. Scaling is done by listing the variable on
 `to_scale`. The input format is identical to that of `to_center`.
 
 ``` r
+
 lm_xw_std <- std_selected(lm_raw,
                           to_center = ~ emot + cons,
                           to_scale  = ~ emot + cons)
@@ -186,11 +194,13 @@ both `to_center` and `to_scale`. Therefore, the following call can also
 be used:
 
 ``` r
+
 lm_xw_std <- std_selected(lm_raw,
                           to_standardize = ~ emot + cons)
 ```
 
 ``` r
+
 printCoefmat(summary(lm_xw_std)$coefficients, digits = 3)
 #>             Estimate Std. Error t value Pr(>|t|)    
 #> (Intercept)   6.4557     0.4783   13.50   <2e-16 ***
@@ -208,6 +218,7 @@ standard deviation increase of emotional stability, the predicted sleep
 duration increases by 0.1630 hour.
 
 ``` r
+
 plotmod(lm_xw_std,
         x = "emot",
         w = "cons",
@@ -237,6 +248,7 @@ variable). We just add the variable to the right hand side of `~` in
 `to_center` and `to_scale` as appropriate.
 
 ``` r
+
 lm_xwy_std <- std_selected(lm_raw,
                            to_center = ~ emot + cons + sleep_duration,
                            to_scale  = ~ emot + cons + sleep_duration)
@@ -245,6 +257,7 @@ lm_xwy_std <- std_selected(lm_raw,
 Since 0.2.6.3, `to_standardize` can be used as a shortcut:
 
 ``` r
+
 lm_xwy_std <- std_selected(lm_raw,
                            to_standardize = ~ emot + cons + sleep_duration)
 printCoefmat(summary(lm_xwy_std)$coefficients, digits = 3)
@@ -264,6 +277,7 @@ standardized moderation effect of emotional stability on sleep duration
 is 0.1150.
 
 ``` r
+
 plotmod(lm_xwy_std,
         x = "emot",
         w = "cons",
@@ -291,6 +305,7 @@ variables in the regression model of
 [`lm()`](https://rdrr.io/r/stats/lm.html)).
 
 ``` r
+
 lm_all_std <- std_selected(lm_raw,
                            to_center = ~ .,
                            to_scale  = ~ .)
@@ -299,6 +314,7 @@ lm_all_std <- std_selected(lm_raw,
 Since 0.2.6.3, `to_standardize` can be used as a shortcut:
 
 ``` r
+
 lm_all_std <- std_selected(lm_raw,
                            to_standardize = ~ .)
 printCoefmat(summary(lm_all_std)$coefficients, digits = 3)
@@ -319,6 +335,7 @@ For comparison, this is the results of standardizing all variables,
 including the product term and the categorical variable.
 
 ``` r
+
 library(lm.beta) # For generating the typical standardized solution
 packageVersion("lm.beta")
 #> [1] '1.7.3'
@@ -362,6 +379,7 @@ denoting 95% confidence intervals. If this is the desired level, this
 argument can be omitted.
 
 ``` r
+
 set.seed(58702)
 lm_xwy_std_ci <- std_selected_boot(lm_raw,
                     to_standardize = ~ emot + cons + sleep_duration,
@@ -369,6 +387,7 @@ lm_xwy_std_ci <- std_selected_boot(lm_raw,
 ```
 
 ``` r
+
 summary(lm_xwy_std_ci)
 #> 
 #> Call to std_selected_boot():
