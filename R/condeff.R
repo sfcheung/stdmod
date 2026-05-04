@@ -153,14 +153,14 @@ cond_effect <- function(output,
     w_method <- match.arg(w_method)
     x0 <- deparse(substitute(x))
     if (inherits(tryCatch(x00 <- as.character(x), error = function(e) e),
-                 "simpleError")) {
+                 "error")) {
         x <- x0
       } else {
         x <- x00
       }
     w0 <- deparse(substitute(w))
     if (inherits(tryCatch(w00 <- as.character(w), error = function(e) e),
-                 "simpleError")) {
+                 "error")) {
         w <- w0
       } else {
         w <- w00
