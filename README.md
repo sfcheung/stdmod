@@ -15,6 +15,20 @@
 
 (Version 0.2.13, updated on 2026-05-04, [release history](https://sfcheung.github.io/stdmod/news/index.html))
 
+**IMPORTANT NOTICE**
+
+> This package will no longer be actively updated. It will
+still be maintained. However, new features will not be added.
+The package [`manymome`](https://sfcheung.github.io/manymome/)
+can do all the tasks in `stdmod` related to computing,
+testing, and printing conditional effects, and can be used
+for any number of moderators. The package
+[`betaselectr`](https://sfcheung.github.io/betaselectr/)
+can do all the tasks related to forming confidence intervals
+for properly standardized coefficients, in both regression
+models fitted by `stats::lm()` and `stats::glm()`, as well
+as structural equation models fitted by `lavaan::sem()`.
+
 (Important changes since 0.2.0.0: Bootstrap confidence intervals and
 variance-covariance matrix of estimates are the defaults of `confint()`
 and `vcov()` for the output of `std_selected_boot()`.)
@@ -59,6 +73,32 @@ https://sfcheung.github.io/stdmod/
   levels of the moderator, and form nonparametric bootstrap
   confidence intervals these effects.
 
+## Related Functions in `betaselectr`
+
+The function `lm_betaselect()` from the package `betaselectr`
+can be used in place
+of `std_selected()` and `std_selected_boot()`. A demonstration
+of `lm_betaselect()` can be found [here](https://sfcheung.github.io/betaselectr/articles/betaselectr_lm.html).
+This package also has `glm_betaselect()` for models, such
+as logistic regression models, fitted by `stats::glm()`
+(see a demonstration [here](https://sfcheung.github.io/betaselectr/articles/betaselectr_glm.html)).
+
+The function `lav_betaselect()` from the package `betaselectr`
+is a version of `std_selected()` but for structural equation
+models fitted by `lavaan::sem()`. A demonstration
+of `lav_betaselect()` can be found [here](https://sfcheung.github.io/betaselectr/articles/betaselectr_lav.html).
+
+## Related Functions in `manymome`
+
+Although the package `manymome` is mainly for mediation and
+moderated mediation, moderation is a special case and is also
+supported. The `plot` method in `manymome` is more powerful
+than `plotmod`, supports not only a regression model but also
+a structural equation model, and also supports any number of
+moderators. The function `manymome::cond_effects()` in `manymome`
+is also more powerful than `cond_effect` in `stdmod`, supporting
+both regression models and structural equation models.
+
 # Installation
 
 The stable CRAN version can be installed by `install.packages()`:
@@ -90,4 +130,4 @@ are also taken into account.
 # Issues
 
 If you have any suggestions and found any bugs, please feel
-feel to open a GitHub issue. Thanks.
+free to open a GitHub issue. Thanks.
