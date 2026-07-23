@@ -29,6 +29,31 @@ for properly standardized coefficients, in both regression
 models fitted by `stats::lm()` and `stats::glm()`, as well
 as structural equation models fitted by `lavaan::sem()`.
 
+> For standardizing only selected variables and for properly
+standardizing product terms in regression models fitted by
+`stats::lm()`, the function [`lm_betaselect()`](https://sfcheung.github.io/betaselectr/articles/betaselectr_lm.html)
+from [`betaselectr`](https://sfcheung.github.io/betaselectr/)
+can be used instead of `std_selected()` and `std_selected_boot()`.
+The package also has supports models fitted by `stats::glm()`,
+such as logistic regression models. See [this article](https://sfcheung.github.io/betaselectr/articles/betaselectr_glm.html)
+for a demonstration.
+
+> For standardizing only selected variables in models fitted
+by `lavaan`, `lavaan` natively supports this since version 0.7-2,
+through setting `type` to a character vector of the variables
+to be standardized. Alternatively, the function [`lav_betaselect()`](https://sfcheung.github.io/betaselectr/articles/betaselectr_lav.html)
+from [`betaselectr`](https://sfcheung.github.io/betaselectr/)
+can also be used. [`lav_betaselect()`](https://sfcheung.github.io/betaselectr/reference/lav_betaselect.html)
+also supports properly standardizing a product term. In addition
+to bootstrap confidence intervals, [`lav_betaselect()`](https://sfcheung.github.io/betaselectr/reference/lav_betaselect.html)
+also supports delta-method confidence intervals.
+
+> For computing conditional effects and plotting conditional
+effects in regression models, the package [`manymome`](https://sfcheung.github.io/manymome/)
+has more comprehensive support. See [these articles](https://sfcheung.github.io/manymome/articles/#moderated-regression)
+for some demonstration. The package also supports moderation
+in structural equation models fitted by `lavaan`.
+
 (Important changes since 0.2.0.0: Bootstrap confidence intervals and
 variance-covariance matrix of estimates are the defaults of `confint()`
 and `vcov()` for the output of `std_selected_boot()`.)
@@ -68,10 +93,20 @@ https://sfcheung.github.io/stdmod/
 - [plotmod](https://sfcheung.github.io/stdmod/articles/plotmod.html): How to generate a typical plot of
   moderation effect using `plotmod()`.
 
+    - It is recommended to use [`manymome`](https://sfcheung.github.io/manymome/)
+      for plotting conditional effects. See [this article](https://sfcheung.github.io/manymome/articles/mo_lm.html)
+      for a demonstration, and [these articles](https://sfcheung.github.io/manymome/articles/#moderated-regression)
+      for more complicated models.
+
 - [cond_effect](https://sfcheung.github.io/stdmod/articles/cond_effect.html): How to compute conditional
   effects of the predictor for selected
   levels of the moderator, and form nonparametric bootstrap
   confidence intervals these effects.
+
+    - It is recommended to use [`manymome`](https://sfcheung.github.io/manymome/)
+      for computing conditional effects. See [this article](https://sfcheung.github.io/manymome/articles/mo_lm.html)
+      for a demonstration, and [these articles](https://sfcheung.github.io/manymome/articles/#moderated-regression)
+      for more complicated models.
 
 ## Related Functions in `betaselectr`
 
