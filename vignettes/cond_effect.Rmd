@@ -1,7 +1,7 @@
 ---
 title: "Conditional Effects by cond_effect()"
 author: "Shu Fai Cheung"
-date: "2023-09-09"
+date: "2026-07-23"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Conditional Effects by cond_effect()}
@@ -10,6 +10,27 @@ vignette: >
 ---
 
 
+
+> For computing conditional effects and plotting conditional
+effects in regression models, it is recommended to
+use the package [`manymome`](https://sfcheung.github.io/manymome/).
+It has more comprehensive support than `stdmod`. See [these articles](https://sfcheung.github.io/manymome/articles/#moderated-regression)
+for some demonstration. The package also supports moderation
+in structural equation models fitted by `lavaan`, which is not
+supported in `stdmod`.
+
+> For standardizing only selected variables and for properly
+standardizing product terms in regression models fitted by
+`stats::lm()`, the function [`lm_betaselect()`](https://sfcheung.github.io/betaselectr/articles/betaselectr_lm.html)
+from [`betaselectr`](https://sfcheung.github.io/betaselectr/)
+can be used instead of `std_selected()` and `std_selected_boot()`.
+The package also has supports models fitted by `stats::glm()`,
+such as logistic regression models. See [this article](https://sfcheung.github.io/betaselectr/articles/betaselectr_glm.html)
+for a demonstration.
+
+> However, if only mean-centering is needed, `stdmod` should
+be used because `betaselectr` does not support doing only
+mean-centering.
 
 # Introduction
 
@@ -69,7 +90,7 @@ graph:
 
 
 
-```r
+``` r
 library(stdmod)
 data(sleep_emo_con)
 lm_out <- lm(sleep_duration ~ age + gender +
@@ -112,7 +133,7 @@ model is also printed. If only the table of effects is needed, call `print()`
 and set `table_only` to `TRUE`:
 
 
-```r
+``` r
 print(cond_out, table_only = TRUE)
 #>   Level conscientiousness emotional_stability Effect  S.E.     t     p Sig
 #>    High             3.950                      0.012 0.117 0.107 0.915    
@@ -137,7 +158,7 @@ and 84th percentile, which corresponds approximately to one SD below mean,
 mean, and one SD above mean, respectively, for a normal distribution.
 
 
-```r
+``` r
 data(sleep_emo_con)
 lm_out <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
@@ -175,7 +196,7 @@ If the moderator is a categorical variable (a string variable or
   this categorical moderator will be printed:
 
 
-```r
+``` r
 set.seed(61452)
 sleep_emo_con$city <- sample(c("Alpha", "Beta", "Gamma"),
                                nrow(sleep_emo_con), replace = TRUE)
@@ -209,7 +230,7 @@ To make the results reproducible, call `set.seed()` before
 calling `cond_effect_boot()`, as illustrated below.
 
 
-```r
+``` r
 lm_out <- lm(sleep_duration ~ age + gender +
                               emotional_stability * conscientiousness,
                               sleep_emo_con)
