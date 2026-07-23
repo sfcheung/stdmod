@@ -111,6 +111,20 @@ Standardize, mean center, or scale by standard deviation
 selected variables in a regression model and refit the model
 }
 \details{
+\subsection{NOTE}{
+
+For standardizing only selected variables and for properly
+standardizing product terms in regression models fitted by
+\code{stats::lm()}, the function \href{https://sfcheung.github.io/betaselectr/articles/betaselectr_lm.html}{\code{lm_betaselect()}}
+from \href{https://sfcheung.github.io/betaselectr/}{\code{betaselectr}}
+can be used instead of \code{std_selected()} and \code{std_selected_boot()}.
+The package also has supports models fitted by \code{stats::glm()},
+such as logistic regression models. See \href{https://sfcheung.github.io/betaselectr/articles/betaselectr_glm.html}{this article}
+for a demonstration.
+}
+
+\subsection{Details}{
+
 \code{\link[=std_selected]{std_selected()}} was originally developed to compute the standardized
 moderation effect and the standardized coefficients for other predictors
 given an \code{\link[=lm]{lm()}} output (Cheung, Cheung, Lau, Hui, & Vong, 2022).
@@ -128,6 +142,7 @@ rescaled by its standard deviation. Therefore, if the goal is to get the
 standardized solution of a moderated regression, users
 just instruct the function to standardize all non-categorical variables
 in the regression model.
+}
 
 \code{\link[=std_selected_boot]{std_selected_boot()}} is a wrapper of \code{\link[=std_selected]{std_selected()}}. It calls
 \code{\link[=std_selected]{std_selected()}}

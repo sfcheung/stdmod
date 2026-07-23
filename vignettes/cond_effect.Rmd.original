@@ -20,6 +20,27 @@ knitr::opts_chunk$set(
 )
 ```
 
+> For computing conditional effects and plotting conditional
+effects in regression models, it is recommended to
+use the package [`manymome`](https://sfcheung.github.io/manymome/).
+It has more comprehensive support than `stdmod`. See [these articles](https://sfcheung.github.io/manymome/articles/#moderated-regression)
+for some demonstration. The package also supports moderation
+in structural equation models fitted by `lavaan`, which is not
+supported in `stdmod`.
+
+> For standardizing only selected variables and for properly
+standardizing product terms in regression models fitted by
+`stats::lm()`, the function [`lm_betaselect()`](https://sfcheung.github.io/betaselectr/articles/betaselectr_lm.html)
+from [`betaselectr`](https://sfcheung.github.io/betaselectr/)
+can be used instead of `std_selected()` and `std_selected_boot()`.
+The package also has supports models fitted by `stats::glm()`,
+such as logistic regression models. See [this article](https://sfcheung.github.io/betaselectr/articles/betaselectr_glm.html)
+for a demonstration.
+
+> However, if only mean-centering is needed, `stdmod` should
+be used because `betaselectr` does not support doing only
+mean-centering.
+
 # Introduction
 
 This vignette illustrates how to use

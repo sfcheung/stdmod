@@ -2,7 +2,24 @@
 #'
 #' @description Plot the moderation effect in a regression model
 #'
-#' @details This function generate a basic `ggplot2` graph
+#' @details
+#'
+#'
+#' ## NOTE
+#'
+#' For computing conditional effects and plotting conditional
+#' effects in regression models, it is recommended to
+#' use the package [`manymome`](https://sfcheung.github.io/manymome/).
+#' It has more comprehensive support than `stdmod`. See
+#' See [this demo](https://sfcheung.github.io/manymome/articles/mo_lm.html) for
+#' a one-moderator model, and [these articles](https://sfcheung.github.io/manymome/articles/#moderated-regression)
+#' for other demonstrations. The package also supports moderation
+#' in structural equation models fitted by `lavaan`, which is not
+#' supported in `stdmod`.
+#'
+#' ## Details
+#'
+#' This function generates a basic `ggplot2` graph
 #'          typically found in psychology manuscripts. It tries to
 #'          check whether one or more variables are standardized, and
 #'          report this in the plot if required.
