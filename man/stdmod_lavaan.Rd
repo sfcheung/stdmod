@@ -85,6 +85,19 @@ equation model fitted by \code{\link[lavaan:lavaan]{lavaan::lavaan()}} or its wr
 form the nonparametric bootstrap confidence interval.
 }
 \details{
+\subsection{NOTE}{
+
+For standardizing only selected variables in models fitted
+by \code{lavaan}, \code{lavaan} natively supports this since version 0.7-2,
+through setting \code{type} to a character vector of the variables
+to be standardized. Alternatively, the function \href{https://sfcheung.github.io/betaselectr/articles/betaselectr_lav.html}{\code{lav_betaselect()}}
+from \href{https://sfcheung.github.io/betaselectr/}{\code{betaselectr}}
+can also be used. \href{https://sfcheung.github.io/betaselectr/reference/lav_betaselect.html}{\code{lav_betaselect()}}
+also supports properly standardizing a product term. In addition
+to bootstrap confidence intervals, \href{https://sfcheung.github.io/betaselectr/reference/lav_betaselect.html}{\code{lav_betaselect()}}
+also supports delta-method confidence intervals.
+}
+
 \subsection{Important Notes}{
 
 Starting from Version 0.2.7.5, of \code{\link[=stdmod_lavaan]{stdmod_lavaan()}} adopts an approach
