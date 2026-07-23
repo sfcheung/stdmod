@@ -13,7 +13,7 @@
 
 # stdmod: Standardized Moderation <img src="man/figures/logo.png" align="right" height="150" />
 
-(Version 0.2.13, updated on 2026-05-04, [release history](https://sfcheung.github.io/stdmod/news/index.html))
+(Version 0.2.14, updated on 2026-07-23, [release history](https://sfcheung.github.io/stdmod/news/index.html))
 
 **IMPORTANT NOTICE**
 
