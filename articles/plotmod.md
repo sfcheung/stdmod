@@ -1,5 +1,14 @@
 # Moderation Effects Plots by plotmod()
 
+> For computing conditional effects and plotting conditional effects in
+> regression models, it is recommended to use the package
+> [`manymome`](https://sfcheung.github.io/manymome/). It has more
+> comprehensive support than `stdmod`. See [these
+> articles](https://sfcheung.github.io/manymome/articles/#moderated-regression)
+> for some demonstration. The package also supports moderation in
+> structural equation models fitted by `lavaan`, which is not supported
+> in `stdmod`.
+
 ## Introduction
 
 This vignette illustrates how to use

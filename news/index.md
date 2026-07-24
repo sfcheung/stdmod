@@ -1,6 +1,17 @@
 # Changelog
 
-## stdmod 0.2.13
+## stdmod 0.2.14
+
+CRAN release: 2026-07-23
+
+### Miscellaneous
+
+- Updated README and other files to refer users to `manymome` and
+  `betaselectr` for more advanced functions. (0.2.14)
+
+## stdmod 0.2.14
+
+CRAN release: 2026-07-23
 
 ### Miscellaneous
 

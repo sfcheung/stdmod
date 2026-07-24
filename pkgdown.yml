@@ -1,5 +1,5 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   cond_effect: cond_effect.html
@@ -8,7 +8,7 @@ articles:
   std_selected: std_selected.html
   stdmod_lavaan: stdmod_lavaan.html
   stdmod: stdmod.html
-last_built: 2026-05-04T15:23Z
+last_built: 2026-07-24T22:14Z
 urls:
   reference: https://sfcheung.github.io/stdmod/reference
   article: https://sfcheung.github.io/stdmod/articles

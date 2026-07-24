@@ -122,6 +122,21 @@ A list of class `stdmod_lavaan` with these elements:
 
 ## Details
 
+### NOTE
+
+For standardizing only selected variables in models fitted by `lavaan`,
+`lavaan` natively supports this since version 0.7-2, through setting
+`type` to a character vector of the variables to be standardized.
+Alternatively, the function
+[`lav_betaselect()`](https://sfcheung.github.io/betaselectr/articles/betaselectr_lav.html)
+from [`betaselectr`](https://sfcheung.github.io/betaselectr/) can also
+be used.
+[`lav_betaselect()`](https://sfcheung.github.io/betaselectr/reference/lav_betaselect.html)
+also supports properly standardizing a product term. In addition to
+bootstrap confidence intervals,
+[`lav_betaselect()`](https://sfcheung.github.io/betaselectr/reference/lav_betaselect.html)
+also supports delta-method confidence intervals.
+
 ### Important Notes
 
 Starting from Version 0.2.7.5, of `stdmod_lavaan()` adopts an approach

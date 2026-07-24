@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="favicon.ico">
 <link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/Arimo-0.4.10/font.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/Arimo-0.4.10/font.css" rel="stylesheet">
 <link href="deps/Noto_Sans_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="index.html">stdmod</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.13</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.14</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,20 @@
 <img src="logo.png" class="logo" alt=""><h1 id="stdmod-standardized-moderation-">stdmod: Standardized Moderation <a class="anchor" aria-label="anchor" href="#stdmod-standardized-moderation-"></a>
 </h1>
 </div>
-<p>(Version 0.2.13, updated on 2026-05-04, <a href="https://sfcheung.github.io/stdmod/news/index.html">release history</a>)</p>
+<p>(Version 0.2.14, updated on 2026-07-23, <a href="https://sfcheung.github.io/stdmod/news/index.html">release history</a>)</p>
+<p><strong>IMPORTANT NOTICE</strong></p>
+<blockquote>
+<p>This package will no longer be actively updated. It will still be maintained. However, new features will not be added. The package <a href="https://sfcheung.github.io/manymome/" class="external-link"><code>manymome</code></a> can do all the tasks in <code>stdmod</code> related to computing, testing, and printing conditional effects, and can be used for any number of moderators. The package <a href="https://sfcheung.github.io/betaselectr/" class="external-link"><code>betaselectr</code></a> can do all the tasks related to forming confidence intervals for properly standardized coefficients, in both regression models fitted by <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code> and <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">stats::glm()</a></code>, as well as structural equation models fitted by <code><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">lavaan::sem()</a></code>.</p>
+</blockquote>
+<blockquote>
+<p>For standardizing only selected variables and for properly standardizing product terms in regression models fitted by <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code>, the function <a href="https://sfcheung.github.io/betaselectr/articles/betaselectr_lm.html" class="external-link"><code>lm_betaselect()</code></a> from <a href="https://sfcheung.github.io/betaselectr/" class="external-link"><code>betaselectr</code></a> can be used instead of <code><a href="reference/std_selected.html">std_selected()</a></code> and <code><a href="reference/std_selected.html">std_selected_boot()</a></code>. The package also has supports models fitted by <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">stats::glm()</a></code>, such as logistic regression models. See <a href="https://sfcheung.github.io/betaselectr/articles/betaselectr_glm.html" class="external-link">this article</a> for a demonstration.</p>
+</blockquote>
+<blockquote>
+<p>For standardizing only selected variables in models fitted by <code>lavaan</code>, <code>lavaan</code> natively supports this since version 0.7-2, through setting <code>type</code> to a character vector of the variables to be standardized. Alternatively, the function <a href="https://sfcheung.github.io/betaselectr/articles/betaselectr_lav.html" class="external-link"><code>lav_betaselect()</code></a> from <a href="https://sfcheung.github.io/betaselectr/" class="external-link"><code>betaselectr</code></a> can also be used. <a href="https://sfcheung.github.io/betaselectr/reference/lav_betaselect.html" class="external-link"><code>lav_betaselect()</code></a> also supports properly standardizing a product term. In addition to bootstrap confidence intervals, <a href="https://sfcheung.github.io/betaselectr/reference/lav_betaselect.html" class="external-link"><code>lav_betaselect()</code></a> also supports delta-method confidence intervals.</p>
+</blockquote>
+<blockquote>
+<p>For computing conditional effects and plotting conditional effects in regression models, the package <a href="https://sfcheung.github.io/manymome/" class="external-link"><code>manymome</code></a> has more comprehensive support. See <a href="https://sfcheung.github.io/manymome/articles/#moderated-regression" class="external-link">these articles</a> for some demonstration. The package also supports moderation in structural equation models fitted by <code>lavaan</code>.</p>
+</blockquote>
 <p>(Important changes since 0.2.0.0: Bootstrap confidence intervals and variance-covariance matrix of estimates are the defaults of <code><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint()</a></code> and <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov()</a></code> for the output of <code><a href="reference/std_selected.html">std_selected_boot()</a></code>.)</p>
 <p>This package includes functions for computing a standardized moderation effect and forming its confidence interval by nonparametric bootstrapping correctly. It was described briefly in the following publication (<a href="https://osf.io/ac8de/" class="external-link">OSF project page</a>). It supports moderated regression conducted by <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">stats::lm()</a></code> and path analysis with product term conducted by <code><a href="https://rdrr.io/pkg/lavaan/man/lavaan.html" class="external-link">lavaan::lavaan()</a></code>.</p>
 <ul>
@@ -87,9 +100,32 @@
 <li><p><a href="https://sfcheung.github.io/stdmod/articles/stdmod.html">stdmod</a>: A quick start on how to use <code><a href="reference/std_selected.html">std_selected()</a></code> and <code><a href="reference/std_selected.html">std_selected_boot()</a></code>, the two main functions, to standardize selected variables in a regression model and refit the model.</p></li>
 <li><p><a href="https://sfcheung.github.io/stdmod/articles/moderation.html">moderation</a>: How to use <code><a href="reference/std_selected.html">std_selected()</a></code> and <code><a href="reference/std_selected.html">std_selected_boot()</a></code> to compute standardized moderation effect and form its nonparametric bootstrap confidence interval.</p></li>
 <li><p><a href="https://sfcheung.github.io/stdmod/articles/std_selected.html">std_selected</a>: How to use <code><a href="reference/std_selected.html">std_selected()</a></code> to mean center or standardize selected variables in any regression models, and use <code><a href="reference/std_selected.html">std_selected_boot()</a></code> to form nonparametric bootstrap confidence intervals for standardized regression coefficients (<em>betas</em> in psychology literature).</p></li>
-<li><p><a href="https://sfcheung.github.io/stdmod/articles/plotmod.html">plotmod</a>: How to generate a typical plot of moderation effect using <code><a href="reference/plotmod.html">plotmod()</a></code>.</p></li>
-<li><p><a href="https://sfcheung.github.io/stdmod/articles/cond_effect.html">cond_effect</a>: How to compute conditional effects of the predictor for selected levels of the moderator, and form nonparametric bootstrap confidence intervals these effects.</p></li>
+<li>
+<p><a href="https://sfcheung.github.io/stdmod/articles/plotmod.html">plotmod</a>: How to generate a typical plot of moderation effect using <code><a href="reference/plotmod.html">plotmod()</a></code>.</p>
+<ul>
+<li>It is recommended to use <a href="https://sfcheung.github.io/manymome/" class="external-link"><code>manymome</code></a> for plotting conditional effects. See <a href="https://sfcheung.github.io/manymome/articles/mo_lm.html" class="external-link">this article</a> for a demonstration, and <a href="https://sfcheung.github.io/manymome/articles/#moderated-regression" class="external-link">these articles</a> for more complicated models.</li>
 </ul>
+</li>
+<li>
+<p><a href="https://sfcheung.github.io/stdmod/articles/cond_effect.html">cond_effect</a>: How to compute conditional effects of the predictor for selected levels of the moderator, and form nonparametric bootstrap confidence intervals these effects.</p>
+<ul>
+<li>It is recommended to use <a href="https://sfcheung.github.io/manymome/" class="external-link"><code>manymome</code></a> for computing conditional effects. See <a href="https://sfcheung.github.io/manymome/articles/mo_lm.html" class="external-link">this article</a> for a demonstration, and <a href="https://sfcheung.github.io/manymome/articles/#moderated-regression" class="external-link">these articles</a> for more complicated models.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="related-functions-in-betaselectr">Related Functions in <code>betaselectr</code>
+<a class="anchor" aria-label="anchor" href="#related-functions-in-betaselectr"></a>
+</h2>
+<p>The function <code>lm_betaselect()</code> from the package <code>betaselectr</code> can be used in place of <code><a href="reference/std_selected.html">std_selected()</a></code> and <code><a href="reference/std_selected.html">std_selected_boot()</a></code>. A demonstration of <code>lm_betaselect()</code> can be found <a href="https://sfcheung.github.io/betaselectr/articles/betaselectr_lm.html" class="external-link">here</a>. This package also has <code>glm_betaselect()</code> for models, such as logistic regression models, fitted by <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">stats::glm()</a></code> (see a demonstration <a href="https://sfcheung.github.io/betaselectr/articles/betaselectr_glm.html" class="external-link">here</a>).</p>
+<p>The function <code>lav_betaselect()</code> from the package <code>betaselectr</code> is a version of <code><a href="reference/std_selected.html">std_selected()</a></code> but for structural equation models fitted by <code><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">lavaan::sem()</a></code>. A demonstration of <code>lav_betaselect()</code> can be found <a href="https://sfcheung.github.io/betaselectr/articles/betaselectr_lav.html" class="external-link">here</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="related-functions-in-manymome">Related Functions in <code>manymome</code>
+<a class="anchor" aria-label="anchor" href="#related-functions-in-manymome"></a>
+</h2>
+<p>Although the package <code>manymome</code> is mainly for mediation and moderated mediation, moderation is a special case and is also supported. The <code>plot</code> method in <code>manymome</code> is more powerful than <code>plotmod</code>, supports not only a regression model but also a structural equation model, and also supports any number of moderators. The function <code><a href="https://sfcheung.github.io/manymome/reference/cond_indirect.html" class="external-link">manymome::cond_effects()</a></code> in <code>manymome</code> is also more powerful than <code>cond_effect</code> in <code>stdmod</code>, supporting both regression models and structural equation models.</p>
 </div>
 </div>
 <div class="section level1">
@@ -108,7 +144,7 @@
 <div class="section level1">
 <h1 id="issues">Issues<a class="anchor" aria-label="anchor" href="#issues"></a>
 </h1>
-<p>If you have any suggestions and found any bugs, please feel feel to open a GitHub issue. Thanks.</p>
+<p>If you have any suggestions and found any bugs, please feel free to open a GitHub issue. Thanks.</p>
 </div>
 
   </main><aside class="col-md-3"><div class="links">
@@ -167,7 +203,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

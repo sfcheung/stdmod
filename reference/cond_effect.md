@@ -194,6 +194,21 @@ information from the bootstrapping stored in these attributes:
 
 ## Details
 
+### NOTE
+
+For computing conditional effects and plotting conditional effects in
+regression models, it is recommended to use the package
+[`manymome`](https://sfcheung.github.io/manymome/). It has more
+comprehensive support than `stdmod`. See See [this
+demo](https://sfcheung.github.io/manymome/articles/mo_lm.html) for a
+one-moderator model, and [these
+articles](https://sfcheung.github.io/manymome/articles/#moderated-regression)
+for other demonstrations. The package also supports moderation in
+structural equation models fitted by `lavaan`, which is not supported in
+`stdmod`.
+
+### Details
+
 `cond_effect()` uses the centering approach to find the conditional
 effect of the focal variable. For each level of the moderator, the value
 for this level is subtracted from the moderator scores, and the model is

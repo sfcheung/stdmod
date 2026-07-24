@@ -1,5 +1,23 @@
 # Standardized Moderation Effect by std_selected()
 
+> For standardizing only selected variables and for properly
+> standardizing product terms in regression models fitted by
+> [`stats::lm()`](https://rdrr.io/r/stats/lm.html), the function
+> [`lm_betaselect()`](https://sfcheung.github.io/betaselectr/articles/betaselectr_lm.html)
+> from [`betaselectr`](https://sfcheung.github.io/betaselectr/) can be
+> used instead of
+> [`std_selected()`](https://sfcheung.github.io/stdmod/reference/std_selected.md)
+> and
+> [`std_selected_boot()`](https://sfcheung.github.io/stdmod/reference/std_selected.md).
+> The package also has supports models fitted by
+> [`stats::glm()`](https://rdrr.io/r/stats/glm.html), such as logistic
+> regression models. See [this
+> article](https://sfcheung.github.io/betaselectr/articles/betaselectr_glm.html)
+> for a demonstration.
+
+> However, if only mean-centering is needed, `stdmod` should be used
+> because `betaselectr` does not support doing only mean-centering.
+
 ## Purpose
 
 This document demonstrates how to use
@@ -22,12 +40,10 @@ library(stdmod) # For computing the standardized moderation effect conveniently
 
 data(sleep_emo_con)
 head(sleep_emo_con, 3)
-#> # A tibble: 3 × 6
-#>   case_id sleep_duration conscientiousness emotional_stability   age gender
-#>     <int>          <dbl>             <dbl>               <dbl> <dbl> <chr> 
-#> 1       1              6               3.6                 3.6    20 female
-#> 2       2              4               3.8                 2.4    20 female
-#> 3       3              7               4.3                 2.7    20 female
+#>   case_id sleep_duration conscientiousness emotional_stability age gender
+#> 1       1              6               3.6                 3.6  20 female
+#> 2       2              4               3.8                 2.4  20 female
+#> 3       3              7               4.3                 2.7  20 female
 ```
 
 This data set has 500 cases of data. The variables are sleep duration,
@@ -41,12 +57,10 @@ The names of some variables are shortened for readability:
 
 colnames(sleep_emo_con)[3:4] <- c("cons", "emot")
 head(sleep_emo_con, 3)
-#> # A tibble: 3 × 6
-#>   case_id sleep_duration  cons  emot   age gender
-#>     <int>          <dbl> <dbl> <dbl> <dbl> <chr> 
-#> 1       1              6   3.6   3.6    20 female
-#> 2       2              4   3.8   2.4    20 female
-#> 3       3              7   4.3   2.7    20 female
+#>   case_id sleep_duration cons emot age gender
+#> 1       1              6  3.6  3.6  20 female
+#> 2       2              4  3.8  2.4  20 female
+#> 3       3              7  4.3  2.7  20 female
 ```
 
 ## Moderated Regression
