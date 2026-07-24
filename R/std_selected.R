@@ -4,6 +4,20 @@
 #'              selected variables in a regression model and refit the model
 #'
 #' @details
+#'
+#' ## NOTE
+#'
+#' For standardizing only selected variables and for properly
+#' standardizing product terms in regression models fitted by
+#' `stats::lm()`, the function [`lm_betaselect()`](https://sfcheung.github.io/betaselectr/articles/betaselectr_lm.html)
+#' from [`betaselectr`](https://sfcheung.github.io/betaselectr/)
+#' can be used instead of `std_selected()` and `std_selected_boot()`.
+#' The package also has supports models fitted by `stats::glm()`,
+#' such as logistic regression models. See [this article](https://sfcheung.github.io/betaselectr/articles/betaselectr_glm.html)
+#' for a demonstration.
+#'
+#' ## Details
+#'
 #' [std_selected()] was originally developed to compute the standardized
 #' moderation effect and the standardized coefficients for other predictors
 #' given an [lm()] output (Cheung, Cheung, Lau, Hui, & Vong, 2022).

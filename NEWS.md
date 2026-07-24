@@ -1,4 +1,13 @@
-# stdmod 0.2.13
+# stdmod 0.2.14
+
+## Miscellaneous
+
+- Updated README and other files to
+  refer users to `manymome` and `betaselectr`
+  for more advanced functions.
+  (0.2.14)
+
+# stdmod 0.2.14
 
 ## Miscellaneous
 

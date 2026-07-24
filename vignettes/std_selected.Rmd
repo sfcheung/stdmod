@@ -1,7 +1,7 @@
 ---
 title: "Mean Center and Standardize Selected Variable by std_selected()"
 author: "Shu Fai Cheung and David Weng Ngai Vong"
-date: "2026-01-04"
+date: "2026-07-23"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Mean Center and Standardize Selected Variable by std_selected()}
@@ -10,6 +10,20 @@ vignette: >
 ---
 
 
+
+
+> For standardizing only selected variables and for properly
+standardizing product terms in regression models fitted by
+`stats::lm()`, the function [`lm_betaselect()`](https://sfcheung.github.io/betaselectr/articles/betaselectr_lm.html)
+from [`betaselectr`](https://sfcheung.github.io/betaselectr/)
+can be used instead of `std_selected()` and `std_selected_boot()`.
+The package also has supports models fitted by `stats::glm()`,
+such as logistic regression models. See [this article](https://sfcheung.github.io/betaselectr/articles/betaselectr_glm.html)
+for a demonstration.
+
+> However, if only mean-centering is needed, `stdmod` should
+be used because `betaselectr` does not support doing only
+mean-centering.
 
 # Purpose
 

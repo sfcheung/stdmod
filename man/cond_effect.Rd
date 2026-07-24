@@ -182,12 +182,28 @@ equal to the number of levels of the moderator.
 Compute the conditional effects in a moderated regression model.
 }
 \details{
+\subsection{NOTE}{
+
+For computing conditional effects and plotting conditional
+effects in regression models, it is recommended to
+use the package \href{https://sfcheung.github.io/manymome/}{\code{manymome}}.
+It has more comprehensive support than \code{stdmod}. See
+See \href{https://sfcheung.github.io/manymome/articles/mo_lm.html}{this demo} for
+a one-moderator model, and \href{https://sfcheung.github.io/manymome/articles/#moderated-regression}{these articles}
+for other demonstrations. The package also supports moderation
+in structural equation models fitted by \code{lavaan}, which is not
+supported in \code{stdmod}.
+}
+
+\subsection{Details}{
+
 \code{\link[=cond_effect]{cond_effect()}} uses the centering approach to find the conditional
 effect of the focal variable. For each level of the moderator, the value for
 this level is subtracted from the moderator scores, and the model is
 fitted to the modified data.
 The coefficient of the focal variable is then the conditional effect of the
 focal variable when the moderator's score is equal this value.
+}
 
 \code{\link[=cond_effect_boot]{cond_effect_boot()}} function is a wrapper of \code{\link[=cond_effect]{cond_effect()}}.
 It calls \code{\link[=cond_effect]{cond_effect()}}

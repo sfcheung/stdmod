@@ -1,7 +1,7 @@
 ---
 title: "Standardized Moderation Effect in a Path Model by stdmod_lavaan()"
 author: "Shu Fai Cheung and David Weng Ngai Vong"
-date: "2026-01-04"
+date: "2026-07-23"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Standardized Moderation Effect in a Path Model by stdmod_lavaan()}
@@ -10,6 +10,16 @@ vignette: >
 ---
 
 
+
+> For standardizing only selected variables in models fitted
+by `lavaan`, `lavaan` natively supports this since version 0.7-2,
+through setting `type` to a character vector of the variables
+to be standardized. Alternatively, the function [`lav_betaselect()`](https://sfcheung.github.io/betaselectr/articles/betaselectr_lav.html)
+from [`betaselectr`](https://sfcheung.github.io/betaselectr/)
+can also be used. [`lav_betaselect()`](https://sfcheung.github.io/betaselectr/reference/lav_betaselect.html)
+also supports properly standardizing a product term. In addition
+to bootstrap confidence intervals, [`lav_betaselect()`](https://sfcheung.github.io/betaselectr/reference/lav_betaselect.html)
+also supports delta-method confidence intervals.
 
 # Purpose
 
@@ -27,6 +37,8 @@ or at [https://sfcheung.github.io/stdmod/](https://sfcheung.github.io/stdmod/).
 ``` r
 library(stdmod) # For computing the standardized moderation effect conveniently
 library(lavaan) # For doing path analysis in lavaan.
+#> This is lavaan 0.7-2.3110
+#> lavaan is FREE software! Please report any bugs.
 ```
 
 # Load the Dataset
@@ -60,7 +72,7 @@ dv ~ med + cov2
 "
 fit <- sem(mod, test_mod1, fixed.x = FALSE)
 summary(fit)
-#> lavaan 0.6-21.2434 ended normally after 1 iteration
+#> lavaan 0.7-2.3110 ended normally after 1 iteration
 #> 
 #>   Estimator                                         ML
 #>   Optimization method                           NLMINB
